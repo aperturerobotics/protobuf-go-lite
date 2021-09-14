@@ -1,0 +1,126 @@
+// Copyright © 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+import "annotations.proto";
+
+package thethings.json.test;
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+
+option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+
+message MessageWithScalars {
+  double double_value = 1;
+  repeated double double_values = 2;
+
+  float float_value = 3;
+  repeated float float_values = 4;
+
+  int32 int32_value = 5;
+  repeated int32 int32_values = 6;
+
+  int64 int64_value = 7;
+  repeated int64 int64_values = 8;
+
+  uint32 uint32_value = 9;
+  repeated uint32 uint32_values = 10;
+
+  uint64 uint64_value = 11;
+  repeated uint64 uint64_values = 12;
+
+  sint32 sint32_value = 13;
+  repeated sint32 sint32_values = 14;
+
+  sint64 sint64_value = 15;
+  repeated sint64 sint64_values = 16;
+
+  fixed32 fixed32_value = 17;
+  repeated fixed32 fixed32_values = 18;
+
+  fixed64 fixed64_value = 19;
+  repeated fixed64 fixed64_values = 20;
+
+  sfixed32 sfixed32_value = 21;
+  repeated sfixed32 sfixed32_values = 22;
+
+  sfixed64 sfixed64_value = 23;
+  repeated sfixed64 sfixed64_values = 24;
+
+  bool bool_value = 25;
+  repeated bool bool_values = 26;
+
+  string string_value = 27;
+  repeated string string_values = 28;
+
+  bytes bytes_value = 29;
+  repeated bytes bytes_values = 30;
+}
+
+message MessageWithOneofScalars {
+  oneof value {
+    double double_value = 1;
+    float float_value = 2;
+    int32 int32_value = 3;
+    int64 int64_value = 4;
+    uint32 uint32_value = 5;
+    uint64 uint64_value = 6;
+    sint32 sint32_value = 7;
+    sint64 sint64_value = 8;
+    fixed32 fixed32_value = 9;
+    fixed64 fixed64_value = 10;
+    sfixed32 sfixed32_value = 11;
+    sfixed64 sfixed64_value = 12;
+    bool bool_value = 13;
+    string string_value = 14;
+    bytes bytes_value = 15;
+  }
+}
+
+message MessageWithScalarMaps {
+  map<string,double> string_double_map = 1;
+  // map<double,string> is impossible.
+
+  map<string,float> string_float_map = 3;
+  // map<float,string> is impossible.
+
+  map<string,int32> string_int32_map = 5;
+  map<int32,string> int32_string_map = 6;
+
+  map<string,int64> string_int64_map = 7;
+  map<int64,string> int64_string_map = 8;
+
+  map<string,uint32> string_uint32_map = 9;
+  map<uint32,string> uint32_string_map = 10;
+
+  map<string,uint64> string_uint64_map = 11;
+  map<uint64,string> uint64_string_map = 12;
+
+  map<string,sint32> string_sint32_map = 13;
+  map<sint32,string> sint32_string_map = 14;
+
+  map<string,sint64> string_sint64_map = 15;
+  map<sint64,string> sint64_string_map = 16;
+
+  map<string,fixed32> string_fixed32_map = 17;
+  map<fixed32,string> fixed32_string_map = 18;
+
+  map<string,fixed64> string_fixed64_map = 19;
+  map<fixed64,string> fixed64_string_map = 20;
+
+  map<string,sfixed32> string_sfixed32_map = 21;
+  map<sfixed32,string> sfixed32_string_map = 22;
+
+  map<string,sfixed64> string_sfixed64_map = 23;
+  map<sfixed64,string> sfixed64_string_map = 24;
+
+  map<string,bool> string_bool_map = 25;
+  map<bool,string> bool_string_map = 26;
+
+  map<string,string> string_string_map = 27;
+  // map<string,string> is above.
+
+  map<string,bytes> string_bytes_map = 29;
+  // map<bytes,string> is impossible.
+}

@@ -1,0 +1,61 @@
+// Copyright © 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+import "annotations.proto";
+import "internal/gogoproto/gogo.proto";
+
+package thethings.json.test;
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+
+option (gogoproto.enum_stringer_all) = true;
+option (gogoproto.goproto_enum_stringer_all) = false;
+
+option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+
+enum RegularEnum {
+  option (thethings.json.enum) = { marshaler: false, unmarshaler: false };
+
+  option (gogoproto.goproto_enum_prefix) = false;
+  option (gogoproto.enum_stringer) = false;
+
+  REGULAR_UNKNOWN = 0;
+
+  REGULAR_A = 1;
+  REGULAR_B = 2;
+}
+
+enum CustomEnum {
+  option (thethings.json.enum) = { marshal_as_string: true, prefix: "CUSTOM" };
+
+  CUSTOM_UNKNOWN = 0;
+  CUSTOM_V1_0    = 1 [ (thethings.json.enum_value) = { value: "1.0", aliases: ["1.0.0"] } ];
+  CUSTOM_V1_0_1  = 2 [ (thethings.json.enum_value) = { value: "1.0.1" } ];
+}
+
+message CustomEnumValue {
+  option (thethings.json.message) = { wrapper: true };
+
+  CustomEnum value = 1;
+}
+
+message MessageWithEnums {
+  RegularEnum regular = 1;
+  repeated RegularEnum regulars = 2;
+
+  CustomEnum custom = 3;
+  repeated CustomEnum customs = 4;
+
+  CustomEnumValue wrapped_custom = 5;
+  repeated CustomEnumValue wrapped_customs = 6;
+}
+
+message MessageWithOneofEnums {
+  oneof value {
+    RegularEnum regular = 1;
+    CustomEnum custom = 2;
+    CustomEnumValue wrapped_custom = 3;
+  }
+}

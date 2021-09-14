@@ -1,0 +1,8 @@
+// Copyright © 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+package thethings.json.test;
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";

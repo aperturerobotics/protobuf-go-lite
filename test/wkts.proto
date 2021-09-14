@@ -1,0 +1,125 @@
+// Copyright © 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+import "annotations.proto";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package thethings.json.test;
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+
+option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+
+message MessageWithMarshaler {
+  string message = 1;
+}
+
+message MessageWithoutMarshaler {
+  option (thethings.json.message) = { marshaler: false, unmarshaler: false };
+
+  string message = 1;
+}
+
+message MessageWithWKTs {
+  google.protobuf.DoubleValue double_value = 1;
+  repeated google.protobuf.DoubleValue double_values = 2;
+
+  google.protobuf.FloatValue float_value = 3;
+  repeated google.protobuf.FloatValue float_values = 4;
+
+  google.protobuf.Int32Value int32_value = 5;
+  repeated google.protobuf.Int32Value int32_values = 6;
+
+  google.protobuf.Int64Value int64_value = 7;
+  repeated google.protobuf.Int64Value int64_values = 8;
+
+  google.protobuf.UInt32Value uint32_value = 9;
+  repeated google.protobuf.UInt32Value uint32_values = 10;
+
+  google.protobuf.UInt64Value uint64_value = 11;
+  repeated google.protobuf.UInt64Value uint64_values = 12;
+
+  google.protobuf.BoolValue bool_value = 13;
+  repeated google.protobuf.BoolValue bool_values = 14;
+
+  google.protobuf.StringValue string_value = 15;
+  repeated google.protobuf.StringValue string_values = 16;
+
+  google.protobuf.BytesValue bytes_value = 17;
+  repeated google.protobuf.BytesValue bytes_values = 18;
+
+  google.protobuf.Empty empty_value = 19;
+  repeated google.protobuf.Empty empty_values = 20;
+
+  google.protobuf.Timestamp timestamp_value = 21;
+  repeated google.protobuf.Timestamp timestamp_values = 22;
+
+  google.protobuf.Duration duration_value = 23;
+  repeated google.protobuf.Duration duration_values = 24;
+
+  google.protobuf.FieldMask field_mask_value = 25;
+  repeated google.protobuf.FieldMask field_mask_values = 26;
+
+  google.protobuf.Value value_value = 27;
+  repeated google.protobuf.Value value_values = 28;
+
+  google.protobuf.ListValue list_value_value = 29;
+  repeated google.protobuf.ListValue list_value_values = 30;
+
+  google.protobuf.Struct struct_value = 31;
+  repeated google.protobuf.Struct struct_values = 32;
+
+  google.protobuf.Any any_value = 33;
+  repeated google.protobuf.Any any_values = 34;
+}
+
+message MessageWithOneofWKTs {
+  oneof value {
+    google.protobuf.DoubleValue double_value = 1;
+    google.protobuf.FloatValue float_value = 2;
+    google.protobuf.Int32Value int32_value = 3;
+    google.protobuf.Int64Value int64_value = 4;
+    google.protobuf.UInt32Value uint32_value = 5;
+    google.protobuf.UInt64Value uint64_value = 6;
+    google.protobuf.BoolValue bool_value = 7;
+    google.protobuf.StringValue string_value = 8;
+    google.protobuf.BytesValue bytes_value = 9;
+    google.protobuf.Empty empty_value = 10;
+    google.protobuf.Timestamp timestamp_value = 11;
+    google.protobuf.Duration duration_value = 12;
+    google.protobuf.FieldMask field_mask_value = 13;
+    google.protobuf.Value value_value = 14;
+    google.protobuf.ListValue list_value_value = 15;
+    google.protobuf.Struct struct_value = 16;
+    google.protobuf.Any any_value = 17;
+  }
+}
+
+message MessageWithWKTMaps {
+  map<string,google.protobuf.DoubleValue> string_double_map = 1;
+  map<string,google.protobuf.FloatValue> string_float_map = 2;
+  map<string,google.protobuf.Int32Value> string_int32_map = 3;
+  map<string,google.protobuf.Int64Value> string_int64_map = 4;
+  map<string,google.protobuf.UInt32Value> string_uint32_map = 5;
+  map<string,google.protobuf.UInt64Value> string_uint64_map = 6;
+  map<string,google.protobuf.BoolValue> string_bool_map = 7;
+  map<string,google.protobuf.StringValue> string_string_map = 8;
+  map<string,google.protobuf.BytesValue> string_bytes_map = 9;
+  map<string,google.protobuf.Empty> string_empty_map = 10;
+  map<string,google.protobuf.Timestamp> string_timestamp_map = 11;
+  map<string,google.protobuf.Duration> string_duration_map = 12;
+  map<string,google.protobuf.FieldMask> string_field_mask_map = 13;
+  map<string,google.protobuf.Value> string_value_map = 14;
+  map<string,google.protobuf.ListValue> string_list_value_map = 15;
+  map<string,google.protobuf.Struct> string_struct_map = 16;
+  map<string,google.protobuf.Any> string_any_map = 17;
+}
