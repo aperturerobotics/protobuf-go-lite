@@ -4,6 +4,7 @@
 package jsonplugin_test
 
 import (
+	"math"
 	"testing"
 	"time"
 
@@ -48,6 +49,30 @@ func TestMarshaler(t *testing.T) {
 	testMarshal(t, func(s *MarshalState) {
 		s.WriteFloat64Array([]float64{-12.34, 56.78})
 	}, `[-12.34,56.78]`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat32(float32(math.NaN()))
+	}, `"NaN"`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat64(math.NaN())
+	}, `"NaN"`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat32(float32(math.Inf(-1)))
+	}, `"-Infinity"`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat64(math.Inf(-1))
+	}, `"-Infinity"`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat32(float32(math.Inf(1)))
+	}, `"Infinity"`)
+
+	testMarshal(t, func(s *MarshalState) {
+		s.WriteFloat64(math.Inf(1))
+	}, `"Infinity"`)
 
 	// int
 

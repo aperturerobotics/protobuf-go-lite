@@ -6,6 +6,7 @@ package jsonplugin
 import (
 	"encoding/base64"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -157,12 +158,34 @@ func (s *MarshalState) WriteFloat32(v float32) {
 	if s.Err() != nil {
 		return
 	}
+	switch {
+	case math.IsInf(float64(v), 1):
+		s.inner.WriteString("Infinity")
+		return
+	case math.IsInf(float64(v), -1):
+		s.inner.WriteString("-Infinity")
+		return
+	case math.IsNaN(float64(v)):
+		s.inner.WriteString("NaN")
+		return
+	}
 	s.inner.WriteFloat32(v)
 }
 
 // WriteFloat64 writes a float64 value.
 func (s *MarshalState) WriteFloat64(v float64) {
 	if s.Err() != nil {
+		return
+	}
+	switch {
+	case math.IsInf(v, 1):
+		s.inner.WriteString("Infinity")
+		return
+	case math.IsInf(v, -1):
+		s.inner.WriteString("-Infinity")
+		return
+	case math.IsNaN(v):
+		s.inner.WriteString("NaN")
 		return
 	}
 	s.inner.WriteFloat64(v)
