@@ -452,6 +452,7 @@ func (s *UnmarshalState) ReadNil() bool {
 }
 
 // ReadObjectField reads a single object field.
+// An empty string indicates the end of the object.
 func (s *UnmarshalState) ReadObjectField() string {
 	if s.Err() != nil {
 		return ""
@@ -622,13 +623,25 @@ func (s *UnmarshalState) ReadFieldMask() FieldMask {
 	next := s.inner.WhatIsNext()
 	switch next {
 	case jsoniter.StringValue:
-		return newPathSlice(strings.Split(s.ReadString(), ",")...)
-	case jsoniter.ObjectValue:
-		if s.ReadObjectField() != "paths" {
-			s.inner.ReadAny()
-			break
+		mask := newPathSlice(strings.Split(s.ReadString(), ",")...)
+		if s.Err() != nil {
+			return nil
 		}
-		return newPathSlice(s.ReadStringArray()...)
+		return mask
+	case jsoniter.ObjectValue:
+		if field := s.ReadObjectField(); field != "paths" {
+			s.SetErrorf("unexpected %q field in FieldMask object", field)
+			return nil
+		}
+		mask := newPathSlice(s.ReadStringArray()...)
+		if s.Err() != nil {
+			return nil
+		}
+		if field := s.ReadObjectField(); field != "" {
+			s.SetErrorf("unexpected %q field in FieldMask object", field)
+			return nil
+		}
+		return mask
 	}
 	s.SetErrorf("invalid value type for field mask: %s", valueTypeString(next))
 	return nil
