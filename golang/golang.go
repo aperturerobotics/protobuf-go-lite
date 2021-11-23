@@ -75,7 +75,11 @@ func MarshalAny(s *jsonplugin.MarshalState, v *anypb.Any) {
 		s.SetErrorf("failed to unmarshal wrapped message from Any: %w", err)
 	}
 
-	if marshaler, ok := msg.(jsonplugin.Marshaler); ok {
+	switch marshaler := msg.(type) {
+	default:
+		// If v doesn't implement jsonplugin.Marshaler, delegate to protojson.
+		MarshalMessage(s, v)
+	case jsonplugin.Marshaler:
 		// Instantiate a sub-marshaler with the same configuration and marshal the wrapped message to that.
 		sub := s.Sub()
 		marshaler.MarshalProtoJSON(sub)
@@ -117,11 +121,41 @@ func MarshalAny(s *jsonplugin.MarshalState, v *anypb.Any) {
 
 		// Write the rest of the buffer (the sub-object without the { character).
 		s.Write(buf.Bytes())
-		return
-	}
+	case *durationpb.Duration,
+		*fieldmaskpb.FieldMask,
+		*structpb.Struct,
+		*structpb.Value,
+		*structpb.ListValue,
+		*timestamppb.Timestamp:
 
-	// If v doesn't implement jsonplugin.Marshaler, delegate to protojson.
-	MarshalMessage(s, v)
+		// Write the opening { and the type field to the main marshaler.
+		s.WriteObjectStart()
+		s.WriteObjectField("@type")
+		s.WriteString(v.GetTypeUrl())
+
+		// Write the comma, and the next field, which is always "value" for these types.
+		s.WriteMore()
+		s.WriteObjectField("value")
+
+		// Write the value.
+		switch msg := msg.(type) {
+		case *durationpb.Duration:
+			MarshalDuration(s, msg)
+		case *fieldmaskpb.FieldMask:
+			MarshalFieldMask(s, msg)
+		case *structpb.Struct:
+			MarshalStruct(s, msg)
+		case *structpb.Value:
+			MarshalValue(s, msg)
+		case *structpb.ListValue:
+			MarshalListValue(s, msg)
+		case *timestamppb.Timestamp:
+			MarshalTimestamp(s, msg)
+		}
+
+		// Write the closing }.
+		s.WriteObjectEnd()
+	}
 }
 
 // UnmarshalAny unmarshals an Any WKT.
@@ -157,21 +191,49 @@ func UnmarshalAny(s *jsonplugin.UnmarshalState) *anypb.Any {
 	// Allocate a new message of that type.
 	msg := t.New().Interface()
 
-	if unmarshaler, ok := msg.(jsonplugin.Unmarshaler); ok {
-		// Create another sub-unmarshaler for the raw data and unmarshal the message.
-		sub := s.Sub(data)
-		unmarshaler.UnmarshalProtoJSON(sub)
-		if err := sub.Err(); err != nil {
-			return nil
-		}
-	} else {
+	switch unmarshaler := msg.(type) {
+	default:
 		// Delegate unmarshaling to protojson.
+		var any anypb.Any
 		if err := (&protojson.UnmarshalOptions{
 			DiscardUnknown: true,
-		}).Unmarshal(data, msg); err != nil {
-			s.SetErrorf("failed to unmarshal Any to JSON: %w", err)
+		}).Unmarshal(data, &any); err != nil {
+			s.SetErrorf("failed to unmarshal Any from JSON: %w", err)
 			return nil
 		}
+		return &any
+	case jsonplugin.Unmarshaler:
+		// Create another sub-unmarshaler for the raw data and unmarshal the message.
+		sub = s.Sub(data)
+		unmarshaler.UnmarshalProtoJSON(sub)
+	case *durationpb.Duration,
+		*fieldmaskpb.FieldMask,
+		*structpb.Struct,
+		*structpb.Value,
+		*structpb.ListValue,
+		*timestamppb.Timestamp:
+		if field := sub.ReadObjectField(); field != "value" {
+			s.SetErrorf("unexpected %q field in Any", field)
+			return nil
+		}
+		switch msg.(type) {
+		case *durationpb.Duration:
+			msg = UnmarshalDuration(sub)
+		case *fieldmaskpb.FieldMask:
+			msg = UnmarshalFieldMask(sub)
+		case *structpb.Struct:
+			msg = UnmarshalStruct(sub)
+		case *structpb.Value:
+			msg = UnmarshalValue(sub)
+		case *structpb.ListValue:
+			msg = UnmarshalListValue(sub)
+		case *timestamppb.Timestamp:
+			msg = UnmarshalTimestamp(sub)
+		}
+	}
+
+	if err := sub.Err(); err != nil {
+		return nil
 	}
 
 	// Wrap the unmarshaled message in an Any and return that.
