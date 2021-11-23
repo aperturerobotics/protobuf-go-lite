@@ -74,7 +74,11 @@ func MarshalAny(s *jsonplugin.MarshalState, v *types.Any) {
 		s.SetErrorf("failed to unmarshal wrapped message from Any: %w", err)
 	}
 
-	if marshaler, ok := msg.(jsonplugin.Marshaler); ok {
+	switch marshaler := msg.(type) {
+	default:
+		// If v doesn't implement jsonplugin.Marshaler, delegate to gogo jsonpb.
+		MarshalMessage(s, v)
+	case jsonplugin.Marshaler:
 		// Instantiate a sub-marshaler with the same configuration and marshal the wrapped message to that.
 		sub := s.Sub()
 		marshaler.MarshalProtoJSON(sub)
@@ -116,11 +120,41 @@ func MarshalAny(s *jsonplugin.MarshalState, v *types.Any) {
 
 		// Write the rest of the buffer (the sub-object without the { character).
 		s.Write(buf.Bytes())
-		return
-	}
+	case *types.Duration,
+		*types.FieldMask,
+		*types.Struct,
+		*types.Value,
+		*types.ListValue,
+		*types.Timestamp:
 
-	// If v doesn't implement jsonplugin.Marshaler, delegate to gogo jsonpb.
-	MarshalMessage(s, v)
+		// Write the opening { and the type field to the main marshaler.
+		s.WriteObjectStart()
+		s.WriteObjectField("@type")
+		s.WriteString(v.GetTypeUrl())
+
+		// Write the comma, and the next field, which is always "value" for these types.
+		s.WriteMore()
+		s.WriteObjectField("value")
+
+		// Write the value.
+		switch msg := msg.(type) {
+		case *types.Duration:
+			MarshalDuration(s, msg)
+		case *types.FieldMask:
+			MarshalFieldMask(s, msg)
+		case *types.Struct:
+			MarshalStruct(s, msg)
+		case *types.Value:
+			MarshalValue(s, msg)
+		case *types.ListValue:
+			MarshalListValue(s, msg)
+		case *types.Timestamp:
+			MarshalTimestamp(s, msg)
+		}
+
+		// Write the closing }.
+		s.WriteObjectEnd()
+	}
 }
 
 // UnmarshalAny unmarshals an Any WKT.
@@ -161,21 +195,49 @@ func UnmarshalAny(s *jsonplugin.UnmarshalState) *types.Any {
 	// Allocate a new message of that type.
 	msg := reflect.New(t.Elem()).Interface().(proto.Message)
 
-	if unmarshaler, ok := msg.(jsonplugin.Unmarshaler); ok {
-		// Create another sub-unmarshaler for the raw data and unmarshal the message.
-		sub := s.Sub(data)
-		unmarshaler.UnmarshalProtoJSON(sub)
-		if err := sub.Err(); err != nil {
-			return nil
-		}
-	} else {
+	switch unmarshaler := msg.(type) {
+	default:
 		// Delegate unmarshaling to gogo jsonpb.
+		var any types.Any
 		if err := (&jsonpb.Unmarshaler{
 			AllowUnknownFields: true,
-		}).Unmarshal(bytes.NewBuffer(data), msg); err != nil {
-			s.SetErrorf("failed to unmarshal Any to JSON: %w", err)
+		}).Unmarshal(bytes.NewBuffer(data), &any); err != nil {
+			s.SetErrorf("failed to unmarshal Any from JSON: %w", err)
 			return nil
 		}
+		return &any
+	case jsonplugin.Unmarshaler:
+		// Create another sub-unmarshaler for the raw data and unmarshal the message.
+		sub = s.Sub(data)
+		unmarshaler.UnmarshalProtoJSON(sub)
+	case *types.Duration,
+		*types.FieldMask,
+		*types.Struct,
+		*types.Value,
+		*types.ListValue,
+		*types.Timestamp:
+		if field := sub.ReadObjectField(); field != "value" {
+			s.SetErrorf("unexpected %q field in Any", field)
+			return nil
+		}
+		switch msg.(type) {
+		case *types.Duration:
+			msg = UnmarshalDuration(sub)
+		case *types.FieldMask:
+			msg = UnmarshalFieldMask(sub)
+		case *types.Struct:
+			msg = UnmarshalStruct(sub)
+		case *types.Value:
+			msg = UnmarshalValue(sub)
+		case *types.ListValue:
+			msg = UnmarshalListValue(sub)
+		case *types.Timestamp:
+			msg = UnmarshalTimestamp(sub)
+		}
+	}
+
+	if err := sub.Err(); err != nil {
+		return nil
 	}
 
 	// Wrap the unmarshaled message in an Any and return that.

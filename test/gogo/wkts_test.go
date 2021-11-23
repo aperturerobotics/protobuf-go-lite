@@ -255,6 +255,10 @@ var testMessagesWithWKTs = []struct {
 			AnyValues: []*types.Any{
 				mustAny(&MessageWithMarshaler{Message: "hello"}),
 				mustAny(&MessageWithoutMarshaler{Message: "hello"}),
+				mustAny(mustTimestamp(testTime)),
+				mustAny(mustDuration(testDuration)),
+				mustAny(&types.FieldMask{Paths: []string{"foo.bar", "bar", "baz.qux"}}),
+				mustAny(&types.Value{Kind: &types.Value_StringValue{StringValue: "foo"}}),
 			},
 		},
 		expected: `{
@@ -334,6 +338,22 @@ var testMessagesWithWKTs = []struct {
 				{
 					"@type": "type.googleapis.com/thethings.json.test.MessageWithoutMarshaler",
 					"message": "hello"
+				},
+				{
+					"@type":"type.googleapis.com/google.protobuf.Timestamp",
+					"value":"2006-01-02T08:04:05.123456789Z"
+				},
+				{
+					"@type":"type.googleapis.com/google.protobuf.Duration",
+					"value":"3723.123456789s"
+				},
+				{
+					"@type":"type.googleapis.com/google.protobuf.FieldMask",
+					"value": "foo.bar,bar,baz.qux"
+				},
+				{
+					"@type":"type.googleapis.com/google.protobuf.Value",
+					"value":"foo"
 				}
 			]
 		}`,
