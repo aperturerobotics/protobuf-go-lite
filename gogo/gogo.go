@@ -240,6 +240,11 @@ func UnmarshalAny(s *jsonplugin.UnmarshalState) *types.Any {
 		return nil
 	}
 
+	if field := sub.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in Any", field)
+		return nil
+	}
+
 	// Wrap the unmarshaled message in an Any and return that.
 	v, err := types.MarshalAny(msg)
 	if err != nil {

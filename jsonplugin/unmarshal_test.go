@@ -238,4 +238,14 @@ func TestUnmarshaler(t *testing.T) {
 	testUnmarshal(t, func(s *UnmarshalState) interface{} {
 		return s.ReadDuration()
 	}, `"3723s"`, testDuration.Truncate(1000000000))
+
+	// field mask
+
+	testUnmarshal(t, func(s *UnmarshalState) interface{} {
+		return s.ReadFieldMask().GetPaths()
+	}, `"foo,bar,baz.qux"`, []string{"foo", "bar", "baz.qux"})
+
+	testUnmarshal(t, func(s *UnmarshalState) interface{} {
+		return s.ReadFieldMask().GetPaths()
+	}, `{"paths":["foo","bar","baz.qux"]}`, []string{"foo", "bar", "baz.qux"})
 }
