@@ -64,9 +64,12 @@ endif
 	unzip -o .dev/gogoproto/gogoproto.zip protobuf-master/protobuf/google/protobuf/*.proto -d .dev/gogoproto
 	mv .dev/gogoproto/protobuf-master/protobuf/google/protobuf/*.proto .dev/gogoproto/include/google/protobuf/
 
+.dev/gogoproto/bin/protoc-gen-gogo:
+	go build -o $@ github.com/gogo/protobuf/protoc-gen-gogo
+
 .PHONY: testprotos
 
-testprotos: build .dev/golangproto/bin/protoc .dev/gogoproto/bin/protoc
+testprotos: build .dev/golangproto/bin/protoc .dev/gogoproto/bin/protoc .dev/gogoproto/bin/protoc-gen-gogo
 	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I ./test -I . \
 	  --go_opt=paths=source_relative --go_out=./test/golang \
 	  --go-json_opt=paths=source_relative --go-json_out=./test/golang \
