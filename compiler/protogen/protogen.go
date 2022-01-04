@@ -254,6 +254,11 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 				importPaths[filename] = GoImportPath(path.Dir(descName))
 			}
 		}
+		if packageNames[filename] == "" {
+			pkgName := fdesc.GetPackage()
+			pkgName = strings.Replace(pkgName, ".", "_", -1)
+			packageNames[filename] = GoPackageName(pkgName)
+		}
 
 		switch {
 		case importPaths[filename] == "":
