@@ -135,8 +135,9 @@ nextField:
 		fieldOpts := field.Desc.Options()
 		if Params.Lang == "gogo" {
 			pluginPackage = gogoPluginPackage
-		} else {
-			if proto.HasExtension(fieldOpts, annotations.E_Field) {
+		}
+		if proto.HasExtension(fieldOpts, annotations.E_Field) {
+			if customtype == nil {
 				marshalerFunc = parseGoIdent(proto.GetExtension(field.Desc.Options(), annotations.E_Field).(*annotations.FieldOptions).GetMarshalerFunc())
 			}
 		}
@@ -156,7 +157,7 @@ nextField:
 			// Write the field name and a colon.
 			g.P(`s.WriteObjectField("`, field.Desc.Name(), `")`)
 
-			// If the map value has a custom marshaler, call that and continue with the next field.
+			// If the field has a custom marshaler, call that and continue with the next field.
 			if marshalerFunc != nil {
 				g.P(*marshalerFunc, `(s.WithField("`, field.Desc.Name(), `"), x.`, fieldGoName, ")")
 				g.P("}") // end if x.{fieldGoName} != nil {
@@ -365,7 +366,7 @@ nextField:
 
 		if marshalerFunc != nil {
 			// If the field has a custom marshaler, call that.
-			g.P(*marshalerFunc, `(s.WithField("`, field.Desc.Name(), `"), x.`, fieldGoName, ")")
+			g.P(*marshalerFunc, `(s.WithField("`, field.Desc.Name(), `"), `, messageOrOneofIdent, `.`, fieldGoName, ")")
 		} else if customtype != nil {
 			// If the field has a custom type, call MarshalProtoJSON for it.
 			g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)

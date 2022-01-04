@@ -8,6 +8,7 @@ package test
 
 import (
 	jsonplugin "github.com/TheThingsIndustries/protoc-gen-go-json/jsonplugin"
+	types "github.com/TheThingsIndustries/protoc-gen-go-json/test/types"
 )
 
 // MarshalProtoJSON marshals the MessageWithScalars message to JSON.
@@ -168,6 +169,16 @@ func (x *MessageWithScalars) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		s.WriteObjectField("bytes_values")
 		s.WriteBytesArray(x.BytesValues)
 	}
+	if len(x.HexBytesValue) > 0 || s.HasField("hex_bytes_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("hex_bytes_value")
+		types.MarshalHEX(s.WithField("hex_bytes_value"), x.HexBytesValue)
+	}
+	if len(x.HexBytesValues) > 0 || s.HasField("hex_bytes_values") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("hex_bytes_values")
+		types.MarshalHEXArray(s.WithField("hex_bytes_values"), x.HexBytesValues)
+	}
 	s.WriteObjectEnd()
 }
 
@@ -270,6 +281,12 @@ func (x *MessageWithScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 		case "bytes_values", "bytesValues":
 			s.AddField("bytes_values")
 			x.BytesValues = s.ReadBytesArray()
+		case "hex_bytes_value", "hexBytesValue":
+			s.AddField("hex_bytes_value")
+			x.HexBytesValue = types.UnmarshalHEX(s.WithField("hex_bytes_value", false))
+		case "hex_bytes_values", "hexBytesValues":
+			s.AddField("hex_bytes_values")
+			x.HexBytesValues = types.UnmarshalHEXArray(s.WithField("hex_bytes_values", false))
 		}
 	})
 }
@@ -344,6 +361,10 @@ func (x *MessageWithOneofScalars) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 			s.WriteMoreIf(&wroteField)
 			s.WriteObjectField("bytes_value")
 			s.WriteBytes(ov.BytesValue)
+		case *MessageWithOneofScalars_HexBytesValue:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("hex_bytes_value")
+			types.MarshalHEX(s.WithField("hex_bytes_value"), ov.HexBytesValue)
 		}
 	}
 	s.WriteObjectEnd()
@@ -432,6 +453,11 @@ func (x *MessageWithOneofScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalStat
 			s.AddField("bytes_value")
 			ov := &MessageWithOneofScalars_BytesValue{}
 			ov.BytesValue = s.ReadBytes()
+			x.Value = ov
+		case "hex_bytes_value", "hexBytesValue":
+			s.AddField("hex_bytes_value")
+			ov := &MessageWithOneofScalars_HexBytesValue{}
+			ov.HexBytesValue = types.UnmarshalHEX(s.WithField("hex_bytes_value", false))
 			x.Value = ov
 		}
 	})
@@ -757,6 +783,11 @@ func (x *MessageWithScalarMaps) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		}
 		s.WriteObjectEnd()
 	}
+	if x.StringHexBytesMap != nil || s.HasField("string_hex_bytes_map") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("string_hex_bytes_map")
+		types.MarshalStringHEXMap(s.WithField("string_hex_bytes_map"), x.StringHexBytesMap)
+	}
 	s.WriteObjectEnd()
 }
 
@@ -925,6 +956,9 @@ func (x *MessageWithScalarMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState)
 			s.ReadStringMap(func(key string) {
 				x.StringBytesMap[key] = s.ReadBytes()
 			})
+		case "string_hex_bytes_map", "stringHexBytesMap":
+			s.AddField("string_hex_bytes_map")
+			x.StringHexBytesMap = types.UnmarshalStringHEXMap(s.WithField("string_hex_bytes_map", false))
 		}
 	})
 }

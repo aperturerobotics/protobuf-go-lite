@@ -50,7 +50,9 @@ var testMessagesWithScalars = []struct {
 			"string_value": "",
 			"string_values": [],
 			"bytes_value": null,
-			"bytes_values": []
+			"bytes_values": [],
+			"hex_bytes_value": null,
+			"hex_bytes_values": []
 		}`,
 		expectedMask: []string{
 			"double_value",
@@ -83,6 +85,8 @@ var testMessagesWithScalars = []struct {
 			"string_values",
 			"bytes_value",
 			"bytes_values",
+			"hex_bytes_value",
+			"hex_bytes_values",
 		},
 	},
 	{
@@ -118,6 +122,8 @@ var testMessagesWithScalars = []struct {
 			StringValues:   []string{"foo", "bar"},
 			BytesValue:     []byte("foo"),
 			BytesValues:    [][]byte{[]byte("foo"), []byte("bar")},
+			HexBytesValue:  []byte("foo"),
+			HexBytesValues: [][]byte{[]byte("foo"), []byte("bar")},
 		},
 		expected: `{
 			"double_value": 12.34,
@@ -149,7 +155,9 @@ var testMessagesWithScalars = []struct {
 			"string_value": "foo",
 			"string_values": ["foo", "bar"],
 			"bytes_value": "Zm9v",
-			"bytes_values": ["Zm9v", "YmFy"]
+			"bytes_values": ["Zm9v", "YmFy"],
+			"hex_bytes_value": "666F6F",
+			"hex_bytes_values": ["666F6F", "626172"]
 		}`,
 		expectedMask: []string{
 			"double_value",
@@ -182,6 +190,8 @@ var testMessagesWithScalars = []struct {
 			"string_values",
 			"bytes_value",
 			"bytes_values",
+			"hex_bytes_value",
+			"hex_bytes_values",
 		},
 	},
 }
@@ -463,6 +473,30 @@ var testMessagesWithOneofScalars = []struct {
 		expected:     `{"bytes_value": "Zm9v"}`,
 		expectedMask: []string{"bytes_value"},
 	},
+	{
+		name: "hex_bytes_null",
+		msg: MessageWithOneofScalars{
+			Value: &MessageWithOneofScalars_HexBytesValue{},
+		},
+		expected:     `{"hex_bytes_value": null}`,
+		expectedMask: []string{"hex_bytes_value"},
+	},
+	{
+		name: "hex_bytes_zero",
+		msg: MessageWithOneofScalars{
+			Value: &MessageWithOneofScalars_HexBytesValue{HexBytesValue: []byte{}},
+		},
+		expected:     `{"hex_bytes_value": ""}`,
+		expectedMask: []string{"hex_bytes_value"},
+	},
+	{
+		name: "hex_bytes_value",
+		msg: MessageWithOneofScalars{
+			Value: &MessageWithOneofScalars_HexBytesValue{HexBytesValue: []byte("foo")},
+		},
+		expected:     `{"hex_bytes_value": "666F6F"}`,
+		expectedMask: []string{"hex_bytes_value"},
+	},
 }
 
 func TestMarshalMessageWithOneofScalars(t *testing.T) {
@@ -521,6 +555,7 @@ var testMessagesWithScalarMaps = []struct {
 			BoolStringMap:     map[bool]string{true: "yes"},
 			StringStringMap:   map[string]string{"value": "foo"},
 			StringBytesMap:    map[string][]byte{"value": []byte("foo")},
+			StringHexBytesMap: map[string][]byte{"value": []byte("foo")},
 		},
 		expected: `{
 			"string_double_map": {"value": -42},
@@ -548,7 +583,8 @@ var testMessagesWithScalarMaps = []struct {
 			"string_bool_map": {"yes": true},
 			"bool_string_map": {"true": "yes"},
 			"string_string_map": {"value": "foo"},
-			"string_bytes_map": {"value": "Zm9v"}
+			"string_bytes_map": {"value": "Zm9v"},
+			"string_hex_bytes_map": {"value": "666F6F"}
 		}`,
 		expectedMask: []string{
 			"string_double_map",
@@ -577,6 +613,7 @@ var testMessagesWithScalarMaps = []struct {
 			"bool_string_map",
 			"string_string_map",
 			"string_bytes_map",
+			"string_hex_bytes_map",
 		},
 	},
 }

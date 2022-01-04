@@ -75,6 +75,28 @@ func UnmarshalHEXArray(s *jsonplugin.UnmarshalState) [][]byte {
 	return bs
 }
 
+func MarshalStringHEXMap(s *jsonplugin.MarshalState, bs map[string][]byte) {
+	s.WriteObjectStart()
+	var wroteElement bool
+	for k, b := range bs {
+		s.WriteMoreIf(&wroteElement)
+		s.WriteObjectField(k)
+		s.WriteString(fmt.Sprintf("%X", b))
+	}
+	s.WriteObjectEnd()
+}
+
+func UnmarshalStringHEXMap(s *jsonplugin.UnmarshalState) map[string][]byte {
+	bs := make(map[string][]byte)
+	s.ReadObject(func(key string) {
+		bs[key] = UnmarshalHEX(s)
+	})
+	if s.Err() != nil {
+		return nil
+	}
+	return bs
+}
+
 func (t EUI64) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%X"`, t[:])), nil
 }

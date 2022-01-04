@@ -134,8 +134,9 @@ nextField:
 		fieldOpts := field.Desc.Options()
 		if Params.Lang == "gogo" {
 			pluginPackage = gogoPluginPackage
-		} else {
-			if proto.HasExtension(fieldOpts, annotations.E_Field) {
+		}
+		if proto.HasExtension(fieldOpts, annotations.E_Field) {
+			if customtype == nil {
 				unmarshalerFunc = parseGoIdent(proto.GetExtension(field.Desc.Options(), annotations.E_Field).(*annotations.FieldOptions).GetUnmarshalerFunc())
 			}
 		}
@@ -156,13 +157,13 @@ nextField:
 			g.P(`s.AddField("`, field.Desc.Name(), `")`)
 		}
 
-		// If the field has a custom unmarshaler, call that and continue with the next field.
-		if unmarshalerFunc != nil {
-			g.P("x.", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
-			continue nextField
-		}
-
 		if field.Desc.IsMap() {
+			// If the field has a custom unmarshaler, call that and continue with the next field.
+			if unmarshalerFunc != nil {
+				g.P("x.", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
+				continue nextField
+			}
+
 			// If the field is a map, the field type is a MapEntry message.
 			// In the MapEntry message, the first field is the key, and the second field is the value.
 			key := field.Message.Fields[0]
@@ -230,6 +231,11 @@ nextField:
 		}
 
 		if field.Desc.IsList() {
+			// If the field has a custom unmarshaler, call that and continue with the next field.
+			if unmarshalerFunc != nil {
+				g.P("x.", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
+				continue nextField
+			}
 			if customtype != nil {
 				// If the field has a custom type, for each element, we will
 				// allocate a zero value, call the unmarshaler and append the value to the list.
@@ -238,73 +244,73 @@ nextField:
 				g.P(`v.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
 				g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
 				g.P("})")
-			} else {
-				switch field.Desc.Kind() {
-				default:
-					// Lists of scalar types can be read by the library.
-					g.P("x.", fieldGoName, " = s.Read", g.libNameForField(field), "Array()")
-				case protoreflect.EnumKind:
-					g.P("s.ReadArray(func() {")
-					if g.enumHasUnmarshaler(field.Enum) {
-						// If the list value is of type enum, and the enum has an unmarshaler,
-						// allocate a zero enum, call the unmarshaler, and append the enum to the list.
-						g.P("var v ", field.Enum.GoIdent)
-						g.P(`v.UnmarshalProtoJSON(s)`)
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
-					} else {
-						// Otherwise we let the library read the enum.
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", field.Enum.GoIdent, "(s.ReadEnum(", field.Enum.GoIdent, "_value)))")
-					}
-					g.P("})") // end s.ReadArray()
-				case protoreflect.MessageKind:
-					g.P("s.ReadArray(func() {")
-					switch {
-					case g.messageHasUnmarshaler(field.Message):
-						if nullable {
-							// If we read nil, append nil and return so that we can continue with the next key.
-							g.P("if s.ReadNil() {")
-							g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", nil)")
-							g.P("return")
-							g.P("}") // end if s.ReadNil() {
-						}
-						// Allocate a zero message, call the unmarshaler and append the message to the list.
-						g.P("v := ", ifThenElse(nullable, "&", ""), field.Message.GoIdent, "{}")
-						g.P(`v.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
-						g.P("if s.Err() != nil {")
-						g.P("return")
-						g.P("}")
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
-					case messageIsWrapper(field.Message):
-						if nullable {
-							// If we read nil, append nil and return so that we can continue with the next key.
-							g.P("if s.ReadNil() {")
-							g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", nil)")
-							g.P("return")
-							g.P("}") // end if s.ReadNil() {
-						}
-						// Read the wrapped value, and if successful, append the wrapped value to the list.
-						g.P("v := ", g.readWrapperValue(field.Message))
-						g.P("if s.Err() != nil {")
-						g.P("return")
-						g.P("}")
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", &", field.Message.GoIdent, "{Value: v})")
-					case messageIsWKT(field.Message):
-						// If the list value is a WKT, read the WKT, and if successful, append it to the list.
-						g.P("v := ", g.readWKTValue(field, field.Message))
-						g.P("if s.Err() != nil {")
-						g.P("return")
-						g.P("}")
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", ifThenElse(nullable, "", "*"), "v)")
-					default:
-						// Otherwise, delegate to the library.
-						g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement UnmarshalProtoJSON.")
-						g.P("var v ", field.Message.GoIdent)
-						g.P(pluginPackage.Ident("UnmarshalMessage"), "(s, &v)")
-						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", ifThenElse(nullable, "&", ""), "v)")
-					}
-
-					g.P("})") // end s.ReadArray()
+				continue nextField
+			}
+			switch field.Desc.Kind() {
+			default:
+				// Lists of scalar types can be read by the library.
+				g.P("x.", fieldGoName, " = s.Read", g.libNameForField(field), "Array()")
+			case protoreflect.EnumKind:
+				g.P("s.ReadArray(func() {")
+				if g.enumHasUnmarshaler(field.Enum) {
+					// If the list value is of type enum, and the enum has an unmarshaler,
+					// allocate a zero enum, call the unmarshaler, and append the enum to the list.
+					g.P("var v ", field.Enum.GoIdent)
+					g.P(`v.UnmarshalProtoJSON(s)`)
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
+				} else {
+					// Otherwise we let the library read the enum.
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", field.Enum.GoIdent, "(s.ReadEnum(", field.Enum.GoIdent, "_value)))")
 				}
+				g.P("})") // end s.ReadArray()
+			case protoreflect.MessageKind:
+				g.P("s.ReadArray(func() {")
+				switch {
+				case g.messageHasUnmarshaler(field.Message):
+					if nullable {
+						// If we read nil, append nil and return so that we can continue with the next key.
+						g.P("if s.ReadNil() {")
+						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", nil)")
+						g.P("return")
+						g.P("}") // end if s.ReadNil() {
+					}
+					// Allocate a zero message, call the unmarshaler and append the message to the list.
+					g.P("v := ", ifThenElse(nullable, "&", ""), field.Message.GoIdent, "{}")
+					g.P(`v.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
+					g.P("if s.Err() != nil {")
+					g.P("return")
+					g.P("}")
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
+				case messageIsWrapper(field.Message):
+					if nullable {
+						// If we read nil, append nil and return so that we can continue with the next key.
+						g.P("if s.ReadNil() {")
+						g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", nil)")
+						g.P("return")
+						g.P("}") // end if s.ReadNil() {
+					}
+					// Read the wrapped value, and if successful, append the wrapped value to the list.
+					g.P("v := ", g.readWrapperValue(field.Message))
+					g.P("if s.Err() != nil {")
+					g.P("return")
+					g.P("}")
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", &", field.Message.GoIdent, "{Value: v})")
+				case messageIsWKT(field.Message):
+					// If the list value is a WKT, read the WKT, and if successful, append it to the list.
+					g.P("v := ", g.readWKTValue(field, field.Message))
+					g.P("if s.Err() != nil {")
+					g.P("return")
+					g.P("}")
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", ifThenElse(nullable, "", "*"), "v)")
+				default:
+					// Otherwise, delegate to the library.
+					g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement UnmarshalProtoJSON.")
+					g.P("var v ", field.Message.GoIdent)
+					g.P(pluginPackage.Ident("UnmarshalMessage"), "(s, &v)")
+					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", ifThenElse(nullable, "&", ""), "v)")
+				}
+
+				g.P("})") // end s.ReadArray()
 			}
 
 			continue nextField
@@ -319,7 +325,10 @@ nextField:
 			messageOrOneofIdent = "ov"
 		}
 
-		if customtype != nil {
+		// If the field has a custom unmarshaler, call that
+		if unmarshalerFunc != nil {
+			g.P(messageOrOneofIdent, ".", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
+		} else if customtype != nil {
 			if nullable {
 				g.P("if !s.ReadNil() {")
 				// Set the field to a newly allocated custom type.
