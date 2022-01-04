@@ -246,6 +246,15 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		if packageNames[filename] == "" && pkgName != "" {
 			packageNames[filename] = pkgName
 		}
+
+		// HACK: assume that the import path is the fdesc name sub .proto
+		if importPaths[filename] == "" {
+			descName := fdesc.GetName()
+			if strings.HasSuffix(descName, ".proto") {
+				importPaths[filename] = GoImportPath(path.Dir(descName))
+			}
+		}
+
 		switch {
 		case importPaths[filename] == "":
 			// The import path must be specified one way or another.
