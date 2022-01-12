@@ -56,6 +56,19 @@ message MessageWithScalars {
 
   bytes bytes_value = 29;
   repeated bytes bytes_values = 30;
+
+  bytes hex_bytes_value = 31 [
+    (thethings.json.field) = {
+      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
+      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
+    }
+  ];
+  repeated bytes hex_bytes_values = 32  [
+    (thethings.json.field) = {
+      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEXArray",
+      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEXArray"
+    }
+  ];
 }
 
 message MessageWithOneofScalars {
@@ -75,6 +88,12 @@ message MessageWithOneofScalars {
     bool bool_value = 13;
     string string_value = 14;
     bytes bytes_value = 15;
+    bytes hex_bytes_value = 16 [
+      (thethings.json.field) = {
+        marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
+        unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
+      }
+    ];
   }
 }
 
@@ -123,4 +142,11 @@ message MessageWithScalarMaps {
 
   map<string,bytes> string_bytes_map = 29;
   // map<bytes,string> is impossible.
+
+  map<string,bytes> string_hex_bytes_map = 30 [
+    (thethings.json.field) = {
+      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalStringHEXMap",
+      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalStringHEXMap"
+    }
+  ];
 }
