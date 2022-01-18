@@ -20,7 +20,6 @@ var Params struct {
 const (
 	bytesPackage   = protogen.GoImportPath("bytes")
 	fmtPackage     = protogen.GoImportPath("fmt")
-	jsonPackage    = protogen.GoImportPath("encoding/json")
 	strconvPackage = protogen.GoImportPath("strconv")
 
 	gogoProtoTypesPackage = protogen.GoImportPath("github.com/gogo/protobuf/types")

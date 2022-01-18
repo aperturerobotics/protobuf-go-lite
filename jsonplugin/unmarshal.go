@@ -5,7 +5,6 @@ package jsonplugin
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"io"
 	"strconv"
@@ -651,8 +650,8 @@ func (s *UnmarshalState) ReadFieldMask() FieldMask {
 }
 
 // ReadRawMessage reads a raw JSON message.
-func (s *UnmarshalState) ReadRawMessage() json.RawMessage {
-	var msg json.RawMessage
+func (s *UnmarshalState) ReadRawMessage() jsoniter.RawMessage {
+	var msg jsoniter.RawMessage
 	s.inner.ReadVal(&msg)
 	if s.Err() != nil {
 		return nil
