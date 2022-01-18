@@ -36,6 +36,11 @@ type MarshalerConfig struct {
 	EnumsAsInts bool
 }
 
+// DefaultMarshalerConfig is the default configuration for the Marshaler.
+var DefaultMarshalerConfig = MarshalerConfig{
+	EnumsAsInts: true,
+}
+
 // Marshal marshals a message.
 func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
 	s := NewMarshalState(c)

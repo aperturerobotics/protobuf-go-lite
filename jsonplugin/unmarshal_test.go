@@ -17,7 +17,7 @@ func testUnmarshal(t *testing.T, f func(s *UnmarshalState) interface{}, data str
 	if expectedValue := reflect.ValueOf(expected); expectedValue.Type().Kind() == reflect.Ptr {
 		expected = expectedValue.Elem().Interface()
 	}
-	s := NewUnmarshalState([]byte(data), UnmarshalerConfig{})
+	s := NewUnmarshalState([]byte(data), DefaultUnmarshalerConfig)
 	actual := f(s)
 	if actualValue := reflect.ValueOf(actual); actualValue.Type().Kind() == reflect.Ptr {
 		actual = actualValue.Elem().Interface()

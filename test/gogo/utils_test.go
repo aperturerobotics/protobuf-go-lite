@@ -36,17 +36,13 @@ func gogoUnmarshal(t *testing.T, msg proto.Message, data []byte) {
 	}
 }
 
-var pluginMarshaler = jsonplugin.MarshalerConfig{
-	EnumsAsInts: true,
-}
-
 func generatedMarshal(t *testing.T, msg proto.Message, mask []string) []byte {
 	t.Helper()
 	m, ok := msg.(jsonplugin.Marshaler)
 	if !ok {
 		t.Fatalf("message %T does not implement the jsonplugin.Marshaler", msg)
 	}
-	s := jsonplugin.NewMarshalState(pluginMarshaler).WithFieldMask(mask...)
+	s := jsonplugin.NewMarshalState(jsonplugin.DefaultMarshalerConfig).WithFieldMask(mask...)
 	m.MarshalProtoJSON(s)
 	b, err := s.Bytes()
 	if err != nil {
@@ -61,7 +57,7 @@ func generatedUnmarshal(t *testing.T, msg proto.Message, data []byte) []string {
 	if !ok {
 		t.Fatalf("message %T does not implement the jsonplugin.Unmarshaler", msg)
 	}
-	s := jsonplugin.NewUnmarshalState(data, jsonplugin.UnmarshalerConfig{})
+	s := jsonplugin.NewUnmarshalState(data, jsonplugin.DefaultUnmarshalerConfig)
 	unmarshaler.UnmarshalProtoJSON(s)
 	if err := s.Err(); err != nil {
 		t.Fatalf("generated failed to unmarshal: %v", err)

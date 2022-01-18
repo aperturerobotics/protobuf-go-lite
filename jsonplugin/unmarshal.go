@@ -35,6 +35,9 @@ func (e *unmarshalError) Error() string {
 // UnmarshalerConfig is the configuration for the Unmarshaler.
 type UnmarshalerConfig struct{}
 
+// DefaultUnmarshalerConfig is the default configuration for the Unmarshaler.
+var DefaultUnmarshalerConfig = UnmarshalerConfig{}
+
 // Unmarshal unmarshals a message.
 func (c UnmarshalerConfig) Unmarshal(data []byte, m Unmarshaler) error {
 	s := NewUnmarshalState(data, c)
