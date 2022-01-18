@@ -85,10 +85,6 @@ func (g *generator) genEnumUnmarshaler(enum *protogen.Enum) {
 	g.P("*x = ", enum.GoIdent, "(v)")
 	g.P("}")
 	g.P()
-
-	if Params.Std {
-		g.genStdEnumUnmarshaler(enum)
-	}
 }
 
 func (g *generator) genStdEnumUnmarshaler(enum *protogen.Enum) {

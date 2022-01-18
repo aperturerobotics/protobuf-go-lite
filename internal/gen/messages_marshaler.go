@@ -418,10 +418,6 @@ nextField:
 
 	g.P("}") // end func (x *{message.GoIdent}) MarshalProtoJSON()
 	g.P()
-
-	if Params.Std {
-		g.genStdMessageMarshaler(message)
-	}
 }
 
 func (g *generator) genStdMessageMarshaler(message *protogen.Message) {

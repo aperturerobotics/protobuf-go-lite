@@ -17,10 +17,16 @@ func (g *generator) enumHasAnyMarshaler(enum *protogen.Enum) bool {
 func (g *generator) genEnum(enum *protogen.Enum) {
 	if g.enumHasMarshaler(enum) {
 		g.genEnumMarshaler(enum)
+		if Params.Std {
+			g.genStdEnumMarshaler(enum)
+		}
 	}
 
 	if g.enumHasUnmarshaler(enum) {
 		g.genEnumUnmarshaler(enum)
+		if Params.Std {
+			g.genStdEnumUnmarshaler(enum)
+		}
 	}
 }
 

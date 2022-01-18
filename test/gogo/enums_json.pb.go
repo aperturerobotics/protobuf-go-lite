@@ -61,6 +61,11 @@ func (x *CustomEnumValue) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	return
 }
 
+// MarshalJSON marshals the CustomEnumValue to JSON.
+func (x CustomEnumValue) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the CustomEnumValue message from JSON.
 func (x *CustomEnumValue) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -68,6 +73,11 @@ func (x *CustomEnumValue) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	}
 	x.Value.UnmarshalProtoJSON(s)
 	return
+}
+
+// UnmarshalJSON unmarshals the CustomEnumValue from JSON.
+func (x *CustomEnumValue) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MessageWithEnums message to JSON.

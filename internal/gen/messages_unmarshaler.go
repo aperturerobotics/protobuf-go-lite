@@ -401,10 +401,6 @@ nextField:
 	g.P("})") // end s.ReadObject()
 	g.P("}")  // end func (x *{message.GoIdent}) MarshalProtoJSON()
 	g.P()
-
-	if Params.Std {
-		g.genStdMessageUnmarshaler(message)
-	}
 }
 
 func (g *generator) genStdMessageUnmarshaler(message *protogen.Message) {

@@ -90,10 +90,6 @@ func (g *generator) genEnumMarshaler(enum *protogen.Enum) {
 	}
 	g.P("}")
 	g.P()
-
-	if Params.Std {
-		g.genStdEnumMarshaler(enum)
-	}
 }
 
 func (g *generator) genStdEnumMarshaler(enum *protogen.Enum) {
