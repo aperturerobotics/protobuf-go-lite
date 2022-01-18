@@ -72,11 +72,11 @@ endif
 testprotos: build .dev/golangproto/bin/protoc .dev/gogoproto/bin/protoc .dev/gogoproto/bin/protoc-gen-gogo
 	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I ./test -I . \
 	  --go_opt=paths=source_relative --go_out=./test/golang \
-	  --go-json_opt=paths=source_relative --go-json_out=./test/golang \
+	  --go-json_opt=paths=source_relative --go-json_opt=std=true --go-json_out=./test/golang \
 	  ./test/*.proto
 	PATH="$$PWD/.bin:$$PWD/.dev/gogoproto/bin:$$PATH" protoc -I ./test -I . \
 	  --gogo_opt=paths=source_relative --gogo_opt=$(REPLACES) --gogo_out=./test/gogo \
-	  --go-json_opt=paths=source_relative --go-json_opt=$(REPLACES) --go-json_opt=lang=gogo --go-json_out=./test/gogo \
+	  --go-json_opt=paths=source_relative --go-json_opt=$(REPLACES) --go-json_opt=lang=gogo --go-json_opt=std=true --go-json_out=./test/gogo \
 	  ./test/*.proto
 
 .PHONY: test

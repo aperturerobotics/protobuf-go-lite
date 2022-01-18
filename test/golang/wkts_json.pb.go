@@ -34,6 +34,11 @@ func (x *MessageWithMarshaler) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithMarshaler to JSON.
+func (x MessageWithMarshaler) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithMarshaler message from JSON.
 func (x *MessageWithMarshaler) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -48,6 +53,11 @@ func (x *MessageWithMarshaler) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 			x.Message = s.ReadString()
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithMarshaler from JSON.
+func (x *MessageWithMarshaler) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MessageWithWKTs message to JSON.
@@ -469,6 +479,11 @@ func (x *MessageWithWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithWKTs to JSON.
+func (x MessageWithWKTs) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithWKTs message from JSON.
 func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -808,6 +823,11 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	})
 }
 
+// UnmarshalJSON unmarshals the MessageWithWKTs from JSON.
+func (x *MessageWithWKTs) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MessageWithOneofWKTs message to JSON.
 func (x *MessageWithOneofWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	if x == nil {
@@ -957,6 +977,11 @@ func (x *MessageWithOneofWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		}
 	}
 	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageWithOneofWKTs to JSON.
+func (x MessageWithOneofWKTs) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithOneofWKTs message from JSON.
@@ -1141,6 +1166,11 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 			x.Value = ov
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithOneofWKTs from JSON.
+func (x *MessageWithOneofWKTs) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MessageWithWKTMaps message to JSON.
@@ -1426,6 +1456,11 @@ func (x *MessageWithWKTMaps) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithWKTMaps to JSON.
+func (x MessageWithWKTMaps) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithWKTMaps message from JSON.
 func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -1643,4 +1678,9 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithWKTMaps from JSON.
+func (x *MessageWithWKTMaps) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
