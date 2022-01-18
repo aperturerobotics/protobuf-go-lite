@@ -418,6 +418,18 @@ nextField:
 
 	g.P("}") // end func (x *{message.GoIdent}) MarshalProtoJSON()
 	g.P()
+
+	if Params.Std {
+		g.genStdMessageMarshaler(message)
+	}
+}
+
+func (g *generator) genStdMessageMarshaler(message *protogen.Message) {
+	g.P("// MarshalJSON marshals the ", message.GoIdent, " to JSON.")
+	g.P("func (x ", message.GoIdent, ") MarshalJSON() ([]byte, error) {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultMarshalerConfig"), ".Marshal(&x)")
+	g.P("}")
+	g.P()
 }
 
 func (g *generator) writeWrapperValue(message *protogen.Message, ident string) {

@@ -21,6 +21,7 @@ func main() {
 	}
 
 	var flags flag.FlagSet
+	flags.BoolVar(&plugin.Params.Std, "std", false, "generate standard library (un)marshalers")
 	flags.StringVar(&plugin.Params.Lang, "lang", "go", "language (go or gogo)")
 
 	protogen.Options{

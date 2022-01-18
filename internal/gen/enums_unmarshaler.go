@@ -85,4 +85,16 @@ func (g *generator) genEnumUnmarshaler(enum *protogen.Enum) {
 	g.P("*x = ", enum.GoIdent, "(v)")
 	g.P("}")
 	g.P()
+
+	if Params.Std {
+		g.genStdEnumUnmarshaler(enum)
+	}
+}
+
+func (g *generator) genStdEnumUnmarshaler(enum *protogen.Enum) {
+	g.P("// UnmarshalJSON unmarshals the ", enum.GoIdent, " from JSON.")
+	g.P("func (x *", enum.GoIdent, ") UnmarshalJSON(b []byte) error {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultUnmarshalerConfig"), ".Unmarshal(b, x)")
+	g.P("}")
+	g.P()
 }

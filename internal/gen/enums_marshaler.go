@@ -90,4 +90,16 @@ func (g *generator) genEnumMarshaler(enum *protogen.Enum) {
 	}
 	g.P("}")
 	g.P()
+
+	if Params.Std {
+		g.genStdEnumMarshaler(enum)
+	}
+}
+
+func (g *generator) genStdEnumMarshaler(enum *protogen.Enum) {
+	g.P("// MarshalJSON marshals the ", enum.GoIdent, " to JSON.")
+	g.P("func (x ", enum.GoIdent, ") MarshalJSON() ([]byte, error) {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultMarshalerConfig"), ".Marshal(x)")
+	g.P("}")
+	g.P()
 }
