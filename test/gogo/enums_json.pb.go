@@ -21,6 +21,11 @@ func (x CustomEnum) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteEnumString(int32(x), CustomEnum_customname, CustomEnum_name)
 }
 
+// MarshalText marshals the CustomEnum to text.
+func (x CustomEnum) MarshalText() ([]byte, error) {
+	return []byte(jsonplugin.GetEnumString(int32(x), CustomEnum_customname, CustomEnum_name)), nil
+}
+
 // MarshalJSON marshals the CustomEnum to JSON.
 func (x CustomEnum) MarshalJSON() ([]byte, error) {
 	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
@@ -44,6 +49,16 @@ func (x *CustomEnum) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 		return
 	}
 	*x = CustomEnum(v)
+}
+
+// UnmarshalText unmarshals the CustomEnum from text.
+func (x *CustomEnum) UnmarshalText(b []byte) error {
+	i, err := jsonplugin.ParseEnumString(string(b), CustomEnum_customvalue, CustomEnum_value)
+	if err != nil {
+		return err
+	}
+	*x = CustomEnum(i)
+	return nil
 }
 
 // UnmarshalJSON unmarshals the CustomEnum from JSON.

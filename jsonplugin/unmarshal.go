@@ -563,6 +563,22 @@ func (s *UnmarshalState) ReadArray(cb func()) {
 	})
 }
 
+// ParseEnumString parses an enum from its string representation using the value maps.
+// If none of the value maps contains a mapping for the string value,
+// it attempts to parse the string as a numeric value.
+func ParseEnumString(v string, valueMaps ...map[string]int32) (int32, error) {
+	for _, valueMap := range valueMaps {
+		if x, ok := valueMap[v]; ok {
+			return x, nil
+		}
+	}
+	x, err := strconv.ParseInt(v, 10, 32)
+	if err != nil {
+		return 0, err
+	}
+	return int32(x), nil
+}
+
 // ReadEnum reads an enum. It supports numeric values and string values.
 func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 	if s.Err() != nil {
@@ -573,13 +589,12 @@ func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 		return any.ToInt32()
 	case jsoniter.StringValue:
 		v := any.ToString()
-		for _, valueMap := range valueMaps {
-			if v, ok := valueMap[v]; ok {
-				return v
-			}
+		x, err := ParseEnumString(v, valueMaps...)
+		if err != nil {
+			s.SetErrorf("unknown value for enum: %q", v)
+			return 0
 		}
-		s.SetErrorf("unknown value for enum: %q", v)
-		return 0
+		return x
 	default:
 		s.SetErrorf("invalid value type for enum: %s", valueTypeString(any.ValueType()))
 		return 0

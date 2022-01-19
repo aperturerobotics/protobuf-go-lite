@@ -93,6 +93,16 @@ func (g *generator) genEnumMarshaler(enum *protogen.Enum) {
 }
 
 func (g *generator) genStdEnumMarshaler(enum *protogen.Enum) {
+	g.P("// MarshalText marshals the ", enum.GoIdent, " to text.")
+	g.P("func (x ", enum.GoIdent, ") MarshalText() ([]byte, error) {")
+	if g.enumHasCustomValues(enum) {
+		g.P("return []byte(", jsonPluginPackage.Ident("GetEnumString"), "(int32(x), ", enum.GoIdent, "_customname, ", enum.GoIdent, "_name)), nil")
+	} else {
+		g.P("return []byte(", jsonPluginPackage.Ident("GetEnumString"), "(int32(x), ", enum.GoIdent, "_name)), nil")
+	}
+	g.P("}")
+	g.P()
+
 	g.P("// MarshalJSON marshals the ", enum.GoIdent, " to JSON.")
 	g.P("func (x ", enum.GoIdent, ") MarshalJSON() ([]byte, error) {")
 	g.P("return ", jsonPluginPackage.Ident("DefaultMarshalerConfig"), ".Marshal(x)")
