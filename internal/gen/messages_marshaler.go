@@ -420,6 +420,14 @@ nextField:
 	g.P()
 }
 
+func (g *generator) genStdMessageMarshaler(message *protogen.Message) {
+	g.P("// MarshalJSON marshals the ", message.GoIdent, " to JSON.")
+	g.P("func (x ", message.GoIdent, ") MarshalJSON() ([]byte, error) {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultMarshalerConfig"), ".Marshal(&x)")
+	g.P("}")
+	g.P()
+}
+
 func (g *generator) writeWrapperValue(message *protogen.Message, ident string) {
 	g.P("if ", ident, " == nil {")
 	g.P("s.WriteNil()")

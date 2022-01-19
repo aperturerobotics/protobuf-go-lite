@@ -36,6 +36,11 @@ type MarshalerConfig struct {
 	EnumsAsInts bool
 }
 
+// DefaultMarshalerConfig is the default configuration for the Marshaler.
+var DefaultMarshalerConfig = MarshalerConfig{
+	EnumsAsInts: true,
+}
+
 // Marshal marshals a message.
 func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
 	s := NewMarshalState(c)
@@ -514,18 +519,24 @@ func (s *MarshalState) WriteEnum(x int32, valueMaps ...map[int32]string) {
 	}
 }
 
+// GetEnumString gets the string representation of the enum using the value maps.
+// If none of the value maps contains a mapping for the enum value,
+// it returns the numeric value as a string.
+func GetEnumString(x int32, valueMaps ...map[int32]string) string {
+	for _, valueMap := range valueMaps {
+		if v, ok := valueMap[x]; ok {
+			return v
+		}
+	}
+	return strconv.FormatInt(int64(x), 10)
+}
+
 // WriteEnumString writes an enum value as a string.
 func (s *MarshalState) WriteEnumString(x int32, valueMaps ...map[int32]string) {
 	if s.Err() != nil {
 		return
 	}
-	for _, valueMap := range valueMaps {
-		if v, ok := valueMap[x]; ok {
-			s.WriteString(v)
-			return
-		}
-	}
-	s.WriteEnumNumber(x)
+	s.WriteString(GetEnumString(x, valueMaps...))
 }
 
 // WriteEnumNumber writes an enum value as a number.

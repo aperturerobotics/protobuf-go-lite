@@ -403,6 +403,14 @@ nextField:
 	g.P()
 }
 
+func (g *generator) genStdMessageUnmarshaler(message *protogen.Message) {
+	g.P("// UnmarshalJSON unmarshals the ", message.GoIdent, " from JSON.")
+	g.P("func (x *", message.GoIdent, ") UnmarshalJSON(b []byte) error {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultUnmarshalerConfig"), ".Unmarshal(b, x)")
+	g.P("}")
+	g.P()
+}
+
 func (g *generator) readWrapperValue(message *protogen.Message) string {
 	switch message.Desc.FullName() {
 	case "google.protobuf.DoubleValue":

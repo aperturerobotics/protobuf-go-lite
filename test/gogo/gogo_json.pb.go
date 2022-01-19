@@ -77,6 +77,11 @@ func (x *MessageWithGoGoOptions) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithGoGoOptions to JSON.
+func (x MessageWithGoGoOptions) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithGoGoOptions message from JSON.
 func (x *MessageWithGoGoOptions) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -137,6 +142,11 @@ func (x *MessageWithGoGoOptions) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState
 	})
 }
 
+// UnmarshalJSON unmarshals the MessageWithGoGoOptions from JSON.
+func (x *MessageWithGoGoOptions) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the SubMessage message to JSON.
 func (x *SubMessage) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	if x == nil {
@@ -153,6 +163,11 @@ func (x *SubMessage) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the SubMessage to JSON.
+func (x SubMessage) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the SubMessage message from JSON.
 func (x *SubMessage) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -167,6 +182,11 @@ func (x *SubMessage) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.Field = s.ReadString()
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the SubMessage from JSON.
+func (x *SubMessage) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MessageWithNullable message to JSON.
@@ -214,6 +234,11 @@ func (x *MessageWithNullable) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithNullable to JSON.
+func (x MessageWithNullable) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithNullable message from JSON.
 func (x *MessageWithNullable) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -255,6 +280,11 @@ func (x *MessageWithNullable) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	})
 }
 
+// UnmarshalJSON unmarshals the MessageWithNullable from JSON.
+func (x *MessageWithNullable) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MessageWithEmbedded message to JSON.
 func (x *MessageWithEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	if x == nil {
@@ -275,6 +305,11 @@ func (x *MessageWithEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		gogo.MarshalMessage(s, x.SubMessageWithoutMarshalers)
 	}
 	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageWithEmbedded to JSON.
+func (x MessageWithEmbedded) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithEmbedded message from JSON.
@@ -301,6 +336,11 @@ func (x *MessageWithEmbedded) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	})
 }
 
+// UnmarshalJSON unmarshals the MessageWithEmbedded from JSON.
+func (x *MessageWithEmbedded) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MessageWithNullableEmbedded message to JSON.
 func (x *MessageWithNullableEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	if x == nil {
@@ -321,6 +361,11 @@ func (x *MessageWithNullableEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalStat
 		gogo.MarshalMessage(s, &x.SubMessageWithoutMarshalers)
 	}
 	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageWithNullableEmbedded to JSON.
+func (x MessageWithNullableEmbedded) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithNullableEmbedded message from JSON.
@@ -344,4 +389,9 @@ func (x *MessageWithNullableEmbedded) UnmarshalProtoJSON(s *jsonplugin.Unmarshal
 			x.SubMessageWithoutMarshalers = v
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithNullableEmbedded from JSON.
+func (x *MessageWithNullableEmbedded) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }

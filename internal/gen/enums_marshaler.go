@@ -91,3 +91,27 @@ func (g *generator) genEnumMarshaler(enum *protogen.Enum) {
 	g.P("}")
 	g.P()
 }
+
+func (g *generator) genStdEnumMarshaler(enum *protogen.Enum) {
+	ext, _ := proto.GetExtension(enum.Desc.Options().(*descriptorpb.EnumOptions), annotations.E_Enum).(*annotations.EnumOptions)
+
+	g.P("// MarshalText marshals the ", enum.GoIdent, " to text.")
+	g.P("func (x ", enum.GoIdent, ") MarshalText() ([]byte, error) {")
+	if ext.GetMarshalAsNumber() {
+		g.P("return []byte(", strconvPackage.Ident("FormatInt"), "(int64(x), 10)), nil")
+	} else {
+		if g.enumHasCustomValues(enum) {
+			g.P("return []byte(", jsonPluginPackage.Ident("GetEnumString"), "(int32(x), ", enum.GoIdent, "_customname, ", enum.GoIdent, "_name)), nil")
+		} else {
+			g.P("return []byte(", jsonPluginPackage.Ident("GetEnumString"), "(int32(x), ", enum.GoIdent, "_name)), nil")
+		}
+	}
+	g.P("}")
+	g.P()
+
+	g.P("// MarshalJSON marshals the ", enum.GoIdent, " to JSON.")
+	g.P("func (x ", enum.GoIdent, ") MarshalJSON() ([]byte, error) {")
+	g.P("return ", jsonPluginPackage.Ident("DefaultMarshalerConfig"), ".Marshal(x)")
+	g.P("}")
+	g.P()
+}

@@ -182,6 +182,11 @@ func (x *MessageWithScalars) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithScalars to JSON.
+func (x MessageWithScalars) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithScalars message from JSON.
 func (x *MessageWithScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -291,6 +296,11 @@ func (x *MessageWithScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	})
 }
 
+// UnmarshalJSON unmarshals the MessageWithScalars from JSON.
+func (x *MessageWithScalars) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MessageWithOneofScalars message to JSON.
 func (x *MessageWithOneofScalars) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	if x == nil {
@@ -368,6 +378,11 @@ func (x *MessageWithOneofScalars) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		}
 	}
 	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageWithOneofScalars to JSON.
+func (x MessageWithOneofScalars) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithOneofScalars message from JSON.
@@ -461,6 +476,11 @@ func (x *MessageWithOneofScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalStat
 			x.Value = ov
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithOneofScalars from JSON.
+func (x *MessageWithOneofScalars) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MessageWithScalarMaps message to JSON.
@@ -791,6 +811,11 @@ func (x *MessageWithScalarMaps) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// MarshalJSON marshals the MessageWithScalarMaps to JSON.
+func (x MessageWithScalarMaps) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+}
+
 // UnmarshalProtoJSON unmarshals the MessageWithScalarMaps message from JSON.
 func (x *MessageWithScalarMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 	if s.ReadNil() {
@@ -961,4 +986,9 @@ func (x *MessageWithScalarMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState)
 			x.StringHexBytesMap = types.UnmarshalStringHEXMap(s.WithField("string_hex_bytes_map", false))
 		}
 	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithScalarMaps from JSON.
+func (x *MessageWithScalarMaps) UnmarshalJSON(b []byte) error {
+	return jsonplugin.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }

@@ -52,11 +52,17 @@ func (g *generator) genMessage(message *protogen.Message) {
 	// Generate marshaler for the message itself, if it has one.
 	if g.messageHasMarshaler(message) {
 		g.genMessageMarshaler(message)
+		if Params.Std {
+			g.genStdMessageMarshaler(message)
+		}
 	}
 
 	// Generate unmarshaler for the message itself, if it has one.
 	if g.messageHasUnmarshaler(message) {
 		g.genMessageUnmarshaler(message)
+		if Params.Std {
+			g.genStdMessageUnmarshaler(message)
+		}
 	}
 }
 

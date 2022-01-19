@@ -20,7 +20,7 @@ var (
 func testMarshal(t *testing.T, f func(s *MarshalState), expected string) {
 	t.Helper()
 
-	s := NewMarshalState(MarshalerConfig{})
+	s := NewMarshalState(DefaultMarshalerConfig)
 	f(s)
 	data, err := s.Bytes()
 	if err != nil {
