@@ -96,15 +96,21 @@ func (x *MessageWithGoGoOptions) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState
 			x.EUIWithCustomName = s.ReadBytes()
 		case "eui_with_custom_name_and_type", "euiWithCustomNameAndType":
 			s.AddField("eui_with_custom_name_and_type")
-			if !s.ReadNil() {
-				x.EUIWithCustomNameAndType = &types.EUI64{}
-				x.EUIWithCustomNameAndType.UnmarshalProtoJSON(s.WithField("eui_with_custom_name_and_type", false))
+			if s.ReadNil() {
+				x.EUIWithCustomNameAndType = nil
+				return
 			}
+			x.EUIWithCustomNameAndType = &types.EUI64{}
+			x.EUIWithCustomNameAndType.UnmarshalProtoJSON(s.WithField("eui_with_custom_name_and_type", false))
 		case "non_nullable_eui_with_custom_name_and_type", "nonNullableEuiWithCustomNameAndType":
 			s.AddField("non_nullable_eui_with_custom_name_and_type")
 			x.NonNullableEUIWithCustomNameAndType.UnmarshalProtoJSON(s.WithField("non_nullable_eui_with_custom_name_and_type", false))
 		case "euis_with_custom_name_and_type", "euisWithCustomNameAndType":
 			s.AddField("euis_with_custom_name_and_type")
+			if s.ReadNil() {
+				x.EUIsWithCustomNameAndType = nil
+				return
+			}
 			s.ReadArray(func() {
 				var v types.EUI64
 				v.UnmarshalProtoJSON(s.WithField("euis_with_custom_name_and_type", false))
@@ -112,6 +118,10 @@ func (x *MessageWithGoGoOptions) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState
 			})
 		case "duration":
 			s.AddField("duration")
+			if s.ReadNil() {
+				x.Duration = nil
+				return
+			}
 			v := s.ReadDuration()
 			if s.Err() != nil {
 				return
@@ -126,6 +136,10 @@ func (x *MessageWithGoGoOptions) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState
 			x.NonNullableDuration = *v
 		case "timestamp":
 			s.AddField("timestamp")
+			if s.ReadNil() {
+				x.Timestamp = nil
+				return
+			}
 			v := s.ReadTime()
 			if s.Err() != nil {
 				return
@@ -249,11 +263,13 @@ func (x *MessageWithNullable) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 		default:
 			s.ReadAny() // ignore unknown field
 		case "sub":
-			if !s.ReadNil() {
-				x.Sub.UnmarshalProtoJSON(s.WithField("sub", true))
-			}
+			x.Sub.UnmarshalProtoJSON(s.WithField("sub", true))
 		case "subs":
 			s.AddField("subs")
+			if s.ReadNil() {
+				x.Subs = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := SubMessage{}
 				v.UnmarshalProtoJSON(s.WithField("subs", false))
@@ -270,6 +286,10 @@ func (x *MessageWithNullable) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.OtherSub = v
 		case "other_subs", "otherSubs":
 			s.AddField("other_subs")
+			if s.ReadNil() {
+				x.OtherSubs = nil
+				return
+			}
 			s.ReadArray(func() {
 				// NOTE: SubMessageWithoutMarshalers does not seem to implement UnmarshalProtoJSON.
 				var v SubMessageWithoutMarshalers
@@ -322,12 +342,18 @@ func (x *MessageWithEmbedded) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 		default:
 			s.ReadAny() // ignore unknown field
 		case "sub":
-			if !s.ReadNil() {
-				x.SubMessage = &SubMessage{}
-				x.SubMessage.UnmarshalProtoJSON(s.WithField("sub", true))
+			if s.ReadNil() {
+				x.SubMessage = nil
+				return
 			}
+			x.SubMessage = &SubMessage{}
+			x.SubMessage.UnmarshalProtoJSON(s.WithField("sub", true))
 		case "other_sub", "otherSub":
 			s.AddField("other_sub")
+			if s.ReadNil() {
+				x.SubMessageWithoutMarshalers = nil
+				return
+			}
 			// NOTE: SubMessageWithoutMarshalers does not seem to implement UnmarshalProtoJSON.
 			var v SubMessageWithoutMarshalers
 			gogo.UnmarshalMessage(s, &v)
@@ -378,9 +404,7 @@ func (x *MessageWithNullableEmbedded) UnmarshalProtoJSON(s *jsonplugin.Unmarshal
 		default:
 			s.ReadAny() // ignore unknown field
 		case "sub":
-			if !s.ReadNil() {
-				x.SubMessage.UnmarshalProtoJSON(s.WithField("sub", true))
-			}
+			x.SubMessage.UnmarshalProtoJSON(s.WithField("sub", true))
 		case "other_sub", "otherSub":
 			s.AddField("other_sub")
 			// NOTE: SubMessageWithoutMarshalers does not seem to implement UnmarshalProtoJSON.
