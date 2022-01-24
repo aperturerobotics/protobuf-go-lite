@@ -173,6 +173,10 @@ func (x *MessageWithEnums) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.Regular = RegularEnum(s.ReadEnum(RegularEnum_value))
 		case "regulars":
 			s.AddField("regulars")
+			if s.ReadNil() {
+				x.Regulars = nil
+				return
+			}
 			s.ReadArray(func() {
 				x.Regulars = append(x.Regulars, RegularEnum(s.ReadEnum(RegularEnum_value)))
 			})
@@ -181,6 +185,10 @@ func (x *MessageWithEnums) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.Custom.UnmarshalProtoJSON(s)
 		case "customs":
 			s.AddField("customs")
+			if s.ReadNil() {
+				x.Customs = nil
+				return
+			}
 			s.ReadArray(func() {
 				var v CustomEnum
 				v.UnmarshalProtoJSON(s)
@@ -188,12 +196,18 @@ func (x *MessageWithEnums) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "wrapped_custom", "wrappedCustom":
 			s.AddField("wrapped_custom")
-			if !s.ReadNil() {
-				x.WrappedCustom = &CustomEnumValue{}
-				x.WrappedCustom.UnmarshalProtoJSON(s.WithField("wrapped_custom", false))
+			if s.ReadNil() {
+				x.WrappedCustom = nil
+				return
 			}
+			x.WrappedCustom = &CustomEnumValue{}
+			x.WrappedCustom.UnmarshalProtoJSON(s.WithField("wrapped_custom", false))
 		case "wrapped_customs", "wrappedCustoms":
 			s.AddField("wrapped_customs")
+			if s.ReadNil() {
+				x.WrappedCustoms = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.WrappedCustoms = append(x.WrappedCustoms, nil)
@@ -259,21 +273,23 @@ func (x *MessageWithOneofEnums) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState)
 		case "regular":
 			s.AddField("regular")
 			ov := &MessageWithOneofEnums_Regular{}
-			ov.Regular = RegularEnum(s.ReadEnum(RegularEnum_value))
 			x.Value = ov
+			ov.Regular = RegularEnum(s.ReadEnum(RegularEnum_value))
 		case "custom":
 			s.AddField("custom")
 			ov := &MessageWithOneofEnums_Custom{}
-			ov.Custom.UnmarshalProtoJSON(s)
 			x.Value = ov
+			ov.Custom.UnmarshalProtoJSON(s)
 		case "wrapped_custom", "wrappedCustom":
 			s.AddField("wrapped_custom")
 			ov := &MessageWithOneofEnums_WrappedCustom{}
-			if !s.ReadNil() {
-				ov.WrappedCustom = &CustomEnumValue{}
-				ov.WrappedCustom.UnmarshalProtoJSON(s.WithField("wrapped_custom", false))
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.WrappedCustom = nil
+				return
+			}
+			ov.WrappedCustom = &CustomEnumValue{}
+			ov.WrappedCustom.UnmarshalProtoJSON(s.WithField("wrapped_custom", false))
 		}
 	})
 }

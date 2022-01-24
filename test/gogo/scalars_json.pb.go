@@ -201,96 +201,160 @@ func (x *MessageWithScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.DoubleValue = s.ReadFloat64()
 		case "double_values", "doubleValues":
 			s.AddField("double_values")
+			if s.ReadNil() {
+				x.DoubleValues = nil
+				return
+			}
 			x.DoubleValues = s.ReadFloat64Array()
 		case "float_value", "floatValue":
 			s.AddField("float_value")
 			x.FloatValue = s.ReadFloat32()
 		case "float_values", "floatValues":
 			s.AddField("float_values")
+			if s.ReadNil() {
+				x.FloatValues = nil
+				return
+			}
 			x.FloatValues = s.ReadFloat32Array()
 		case "int32_value", "int32Value":
 			s.AddField("int32_value")
 			x.Int32Value = s.ReadInt32()
 		case "int32_values", "int32Values":
 			s.AddField("int32_values")
+			if s.ReadNil() {
+				x.Int32Values = nil
+				return
+			}
 			x.Int32Values = s.ReadInt32Array()
 		case "int64_value", "int64Value":
 			s.AddField("int64_value")
 			x.Int64Value = s.ReadInt64()
 		case "int64_values", "int64Values":
 			s.AddField("int64_values")
+			if s.ReadNil() {
+				x.Int64Values = nil
+				return
+			}
 			x.Int64Values = s.ReadInt64Array()
 		case "uint32_value", "uint32Value":
 			s.AddField("uint32_value")
 			x.Uint32Value = s.ReadUint32()
 		case "uint32_values", "uint32Values":
 			s.AddField("uint32_values")
+			if s.ReadNil() {
+				x.Uint32Values = nil
+				return
+			}
 			x.Uint32Values = s.ReadUint32Array()
 		case "uint64_value", "uint64Value":
 			s.AddField("uint64_value")
 			x.Uint64Value = s.ReadUint64()
 		case "uint64_values", "uint64Values":
 			s.AddField("uint64_values")
+			if s.ReadNil() {
+				x.Uint64Values = nil
+				return
+			}
 			x.Uint64Values = s.ReadUint64Array()
 		case "sint32_value", "sint32Value":
 			s.AddField("sint32_value")
 			x.Sint32Value = s.ReadInt32()
 		case "sint32_values", "sint32Values":
 			s.AddField("sint32_values")
+			if s.ReadNil() {
+				x.Sint32Values = nil
+				return
+			}
 			x.Sint32Values = s.ReadInt32Array()
 		case "sint64_value", "sint64Value":
 			s.AddField("sint64_value")
 			x.Sint64Value = s.ReadInt64()
 		case "sint64_values", "sint64Values":
 			s.AddField("sint64_values")
+			if s.ReadNil() {
+				x.Sint64Values = nil
+				return
+			}
 			x.Sint64Values = s.ReadInt64Array()
 		case "fixed32_value", "fixed32Value":
 			s.AddField("fixed32_value")
 			x.Fixed32Value = s.ReadUint32()
 		case "fixed32_values", "fixed32Values":
 			s.AddField("fixed32_values")
+			if s.ReadNil() {
+				x.Fixed32Values = nil
+				return
+			}
 			x.Fixed32Values = s.ReadUint32Array()
 		case "fixed64_value", "fixed64Value":
 			s.AddField("fixed64_value")
 			x.Fixed64Value = s.ReadUint64()
 		case "fixed64_values", "fixed64Values":
 			s.AddField("fixed64_values")
+			if s.ReadNil() {
+				x.Fixed64Values = nil
+				return
+			}
 			x.Fixed64Values = s.ReadUint64Array()
 		case "sfixed32_value", "sfixed32Value":
 			s.AddField("sfixed32_value")
 			x.Sfixed32Value = s.ReadInt32()
 		case "sfixed32_values", "sfixed32Values":
 			s.AddField("sfixed32_values")
+			if s.ReadNil() {
+				x.Sfixed32Values = nil
+				return
+			}
 			x.Sfixed32Values = s.ReadInt32Array()
 		case "sfixed64_value", "sfixed64Value":
 			s.AddField("sfixed64_value")
 			x.Sfixed64Value = s.ReadInt64()
 		case "sfixed64_values", "sfixed64Values":
 			s.AddField("sfixed64_values")
+			if s.ReadNil() {
+				x.Sfixed64Values = nil
+				return
+			}
 			x.Sfixed64Values = s.ReadInt64Array()
 		case "bool_value", "boolValue":
 			s.AddField("bool_value")
 			x.BoolValue = s.ReadBool()
 		case "bool_values", "boolValues":
 			s.AddField("bool_values")
+			if s.ReadNil() {
+				x.BoolValues = nil
+				return
+			}
 			x.BoolValues = s.ReadBoolArray()
 		case "string_value", "stringValue":
 			s.AddField("string_value")
 			x.StringValue = s.ReadString()
 		case "string_values", "stringValues":
 			s.AddField("string_values")
+			if s.ReadNil() {
+				x.StringValues = nil
+				return
+			}
 			x.StringValues = s.ReadStringArray()
 		case "bytes_value", "bytesValue":
 			s.AddField("bytes_value")
 			x.BytesValue = s.ReadBytes()
 		case "bytes_values", "bytesValues":
 			s.AddField("bytes_values")
+			if s.ReadNil() {
+				x.BytesValues = nil
+				return
+			}
 			x.BytesValues = s.ReadBytesArray()
 		case "hex_bytes_value", "hexBytesValue":
 			s.AddField("hex_bytes_value")
 			x.HexBytesValue = types.UnmarshalHEX(s.WithField("hex_bytes_value", false))
 		case "hex_bytes_values", "hexBytesValues":
 			s.AddField("hex_bytes_values")
+			if s.ReadNil() {
+				x.HexBytesValues = nil
+				return
+			}
 			x.HexBytesValues = types.UnmarshalHEXArray(s.WithField("hex_bytes_values", false))
 		}
 	})
@@ -397,83 +461,83 @@ func (x *MessageWithOneofScalars) UnmarshalProtoJSON(s *jsonplugin.UnmarshalStat
 		case "double_value", "doubleValue":
 			s.AddField("double_value")
 			ov := &MessageWithOneofScalars_DoubleValue{}
-			ov.DoubleValue = s.ReadFloat64()
 			x.Value = ov
+			ov.DoubleValue = s.ReadFloat64()
 		case "float_value", "floatValue":
 			s.AddField("float_value")
 			ov := &MessageWithOneofScalars_FloatValue{}
-			ov.FloatValue = s.ReadFloat32()
 			x.Value = ov
+			ov.FloatValue = s.ReadFloat32()
 		case "int32_value", "int32Value":
 			s.AddField("int32_value")
 			ov := &MessageWithOneofScalars_Int32Value{}
-			ov.Int32Value = s.ReadInt32()
 			x.Value = ov
+			ov.Int32Value = s.ReadInt32()
 		case "int64_value", "int64Value":
 			s.AddField("int64_value")
 			ov := &MessageWithOneofScalars_Int64Value{}
-			ov.Int64Value = s.ReadInt64()
 			x.Value = ov
+			ov.Int64Value = s.ReadInt64()
 		case "uint32_value", "uint32Value":
 			s.AddField("uint32_value")
 			ov := &MessageWithOneofScalars_Uint32Value{}
-			ov.Uint32Value = s.ReadUint32()
 			x.Value = ov
+			ov.Uint32Value = s.ReadUint32()
 		case "uint64_value", "uint64Value":
 			s.AddField("uint64_value")
 			ov := &MessageWithOneofScalars_Uint64Value{}
-			ov.Uint64Value = s.ReadUint64()
 			x.Value = ov
+			ov.Uint64Value = s.ReadUint64()
 		case "sint32_value", "sint32Value":
 			s.AddField("sint32_value")
 			ov := &MessageWithOneofScalars_Sint32Value{}
-			ov.Sint32Value = s.ReadInt32()
 			x.Value = ov
+			ov.Sint32Value = s.ReadInt32()
 		case "sint64_value", "sint64Value":
 			s.AddField("sint64_value")
 			ov := &MessageWithOneofScalars_Sint64Value{}
-			ov.Sint64Value = s.ReadInt64()
 			x.Value = ov
+			ov.Sint64Value = s.ReadInt64()
 		case "fixed32_value", "fixed32Value":
 			s.AddField("fixed32_value")
 			ov := &MessageWithOneofScalars_Fixed32Value{}
-			ov.Fixed32Value = s.ReadUint32()
 			x.Value = ov
+			ov.Fixed32Value = s.ReadUint32()
 		case "fixed64_value", "fixed64Value":
 			s.AddField("fixed64_value")
 			ov := &MessageWithOneofScalars_Fixed64Value{}
-			ov.Fixed64Value = s.ReadUint64()
 			x.Value = ov
+			ov.Fixed64Value = s.ReadUint64()
 		case "sfixed32_value", "sfixed32Value":
 			s.AddField("sfixed32_value")
 			ov := &MessageWithOneofScalars_Sfixed32Value{}
-			ov.Sfixed32Value = s.ReadInt32()
 			x.Value = ov
+			ov.Sfixed32Value = s.ReadInt32()
 		case "sfixed64_value", "sfixed64Value":
 			s.AddField("sfixed64_value")
 			ov := &MessageWithOneofScalars_Sfixed64Value{}
-			ov.Sfixed64Value = s.ReadInt64()
 			x.Value = ov
+			ov.Sfixed64Value = s.ReadInt64()
 		case "bool_value", "boolValue":
 			s.AddField("bool_value")
 			ov := &MessageWithOneofScalars_BoolValue{}
-			ov.BoolValue = s.ReadBool()
 			x.Value = ov
+			ov.BoolValue = s.ReadBool()
 		case "string_value", "stringValue":
 			s.AddField("string_value")
 			ov := &MessageWithOneofScalars_StringValue{}
-			ov.StringValue = s.ReadString()
 			x.Value = ov
+			ov.StringValue = s.ReadString()
 		case "bytes_value", "bytesValue":
 			s.AddField("bytes_value")
 			ov := &MessageWithOneofScalars_BytesValue{}
-			ov.BytesValue = s.ReadBytes()
 			x.Value = ov
+			ov.BytesValue = s.ReadBytes()
 		case "hex_bytes_value", "hexBytesValue":
 			s.AddField("hex_bytes_value")
 			ov := &MessageWithOneofScalars_HexBytesValue{}
-			ov.HexBytesValue = types.UnmarshalHEX(s.WithField("hex_bytes_value", false))
 			x.Value = ov
+			ov.HexBytesValue = types.UnmarshalHEX(s.WithField("hex_bytes_value", false))
 		}
 	})
 }
@@ -827,162 +891,270 @@ func (x *MessageWithScalarMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState)
 			s.ReadAny() // ignore unknown field
 		case "string_double_map", "stringDoubleMap":
 			s.AddField("string_double_map")
+			if s.ReadNil() {
+				x.StringDoubleMap = nil
+				return
+			}
 			x.StringDoubleMap = make(map[string]float64)
 			s.ReadStringMap(func(key string) {
 				x.StringDoubleMap[key] = s.ReadFloat64()
 			})
 		case "string_float_map", "stringFloatMap":
 			s.AddField("string_float_map")
+			if s.ReadNil() {
+				x.StringFloatMap = nil
+				return
+			}
 			x.StringFloatMap = make(map[string]float32)
 			s.ReadStringMap(func(key string) {
 				x.StringFloatMap[key] = s.ReadFloat32()
 			})
 		case "string_int32_map", "stringInt32Map":
 			s.AddField("string_int32_map")
+			if s.ReadNil() {
+				x.StringInt32Map = nil
+				return
+			}
 			x.StringInt32Map = make(map[string]int32)
 			s.ReadStringMap(func(key string) {
 				x.StringInt32Map[key] = s.ReadInt32()
 			})
 		case "int32_string_map", "int32StringMap":
 			s.AddField("int32_string_map")
+			if s.ReadNil() {
+				x.Int32StringMap = nil
+				return
+			}
 			x.Int32StringMap = make(map[int32]string)
 			s.ReadInt32Map(func(key int32) {
 				x.Int32StringMap[key] = s.ReadString()
 			})
 		case "string_int64_map", "stringInt64Map":
 			s.AddField("string_int64_map")
+			if s.ReadNil() {
+				x.StringInt64Map = nil
+				return
+			}
 			x.StringInt64Map = make(map[string]int64)
 			s.ReadStringMap(func(key string) {
 				x.StringInt64Map[key] = s.ReadInt64()
 			})
 		case "int64_string_map", "int64StringMap":
 			s.AddField("int64_string_map")
+			if s.ReadNil() {
+				x.Int64StringMap = nil
+				return
+			}
 			x.Int64StringMap = make(map[int64]string)
 			s.ReadInt64Map(func(key int64) {
 				x.Int64StringMap[key] = s.ReadString()
 			})
 		case "string_uint32_map", "stringUint32Map":
 			s.AddField("string_uint32_map")
+			if s.ReadNil() {
+				x.StringUint32Map = nil
+				return
+			}
 			x.StringUint32Map = make(map[string]uint32)
 			s.ReadStringMap(func(key string) {
 				x.StringUint32Map[key] = s.ReadUint32()
 			})
 		case "uint32_string_map", "uint32StringMap":
 			s.AddField("uint32_string_map")
+			if s.ReadNil() {
+				x.Uint32StringMap = nil
+				return
+			}
 			x.Uint32StringMap = make(map[uint32]string)
 			s.ReadUint32Map(func(key uint32) {
 				x.Uint32StringMap[key] = s.ReadString()
 			})
 		case "string_uint64_map", "stringUint64Map":
 			s.AddField("string_uint64_map")
+			if s.ReadNil() {
+				x.StringUint64Map = nil
+				return
+			}
 			x.StringUint64Map = make(map[string]uint64)
 			s.ReadStringMap(func(key string) {
 				x.StringUint64Map[key] = s.ReadUint64()
 			})
 		case "uint64_string_map", "uint64StringMap":
 			s.AddField("uint64_string_map")
+			if s.ReadNil() {
+				x.Uint64StringMap = nil
+				return
+			}
 			x.Uint64StringMap = make(map[uint64]string)
 			s.ReadUint64Map(func(key uint64) {
 				x.Uint64StringMap[key] = s.ReadString()
 			})
 		case "string_sint32_map", "stringSint32Map":
 			s.AddField("string_sint32_map")
+			if s.ReadNil() {
+				x.StringSint32Map = nil
+				return
+			}
 			x.StringSint32Map = make(map[string]int32)
 			s.ReadStringMap(func(key string) {
 				x.StringSint32Map[key] = s.ReadInt32()
 			})
 		case "sint32_string_map", "sint32StringMap":
 			s.AddField("sint32_string_map")
+			if s.ReadNil() {
+				x.Sint32StringMap = nil
+				return
+			}
 			x.Sint32StringMap = make(map[int32]string)
 			s.ReadInt32Map(func(key int32) {
 				x.Sint32StringMap[key] = s.ReadString()
 			})
 		case "string_sint64_map", "stringSint64Map":
 			s.AddField("string_sint64_map")
+			if s.ReadNil() {
+				x.StringSint64Map = nil
+				return
+			}
 			x.StringSint64Map = make(map[string]int64)
 			s.ReadStringMap(func(key string) {
 				x.StringSint64Map[key] = s.ReadInt64()
 			})
 		case "sint64_string_map", "sint64StringMap":
 			s.AddField("sint64_string_map")
+			if s.ReadNil() {
+				x.Sint64StringMap = nil
+				return
+			}
 			x.Sint64StringMap = make(map[int64]string)
 			s.ReadInt64Map(func(key int64) {
 				x.Sint64StringMap[key] = s.ReadString()
 			})
 		case "string_fixed32_map", "stringFixed32Map":
 			s.AddField("string_fixed32_map")
+			if s.ReadNil() {
+				x.StringFixed32Map = nil
+				return
+			}
 			x.StringFixed32Map = make(map[string]uint32)
 			s.ReadStringMap(func(key string) {
 				x.StringFixed32Map[key] = s.ReadUint32()
 			})
 		case "fixed32_string_map", "fixed32StringMap":
 			s.AddField("fixed32_string_map")
+			if s.ReadNil() {
+				x.Fixed32StringMap = nil
+				return
+			}
 			x.Fixed32StringMap = make(map[uint32]string)
 			s.ReadUint32Map(func(key uint32) {
 				x.Fixed32StringMap[key] = s.ReadString()
 			})
 		case "string_fixed64_map", "stringFixed64Map":
 			s.AddField("string_fixed64_map")
+			if s.ReadNil() {
+				x.StringFixed64Map = nil
+				return
+			}
 			x.StringFixed64Map = make(map[string]uint64)
 			s.ReadStringMap(func(key string) {
 				x.StringFixed64Map[key] = s.ReadUint64()
 			})
 		case "fixed64_string_map", "fixed64StringMap":
 			s.AddField("fixed64_string_map")
+			if s.ReadNil() {
+				x.Fixed64StringMap = nil
+				return
+			}
 			x.Fixed64StringMap = make(map[uint64]string)
 			s.ReadUint64Map(func(key uint64) {
 				x.Fixed64StringMap[key] = s.ReadString()
 			})
 		case "string_sfixed32_map", "stringSfixed32Map":
 			s.AddField("string_sfixed32_map")
+			if s.ReadNil() {
+				x.StringSfixed32Map = nil
+				return
+			}
 			x.StringSfixed32Map = make(map[string]int32)
 			s.ReadStringMap(func(key string) {
 				x.StringSfixed32Map[key] = s.ReadInt32()
 			})
 		case "sfixed32_string_map", "sfixed32StringMap":
 			s.AddField("sfixed32_string_map")
+			if s.ReadNil() {
+				x.Sfixed32StringMap = nil
+				return
+			}
 			x.Sfixed32StringMap = make(map[int32]string)
 			s.ReadInt32Map(func(key int32) {
 				x.Sfixed32StringMap[key] = s.ReadString()
 			})
 		case "string_sfixed64_map", "stringSfixed64Map":
 			s.AddField("string_sfixed64_map")
+			if s.ReadNil() {
+				x.StringSfixed64Map = nil
+				return
+			}
 			x.StringSfixed64Map = make(map[string]int64)
 			s.ReadStringMap(func(key string) {
 				x.StringSfixed64Map[key] = s.ReadInt64()
 			})
 		case "sfixed64_string_map", "sfixed64StringMap":
 			s.AddField("sfixed64_string_map")
+			if s.ReadNil() {
+				x.Sfixed64StringMap = nil
+				return
+			}
 			x.Sfixed64StringMap = make(map[int64]string)
 			s.ReadInt64Map(func(key int64) {
 				x.Sfixed64StringMap[key] = s.ReadString()
 			})
 		case "string_bool_map", "stringBoolMap":
 			s.AddField("string_bool_map")
+			if s.ReadNil() {
+				x.StringBoolMap = nil
+				return
+			}
 			x.StringBoolMap = make(map[string]bool)
 			s.ReadStringMap(func(key string) {
 				x.StringBoolMap[key] = s.ReadBool()
 			})
 		case "bool_string_map", "boolStringMap":
 			s.AddField("bool_string_map")
+			if s.ReadNil() {
+				x.BoolStringMap = nil
+				return
+			}
 			x.BoolStringMap = make(map[bool]string)
 			s.ReadBoolMap(func(key bool) {
 				x.BoolStringMap[key] = s.ReadString()
 			})
 		case "string_string_map", "stringStringMap":
 			s.AddField("string_string_map")
+			if s.ReadNil() {
+				x.StringStringMap = nil
+				return
+			}
 			x.StringStringMap = make(map[string]string)
 			s.ReadStringMap(func(key string) {
 				x.StringStringMap[key] = s.ReadString()
 			})
 		case "string_bytes_map", "stringBytesMap":
 			s.AddField("string_bytes_map")
+			if s.ReadNil() {
+				x.StringBytesMap = nil
+				return
+			}
 			x.StringBytesMap = make(map[string][]byte)
 			s.ReadStringMap(func(key string) {
 				x.StringBytesMap[key] = s.ReadBytes()
 			})
 		case "string_hex_bytes_map", "stringHexBytesMap":
 			s.AddField("string_hex_bytes_map")
+			if s.ReadNil() {
+				x.StringHexBytesMap = nil
+				return
+			}
 			x.StringHexBytesMap = types.UnmarshalStringHEXMap(s.WithField("string_hex_bytes_map", false))
 		}
 	})

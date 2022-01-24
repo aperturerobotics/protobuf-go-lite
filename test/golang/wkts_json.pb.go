@@ -495,15 +495,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			s.ReadAny() // ignore unknown field
 		case "double_value", "doubleValue":
 			s.AddField("double_value")
-			if !s.ReadNil() {
-				v := s.ReadFloat64()
-				if s.Err() != nil {
-					return
-				}
-				x.DoubleValue = &wrapperspb.DoubleValue{Value: v}
+			if s.ReadNil() {
+				x.DoubleValue = nil
+				return
 			}
+			v := s.ReadFloat64()
+			if s.Err() != nil {
+				return
+			}
+			x.DoubleValue = &wrapperspb.DoubleValue{Value: v}
 		case "double_values", "doubleValues":
 			s.AddField("double_values")
+			if s.ReadNil() {
+				x.DoubleValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.DoubleValues = append(x.DoubleValues, nil)
@@ -517,15 +523,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "float_value", "floatValue":
 			s.AddField("float_value")
-			if !s.ReadNil() {
-				v := s.ReadFloat32()
-				if s.Err() != nil {
-					return
-				}
-				x.FloatValue = &wrapperspb.FloatValue{Value: v}
+			if s.ReadNil() {
+				x.FloatValue = nil
+				return
 			}
+			v := s.ReadFloat32()
+			if s.Err() != nil {
+				return
+			}
+			x.FloatValue = &wrapperspb.FloatValue{Value: v}
 		case "float_values", "floatValues":
 			s.AddField("float_values")
+			if s.ReadNil() {
+				x.FloatValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.FloatValues = append(x.FloatValues, nil)
@@ -539,15 +551,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "int32_value", "int32Value":
 			s.AddField("int32_value")
-			if !s.ReadNil() {
-				v := s.ReadInt32()
-				if s.Err() != nil {
-					return
-				}
-				x.Int32Value = &wrapperspb.Int32Value{Value: v}
+			if s.ReadNil() {
+				x.Int32Value = nil
+				return
 			}
+			v := s.ReadInt32()
+			if s.Err() != nil {
+				return
+			}
+			x.Int32Value = &wrapperspb.Int32Value{Value: v}
 		case "int32_values", "int32Values":
 			s.AddField("int32_values")
+			if s.ReadNil() {
+				x.Int32Values = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.Int32Values = append(x.Int32Values, nil)
@@ -561,15 +579,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "int64_value", "int64Value":
 			s.AddField("int64_value")
-			if !s.ReadNil() {
-				v := s.ReadInt64()
-				if s.Err() != nil {
-					return
-				}
-				x.Int64Value = &wrapperspb.Int64Value{Value: v}
+			if s.ReadNil() {
+				x.Int64Value = nil
+				return
 			}
+			v := s.ReadInt64()
+			if s.Err() != nil {
+				return
+			}
+			x.Int64Value = &wrapperspb.Int64Value{Value: v}
 		case "int64_values", "int64Values":
 			s.AddField("int64_values")
+			if s.ReadNil() {
+				x.Int64Values = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.Int64Values = append(x.Int64Values, nil)
@@ -583,15 +607,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "uint32_value", "uint32Value":
 			s.AddField("uint32_value")
-			if !s.ReadNil() {
-				v := s.ReadUint32()
-				if s.Err() != nil {
-					return
-				}
-				x.Uint32Value = &wrapperspb.UInt32Value{Value: v}
+			if s.ReadNil() {
+				x.Uint32Value = nil
+				return
 			}
+			v := s.ReadUint32()
+			if s.Err() != nil {
+				return
+			}
+			x.Uint32Value = &wrapperspb.UInt32Value{Value: v}
 		case "uint32_values", "uint32Values":
 			s.AddField("uint32_values")
+			if s.ReadNil() {
+				x.Uint32Values = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.Uint32Values = append(x.Uint32Values, nil)
@@ -605,15 +635,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "uint64_value", "uint64Value":
 			s.AddField("uint64_value")
-			if !s.ReadNil() {
-				v := s.ReadUint64()
-				if s.Err() != nil {
-					return
-				}
-				x.Uint64Value = &wrapperspb.UInt64Value{Value: v}
+			if s.ReadNil() {
+				x.Uint64Value = nil
+				return
 			}
+			v := s.ReadUint64()
+			if s.Err() != nil {
+				return
+			}
+			x.Uint64Value = &wrapperspb.UInt64Value{Value: v}
 		case "uint64_values", "uint64Values":
 			s.AddField("uint64_values")
+			if s.ReadNil() {
+				x.Uint64Values = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.Uint64Values = append(x.Uint64Values, nil)
@@ -627,15 +663,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "bool_value", "boolValue":
 			s.AddField("bool_value")
-			if !s.ReadNil() {
-				v := s.ReadBool()
-				if s.Err() != nil {
-					return
-				}
-				x.BoolValue = &wrapperspb.BoolValue{Value: v}
+			if s.ReadNil() {
+				x.BoolValue = nil
+				return
 			}
+			v := s.ReadBool()
+			if s.Err() != nil {
+				return
+			}
+			x.BoolValue = &wrapperspb.BoolValue{Value: v}
 		case "bool_values", "boolValues":
 			s.AddField("bool_values")
+			if s.ReadNil() {
+				x.BoolValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.BoolValues = append(x.BoolValues, nil)
@@ -649,15 +691,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_value", "stringValue":
 			s.AddField("string_value")
-			if !s.ReadNil() {
-				v := s.ReadString()
-				if s.Err() != nil {
-					return
-				}
-				x.StringValue = &wrapperspb.StringValue{Value: v}
+			if s.ReadNil() {
+				x.StringValue = nil
+				return
 			}
+			v := s.ReadString()
+			if s.Err() != nil {
+				return
+			}
+			x.StringValue = &wrapperspb.StringValue{Value: v}
 		case "string_values", "stringValues":
 			s.AddField("string_values")
+			if s.ReadNil() {
+				x.StringValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.StringValues = append(x.StringValues, nil)
@@ -671,15 +719,21 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "bytes_value", "bytesValue":
 			s.AddField("bytes_value")
-			if !s.ReadNil() {
-				v := s.ReadBytes()
-				if s.Err() != nil {
-					return
-				}
-				x.BytesValue = &wrapperspb.BytesValue{Value: v}
+			if s.ReadNil() {
+				x.BytesValue = nil
+				return
 			}
+			v := s.ReadBytes()
+			if s.Err() != nil {
+				return
+			}
+			x.BytesValue = &wrapperspb.BytesValue{Value: v}
 		case "bytes_values", "bytesValues":
 			s.AddField("bytes_values")
+			if s.ReadNil() {
+				x.BytesValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				if s.ReadNil() {
 					x.BytesValues = append(x.BytesValues, nil)
@@ -693,6 +747,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "empty_value", "emptyValue":
 			s.AddField("empty_value")
+			if s.ReadNil() {
+				x.EmptyValue = nil
+				return
+			}
 			v := golang.UnmarshalEmpty(s)
 			if s.Err() != nil {
 				return
@@ -700,6 +758,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.EmptyValue = v
 		case "empty_values", "emptyValues":
 			s.AddField("empty_values")
+			if s.ReadNil() {
+				x.EmptyValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalEmpty(s)
 				if s.Err() != nil {
@@ -709,6 +771,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "timestamp_value", "timestampValue":
 			s.AddField("timestamp_value")
+			if s.ReadNil() {
+				x.TimestampValue = nil
+				return
+			}
 			v := golang.UnmarshalTimestamp(s)
 			if s.Err() != nil {
 				return
@@ -716,6 +782,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.TimestampValue = v
 		case "timestamp_values", "timestampValues":
 			s.AddField("timestamp_values")
+			if s.ReadNil() {
+				x.TimestampValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalTimestamp(s)
 				if s.Err() != nil {
@@ -725,6 +795,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "duration_value", "durationValue":
 			s.AddField("duration_value")
+			if s.ReadNil() {
+				x.DurationValue = nil
+				return
+			}
 			v := golang.UnmarshalDuration(s)
 			if s.Err() != nil {
 				return
@@ -732,6 +806,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.DurationValue = v
 		case "duration_values", "durationValues":
 			s.AddField("duration_values")
+			if s.ReadNil() {
+				x.DurationValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalDuration(s)
 				if s.Err() != nil {
@@ -741,6 +819,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "field_mask_value", "fieldMaskValue":
 			s.AddField("field_mask_value")
+			if s.ReadNil() {
+				x.FieldMaskValue = nil
+				return
+			}
 			v := golang.UnmarshalFieldMask(s)
 			if s.Err() != nil {
 				return
@@ -748,6 +830,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.FieldMaskValue = v
 		case "field_mask_values", "fieldMaskValues":
 			s.AddField("field_mask_values")
+			if s.ReadNil() {
+				x.FieldMaskValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalFieldMask(s)
 				if s.Err() != nil {
@@ -757,6 +843,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "value_value", "valueValue":
 			s.AddField("value_value")
+			if s.ReadNil() {
+				x.ValueValue = &structpb.Value{Kind: &structpb.Value_NullValue{}}
+				return
+			}
 			v := golang.UnmarshalValue(s)
 			if s.Err() != nil {
 				return
@@ -764,6 +854,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.ValueValue = v
 		case "value_values", "valueValues":
 			s.AddField("value_values")
+			if s.ReadNil() {
+				x.ValueValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalValue(s)
 				if s.Err() != nil {
@@ -773,6 +867,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "list_value_value", "listValueValue":
 			s.AddField("list_value_value")
+			if s.ReadNil() {
+				x.ListValueValue = nil
+				return
+			}
 			v := golang.UnmarshalListValue(s)
 			if s.Err() != nil {
 				return
@@ -780,6 +878,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.ListValueValue = v
 		case "list_value_values", "listValueValues":
 			s.AddField("list_value_values")
+			if s.ReadNil() {
+				x.ListValueValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalListValue(s)
 				if s.Err() != nil {
@@ -789,6 +891,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "struct_value", "structValue":
 			s.AddField("struct_value")
+			if s.ReadNil() {
+				x.StructValue = nil
+				return
+			}
 			v := golang.UnmarshalStruct(s)
 			if s.Err() != nil {
 				return
@@ -796,6 +902,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.StructValue = v
 		case "struct_values", "structValues":
 			s.AddField("struct_values")
+			if s.ReadNil() {
+				x.StructValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalStruct(s)
 				if s.Err() != nil {
@@ -805,6 +915,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "any_value", "anyValue":
 			s.AddField("any_value")
+			if s.ReadNil() {
+				x.AnyValue = nil
+				return
+			}
 			v := golang.UnmarshalAny(s)
 			if s.Err() != nil {
 				return
@@ -812,6 +926,10 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			x.AnyValue = v
 		case "any_values", "anyValues":
 			s.AddField("any_values")
+			if s.ReadNil() {
+				x.AnyValues = nil
+				return
+			}
 			s.ReadArray(func() {
 				v := golang.UnmarshalAny(s)
 				if s.Err() != nil {
@@ -996,174 +1114,224 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 		case "double_value", "doubleValue":
 			s.AddField("double_value")
 			ov := &MessageWithOneofWKTs_DoubleValue{}
-			if !s.ReadNil() {
-				v := s.ReadFloat64()
-				if s.Err() != nil {
-					return
-				}
-				ov.DoubleValue = &wrapperspb.DoubleValue{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.DoubleValue = nil
+				return
+			}
+			v := s.ReadFloat64()
+			if s.Err() != nil {
+				return
+			}
+			ov.DoubleValue = &wrapperspb.DoubleValue{Value: v}
 		case "float_value", "floatValue":
 			s.AddField("float_value")
 			ov := &MessageWithOneofWKTs_FloatValue{}
-			if !s.ReadNil() {
-				v := s.ReadFloat32()
-				if s.Err() != nil {
-					return
-				}
-				ov.FloatValue = &wrapperspb.FloatValue{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.FloatValue = nil
+				return
+			}
+			v := s.ReadFloat32()
+			if s.Err() != nil {
+				return
+			}
+			ov.FloatValue = &wrapperspb.FloatValue{Value: v}
 		case "int32_value", "int32Value":
 			s.AddField("int32_value")
 			ov := &MessageWithOneofWKTs_Int32Value{}
-			if !s.ReadNil() {
-				v := s.ReadInt32()
-				if s.Err() != nil {
-					return
-				}
-				ov.Int32Value = &wrapperspb.Int32Value{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.Int32Value = nil
+				return
+			}
+			v := s.ReadInt32()
+			if s.Err() != nil {
+				return
+			}
+			ov.Int32Value = &wrapperspb.Int32Value{Value: v}
 		case "int64_value", "int64Value":
 			s.AddField("int64_value")
 			ov := &MessageWithOneofWKTs_Int64Value{}
-			if !s.ReadNil() {
-				v := s.ReadInt64()
-				if s.Err() != nil {
-					return
-				}
-				ov.Int64Value = &wrapperspb.Int64Value{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.Int64Value = nil
+				return
+			}
+			v := s.ReadInt64()
+			if s.Err() != nil {
+				return
+			}
+			ov.Int64Value = &wrapperspb.Int64Value{Value: v}
 		case "uint32_value", "uint32Value":
 			s.AddField("uint32_value")
 			ov := &MessageWithOneofWKTs_Uint32Value{}
-			if !s.ReadNil() {
-				v := s.ReadUint32()
-				if s.Err() != nil {
-					return
-				}
-				ov.Uint32Value = &wrapperspb.UInt32Value{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.Uint32Value = nil
+				return
+			}
+			v := s.ReadUint32()
+			if s.Err() != nil {
+				return
+			}
+			ov.Uint32Value = &wrapperspb.UInt32Value{Value: v}
 		case "uint64_value", "uint64Value":
 			s.AddField("uint64_value")
 			ov := &MessageWithOneofWKTs_Uint64Value{}
-			if !s.ReadNil() {
-				v := s.ReadUint64()
-				if s.Err() != nil {
-					return
-				}
-				ov.Uint64Value = &wrapperspb.UInt64Value{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.Uint64Value = nil
+				return
+			}
+			v := s.ReadUint64()
+			if s.Err() != nil {
+				return
+			}
+			ov.Uint64Value = &wrapperspb.UInt64Value{Value: v}
 		case "bool_value", "boolValue":
 			s.AddField("bool_value")
 			ov := &MessageWithOneofWKTs_BoolValue{}
-			if !s.ReadNil() {
-				v := s.ReadBool()
-				if s.Err() != nil {
-					return
-				}
-				ov.BoolValue = &wrapperspb.BoolValue{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.BoolValue = nil
+				return
+			}
+			v := s.ReadBool()
+			if s.Err() != nil {
+				return
+			}
+			ov.BoolValue = &wrapperspb.BoolValue{Value: v}
 		case "string_value", "stringValue":
 			s.AddField("string_value")
 			ov := &MessageWithOneofWKTs_StringValue{}
-			if !s.ReadNil() {
-				v := s.ReadString()
-				if s.Err() != nil {
-					return
-				}
-				ov.StringValue = &wrapperspb.StringValue{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.StringValue = nil
+				return
+			}
+			v := s.ReadString()
+			if s.Err() != nil {
+				return
+			}
+			ov.StringValue = &wrapperspb.StringValue{Value: v}
 		case "bytes_value", "bytesValue":
 			s.AddField("bytes_value")
 			ov := &MessageWithOneofWKTs_BytesValue{}
-			if !s.ReadNil() {
-				v := s.ReadBytes()
-				if s.Err() != nil {
-					return
-				}
-				ov.BytesValue = &wrapperspb.BytesValue{Value: v}
-			}
 			x.Value = ov
+			if s.ReadNil() {
+				ov.BytesValue = nil
+				return
+			}
+			v := s.ReadBytes()
+			if s.Err() != nil {
+				return
+			}
+			ov.BytesValue = &wrapperspb.BytesValue{Value: v}
 		case "empty_value", "emptyValue":
 			s.AddField("empty_value")
 			ov := &MessageWithOneofWKTs_EmptyValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.EmptyValue = nil
+				return
+			}
 			v := golang.UnmarshalEmpty(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.EmptyValue = v
-			x.Value = ov
 		case "timestamp_value", "timestampValue":
 			s.AddField("timestamp_value")
 			ov := &MessageWithOneofWKTs_TimestampValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.TimestampValue = nil
+				return
+			}
 			v := golang.UnmarshalTimestamp(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.TimestampValue = v
-			x.Value = ov
 		case "duration_value", "durationValue":
 			s.AddField("duration_value")
 			ov := &MessageWithOneofWKTs_DurationValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.DurationValue = nil
+				return
+			}
 			v := golang.UnmarshalDuration(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.DurationValue = v
-			x.Value = ov
 		case "field_mask_value", "fieldMaskValue":
 			s.AddField("field_mask_value")
 			ov := &MessageWithOneofWKTs_FieldMaskValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.FieldMaskValue = nil
+				return
+			}
 			v := golang.UnmarshalFieldMask(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.FieldMaskValue = v
-			x.Value = ov
 		case "value_value", "valueValue":
 			s.AddField("value_value")
 			ov := &MessageWithOneofWKTs_ValueValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.ValueValue = &structpb.Value{Kind: &structpb.Value_NullValue{}}
+				return
+			}
 			v := golang.UnmarshalValue(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.ValueValue = v
-			x.Value = ov
 		case "list_value_value", "listValueValue":
 			s.AddField("list_value_value")
 			ov := &MessageWithOneofWKTs_ListValueValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.ListValueValue = nil
+				return
+			}
 			v := golang.UnmarshalListValue(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.ListValueValue = v
-			x.Value = ov
 		case "struct_value", "structValue":
 			s.AddField("struct_value")
 			ov := &MessageWithOneofWKTs_StructValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.StructValue = nil
+				return
+			}
 			v := golang.UnmarshalStruct(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.StructValue = v
-			x.Value = ov
 		case "any_value", "anyValue":
 			s.AddField("any_value")
 			ov := &MessageWithOneofWKTs_AnyValue{}
+			x.Value = ov
+			if s.ReadNil() {
+				ov.AnyValue = nil
+				return
+			}
 			v := golang.UnmarshalAny(s)
 			if s.Err() != nil {
 				return
 			}
 			ov.AnyValue = v
-			x.Value = ov
 		}
 	})
 }
@@ -1472,6 +1640,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			s.ReadAny() // ignore unknown field
 		case "string_double_map", "stringDoubleMap":
 			s.AddField("string_double_map")
+			if s.ReadNil() {
+				x.StringDoubleMap = nil
+				return
+			}
 			x.StringDoubleMap = make(map[string]*wrapperspb.DoubleValue)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1486,6 +1658,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_float_map", "stringFloatMap":
 			s.AddField("string_float_map")
+			if s.ReadNil() {
+				x.StringFloatMap = nil
+				return
+			}
 			x.StringFloatMap = make(map[string]*wrapperspb.FloatValue)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1500,6 +1676,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_int32_map", "stringInt32Map":
 			s.AddField("string_int32_map")
+			if s.ReadNil() {
+				x.StringInt32Map = nil
+				return
+			}
 			x.StringInt32Map = make(map[string]*wrapperspb.Int32Value)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1514,6 +1694,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_int64_map", "stringInt64Map":
 			s.AddField("string_int64_map")
+			if s.ReadNil() {
+				x.StringInt64Map = nil
+				return
+			}
 			x.StringInt64Map = make(map[string]*wrapperspb.Int64Value)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1528,6 +1712,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_uint32_map", "stringUint32Map":
 			s.AddField("string_uint32_map")
+			if s.ReadNil() {
+				x.StringUint32Map = nil
+				return
+			}
 			x.StringUint32Map = make(map[string]*wrapperspb.UInt32Value)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1542,6 +1730,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_uint64_map", "stringUint64Map":
 			s.AddField("string_uint64_map")
+			if s.ReadNil() {
+				x.StringUint64Map = nil
+				return
+			}
 			x.StringUint64Map = make(map[string]*wrapperspb.UInt64Value)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1556,6 +1748,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_bool_map", "stringBoolMap":
 			s.AddField("string_bool_map")
+			if s.ReadNil() {
+				x.StringBoolMap = nil
+				return
+			}
 			x.StringBoolMap = make(map[string]*wrapperspb.BoolValue)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1570,6 +1766,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_string_map", "stringStringMap":
 			s.AddField("string_string_map")
+			if s.ReadNil() {
+				x.StringStringMap = nil
+				return
+			}
 			x.StringStringMap = make(map[string]*wrapperspb.StringValue)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1584,6 +1784,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_bytes_map", "stringBytesMap":
 			s.AddField("string_bytes_map")
+			if s.ReadNil() {
+				x.StringBytesMap = nil
+				return
+			}
 			x.StringBytesMap = make(map[string]*wrapperspb.BytesValue)
 			s.ReadStringMap(func(key string) {
 				if s.ReadNil() {
@@ -1598,6 +1802,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_empty_map", "stringEmptyMap":
 			s.AddField("string_empty_map")
+			if s.ReadNil() {
+				x.StringEmptyMap = nil
+				return
+			}
 			x.StringEmptyMap = make(map[string]*emptypb.Empty)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalEmpty(s)
@@ -1608,6 +1816,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_timestamp_map", "stringTimestampMap":
 			s.AddField("string_timestamp_map")
+			if s.ReadNil() {
+				x.StringTimestampMap = nil
+				return
+			}
 			x.StringTimestampMap = make(map[string]*timestamppb.Timestamp)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalTimestamp(s)
@@ -1618,6 +1830,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_duration_map", "stringDurationMap":
 			s.AddField("string_duration_map")
+			if s.ReadNil() {
+				x.StringDurationMap = nil
+				return
+			}
 			x.StringDurationMap = make(map[string]*durationpb.Duration)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalDuration(s)
@@ -1628,6 +1844,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_field_mask_map", "stringFieldMaskMap":
 			s.AddField("string_field_mask_map")
+			if s.ReadNil() {
+				x.StringFieldMaskMap = nil
+				return
+			}
 			x.StringFieldMaskMap = make(map[string]*fieldmaskpb.FieldMask)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalFieldMask(s)
@@ -1638,6 +1858,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_value_map", "stringValueMap":
 			s.AddField("string_value_map")
+			if s.ReadNil() {
+				x.StringValueMap = nil
+				return
+			}
 			x.StringValueMap = make(map[string]*structpb.Value)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalValue(s)
@@ -1648,6 +1872,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_list_value_map", "stringListValueMap":
 			s.AddField("string_list_value_map")
+			if s.ReadNil() {
+				x.StringListValueMap = nil
+				return
+			}
 			x.StringListValueMap = make(map[string]*structpb.ListValue)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalListValue(s)
@@ -1658,6 +1886,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_struct_map", "stringStructMap":
 			s.AddField("string_struct_map")
+			if s.ReadNil() {
+				x.StringStructMap = nil
+				return
+			}
 			x.StringStructMap = make(map[string]*structpb.Struct)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalStruct(s)
@@ -1668,6 +1900,10 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 			})
 		case "string_any_map", "stringAnyMap":
 			s.AddField("string_any_map")
+			if s.ReadNil() {
+				x.StringAnyMap = nil
+				return
+			}
 			x.StringAnyMap = make(map[string]*anypb.Any)
 			s.ReadStringMap(func(key string) {
 				v := golang.UnmarshalAny(s)

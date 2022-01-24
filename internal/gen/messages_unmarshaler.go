@@ -158,6 +158,12 @@ nextField:
 		}
 
 		if field.Desc.IsMap() {
+			// If we read null, set the field to nil.
+			g.P("if s.ReadNil() {")
+			g.P("x.", fieldGoName, " = nil")
+			g.P("return")
+			g.P("}")
+
 			// If the field has a custom unmarshaler, call that and continue with the next field.
 			if unmarshalerFunc != nil {
 				g.P("x.", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
@@ -231,6 +237,12 @@ nextField:
 		}
 
 		if field.Desc.IsList() {
+			// If we read null, set the field to nil.
+			g.P("if s.ReadNil() {")
+			g.P("x.", fieldGoName, " = nil")
+			g.P("return")
+			g.P("}")
+
 			// If the field has a custom unmarshaler, call that and continue with the next field.
 			if unmarshalerFunc != nil {
 				g.P("x.", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
@@ -322,7 +334,26 @@ nextField:
 		// If this field is in a oneof, allocate a new oneof value wrapper.
 		if field.Oneof != nil {
 			g.P("ov := &", field.GoIdent.GoName, "{}")
+			g.P("x.", field.Oneof.GoName, " = ov")
 			messageOrOneofIdent = "ov"
+		}
+
+		// If the field is nullable (it's a message, or bytes with custom type)
+		// and we read null, set the field to nil.
+		if nullable {
+			g.P("if s.ReadNil() {")
+			// If the field is a google.protobuf.Value, instead of nil, we write a google.protobuf.NullValue.
+			if field.Message != nil && field.Message.Desc.FullName() == "google.protobuf.Value" {
+				g.P(
+					messageOrOneofIdent, ".", fieldGoName, " = &", field.Message.GoIdent, "{",
+					"Kind: &", field.Message.GoIdent.GoImportPath.Ident("Value_NullValue"), "{},",
+					"}",
+				)
+			} else {
+				g.P(messageOrOneofIdent, ".", fieldGoName, " = nil")
+			}
+			g.P("return")
+			g.P("}")
 		}
 
 		// If the field has a custom unmarshaler, call that
@@ -330,12 +361,10 @@ nextField:
 			g.P(messageOrOneofIdent, ".", fieldGoName, " = ", *unmarshalerFunc, `(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
 		} else if customtype != nil {
 			if nullable {
-				g.P("if !s.ReadNil() {")
 				// Set the field to a newly allocated custom type.
 				g.P(messageOrOneofIdent, ".", fieldGoName, " = &", *customtype, "{}")
 				// Call UnmarshalProtoJSON on the field.
 				g.P(messageOrOneofIdent, ".", fieldGoName, `.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
-				g.P("}")
 			} else {
 				// Call UnmarshalProtoJSON on the field.
 				g.P(messageOrOneofIdent, ".", fieldGoName, `.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
@@ -356,23 +385,19 @@ nextField:
 			case protoreflect.MessageKind:
 				switch {
 				case g.messageHasUnmarshaler(field.Message):
-					g.P("if !s.ReadNil() {")
 					if nullable {
 						// Set the field (or enum wrapper) to a newly allocated custom type.
 						g.P(messageOrOneofIdent, ".", fieldGoName, " = &", field.Message.GoIdent, "{}")
 					}
 					// Call UnmarshalProtoJSON on the field.
 					g.P(messageOrOneofIdent, ".", fieldGoName, `.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
-					g.P("}") // end if !s.ReadNil() {
 				case messageIsWrapper(field.Message):
-					g.P("if !s.ReadNil() {")
 					// Read the wrapped value, and if successful, set the wrapped value in the field.
 					g.P("v := ", g.readWrapperValue(field.Message))
 					g.P("if s.Err() != nil {")
 					g.P("return")
 					g.P("}")
 					g.P(messageOrOneofIdent, ".", fieldGoName, " = &", field.Message.GoIdent, "{Value: v}")
-					g.P("}") // end if !s.ReadNil() {
 				case messageIsWKT(field.Message):
 					// Read the WKT, and if successful, set it in the field.
 					g.P("v := ", g.readWKTValue(field, field.Message))
@@ -391,8 +416,6 @@ nextField:
 		}
 
 		if field.Oneof != nil {
-			// Set the message field to the oneof wrapper.
-			g.P("x.", field.Oneof.GoName, " = ov")
 			continue nextField
 		}
 	}
