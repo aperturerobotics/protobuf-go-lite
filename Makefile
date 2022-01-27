@@ -11,11 +11,15 @@ clean:
 	rm -f ./annotations/*.pb.go
 	rm -f ./test/*/*.pb.go
 
-annotations/annotations.pb.go: annotations.proto
-	protoc -I . --go_opt=paths=source_relative --go_out=./annotations ./annotations.proto
+.dev/protoc-gen-go-json/annotations.proto: annotations.proto
+	mkdir -p $(shell dirname $@)
+	cp $< $@
+
+annotations/annotations.pb.go: .dev/protoc-gen-go-json/annotations.proto
+	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I .dev --go_opt=module=github.com/TheThingsIndustries/protoc-gen-go-json --go_out=./ $<
 
 internal/gogoproto/gogo.pb.go: internal/gogoproto/gogo.proto
-	protoc -I . --go_opt=paths=source_relative --go_out=./ ./internal/gogoproto/gogo.proto
+	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I . --go_opt=paths=source_relative --go_out=./ ./internal/gogoproto/gogo.proto
 
 BINARY_DEPS = annotations/annotations.pb.go internal/gogoproto/gogo.pb.go $(wildcard cmd/protoc-gen-go-json/*.go) $(wildcard internal/gen/*.go)
 
