@@ -4,6 +4,8 @@
 package gen
 
 import (
+	"strings"
+
 	"github.com/TheThingsIndustries/protoc-gen-go-json/annotations"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
@@ -42,6 +44,14 @@ func (*generator) enumHasCustomValues(enum *protogen.Enum) bool {
 }
 
 func (*generator) enumHasCustomAliases(enum *protogen.Enum) bool {
+	ext, _ := proto.GetExtension(enum.Desc.Options().(*descriptorpb.EnumOptions), annotations.E_Enum).(*annotations.EnumOptions)
+	prefix := strings.TrimSuffix(ext.GetPrefix(), "_") + "_"
+
+	// The enum has a prefix, so the aliases are the non-prefixed values.
+	if prefix != "_" {
+		return true
+	}
+
 	for _, value := range enum.Values {
 		// If the file has the (thethings.json.enum_value) option, and a value is set, or aliases are set, we have custom aliases.
 		opts := value.Desc.Options().(*descriptorpb.EnumValueOptions)

@@ -26,8 +26,7 @@ func (g *generator) enumHasUnmarshaler(enum *protogen.Enum) bool {
 		}
 	}
 
-	// NOTE: enumHasCustomAliases already checks if there are custom values, but just in case, we also check it.
-	if g.enumHasCustomValues(enum) || g.enumHasCustomAliases(enum) {
+	if g.enumHasCustomAliases(enum) {
 		generateUnmarshaler = true
 	}
 
@@ -49,11 +48,11 @@ func (g *generator) enumHasUnmarshaler(enum *protogen.Enum) bool {
 
 func (g *generator) genEnumUnmarshaler(enum *protogen.Enum) {
 	ext, _ := proto.GetExtension(enum.Desc.Options().(*descriptorpb.EnumOptions), annotations.E_Enum).(*annotations.EnumOptions)
-
-	// If the enum has a prefix, or any aliases, we create a map[string]int32 that maps the non-prefixed values and aliases to the number.
 	prefix := strings.TrimSuffix(ext.GetPrefix(), "_") + "_"
-	hasCustomAliases := g.enumHasCustomAliases(enum) || prefix != "_"
-	if hasCustomAliases {
+
+	// If the enum has any custom aliases, custom values or a prefix,
+	// we create a map[string]int32 that maps the custom aliases, custom values and non-prefixed values to the number.
+	if g.enumHasCustomAliases(enum) {
 		g.P("// ", enum.GoIdent, "_customvalue contains custom string values that extend ", enum.GoIdent, "_value.")
 		g.P("var ", enum.GoIdent, "_customvalue = map[string]int32{")
 		for _, value := range enum.Values {
@@ -71,7 +70,7 @@ func (g *generator) genEnumUnmarshaler(enum *protogen.Enum) {
 
 	g.P("// UnmarshalProtoJSON unmarshals the ", enum.GoIdent, " from JSON.")
 	g.P("func (x *", enum.GoIdent, ") UnmarshalProtoJSON(s *", jsonPluginPackage.Ident("UnmarshalState"), ") {")
-	if hasCustomAliases {
+	if g.enumHasCustomAliases(enum) {
 		// We read the enum, passing both the original mapping, and our custom mapping to the unmarshaler.
 		g.P("v := s.ReadEnum(", enum.GoIdent, "_value, ", enum.GoIdent, "_customvalue)")
 	} else {
