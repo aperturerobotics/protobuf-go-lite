@@ -1,6 +1,7 @@
 package test_test
 
 import (
+	"fmt"
 	"testing"
 
 	. "github.com/TheThingsIndustries/protoc-gen-go-json/test/golang"
@@ -167,6 +168,39 @@ func TestUnmarshalMessageWithOneofEnums(t *testing.T) {
 	for _, tt := range testMessagesWithWithOneofEnums {
 		t.Run(tt.name, func(t *testing.T) {
 			expectUnmarshalEqual(t, &tt.msg, []byte(tt.expected), tt.expectedMask)
+		})
+	}
+}
+
+func TestCustomEnum_TextMarshalers(t *testing.T) {
+	for _, tt := range []struct {
+		enum   CustomEnum
+		values []string
+	}{
+		{CustomEnum_CUSTOM_UNKNOWN, []string{"CUSTOM_UNKNOWN", "UNKNOWN", "0"}},
+		{CustomEnum_CUSTOM_V1_0, []string{"1.0", "1.0.0", "CUSTOM_V1_0", "V1_0", "1"}},
+		{CustomEnum_CUSTOM_V1_0_1, []string{"1.0.1", "CUSTOM_V1_0_1", "V1_0_1", "2"}},
+	} {
+		t.Run(fmt.Sprintf("MarshalText_%s", tt.enum), func(t *testing.T) {
+			txt, err := tt.enum.MarshalText()
+			if err != nil {
+				t.Fatal(err)
+			}
+			if string(txt) != tt.values[0] {
+				t.Errorf("expected: %s, got: %s", tt.values[0], string(txt))
+			}
+		})
+		t.Run(fmt.Sprintf("UnmarshalText_%s", tt.enum), func(t *testing.T) {
+			for _, value := range tt.values {
+				var enum CustomEnum
+				err := enum.UnmarshalText([]byte(value))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if enum != tt.enum {
+					t.Errorf("expected %q to unmarshal as %s, got: %s", value, tt.enum, enum)
+				}
+			}
 		})
 	}
 }
