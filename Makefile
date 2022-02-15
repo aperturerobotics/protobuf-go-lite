@@ -48,10 +48,10 @@ watch:
 	ls annotations.proto cmd/protoc-gen-go-json/*.go internal/gen/*.go test/*.proto | entr make build test
 
 OS :=
-ifeq ($(shell uname -o),Linux)
+ifeq ($(shell uname),Linux)
 	OS = linux
 endif
-ifeq ($(shell uname -o),Darwin)
+ifeq ($(shell uname),Darwin)
 	OS = osx
 endif
 
