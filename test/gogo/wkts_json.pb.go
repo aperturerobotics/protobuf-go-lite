@@ -29,8 +29,8 @@ func (x *MessageWithMarshaler) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithMarshaler to JSON.
-func (x MessageWithMarshaler) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithMarshaler) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithMarshaler message from JSON.
@@ -474,8 +474,8 @@ func (x *MessageWithWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithWKTs to JSON.
-func (x MessageWithWKTs) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithWKTs) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithWKTs message from JSON.
@@ -1092,8 +1092,8 @@ func (x *MessageWithOneofWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithOneofWKTs to JSON.
-func (x MessageWithOneofWKTs) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithOneofWKTs) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithOneofWKTs message from JSON.
@@ -1619,8 +1619,8 @@ func (x *MessageWithWKTMaps) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithWKTMaps to JSON.
-func (x MessageWithWKTMaps) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithWKTMaps) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithWKTMaps message from JSON.

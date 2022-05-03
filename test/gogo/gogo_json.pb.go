@@ -78,8 +78,8 @@ func (x *MessageWithGoGoOptions) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithGoGoOptions to JSON.
-func (x MessageWithGoGoOptions) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithGoGoOptions) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithGoGoOptions message from JSON.
@@ -178,8 +178,8 @@ func (x *SubMessage) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the SubMessage to JSON.
-func (x SubMessage) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *SubMessage) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the SubMessage message from JSON.
@@ -249,8 +249,8 @@ func (x *MessageWithNullable) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithNullable to JSON.
-func (x MessageWithNullable) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithNullable) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithNullable message from JSON.
@@ -328,8 +328,8 @@ func (x *MessageWithEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 }
 
 // MarshalJSON marshals the MessageWithEmbedded to JSON.
-func (x MessageWithEmbedded) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithEmbedded) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithEmbedded message from JSON.
@@ -390,8 +390,8 @@ func (x *MessageWithNullableEmbedded) MarshalProtoJSON(s *jsonplugin.MarshalStat
 }
 
 // MarshalJSON marshals the MessageWithNullableEmbedded to JSON.
-func (x MessageWithNullableEmbedded) MarshalJSON() ([]byte, error) {
-	return jsonplugin.DefaultMarshalerConfig.Marshal(&x)
+func (x *MessageWithNullableEmbedded) MarshalJSON() ([]byte, error) {
+	return jsonplugin.DefaultMarshalerConfig.Marshal(x)
 }
 
 // UnmarshalProtoJSON unmarshals the MessageWithNullableEmbedded message from JSON.
