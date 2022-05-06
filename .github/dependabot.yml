@@ -3,10 +3,12 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     labels: [dependencies]
+    reviewers: [TheThingsIndustries/stack-contributors]
     schedule:
       interval: monthly
   - package-ecosystem: gomod
     directory: "/"
     labels: [dependencies]
+    reviewers: [TheThingsIndustries/stack-contributors]
     schedule:
       interval: monthly
