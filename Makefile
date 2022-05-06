@@ -57,7 +57,7 @@ endif
 
 .dev/golangproto/bin/protoc:
 	mkdir -p .dev/golangproto/bin
-	curl -sSL -o .dev/golangproto/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-$(OS)-x86_64.zip
+	curl -sSL -o .dev/golangproto/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.20.1/protoc-3.20.1-$(OS)-x86_64.zip
 	unzip -o .dev/golangproto/protoc.zip -d .dev/golangproto/
 
 .dev/gogoproto/bin/protoc:
