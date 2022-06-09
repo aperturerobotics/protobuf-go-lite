@@ -288,26 +288,6 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		}
 	}
 
-	// Consistency check: Every file with the same Go import path should have
-	// the same Go package name.
-	packageFiles := make(map[GoImportPath][]string)
-	for filename, importPath := range importPaths {
-		if _, ok := packageNames[filename]; !ok {
-			// Skip files mentioned in a M<file>=<import_path> parameter
-			// but which do not appear in the CodeGeneratorRequest.
-			continue
-		}
-		packageFiles[importPath] = append(packageFiles[importPath], filename)
-	}
-	for importPath, filenames := range packageFiles {
-		for i := 1; i < len(filenames); i++ {
-			if a, b := packageNames[filenames[0]], packageNames[filenames[i]]; a != b {
-				return nil, fmt.Errorf("Go package %v has inconsistent names %v (%v) and %v (%v)",
-					importPath, a, filenames[0], b, filenames[i])
-			}
-		}
-	}
-
 	// The extracted types from the full import set
 	typeRegistry := newExtensionRegistry()
 	for _, fdesc := range gen.Request.ProtoFile {
