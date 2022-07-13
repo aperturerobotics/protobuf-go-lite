@@ -156,6 +156,26 @@ func (s *UnmarshalState) ReadFloat32() float32 {
 	}
 }
 
+// ReadWrappedFloat32 reads a wrapped float32 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedFloat32() float32 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadFloat32()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped float32 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadFloat32()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped float32", field)
+		return 0
+	}
+	return v
+}
+
 // ReadFloat64 reads a float64 value. This also supports string encoding.
 func (s *UnmarshalState) ReadFloat64() float64 {
 	if s.Err() != nil {
@@ -175,6 +195,26 @@ func (s *UnmarshalState) ReadFloat64() float64 {
 		s.SetErrorf("invalid value type for float64: %s", valueTypeString(any.ValueType()))
 		return 0
 	}
+}
+
+// ReadWrappedFloat64 reads a wrapped float64 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedFloat64() float64 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadFloat64()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped float64 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadFloat64()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped float64", field)
+		return 0
+	}
+	return v
 }
 
 // ReadFloat32Array reads an array of float32 values.
@@ -230,6 +270,26 @@ func (s *UnmarshalState) ReadInt32() int32 {
 	}
 }
 
+// ReadWrappedInt32 reads a wrapped int32 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedInt32() int32 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadInt32()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped int32 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadInt32()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped int32", field)
+		return 0
+	}
+	return v
+}
+
 // ReadInt64 reads a int64 value. This also supports string encoding.
 func (s *UnmarshalState) ReadInt64() int64 {
 	if s.Err() != nil {
@@ -249,6 +309,26 @@ func (s *UnmarshalState) ReadInt64() int64 {
 		s.SetErrorf("invalid value type for int64: %s", valueTypeString(any.ValueType()))
 		return 0
 	}
+}
+
+// ReadWrappedInt64 reads a wrapped int64 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedInt64() int64 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadInt64()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped int64 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadInt64()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped int64", field)
+		return 0
+	}
+	return v
 }
 
 // ReadInt32Array reads an array of int32 values.
@@ -304,6 +384,26 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 	}
 }
 
+// ReadWrappedUint32 reads a wrapped uint32 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedUint32() uint32 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadUint32()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped uint32 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadUint32()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped uint32", field)
+		return 0
+	}
+	return v
+}
+
 // ReadUint64 reads a uint64 value. This also supports string encoding.
 func (s *UnmarshalState) ReadUint64() uint64 {
 	if s.Err() != nil {
@@ -323,6 +423,26 @@ func (s *UnmarshalState) ReadUint64() uint64 {
 		s.SetErrorf("invalid value type for uint64: %s", valueTypeString(any.ValueType()))
 		return 0
 	}
+}
+
+// ReadWrappedUint64 reads a wrapped uint64 value. This also supports string encoding as well as {"value": ...}.
+func (s *UnmarshalState) ReadWrappedUint64() uint64 {
+	if s.Err() != nil {
+		return 0
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadUint64()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped uint64 is not value, but %q", key)
+		return 0
+	}
+	v := s.ReadUint64()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped uint64", field)
+		return 0
+	}
+	return v
 }
 
 // ReadUint32Array reads an array of uint32 values.
@@ -365,6 +485,26 @@ func (s *UnmarshalState) ReadBool() bool {
 	return s.inner.ReadBool()
 }
 
+// ReadWrappedBool reads a wrapped bool value. This also supports {"value": ...}.
+func (s *UnmarshalState) ReadWrappedBool() bool {
+	if s.Err() != nil {
+		return false
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadBool()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped bool is not value, but %q", key)
+		return false
+	}
+	v := s.ReadBool()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped bool", field)
+		return false
+	}
+	return v
+}
+
 // ReadBoolArray reads an array of bool values.
 func (s *UnmarshalState) ReadBoolArray() []bool {
 	var arr []bool
@@ -387,6 +527,26 @@ func (s *UnmarshalState) ReadString() string {
 		return ""
 	}
 	return s.inner.ReadString()
+}
+
+// ReadWrappedString reads a wrapped string value. This also supports {"value": ...}.
+func (s *UnmarshalState) ReadWrappedString() string {
+	if s.Err() != nil {
+		return ""
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadString()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped string is not value, but %q", key)
+		return ""
+	}
+	v := s.ReadString()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped string", field)
+		return ""
+	}
+	return v
 }
 
 // ReadStringArray reads an array of string values.
@@ -424,6 +584,26 @@ func (s *UnmarshalState) ReadBytes() []byte {
 	v, err := base64.RawStdEncoding.DecodeString(b64)
 	if err != nil {
 		s.SetErrorf("invalid value: %w", err)
+		return nil
+	}
+	return v
+}
+
+// ReadWrappedBytes reads a wrapped bytes value. This also supports {"value": ...}.
+func (s *UnmarshalState) ReadWrappedBytes() []byte {
+	if s.Err() != nil {
+		return nil
+	}
+	if s.inner.WhatIsNext() != jsoniter.ObjectValue {
+		return s.ReadBytes()
+	}
+	if key := s.ReadObjectField(); key != "value" {
+		s.SetErrorf("first field in wrapped bytes is not value, but %q", key)
+		return nil
+	}
+	v := s.ReadBytes()
+	if field := s.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in wrapped bytes", field)
 		return nil
 	}
 	return v

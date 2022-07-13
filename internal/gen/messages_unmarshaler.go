@@ -437,23 +437,23 @@ func (g *generator) genStdMessageUnmarshaler(message *protogen.Message) {
 func (g *generator) readWrapperValue(message *protogen.Message) string {
 	switch message.Desc.FullName() {
 	case "google.protobuf.DoubleValue":
-		return "s.ReadFloat64()"
+		return "s.ReadWrappedFloat64()"
 	case "google.protobuf.FloatValue":
-		return "s.ReadFloat32()"
+		return "s.ReadWrappedFloat32()"
 	case "google.protobuf.Int64Value":
-		return "s.ReadInt64()"
+		return "s.ReadWrappedInt64()"
 	case "google.protobuf.UInt64Value":
-		return "s.ReadUint64()"
+		return "s.ReadWrappedUint64()"
 	case "google.protobuf.Int32Value":
-		return "s.ReadInt32()"
+		return "s.ReadWrappedInt32()"
 	case "google.protobuf.UInt32Value":
-		return "s.ReadUint32()"
+		return "s.ReadWrappedUint32()"
 	case "google.protobuf.BoolValue":
-		return "s.ReadBool()"
+		return "s.ReadWrappedBool()"
 	case "google.protobuf.StringValue":
-		return "s.ReadString()"
+		return "s.ReadWrappedString()"
 	case "google.protobuf.BytesValue":
-		return "s.ReadBytes()"
+		return "s.ReadWrappedBytes()"
 	default:
 		g.gen.Error(fmt.Errorf("unsupported wrapper %q", message.Desc.FullName()))
 		return ""

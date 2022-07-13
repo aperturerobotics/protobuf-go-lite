@@ -48,10 +48,11 @@ func mustAny(pb proto.Message) *anypb.Any {
 }
 
 var testMessagesWithWKTs = []struct {
-	name         string
-	msg          MessageWithWKTs
-	expected     string
-	expectedMask []string
+	name          string
+	msg           MessageWithWKTs
+	unmarshalOnly bool
+	expected      string
+	expectedMask  []string
 }{
 	{
 		name:     "empty",
@@ -396,10 +397,108 @@ var testMessagesWithWKTs = []struct {
 			"any_values",
 		},
 	},
+	{
+		name: "wrappers",
+		msg: MessageWithWKTs{
+			DoubleValue: &wrapperspb.DoubleValue{Value: 12.34},
+			DoubleValues: []*wrapperspb.DoubleValue{
+				{Value: 12.34},
+				{Value: 56.78},
+			},
+			FloatValue: &wrapperspb.FloatValue{Value: 12.34},
+			FloatValues: []*wrapperspb.FloatValue{
+				{Value: 12.34},
+				{Value: 56.78},
+			},
+			Int32Value: &wrapperspb.Int32Value{Value: -42},
+			Int32Values: []*wrapperspb.Int32Value{
+				{Value: 1},
+				{Value: 2},
+				{Value: -42},
+			},
+			Int64Value: &wrapperspb.Int64Value{Value: -42},
+			Int64Values: []*wrapperspb.Int64Value{
+				{Value: 1},
+				{Value: 2},
+				{Value: -42},
+			},
+			Uint32Value: &wrapperspb.UInt32Value{Value: 42},
+			Uint32Values: []*wrapperspb.UInt32Value{
+				{Value: 1},
+				{Value: 2},
+				{Value: 42},
+			},
+			Uint64Value: &wrapperspb.UInt64Value{Value: 42},
+			Uint64Values: []*wrapperspb.UInt64Value{
+				{Value: 1},
+				{Value: 2},
+				{Value: 42},
+			},
+			BoolValue: &wrapperspb.BoolValue{Value: true},
+			BoolValues: []*wrapperspb.BoolValue{
+				{Value: true},
+				{Value: false},
+			},
+			StringValue: &wrapperspb.StringValue{Value: "foo"},
+			StringValues: []*wrapperspb.StringValue{
+				{Value: "foo"},
+				{Value: "bar"},
+			},
+			BytesValue: &wrapperspb.BytesValue{Value: []byte("foo")},
+			BytesValues: []*wrapperspb.BytesValue{
+				{Value: []byte("foo")},
+				{Value: []byte("bar")},
+			},
+		},
+		unmarshalOnly: true,
+		expected: `{
+			"double_value": {"value": 12.34},
+			"double_values": [{"value": 12.34}, {"value": 56.78}],
+			"float_value": {"value": 12.34},
+			"float_values": [{"value": 12.34}, {"value": 56.78}],
+			"int32_value": {"value": -42},
+			"int32_values": [{"value": 1}, {"value": 2}, {"value": -42}],
+			"int64_value": {"value": "-42"},
+			"int64_values": [{"value": "1"}, {"value": "2"}, {"value": "-42"}],
+			"uint32_value": {"value": 42},
+			"uint32_values": [{"value": 1}, {"value": 2}, {"value": 42}],
+			"uint64_value": {"value": "42"},
+			"uint64_values": [{"value": "1"}, {"value": "2"}, {"value": "42"}],
+			"bool_value": {"value": true},
+			"bool_values": [{"value": true}, {"value": false}],
+			"string_value": {"value": "foo"},
+			"string_values": [{"value": "foo"}, {"value": "bar"}],
+			"bytes_value": {"value": "Zm9v"},
+			"bytes_values": [{"value": "Zm9v"}, {"value": "YmFy"}]
+		}`,
+		expectedMask: []string{
+			"double_value",
+			"double_values",
+			"float_value",
+			"float_values",
+			"int32_value",
+			"int32_values",
+			"int64_value",
+			"int64_values",
+			"uint32_value",
+			"uint32_values",
+			"uint64_value",
+			"uint64_values",
+			"bool_value",
+			"bool_values",
+			"string_value",
+			"string_values",
+			"bytes_value",
+			"bytes_values",
+		},
+	},
 }
 
 func TestMarshalMessageWithWKTs(t *testing.T) {
 	for _, tt := range testMessagesWithWKTs {
+		if tt.unmarshalOnly {
+			continue
+		}
 		t.Run(tt.name, func(t *testing.T) {
 			expectMarshalEqual(t, &tt.msg, tt.expectedMask, []byte(tt.expected))
 		})

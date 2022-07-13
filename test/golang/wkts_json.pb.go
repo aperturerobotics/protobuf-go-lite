@@ -499,7 +499,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.DoubleValue = nil
 				return
 			}
-			v := s.ReadFloat64()
+			v := s.ReadWrappedFloat64()
 			if s.Err() != nil {
 				return
 			}
@@ -515,7 +515,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.DoubleValues = append(x.DoubleValues, nil)
 					return
 				}
-				v := s.ReadFloat64()
+				v := s.ReadWrappedFloat64()
 				if s.Err() != nil {
 					return
 				}
@@ -527,7 +527,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.FloatValue = nil
 				return
 			}
-			v := s.ReadFloat32()
+			v := s.ReadWrappedFloat32()
 			if s.Err() != nil {
 				return
 			}
@@ -543,7 +543,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.FloatValues = append(x.FloatValues, nil)
 					return
 				}
-				v := s.ReadFloat32()
+				v := s.ReadWrappedFloat32()
 				if s.Err() != nil {
 					return
 				}
@@ -555,7 +555,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.Int32Value = nil
 				return
 			}
-			v := s.ReadInt32()
+			v := s.ReadWrappedInt32()
 			if s.Err() != nil {
 				return
 			}
@@ -571,7 +571,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.Int32Values = append(x.Int32Values, nil)
 					return
 				}
-				v := s.ReadInt32()
+				v := s.ReadWrappedInt32()
 				if s.Err() != nil {
 					return
 				}
@@ -583,7 +583,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.Int64Value = nil
 				return
 			}
-			v := s.ReadInt64()
+			v := s.ReadWrappedInt64()
 			if s.Err() != nil {
 				return
 			}
@@ -599,7 +599,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.Int64Values = append(x.Int64Values, nil)
 					return
 				}
-				v := s.ReadInt64()
+				v := s.ReadWrappedInt64()
 				if s.Err() != nil {
 					return
 				}
@@ -611,7 +611,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.Uint32Value = nil
 				return
 			}
-			v := s.ReadUint32()
+			v := s.ReadWrappedUint32()
 			if s.Err() != nil {
 				return
 			}
@@ -627,7 +627,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.Uint32Values = append(x.Uint32Values, nil)
 					return
 				}
-				v := s.ReadUint32()
+				v := s.ReadWrappedUint32()
 				if s.Err() != nil {
 					return
 				}
@@ -639,7 +639,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.Uint64Value = nil
 				return
 			}
-			v := s.ReadUint64()
+			v := s.ReadWrappedUint64()
 			if s.Err() != nil {
 				return
 			}
@@ -655,7 +655,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.Uint64Values = append(x.Uint64Values, nil)
 					return
 				}
-				v := s.ReadUint64()
+				v := s.ReadWrappedUint64()
 				if s.Err() != nil {
 					return
 				}
@@ -667,7 +667,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.BoolValue = nil
 				return
 			}
-			v := s.ReadBool()
+			v := s.ReadWrappedBool()
 			if s.Err() != nil {
 				return
 			}
@@ -683,7 +683,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.BoolValues = append(x.BoolValues, nil)
 					return
 				}
-				v := s.ReadBool()
+				v := s.ReadWrappedBool()
 				if s.Err() != nil {
 					return
 				}
@@ -695,7 +695,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.StringValue = nil
 				return
 			}
-			v := s.ReadString()
+			v := s.ReadWrappedString()
 			if s.Err() != nil {
 				return
 			}
@@ -711,7 +711,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.StringValues = append(x.StringValues, nil)
 					return
 				}
-				v := s.ReadString()
+				v := s.ReadWrappedString()
 				if s.Err() != nil {
 					return
 				}
@@ -723,7 +723,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				x.BytesValue = nil
 				return
 			}
-			v := s.ReadBytes()
+			v := s.ReadWrappedBytes()
 			if s.Err() != nil {
 				return
 			}
@@ -739,7 +739,7 @@ func (x *MessageWithWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 					x.BytesValues = append(x.BytesValues, nil)
 					return
 				}
-				v := s.ReadBytes()
+				v := s.ReadWrappedBytes()
 				if s.Err() != nil {
 					return
 				}
@@ -1119,7 +1119,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.DoubleValue = nil
 				return
 			}
-			v := s.ReadFloat64()
+			v := s.ReadWrappedFloat64()
 			if s.Err() != nil {
 				return
 			}
@@ -1132,7 +1132,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.FloatValue = nil
 				return
 			}
-			v := s.ReadFloat32()
+			v := s.ReadWrappedFloat32()
 			if s.Err() != nil {
 				return
 			}
@@ -1145,7 +1145,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.Int32Value = nil
 				return
 			}
-			v := s.ReadInt32()
+			v := s.ReadWrappedInt32()
 			if s.Err() != nil {
 				return
 			}
@@ -1158,7 +1158,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.Int64Value = nil
 				return
 			}
-			v := s.ReadInt64()
+			v := s.ReadWrappedInt64()
 			if s.Err() != nil {
 				return
 			}
@@ -1171,7 +1171,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.Uint32Value = nil
 				return
 			}
-			v := s.ReadUint32()
+			v := s.ReadWrappedUint32()
 			if s.Err() != nil {
 				return
 			}
@@ -1184,7 +1184,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.Uint64Value = nil
 				return
 			}
-			v := s.ReadUint64()
+			v := s.ReadWrappedUint64()
 			if s.Err() != nil {
 				return
 			}
@@ -1197,7 +1197,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.BoolValue = nil
 				return
 			}
-			v := s.ReadBool()
+			v := s.ReadWrappedBool()
 			if s.Err() != nil {
 				return
 			}
@@ -1210,7 +1210,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.StringValue = nil
 				return
 			}
-			v := s.ReadString()
+			v := s.ReadWrappedString()
 			if s.Err() != nil {
 				return
 			}
@@ -1223,7 +1223,7 @@ func (x *MessageWithOneofWKTs) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) 
 				ov.BytesValue = nil
 				return
 			}
-			v := s.ReadBytes()
+			v := s.ReadWrappedBytes()
 			if s.Err() != nil {
 				return
 			}
@@ -1649,7 +1649,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringDoubleMap[key] = nil
 				} else {
-					v := s.ReadFloat64()
+					v := s.ReadWrappedFloat64()
 					if s.Err() != nil {
 						return
 					}
@@ -1667,7 +1667,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringFloatMap[key] = nil
 				} else {
-					v := s.ReadFloat32()
+					v := s.ReadWrappedFloat32()
 					if s.Err() != nil {
 						return
 					}
@@ -1685,7 +1685,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringInt32Map[key] = nil
 				} else {
-					v := s.ReadInt32()
+					v := s.ReadWrappedInt32()
 					if s.Err() != nil {
 						return
 					}
@@ -1703,7 +1703,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringInt64Map[key] = nil
 				} else {
-					v := s.ReadInt64()
+					v := s.ReadWrappedInt64()
 					if s.Err() != nil {
 						return
 					}
@@ -1721,7 +1721,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringUint32Map[key] = nil
 				} else {
-					v := s.ReadUint32()
+					v := s.ReadWrappedUint32()
 					if s.Err() != nil {
 						return
 					}
@@ -1739,7 +1739,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringUint64Map[key] = nil
 				} else {
-					v := s.ReadUint64()
+					v := s.ReadWrappedUint64()
 					if s.Err() != nil {
 						return
 					}
@@ -1757,7 +1757,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringBoolMap[key] = nil
 				} else {
-					v := s.ReadBool()
+					v := s.ReadWrappedBool()
 					if s.Err() != nil {
 						return
 					}
@@ -1775,7 +1775,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringStringMap[key] = nil
 				} else {
-					v := s.ReadString()
+					v := s.ReadWrappedString()
 					if s.Err() != nil {
 						return
 					}
@@ -1793,7 +1793,7 @@ func (x *MessageWithWKTMaps) UnmarshalProtoJSON(s *jsonplugin.UnmarshalState) {
 				if s.ReadNil() {
 					x.StringBytesMap[key] = nil
 				} else {
-					v := s.ReadBytes()
+					v := s.ReadWrappedBytes()
 					if s.Err() != nil {
 						return
 					}
