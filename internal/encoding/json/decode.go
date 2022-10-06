@@ -237,6 +237,16 @@ func (d *Decoder) currPos() int {
 	return len(d.orig) - len(d.in)
 }
 
+// CurrentPos returns the current position.
+func (d *Decoder) CurrentPos() int {
+	return d.currPos()
+}
+
+// Original returns the original buffer.
+func (d *Decoder) Original() []byte {
+	return d.orig
+}
+
 // matchWithDelim matches s with the input b and verifies that the match
 // terminates with a delimiter of some form (e.g., r"[^-+_.a-zA-Z0-9]").
 // As a special case, EOF is considered a delimiter. It returns the length of s

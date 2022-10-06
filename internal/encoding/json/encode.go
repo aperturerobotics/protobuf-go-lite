@@ -59,6 +59,14 @@ func (e *Encoder) Bytes() []byte {
 	return e.out
 }
 
+// WriteRawObject writes a raw object {...} to the marshaler.
+// Assumes that data starts with { and ends with }.
+func (e *Encoder) WriteRawObject(data string) {
+	e.prepareNext(objectOpen)
+	e.out = append(e.out, data...)
+	e.lastKind = objectClose
+}
+
 // WriteNull writes out the null value.
 func (e *Encoder) WriteNull() {
 	e.prepareNext(scalar)

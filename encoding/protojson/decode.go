@@ -41,6 +41,10 @@ type UnmarshalOptions struct {
 	// If DiscardUnknown is set, unknown fields and enum name values are ignored.
 	DiscardUnknown bool
 
+	// IgnoreUnmarshalJSON ignores UnmarshalJSON functions on messages.
+	// If unset: will call UnmarshalJSON on message types, if it exists.
+	IgnoreUnmarshalJSON bool
+
 	// Resolver is used for looking up types when unmarshaling
 	// google.protobuf.Any messages or extension fields.
 	// If nil, this defaults to using protoregistry.GlobalTypes.
@@ -120,6 +124,41 @@ func (d decoder) syntaxError(pos int, f string, x ...interface{}) error {
 	return errors.New(head+f, x...)
 }
 
+// unmarshalObjectToJSON unmarshals an entire object to raw json.
+func (d decoder) unmarshalObjectToJSON() ([]byte, error) {
+	// advance to the end of this block of json
+	var objOpenDepth int
+	var startPos int
+	for {
+		tok, err := d.Read()
+		if err != nil {
+			return nil, err
+		}
+		tokKind := tok.Kind()
+		if objOpenDepth == 0 {
+			startPos = tok.Pos()
+			if tokKind == json.String {
+				// parse as string, single token.
+				break
+			}
+			if tokKind != json.ObjectOpen {
+				return nil, d.unexpectedTokenError(tok)
+			}
+		}
+		if tokKind == json.ObjectOpen {
+			objOpenDepth++
+		} else if tokKind == json.ObjectClose {
+			objOpenDepth--
+		}
+		if objOpenDepth == 0 {
+			break
+		}
+	}
+
+	endPos := d.CurrentPos()
+	return d.Original()[startPos:endPos], nil
+}
+
 // unmarshalMessage unmarshals a message into the given protoreflect.Message.
 func (d decoder) unmarshalMessage(m protoreflect.Message, skipTypeURL bool) error {
 	d.opts.RecursionLimit--
@@ -128,6 +167,18 @@ func (d decoder) unmarshalMessage(m protoreflect.Message, skipTypeURL bool) erro
 	}
 	if unmarshal := wellKnownTypeUnmarshaler(m.Descriptor().FullName()); unmarshal != nil {
 		return unmarshal(d, m)
+	}
+
+	if !d.opts.IgnoreUnmarshalJSON {
+		if jdec, jdecOk := m.Interface().(protoreflect.ProtoMessageWithJSONUnmarshaler); jdecOk {
+			// advance the decoder to extract the raw json for this entire message
+			messageData, err := d.unmarshalObjectToJSON()
+			if err != nil {
+				return err
+			}
+
+			return jdec.UnmarshalJSON(messageData)
+		}
 	}
 
 	tok, err := d.Read()

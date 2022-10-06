@@ -147,6 +147,12 @@ type doNotImplement pragma.DoNotImplement
 // use the [google.golang.org/protobuf/proto.Message] type instead, which aliases this type.
 type ProtoMessage interface{ ProtoReflect() Message }
 
+// ProtoMessageWithJSONUnmarshaler is a ProtoMessage with custom JSON unmarshal logic.
+type ProtoMessageWithJSONUnmarshaler interface {
+	ProtoMessage
+	UnmarshalJSON([]byte) error
+}
+
 // Syntax is the language version of the proto file.
 type Syntax syntax
 

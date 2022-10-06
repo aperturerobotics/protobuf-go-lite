@@ -58,6 +58,10 @@ type MarshalOptions struct {
 	// Marshal will return error if there are any missing required fields.
 	AllowPartial bool
 
+	// IgnoreMarshalJSON ignores MarshalJSON functions on messages.
+	// If unset: will call MarshalJSON on message types, if it exists.
+	IgnoreMarshalJSON bool
+
 	// UseProtoNames uses proto field name instead of lowerCamelCase name in JSON
 	// field names.
 	UseProtoNames bool
@@ -237,6 +241,26 @@ func (e encoder) marshalMessage(m protoreflect.Message, typeURL string) error {
 
 	if marshal := wellKnownTypeMarshaler(m.Descriptor().FullName()); marshal != nil {
 		return marshal(e, m)
+	}
+
+	if !e.opts.IgnoreMarshalJSON {
+		// Marshaler is the interface implemented by types that
+		// can marshal themselves into valid JSON.
+		//
+		// Copied from encoding/json.Marshaler
+		type JSONMarshaler interface {
+			MarshalJSON() ([]byte, error)
+		}
+		if marshaler, ok := m.Interface().(JSONMarshaler); ok {
+			data, err := marshaler.MarshalJSON()
+			if err != nil {
+				return err
+			}
+			if len(data) != 0 {
+				e.Encoder.WriteRawObject(string(data))
+			}
+			return nil
+		}
 	}
 
 	e.StartObject()
