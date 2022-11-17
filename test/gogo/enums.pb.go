@@ -189,6 +189,7 @@ func (m *MessageWithEnums) GetWrappedCustoms() []*CustomEnumValue {
 
 type MessageWithOneofEnums struct {
 	// Types that are valid to be assigned to Value:
+	//
 	//	*MessageWithOneofEnums_Regular
 	//	*MessageWithOneofEnums_Custom
 	//	*MessageWithOneofEnums_WrappedCustom

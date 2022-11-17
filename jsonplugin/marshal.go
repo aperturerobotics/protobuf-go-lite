@@ -479,7 +479,7 @@ func (s *MarshalState) WriteArrayStart() {
 	s.inner.WriteArrayStart()
 }
 
-// WriteArrayEnd writes the enting ] of an array.
+// WriteArrayEnd writes the ending ] of an array.
 func (s *MarshalState) WriteArrayEnd() {
 	if s.Err() != nil {
 		return

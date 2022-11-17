@@ -190,16 +190,24 @@ nextField:
 					g.P("s.WriteEnum(int32(v), ", value.Enum.GoIdent, "_name)")
 				}
 			case protoreflect.MessageKind:
-				switch {
-				case g.messageHasMarshaler(value.Message):
+				gen := func() {
 					// If the map value is of type message, and the message has a marshaler, use that.
 					g.P(`v.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+				}
+
+				switch {
+				case g.messageHasMarshaler(value.Message):
+					gen()
 				case messageIsWrapper(value.Message):
 					// If the map value is a wrapper, write the wrapped value.
 					g.writeWrapperValue(value.Message, "v")
 				case messageIsWKT(value.Message):
 					// If the map value is a WKT, write the WKT.
 					g.writeWKTValue(field, value.Message, "v")
+
+				// Has the same behaviour as the g.messageHasMarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(value.Message):
+					gen()
 				default:
 					// Otherwise delegate to the library.
 					g.P("// NOTE: ", value.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
@@ -278,6 +286,10 @@ nextField:
 				g.P("}") // end for _, element := range x.{fieldGoName} {
 				g.P("s.WriteArrayEnd()")
 			case protoreflect.MessageKind:
+				gen := func() {
+					// If the list element is of type message, and the message has a marshaler, use that.
+					g.P(`element.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+				}
 				g.P("s.WriteArrayStart()")
 
 				// wroteElement keeps track of whether we wrote an element of the list, so that we know when to add a comma before the next.
@@ -290,14 +302,17 @@ nextField:
 
 				switch {
 				case g.messageHasMarshaler(field.Message):
-					// If the list element is of type message, and the message has a marshaler, use that.
-					g.P(`element.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+					gen()
 				case messageIsWrapper(field.Message):
 					// If the list element is a wrapper, write the wrapped value.
 					g.writeWrapperValue(field.Message, "element")
 				case messageIsWKT(field.Message):
 					// If the list element is a WKT, write the WKT.
 					g.writeWKTValue(field, field.Message, "element")
+
+				// Has the same behaviour as the g.messageHasMarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(field.Message):
+					gen()
 				default:
 					// Otherwise delegate to the library.
 					g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
@@ -384,16 +399,24 @@ nextField:
 					g.P("s.WriteEnum(int32(", messageOrOneofIdent, ".", fieldGoName, "), ", field.Enum.GoIdent, "_name)")
 				}
 			case protoreflect.MessageKind:
-				switch {
-				case g.messageHasMarshaler(field.Message):
+				gen := func() {
 					// If the field is of type message, and the message has a marshaler, use that.
 					g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+				}
+
+				switch {
+				case g.messageHasMarshaler(field.Message):
+					gen()
 				case messageIsWrapper(field.Message):
 					// If the field is a wrapper, write the wrapped value.
 					g.writeWrapperValue(field.Message, fmt.Sprintf("%s.%s", messageOrOneofIdent, fieldGoName))
 				case messageIsWKT(field.Message):
 					// If the field is a WKT, write the WKT.
 					g.writeWKTValue(field, field.Message, fmt.Sprintf("%s.%s", messageOrOneofIdent, fieldGoName))
+
+				// Has the same behaviour as the g.messageHasMarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(field.Message):
+					gen()
 				default:
 					// Otherwise delegate to the library.
 					g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")

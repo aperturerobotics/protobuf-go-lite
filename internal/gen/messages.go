@@ -15,9 +15,38 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
+func (g *generator) messageHasFieldMask(message *protogen.Message, visited ...*protogen.Message) bool {
+	// Since we're going to be looking at the fields of this message, it's possible that there will be cycles.
+	// If that's the case, we'll return false here so that the caller can continue with the next field.
+	for _, visited := range visited {
+		if message == visited {
+			return false
+		}
+	}
+
+	// No code is generated for map entries, so we also don't need to generate marshalers.
+	if message.Desc.IsMapEntry() {
+		return false
+	}
+
+	var generate bool
+
+	for _, field := range message.Fields {
+		if strings.HasPrefix(string(field.Desc.FullName()), "google.protobuf.FieldMask") {
+			generate = true
+		}
+
+		// If the field is a message, and that message has a field mask, we need to generate a marshaler.
+		if field.Message != nil && g.messageHasFieldMask(field.Message, append(visited, message)...) {
+			generate = true
+		}
+	}
+	return generate
+}
+
 func (g *generator) messageHasAnyMarshaler(message *protogen.Message) bool {
 	// We have a marshaler if the message itself has a marshaler or unmarshaler.
-	if g.messageHasMarshaler(message) || g.messageHasUnmarshaler(message) {
+	if g.messageHasMarshaler(message) || g.messageHasUnmarshaler(message) || g.messageHasFieldMask(message) {
 		return true
 	}
 
@@ -30,7 +59,7 @@ func (g *generator) messageHasAnyMarshaler(message *protogen.Message) bool {
 
 	// We have a marshaler if any of the sub-messages defined in the message has any marshaler.
 	for _, message := range message.Messages {
-		if g.messageHasAnyMarshaler(message) {
+		if g.messageHasAnyMarshaler(message) || g.messageHasFieldMask(message) {
 			return true
 		}
 	}
@@ -50,7 +79,7 @@ func (g *generator) genMessage(message *protogen.Message) {
 	}
 
 	// Generate marshaler for the message itself, if it has one.
-	if g.messageHasMarshaler(message) {
+	if g.messageHasMarshaler(message) || g.messageHasFieldMask(message) {
 		g.genMessageMarshaler(message)
 		if Params.Std {
 			g.genStdMessageMarshaler(message)
@@ -58,7 +87,7 @@ func (g *generator) genMessage(message *protogen.Message) {
 	}
 
 	// Generate unmarshaler for the message itself, if it has one.
-	if g.messageHasUnmarshaler(message) {
+	if g.messageHasUnmarshaler(message) || g.messageHasFieldMask(message) {
 		g.genMessageUnmarshaler(message)
 		if Params.Std {
 			g.genStdMessageUnmarshaler(message)

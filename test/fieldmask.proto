@@ -1,0 +1,45 @@
+// Copyright © 2022 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+import "annotations.proto";
+
+import "google/protobuf/field_mask.proto";
+
+package thethings.json.test;
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+
+message MessageWithFieldMask {
+  google.protobuf.FieldMask field_mask = 1;
+  string name = 2;
+}
+
+message MessageWithoutFieldMask {
+  string name = 1;
+}
+
+message MessageWithSubmessageWithFieldmask {
+  MessageWithFieldMask submessage = 1;
+}
+
+message MessageWithSubmessageWithoutFieldmask {
+  MessageWithoutFieldMask submessage = 1;
+}
+
+message MessageWithFieldmaskAndSubmessageWithFieldmask {
+  google.protobuf.FieldMask field_mask = 1;
+  MessageWithoutFieldMask submessage = 2;
+}
+
+message MessageWithFieldmaskAndSubmessageWithoutFieldmask {
+  google.protobuf.FieldMask field_mask = 1;
+  MessageWithFieldMask submessage = 2;
+}
+
+message MessageWithSubmessageWithFieldmaskAndMarshaler {
+  option (thethings.json.message) = { marshaler: true};
+
+  MessageWithFieldMask submessage = 1;
+}

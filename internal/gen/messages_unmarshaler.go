@@ -197,13 +197,17 @@ nextField:
 					g.P("x.", fieldGoName, "[key] = ", value.Enum.GoIdent, "(s.ReadEnum(", value.Enum.GoIdent, "_value))")
 				}
 			case protoreflect.MessageKind:
-				switch {
-				case g.messageHasUnmarshaler(value.Message):
+				gen := func() {
 					// If the map value is of type message, and the message has a marshaler,
 					// allocate a zero message, call the unmarshaler and set the map value for the key to the message.
 					g.P("var v ", value.Message.GoIdent)
 					g.P(`v.UnmarshalProtoJSON(s)`)
 					g.P("x.", fieldGoName, "[key] = &v")
+				}
+
+				switch {
+				case g.messageHasUnmarshaler(value.Message):
+					gen()
 				case messageIsWrapper(value.Message):
 					// If the map value is a wrapper, and we read null, set the map value for the key to nil.
 					// Otherwise read the wrapped value, and if successful, set the map value for the key to the wrapped value.
@@ -223,6 +227,10 @@ nextField:
 					g.P("return")
 					g.P("}")
 					g.P("x.", fieldGoName, "[key] = ", ifThenElse(nullable, "", "*"), "v")
+
+				// Has the same behaviour as the g.messageHasUnmarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(field.Message):
+					gen()
 				default:
 					// Otherwise, delegate to the library.
 					g.P("// NOTE: ", value.Message.GoIdent.GoName, " does not seem to implement UnmarshalProtoJSON.")
@@ -276,9 +284,7 @@ nextField:
 				}
 				g.P("})") // end s.ReadArray()
 			case protoreflect.MessageKind:
-				g.P("s.ReadArray(func() {")
-				switch {
-				case g.messageHasUnmarshaler(field.Message):
+				gen := func() {
 					if nullable {
 						// If we read nil, append nil and return so that we can continue with the next key.
 						g.P("if s.ReadNil() {")
@@ -293,6 +299,12 @@ nextField:
 					g.P("return")
 					g.P("}")
 					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", v)")
+				}
+
+				g.P("s.ReadArray(func() {")
+				switch {
+				case g.messageHasUnmarshaler(field.Message):
+					gen()
 				case messageIsWrapper(field.Message):
 					if nullable {
 						// If we read nil, append nil and return so that we can continue with the next key.
@@ -314,6 +326,10 @@ nextField:
 					g.P("return")
 					g.P("}")
 					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", ifThenElse(nullable, "", "*"), "v)")
+
+				// Has the same behaviour as the g.messageHasUnmarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(field.Message):
+					gen()
 				default:
 					// Otherwise, delegate to the library.
 					g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement UnmarshalProtoJSON.")
@@ -383,14 +399,18 @@ nextField:
 					g.P(messageOrOneofIdent, ".", fieldGoName, " = ", field.Enum.GoIdent, "(s.ReadEnum(", field.Enum.GoIdent, "_value))")
 				}
 			case protoreflect.MessageKind:
-				switch {
-				case g.messageHasUnmarshaler(field.Message):
+				gen := func() {
 					if nullable {
 						// Set the field (or enum wrapper) to a newly allocated custom type.
 						g.P(messageOrOneofIdent, ".", fieldGoName, " = &", field.Message.GoIdent, "{}")
 					}
 					// Call UnmarshalProtoJSON on the field.
 					g.P(messageOrOneofIdent, ".", fieldGoName, `.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
+				}
+
+				switch {
+				case g.messageHasUnmarshaler(field.Message):
+					gen()
 				case messageIsWrapper(field.Message):
 					// Read the wrapped value, and if successful, set the wrapped value in the field.
 					g.P("v := ", g.readWrapperValue(field.Message))
@@ -405,6 +425,10 @@ nextField:
 					g.P("return")
 					g.P("}")
 					g.P(messageOrOneofIdent, ".", fieldGoName, " = ", ifThenElse(nullable, "", "*"), "v")
+
+				// Has the same behaviour as the g.messageHasUnmarshaler case but is a catch all for when the message has a fieldmask.
+				case g.messageHasFieldMask(field.Message):
+					gen()
 				default:
 					// Otherwise, delegate to the library.
 					g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement UnmarshalProtoJSON.")

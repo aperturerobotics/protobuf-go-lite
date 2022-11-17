@@ -402,6 +402,7 @@ func (m *MessageWithWKTs) GetAnyValues() []*types.Any {
 
 type MessageWithOneofWKTs struct {
 	// Types that are valid to be assigned to Value:
+	//
 	//	*MessageWithOneofWKTs_DoubleValue
 	//	*MessageWithOneofWKTs_FloatValue
 	//	*MessageWithOneofWKTs_Int32Value

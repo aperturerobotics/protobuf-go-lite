@@ -309,6 +309,7 @@ func (m *MessageWithScalars) GetHexBytesValues() [][]byte {
 
 type MessageWithOneofScalars struct {
 	// Types that are valid to be assigned to Value:
+	//
 	//	*MessageWithOneofScalars_DoubleValue
 	//	*MessageWithOneofScalars_FloatValue
 	//	*MessageWithOneofScalars_Int32Value
