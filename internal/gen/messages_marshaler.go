@@ -473,11 +473,15 @@ func (g *generator) writeWKTValue(field *protogen.Field, message *protogen.Messa
 	}
 	switch message.Desc.FullName() {
 	case "google.protobuf.Any":
-		g.P(pluginPackage.Ident("MarshalAny"), "(s, ", ident, ")")
+		g.P(pluginPackage.Ident("MarshalAny"), "(s, ", ident, ", ", Params.LegacyFieldMaskMarshalling, ")")
 	case "google.protobuf.Empty":
 		g.P(pluginPackage.Ident("MarshalEmpty"), "(s, ", ident, ")")
 	case "google.protobuf.FieldMask":
-		g.P(pluginPackage.Ident("MarshalFieldMask"), "(s, ", ident, ")")
+		if Params.LegacyFieldMaskMarshalling {
+			g.P(pluginPackage.Ident("MarshalLegacyFieldMask"), "(s, ", ident, ")")
+		} else {
+			g.P(pluginPackage.Ident("MarshalFieldMask"), "(s, ", ident, ")")
+		}
 	case "google.protobuf.Struct":
 		g.P(pluginPackage.Ident("MarshalStruct"), "(s, ", ident, ")")
 	case "google.protobuf.Value":

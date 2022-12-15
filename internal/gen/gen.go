@@ -14,8 +14,9 @@ var Version = "0.0.0-dev"
 
 // Params are the parameters for the generator.
 var Params struct {
-	Lang string
-	Std  bool
+	Lang                       string
+	Std                        bool
+	LegacyFieldMaskMarshalling bool
 }
 
 const (

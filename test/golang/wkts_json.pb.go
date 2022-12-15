@@ -458,7 +458,7 @@ func (x *MessageWithWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 		if x.AnyValue == nil {
 			s.WriteNil()
 		} else {
-			golang.MarshalAny(s, x.AnyValue)
+			golang.MarshalAny(s, x.AnyValue, false)
 		}
 	}
 	if len(x.AnyValues) > 0 || s.HasField("any_values") {
@@ -471,7 +471,7 @@ func (x *MessageWithWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 			if element == nil {
 				s.WriteNil()
 			} else {
-				golang.MarshalAny(s, element)
+				golang.MarshalAny(s, element, false)
 			}
 		}
 		s.WriteArrayEnd()
@@ -1090,7 +1090,7 @@ func (x *MessageWithOneofWKTs) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 			if ov.AnyValue == nil {
 				s.WriteNil()
 			} else {
-				golang.MarshalAny(s, ov.AnyValue)
+				golang.MarshalAny(s, ov.AnyValue, false)
 			}
 		}
 	}
@@ -1616,7 +1616,7 @@ func (x *MessageWithWKTMaps) MarshalProtoJSON(s *jsonplugin.MarshalState) {
 			if v == nil {
 				s.WriteNil()
 			} else {
-				golang.MarshalAny(s, v)
+				golang.MarshalAny(s, v, false)
 			}
 		}
 		s.WriteObjectEnd()

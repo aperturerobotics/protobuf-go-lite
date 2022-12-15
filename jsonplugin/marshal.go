@@ -581,3 +581,21 @@ func (s *MarshalState) WriteFieldMask(x FieldMask) {
 	paths := x.GetPaths()
 	s.inner.WriteString(strings.Join(paths, ","))
 }
+
+func (s *MarshalState) WriteLegacyFieldMask(x FieldMask) {
+	if s.Err() != nil {
+		return
+	}
+	paths := x.GetPaths()
+	s.inner.WriteObjectStart()
+	s.inner.WriteObjectField("paths")
+	s.inner.WriteArrayStart()
+	for i, path := range paths {
+		if i != 0 {
+			s.inner.WriteMore()
+		}
+		s.inner.WriteString(path)
+	}
+	s.inner.WriteArrayEnd()
+	s.inner.WriteObjectEnd()
+}

@@ -57,7 +57,7 @@ func UnmarshalMessage(s *jsonplugin.UnmarshalState, v proto.Message) {
 }
 
 // MarshalAny marshals a Any WKT.
-func MarshalAny(s *jsonplugin.MarshalState, v *types.Any) {
+func MarshalAny(s *jsonplugin.MarshalState, v *types.Any, legacyFieldmask bool) {
 	if v == nil {
 		s.WriteNil()
 		return
@@ -141,7 +141,11 @@ func MarshalAny(s *jsonplugin.MarshalState, v *types.Any) {
 		case *types.Duration:
 			MarshalDuration(s, msg)
 		case *types.FieldMask:
-			MarshalFieldMask(s, msg)
+			if legacyFieldmask {
+				MarshalLegacyFieldMask(s, msg)
+			} else {
+				MarshalFieldMask(s, msg)
+			}
 		case *types.Struct:
 			MarshalStruct(s, msg)
 		case *types.Value:
@@ -306,6 +310,14 @@ func MarshalFieldMask(s *jsonplugin.MarshalState, v *types.FieldMask) {
 		return
 	}
 	s.WriteFieldMask(v)
+}
+
+func MarshalLegacyFieldMask(s *jsonplugin.MarshalState, v *types.FieldMask) {
+	if v == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteLegacyFieldMask(v)
 }
 
 // UnmarshalFieldMask unmarshals a FieldMask WKT.
