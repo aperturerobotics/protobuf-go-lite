@@ -7,7 +7,6 @@ import (
 	"fmt"
 
 	"github.com/TheThingsIndustries/protoc-gen-go-json/annotations"
-	"github.com/TheThingsIndustries/protoc-gen-go-json/internal/gogoproto"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -133,9 +132,6 @@ nextField:
 			marshalerFunc *protogen.GoIdent
 		)
 		fieldOpts := field.Desc.Options()
-		if Params.Lang == "gogo" {
-			pluginPackage = gogoPluginPackage
-		}
 		if proto.HasExtension(fieldOpts, annotations.E_Field) {
 			if customtype == nil {
 				marshalerFunc = parseGoIdent(proto.GetExtension(field.Desc.Options(), annotations.E_Field).(*annotations.FieldOptions).GetMarshalerFunc())
@@ -368,7 +364,7 @@ nextField:
 					g.P("if len(", messageOrOneofIdent, ".", fieldGoName, `) > 0 || s.HasField("`, field.Desc.Name(), `") {`)
 				case protoreflect.MessageKind:
 					// For not-nullable messages we have a dummy check.
-					g.P("if true { // (gogoproto.nullable) = false")
+					g.P("if true { ")
 				}
 			}
 		}
@@ -468,9 +464,6 @@ func (g *generator) writeWKTValue(field *protogen.Field, message *protogen.Messa
 		g.P("} else {")
 	}
 	pluginPackage := golangPluginPackage
-	if Params.Lang == "gogo" {
-		pluginPackage = gogoPluginPackage
-	}
 	switch message.Desc.FullName() {
 	case "google.protobuf.Any":
 		g.P(pluginPackage.Ident("MarshalAny"), "(s, ", ident, ", ", Params.LegacyFieldMaskMarshalling, ")")
@@ -489,21 +482,9 @@ func (g *generator) writeWKTValue(field *protogen.Field, message *protogen.Messa
 	case "google.protobuf.ListValue":
 		g.P(pluginPackage.Ident("MarshalListValue"), "(s, ", ident, ")")
 	case "google.protobuf.Timestamp":
-		if Params.Lang == "gogo" && proto.HasExtension(field.Desc.Options(), gogoproto.E_Stdtime) && proto.GetExtension(field.Desc.Options(), gogoproto.E_Stdtime).(bool) {
-			// If the file has the (gogoproto.stdtime) option, marshal the Go time directly.
-			g.P("s.WriteTime(", ifThenElse(nullable, "*", ""), ident, ")")
-		} else {
-			// Otherwise delegate to the library.
-			g.P(pluginPackage.Ident("MarshalTimestamp"), "(s, ", ident, ")")
-		}
+		g.P(pluginPackage.Ident("MarshalTimestamp"), "(s, ", ident, ")")
 	case "google.protobuf.Duration":
-		if Params.Lang == "gogo" && proto.HasExtension(field.Desc.Options(), gogoproto.E_Stdduration) && proto.GetExtension(field.Desc.Options(), gogoproto.E_Stdduration).(bool) {
-			// If the file has the (gogoproto.stdduration) option, marshal the Go duration directly.
-			g.P("s.WriteDuration(", ifThenElse(nullable, "*", ""), ident, ")")
-		} else {
-			// Otherwise delegate to the library.
-			g.P(pluginPackage.Ident("MarshalDuration"), "(s, ", ident, ")")
-		}
+		g.P(pluginPackage.Ident("MarshalDuration"), "(s, ", ident, ")")
 	default:
 		g.gen.Error(fmt.Errorf("unsupported WKT %q", message.Desc.FullName()))
 	}

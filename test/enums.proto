@@ -4,22 +4,15 @@
 syntax = "proto3";
 
 import "annotations.proto";
-import "internal/gogoproto/gogo.proto";
 
 package thethings.json.test;
 
 option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
 
-option (gogoproto.enum_stringer_all) = true;
-option (gogoproto.goproto_enum_stringer_all) = false;
-
 option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
 
 enum RegularEnum {
   option (thethings.json.enum) = { marshaler: false, unmarshaler: false };
-
-  option (gogoproto.goproto_enum_prefix) = false;
-  option (gogoproto.enum_stringer) = false;
 
   REGULAR_UNKNOWN = 0;
 

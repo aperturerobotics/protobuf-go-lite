@@ -7,7 +7,6 @@ import (
 	"fmt"
 
 	"github.com/TheThingsIndustries/protoc-gen-go-json/annotations"
-	"github.com/TheThingsIndustries/protoc-gen-go-json/internal/gogoproto"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -132,9 +131,6 @@ nextField:
 			unmarshalerFunc *protogen.GoIdent
 		)
 		fieldOpts := field.Desc.Options()
-		if Params.Lang == "gogo" {
-			pluginPackage = gogoPluginPackage
-		}
 		if proto.HasExtension(fieldOpts, annotations.E_Field) {
 			if customtype == nil {
 				unmarshalerFunc = parseGoIdent(proto.GetExtension(field.Desc.Options(), annotations.E_Field).(*annotations.FieldOptions).GetUnmarshalerFunc())
@@ -486,9 +482,6 @@ func (g *generator) readWrapperValue(message *protogen.Message) string {
 
 func (g *generator) readWKTValue(field *protogen.Field, message *protogen.Message) string {
 	pluginPackage := golangPluginPackage
-	if Params.Lang == "gogo" {
-		pluginPackage = gogoPluginPackage
-	}
 	switch message.Desc.FullName() {
 	case "google.protobuf.Any":
 		return g.QualifiedGoIdent(pluginPackage.Ident("UnmarshalAny")) + "(s)"
@@ -503,14 +496,8 @@ func (g *generator) readWKTValue(field *protogen.Field, message *protogen.Messag
 	case "google.protobuf.ListValue":
 		return g.QualifiedGoIdent(pluginPackage.Ident("UnmarshalListValue")) + "(s)"
 	case "google.protobuf.Timestamp":
-		if Params.Lang == "gogo" && proto.HasExtension(field.Desc.Options(), gogoproto.E_Stdtime) && proto.GetExtension(field.Desc.Options(), gogoproto.E_Stdtime).(bool) {
-			return "s.ReadTime()"
-		}
 		return g.QualifiedGoIdent(pluginPackage.Ident("UnmarshalTimestamp")) + "(s)"
 	case "google.protobuf.Duration":
-		if Params.Lang == "gogo" && proto.HasExtension(field.Desc.Options(), gogoproto.E_Stdduration) && proto.GetExtension(field.Desc.Options(), gogoproto.E_Stdduration).(bool) {
-			return "s.ReadDuration()"
-		}
 		return g.QualifiedGoIdent(pluginPackage.Ident("UnmarshalDuration")) + "(s)"
 	default:
 		g.gen.Error(fmt.Errorf("unsupported WKT %q", message.Desc.FullName()))

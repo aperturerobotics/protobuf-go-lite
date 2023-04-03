@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/TheThingsIndustries/protoc-gen-go-json/annotations"
-	"github.com/TheThingsIndustries/protoc-gen-go-json/internal/gogoproto"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -98,44 +97,15 @@ func (g *generator) genMessage(message *protogen.Message) {
 func fieldIsNullable(field *protogen.Field) bool {
 	// Typically, only message fields are nullable (use pointers).
 	nullable := field.Desc.Kind() == protoreflect.MessageKind
-
-	// If we use gogo, the nullability of fields (messages, but also bytes fields with custom types) is controlled with the (gogoproto.nullable) option.
-	if Params.Lang == "gogo" {
-		if proto.HasExtension(field.Desc.Options(), gogoproto.E_Customtype) {
-			nullable = true
-		}
-		if proto.HasExtension(field.Desc.Options(), gogoproto.E_Nullable) {
-			nullable = proto.GetExtension(field.Desc.Options(), gogoproto.E_Nullable).(bool)
-		}
-	}
-
 	return nullable
 }
 
 func fieldGoName(field *protogen.Field) interface{} {
 	var fieldGoName interface{} = field.GoName
-	if Params.Lang == "gogo" {
-		// If we use gogo, the GoName of a field can be overridden with the (gogoproto.customname) option.
-		if proto.HasExtension(field.Desc.Options(), gogoproto.E_Customname) {
-			fieldGoName = proto.GetExtension(field.Desc.Options(), gogoproto.E_Customname).(string)
-		}
-		// Fields with the (gogoproto.embed) option should use the name of the embedded message.
-		if proto.HasExtension(field.Desc.Options(), gogoproto.E_Embed) {
-			if proto.GetExtension(field.Desc.Options(), gogoproto.E_Embed).(bool) {
-				fieldGoName = field.Message.GoIdent
-			}
-		}
-	}
 	return fieldGoName
 }
 
 func fieldCustomType(field *protogen.Field) *protogen.GoIdent {
-	if Params.Lang == "gogo" {
-		// If we use gogo, the type of a field can be overridden with the (gogoproto.customtype) option.
-		if proto.HasExtension(field.Desc.Options(), gogoproto.E_Customtype) {
-			return parseGoIdent(proto.GetExtension(field.Desc.Options(), gogoproto.E_Customtype).(string))
-		}
-	}
 	return nil
 }
 

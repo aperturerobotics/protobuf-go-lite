@@ -23,7 +23,7 @@ func main() {
 	var flags flag.FlagSet
 	flags.BoolVar(&plugin.Params.Std, "std", false, "generate standard library (un)marshalers")
 	flags.BoolVar(&plugin.Params.LegacyFieldMaskMarshalling, "legacy_fieldmask_marshaling", false, "generate legacy fieldmask marshalers")
-	flags.StringVar(&plugin.Params.Lang, "lang", "go", "language (go or gogo)")
+	flags.StringVar(&plugin.Params.Lang, "lang", "go", "language (go)")
 
 	protogen.Options{
 		ParamFunc: flags.Set,

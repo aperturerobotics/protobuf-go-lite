@@ -24,13 +24,9 @@ const (
 	fmtPackage     = protogen.GoImportPath("fmt")
 	strconvPackage = protogen.GoImportPath("strconv")
 
-	gogoProtoTypesPackage = protogen.GoImportPath("github.com/gogo/protobuf/types")
-
-	gogoProtoJSONPackage   = protogen.GoImportPath("github.com/gogo/protobuf/jsonpb")
 	golangProtoJSONPackage = protogen.GoImportPath("google.golang.org/protobuf/encoding/protojson")
 
 	jsonPluginPackage   = protogen.GoImportPath("github.com/TheThingsIndustries/protoc-gen-go-json/jsonplugin")
-	gogoPluginPackage   = protogen.GoImportPath("github.com/TheThingsIndustries/protoc-gen-go-json/gogo")
 	golangPluginPackage = protogen.GoImportPath("github.com/TheThingsIndustries/protoc-gen-go-json/golang")
 )
 
