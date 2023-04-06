@@ -31,6 +31,10 @@ func (e *marshalError) Error() string {
 	return fmt.Sprintf("marshal error: %v", e.Err)
 }
 
+func (e *marshalError) Unwrap() error {
+	return e.Err
+}
+
 // MarshalerConfig is the configuration for the Marshaler.
 type MarshalerConfig struct {
 	EnumsAsInts bool

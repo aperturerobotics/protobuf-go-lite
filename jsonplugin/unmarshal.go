@@ -31,6 +31,10 @@ func (e *unmarshalError) Error() string {
 	return fmt.Sprintf("unmarshal error: %v", e.Err)
 }
 
+func (e *unmarshalError) Unwrap() error {
+	return e.Err
+}
+
 // UnmarshalerConfig is the configuration for the Unmarshaler.
 type UnmarshalerConfig struct{}
 
