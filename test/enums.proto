@@ -3,16 +3,21 @@
 
 syntax = "proto3";
 
-import "annotations.proto";
-
 package thethings.json.test;
 
-option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+import "thethings/json/annotations.proto";
 
-option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+option (thethings.json.file) = {
+  marshaler_all: true,
+  unmarshaler_all: true
+};
 
 enum RegularEnum {
-  option (thethings.json.enum) = { marshaler: false, unmarshaler: false };
+  option (thethings.json.enum) = {
+    marshaler: false,
+    unmarshaler: false
+  };
 
   REGULAR_UNKNOWN = 0;
 
@@ -21,15 +26,21 @@ enum RegularEnum {
 }
 
 enum CustomEnum {
-  option (thethings.json.enum) = { marshal_as_string: true, prefix: "CUSTOM" };
+  option (thethings.json.enum) = {
+    marshal_as_string: true,
+    prefix: "CUSTOM"
+  };
 
   CUSTOM_UNKNOWN = 0;
-  CUSTOM_V1_0    = 1 [ (thethings.json.enum_value) = { value: "1.0", aliases: ["1.0.0"] } ];
-  CUSTOM_V1_0_1  = 2 [ (thethings.json.enum_value) = { value: "1.0.1" } ];
+  CUSTOM_V1_0 = 1 [(thethings.json.enum_value) = {
+    value: "1.0",
+    aliases: ["1.0.0"]
+  }];
+  CUSTOM_V1_0_1 = 2 [(thethings.json.enum_value) = {value: "1.0.1"}];
 }
 
 message CustomEnumValue {
-  option (thethings.json.message) = { wrapper: true };
+  option (thethings.json.message) = {wrapper: true};
 
   CustomEnum value = 1;
 }

@@ -11,12 +11,11 @@ clean:
 	rm -f ./annotations/*.pb.go
 	rm -f ./test/*/*.pb.go
 
-.dev/protoc-gen-go-json/annotations.proto: annotations.proto
-	mkdir -p $(shell dirname $@)
-	cp $< $@
+.bin/protoc-gen-go: go.mod
+	GOBIN=$(PWD)/.bin go install google.golang.org/protobuf/cmd/protoc-gen-go
 
-annotations/annotations.pb.go: .dev/protoc-gen-go-json/annotations.proto .dev/golangproto/bin/protoc .dev/golangproto/bin/protoc-gen-go
-	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I .dev --go_opt=module=github.com/TheThingsIndustries/protoc-gen-go-json --go_out=./ $<
+annotations/annotations.pb.go: api/thethings/json/annotations.proto .bin/protoc-gen-go
+	buf generate api
 
 BINARY_DEPS = annotations/annotations.pb.go $(wildcard cmd/protoc-gen-go-json/*.go) $(wildcard internal/gen/*.go)
 
@@ -40,31 +39,12 @@ build: .bin/protoc-gen-go-json .bin/protoc-gen-go-json-linux-amd64 .bin/protoc-g
 .PHONY: watch
 
 watch:
-	ls annotations.proto cmd/protoc-gen-go-json/*.go internal/gen/*.go test/*.proto | entr make build test
-
-OS :=
-ifeq ($(shell uname),Linux)
-	OS = linux
-endif
-ifeq ($(shell uname),Darwin)
-	OS = osx
-endif
-
-.dev/golangproto/bin/protoc:
-	mkdir -p .dev/golangproto/bin
-	curl -sSL -o .dev/golangproto/protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.20.1/protoc-3.20.1-$(OS)-x86_64.zip
-	unzip -o .dev/golangproto/protoc.zip -d .dev/golangproto/
-
-.dev/golangproto/bin/protoc-gen-go:
-	go build -o $@ google.golang.org/protobuf/cmd/protoc-gen-go
+	ls api/thethings/json/annotations.proto cmd/protoc-gen-go-json/*.go internal/gen/*.go test/*.proto | entr make build test
 
 .PHONY: testprotos
 
-testprotos: build .dev/golangproto/bin/protoc .dev/golangproto/bin/protoc-gen-go
-	PATH="$$PWD/.bin:$$PWD/.dev/golangproto/bin:$$PATH" protoc -I ./test -I . \
-	  --go_opt=paths=source_relative --go_out=./test/golang \
-	  --go-json_opt=paths=source_relative --go-json_opt=std=true --go-json_out=./test/golang \
-	  ./test/*.proto
+testprotos: build .bin/protoc-gen-go
+	buf generate --template buf.gen.test.yaml test
 
 .PHONY: test
 

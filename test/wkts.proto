@@ -3,7 +3,7 @@
 
 syntax = "proto3";
 
-import "annotations.proto";
+package thethings.json.test;
 
 import "google/protobuf/any.proto";
 import "google/protobuf/duration.proto";
@@ -12,19 +12,23 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-
-package thethings.json.test;
+import "thethings/json/annotations.proto";
 
 option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
-
-option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+option (thethings.json.file) = {
+  marshaler_all: true,
+  unmarshaler_all: true
+};
 
 message MessageWithMarshaler {
   string message = 1;
 }
 
 message MessageWithoutMarshaler {
-  option (thethings.json.message) = { marshaler: false, unmarshaler: false };
+  option (thethings.json.message) = {
+    marshaler: false,
+    unmarshaler: false
+  };
 
   string message = 1;
 }
@@ -105,21 +109,21 @@ message MessageWithOneofWKTs {
 }
 
 message MessageWithWKTMaps {
-  map<string,google.protobuf.DoubleValue> string_double_map = 1;
-  map<string,google.protobuf.FloatValue> string_float_map = 2;
-  map<string,google.protobuf.Int32Value> string_int32_map = 3;
-  map<string,google.protobuf.Int64Value> string_int64_map = 4;
-  map<string,google.protobuf.UInt32Value> string_uint32_map = 5;
-  map<string,google.protobuf.UInt64Value> string_uint64_map = 6;
-  map<string,google.protobuf.BoolValue> string_bool_map = 7;
-  map<string,google.protobuf.StringValue> string_string_map = 8;
-  map<string,google.protobuf.BytesValue> string_bytes_map = 9;
-  map<string,google.protobuf.Empty> string_empty_map = 10;
-  map<string,google.protobuf.Timestamp> string_timestamp_map = 11;
-  map<string,google.protobuf.Duration> string_duration_map = 12;
-  map<string,google.protobuf.FieldMask> string_field_mask_map = 13;
-  map<string,google.protobuf.Value> string_value_map = 14;
-  map<string,google.protobuf.ListValue> string_list_value_map = 15;
-  map<string,google.protobuf.Struct> string_struct_map = 16;
-  map<string,google.protobuf.Any> string_any_map = 17;
+  map<string, google.protobuf.DoubleValue> string_double_map = 1;
+  map<string, google.protobuf.FloatValue> string_float_map = 2;
+  map<string, google.protobuf.Int32Value> string_int32_map = 3;
+  map<string, google.protobuf.Int64Value> string_int64_map = 4;
+  map<string, google.protobuf.UInt32Value> string_uint32_map = 5;
+  map<string, google.protobuf.UInt64Value> string_uint64_map = 6;
+  map<string, google.protobuf.BoolValue> string_bool_map = 7;
+  map<string, google.protobuf.StringValue> string_string_map = 8;
+  map<string, google.protobuf.BytesValue> string_bytes_map = 9;
+  map<string, google.protobuf.Empty> string_empty_map = 10;
+  map<string, google.protobuf.Timestamp> string_timestamp_map = 11;
+  map<string, google.protobuf.Duration> string_duration_map = 12;
+  map<string, google.protobuf.FieldMask> string_field_mask_map = 13;
+  map<string, google.protobuf.Value> string_value_map = 14;
+  map<string, google.protobuf.ListValue> string_list_value_map = 15;
+  map<string, google.protobuf.Struct> string_struct_map = 16;
+  map<string, google.protobuf.Any> string_any_map = 17;
 }

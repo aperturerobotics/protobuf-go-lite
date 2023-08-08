@@ -1,0 +1,6 @@
+version: v1
+plugins:
+  - name: go
+    path: .bin/protoc-gen-go
+    out: .
+    opt: module=github.com/TheThingsIndustries/protoc-gen-go-json

@@ -3,11 +3,10 @@
 
 syntax = "proto3";
 
-import "annotations.proto";
+package thethings.json.test;
 
 import "google/protobuf/field_mask.proto";
-
-package thethings.json.test;
+import "thethings/json/annotations.proto";
 
 option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
 
@@ -39,7 +38,7 @@ message MessageWithFieldmaskAndSubmessageWithoutFieldmask {
 }
 
 message MessageWithSubmessageWithFieldmaskAndMarshaler {
-  option (thethings.json.message) = { marshaler: true};
+  option (thethings.json.message) = {marshaler: true};
 
   MessageWithFieldMask submessage = 1;
 }

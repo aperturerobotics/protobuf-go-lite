@@ -3,13 +3,15 @@
 
 syntax = "proto3";
 
-import "annotations.proto";
-
 package thethings.json.test;
 
-option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+import "thethings/json/annotations.proto";
 
-option (thethings.json.file) = { marshaler_all: true, unmarshaler_all: true };
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/test";
+option (thethings.json.file) = {
+  marshaler_all: true,
+  unmarshaler_all: true
+};
 
 message MessageWithScalars {
   double double_value = 1;
@@ -57,18 +59,14 @@ message MessageWithScalars {
   bytes bytes_value = 29;
   repeated bytes bytes_values = 30;
 
-  bytes hex_bytes_value = 31 [
-    (thethings.json.field) = {
-      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
-      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
-    }
-  ];
-  repeated bytes hex_bytes_values = 32  [
-    (thethings.json.field) = {
-      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEXArray",
-      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEXArray"
-    }
-  ];
+  bytes hex_bytes_value = 31 [(thethings.json.field) = {
+    marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
+    unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
+  }];
+  repeated bytes hex_bytes_values = 32 [(thethings.json.field) = {
+    marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEXArray",
+    unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEXArray"
+  }];
 }
 
 message MessageWithOneofScalars {
@@ -88,65 +86,61 @@ message MessageWithOneofScalars {
     bool bool_value = 13;
     string string_value = 14;
     bytes bytes_value = 15;
-    bytes hex_bytes_value = 16 [
-      (thethings.json.field) = {
-        marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
-        unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
-      }
-    ];
+    bytes hex_bytes_value = 16 [(thethings.json.field) = {
+      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalHEX",
+      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalHEX"
+    }];
   }
 }
 
 message MessageWithScalarMaps {
-  map<string,double> string_double_map = 1;
+  map<string, double> string_double_map = 1;
   // map<double,string> is impossible.
 
-  map<string,float> string_float_map = 3;
+  map<string, float> string_float_map = 3;
   // map<float,string> is impossible.
 
-  map<string,int32> string_int32_map = 5;
-  map<int32,string> int32_string_map = 6;
+  map<string, int32> string_int32_map = 5;
+  map<int32, string> int32_string_map = 6;
 
-  map<string,int64> string_int64_map = 7;
-  map<int64,string> int64_string_map = 8;
+  map<string, int64> string_int64_map = 7;
+  map<int64, string> int64_string_map = 8;
 
-  map<string,uint32> string_uint32_map = 9;
-  map<uint32,string> uint32_string_map = 10;
+  map<string, uint32> string_uint32_map = 9;
+  map<uint32, string> uint32_string_map = 10;
 
-  map<string,uint64> string_uint64_map = 11;
-  map<uint64,string> uint64_string_map = 12;
+  map<string, uint64> string_uint64_map = 11;
+  map<uint64, string> uint64_string_map = 12;
 
-  map<string,sint32> string_sint32_map = 13;
-  map<sint32,string> sint32_string_map = 14;
+  map<string, sint32> string_sint32_map = 13;
+  map<sint32, string> sint32_string_map = 14;
 
-  map<string,sint64> string_sint64_map = 15;
-  map<sint64,string> sint64_string_map = 16;
+  map<string, sint64> string_sint64_map = 15;
+  map<sint64, string> sint64_string_map = 16;
 
-  map<string,fixed32> string_fixed32_map = 17;
-  map<fixed32,string> fixed32_string_map = 18;
+  map<string, fixed32> string_fixed32_map = 17;
+  map<fixed32, string> fixed32_string_map = 18;
 
-  map<string,fixed64> string_fixed64_map = 19;
-  map<fixed64,string> fixed64_string_map = 20;
+  map<string, fixed64> string_fixed64_map = 19;
+  map<fixed64, string> fixed64_string_map = 20;
 
-  map<string,sfixed32> string_sfixed32_map = 21;
-  map<sfixed32,string> sfixed32_string_map = 22;
+  map<string, sfixed32> string_sfixed32_map = 21;
+  map<sfixed32, string> sfixed32_string_map = 22;
 
-  map<string,sfixed64> string_sfixed64_map = 23;
-  map<sfixed64,string> sfixed64_string_map = 24;
+  map<string, sfixed64> string_sfixed64_map = 23;
+  map<sfixed64, string> sfixed64_string_map = 24;
 
-  map<string,bool> string_bool_map = 25;
-  map<bool,string> bool_string_map = 26;
+  map<string, bool> string_bool_map = 25;
+  map<bool, string> bool_string_map = 26;
 
-  map<string,string> string_string_map = 27;
+  map<string, string> string_string_map = 27;
   // map<string,string> is above.
 
-  map<string,bytes> string_bytes_map = 29;
+  map<string, bytes> string_bytes_map = 29;
   // map<bytes,string> is impossible.
 
-  map<string,bytes> string_hex_bytes_map = 30 [
-    (thethings.json.field) = {
-      marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalStringHEXMap",
-      unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalStringHEXMap"
-    }
-  ];
+  map<string, bytes> string_hex_bytes_map = 30 [(thethings.json.field) = {
+    marshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.MarshalStringHEXMap",
+    unmarshaler_func: "github.com/TheThingsIndustries/protoc-gen-go-json/test/types.UnmarshalStringHEXMap"
+  }];
 }

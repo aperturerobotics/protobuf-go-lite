@@ -1,0 +1,23 @@
+name: Buf Schema Registry
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  push:
+    name: Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install Buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.25.1"
+      - name: Push
+        uses: bufbuild/buf-push-action@v1
+        with:
+          input: api
+          buf_token: ${{ secrets.BUF_TOKEN }}

@@ -5,9 +5,9 @@ syntax = "proto2";
 
 package thethings.json;
 
-option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/annotations";
-
 import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/TheThingsIndustries/protoc-gen-go-json/annotations";
 
 // NOTE: protoc-gen-go-json is primarily intended for internal use by
 // The Things Industries. We have therefore chosen to use option number 51885,
@@ -52,9 +52,7 @@ extend google.protobuf.FieldOptions {
   optional FieldOptions field = 51885;
 }
 
-message OneofOptions {
-
-}
+message OneofOptions {}
 
 extend google.protobuf.OneofOptions {
   optional OneofOptions oneof = 51885;
@@ -88,17 +86,13 @@ extend google.protobuf.EnumValueOptions {
   optional EnumValueOptions enum_value = 51885;
 }
 
-message ServiceOptions {
-
-}
+message ServiceOptions {}
 
 extend google.protobuf.ServiceOptions {
   optional ServiceOptions service = 51885;
 }
 
-message MethodOptions {
-
-}
+message MethodOptions {}
 
 extend google.protobuf.MethodOptions {
   optional MethodOptions method = 51885;

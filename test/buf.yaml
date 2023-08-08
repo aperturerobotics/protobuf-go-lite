@@ -1,0 +1,15 @@
+version: v1
+name: buf.build/thethingsindustries/protoc-gen-go-json-test
+deps:
+  - buf.build/thethingsindustries/protoc-gen-go-json
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
+  except:
+    - PACKAGE_VERSION_SUFFIX
+    - PACKAGE_DIRECTORY_MATCH
+    - ENUM_VALUE_PREFIX
+    - ENUM_ZERO_VALUE_SUFFIX

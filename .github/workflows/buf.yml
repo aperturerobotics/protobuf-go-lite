@@ -1,0 +1,21 @@
+name: Buf
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    name: Lint and Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install Buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.25.1"
+      - name: Buf lint
+        uses: bufbuild/buf-lint-action@v1
+      - name: Buf format
+        run: buf format --exit-code

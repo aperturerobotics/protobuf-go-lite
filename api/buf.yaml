@@ -1,0 +1,10 @@
+version: v1
+name: buf.build/thethingsindustries/protoc-gen-go-json
+lint:
+  use:
+    - DEFAULT
+  except:
+    - PACKAGE_VERSION_SUFFIX
+breaking:
+  use:
+    - FILE
