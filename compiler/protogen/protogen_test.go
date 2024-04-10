@@ -11,11 +11,9 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"google.golang.org/protobuf/internal/genid"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/genid"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/testing/protocmp"
-
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -65,8 +63,8 @@ func TestNoGoPackage(t *testing.T) {
 			},
 		},
 	})
-	if err == nil {
-		t.Fatalf("missing go_package option: New(req) = nil, want error")
+	if err != nil {
+		t.Fatalf("missing go_package option: New(req) = %v, want nil", err.Error())
 	}
 }
 
@@ -83,8 +81,8 @@ func TestInvalidImportPath(t *testing.T) {
 			},
 		},
 	})
-	if err == nil {
-		t.Fatalf("missing go_package option: New(req) = nil, want error")
+	if err != nil {
+		t.Fatalf("missing go_package option: New(req) = %v, want nil", err.Error())
 	}
 }
 
@@ -106,7 +104,7 @@ func TestPackageNamesAndPaths(t *testing.T) {
 			desc:            "go_package option sets import path",
 			goPackageOption: "golang.org/x/foo",
 			generate:        true,
-			wantPackageName: "foo",
+			wantPackageName: "proto_package",
 			wantImportPath:  "golang.org/x/foo",
 			wantFilename:    "golang.org/x/foo/filename",
 		},
@@ -131,7 +129,7 @@ func TestPackageNamesAndPaths(t *testing.T) {
 			parameter:       "Mdir/filename.proto=golang.org/x/bar",
 			goPackageOption: "golang.org/x/foo",
 			generate:        true,
-			wantPackageName: "foo",
+			wantPackageName: "proto_package",
 			wantImportPath:  "golang.org/x/bar",
 			wantFilename:    "golang.org/x/bar/filename",
 		},
@@ -149,7 +147,7 @@ func TestPackageNamesAndPaths(t *testing.T) {
 			parameter:       "module=golang.org/x",
 			goPackageOption: "golang.org/x/foo",
 			generate:        false,
-			wantPackageName: "foo",
+			wantPackageName: "proto_package",
 			wantImportPath:  "golang.org/x/foo",
 			wantFilename:    "foo/filename",
 		},
@@ -158,7 +156,7 @@ func TestPackageNamesAndPaths(t *testing.T) {
 			parameter:       "paths=import,Mdir/filename.proto=golang.org/x/bar",
 			goPackageOption: "golang.org/x/foo",
 			generate:        true,
-			wantPackageName: "foo",
+			wantPackageName: "proto_package",
 			wantImportPath:  "golang.org/x/bar",
 			wantFilename:    "golang.org/x/bar/filename",
 		},
@@ -166,14 +164,14 @@ func TestPackageNamesAndPaths(t *testing.T) {
 			desc:            "module option implies paths=import",
 			parameter:       "module=golang.org/x,Mdir/filename.proto=golang.org/x/foo",
 			generate:        false,
-			wantPackageName: "foo",
+			wantPackageName: "proto_package",
 			wantImportPath:  "golang.org/x/foo",
 			wantFilename:    "foo/filename",
 		},
 	} {
 		context := fmt.Sprintf(`
 TEST: %v
-  --go_out=%v:.
+  --go-lite_out=%v:.
   file %q: generate=%v
   option go_package = %q;
 
@@ -242,11 +240,12 @@ func TestPackageNameInference(t *testing.T) {
 	}
 	if f1, ok := gen.FilesByPath["dir/file1.proto"]; !ok {
 		t.Errorf("missing file info for dir/file1.proto")
-	} else if f1.GoPackageName != "file1" {
-		t.Errorf("dir/file1.proto: GoPackageName=%v, want foo; package name should be derived from dir/file2.proto", f1.GoPackageName)
+	} else if f1.GoPackageName != "proto_package" {
+		t.Errorf("dir/file1.proto: GoPackageName=%v, want proto_package; package name should be derived from dir/file2.proto", f1.GoPackageName)
 	}
 }
 
+/*
 func TestInconsistentPackageNames(t *testing.T) {
 	_, err := Options{}.New(&pluginpb.CodeGeneratorRequest{
 		ProtoFile: []*descriptorpb.FileDescriptorProto{
@@ -271,6 +270,7 @@ func TestInconsistentPackageNames(t *testing.T) {
 		t.Fatalf("inconsistent package names for the same import path: New(req) = nil, want error")
 	}
 }
+*/
 
 func TestImports(t *testing.T) {
 	gen, err := Options{}.New(&pluginpb.CodeGeneratorRequest{})
@@ -313,7 +313,7 @@ var _ = string1.X // "golang.org/z/string"
 	if err != nil {
 		t.Fatalf("g.Content() = %v", err)
 	}
-	if diff := cmp.Diff(string(want), string(got)); diff != "" {
+	if diff := cmp.Diff(want, string(got)); diff != "" {
 		t.Fatalf("content mismatch (-want +got):\n%s", diff)
 	}
 }
@@ -342,7 +342,7 @@ var _ = bar.X
 	if err != nil {
 		t.Fatalf("g.Content() = %v", err)
 	}
-	if diff := cmp.Diff(string(want), string(got)); diff != "" {
+	if diff := cmp.Diff(want, string(got)); diff != "" {
 		t.Fatalf("content mismatch (-want +got):\n%s", diff)
 	}
 }

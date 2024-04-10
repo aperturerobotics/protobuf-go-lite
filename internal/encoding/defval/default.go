@@ -14,8 +14,8 @@ import (
 	"math"
 	"strconv"
 
-	ptext "google.golang.org/protobuf/internal/encoding/text"
-	"google.golang.org/protobuf/internal/errors"
+	ptext "github.com/aperturerobotics/protobuf-go-lite/internal/encoding/text"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/errors"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
@@ -74,7 +74,7 @@ func Unmarshal(s string, k protoreflect.Kind, evs protoreflect.EnumValueDescript
 		}
 	case protoreflect.Int64Kind, protoreflect.Sint64Kind, protoreflect.Sfixed64Kind:
 		if v, err := strconv.ParseInt(s, 10, 64); err == nil {
-			return protoreflect.ValueOfInt64(int64(v)), nil, nil
+			return protoreflect.ValueOfInt64(v), nil, nil
 		}
 	case protoreflect.Uint32Kind, protoreflect.Fixed32Kind:
 		if v, err := strconv.ParseUint(s, 10, 32); err == nil {
@@ -82,7 +82,7 @@ func Unmarshal(s string, k protoreflect.Kind, evs protoreflect.EnumValueDescript
 		}
 	case protoreflect.Uint64Kind, protoreflect.Fixed64Kind:
 		if v, err := strconv.ParseUint(s, 10, 64); err == nil {
-			return protoreflect.ValueOfUint64(uint64(v)), nil, nil
+			return protoreflect.ValueOfUint64(v), nil, nil
 		}
 	case protoreflect.FloatKind, protoreflect.DoubleKind:
 		var v float64

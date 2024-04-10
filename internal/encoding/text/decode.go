@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"unicode/utf8"
 
-	"google.golang.org/protobuf/internal/errors"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/errors"
 )
 
 // Decoder is a token-based textproto decoder.
@@ -503,15 +503,6 @@ func isTypeNameChar(b byte) bool {
 		('A' <= b && b <= 'Z'))
 }
 
-func isWhiteSpace(b byte) bool {
-	switch b {
-	case ' ', '\n', '\r', '\t':
-		return true
-	default:
-		return false
-	}
-}
-
 // parseIdent parses an unquoted proto identifier and returns size.
 // If allowNeg is true, it allows '-' to be the first character in the
 // identifier. This is used when parsing literal values like -infinity, etc.
@@ -630,7 +621,6 @@ func (d *Decoder) tryConsumeChar(c byte) bool {
 // consume consumes n bytes of input and any subsequent whitespace or comments.
 func (d *Decoder) consume(n int) {
 	d.in = consume(d.in, n)
-	return
 }
 
 // consume consumes n bytes of input and any subsequent whitespace or comments.

@@ -6,9 +6,7 @@
 
 package genid
 
-import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-)
+import "google.golang.org/protobuf/reflect/protoreflect"
 
 const File_google_protobuf_descriptor_proto = "google/protobuf/descriptor.proto"
 
@@ -605,7 +603,6 @@ const (
 
 // Field names for google.protobuf.MessageOptions.
 const (
-	MessageOptions_MessageSetWireFormat_field_name               protoreflect.Name = "message_set_wire_format"
 	MessageOptions_NoStandardDescriptorAccessor_field_name       protoreflect.Name = "no_standard_descriptor_accessor"
 	MessageOptions_Deprecated_field_name                         protoreflect.Name = "deprecated"
 	MessageOptions_MapEntry_field_name                           protoreflect.Name = "map_entry"
@@ -613,7 +610,6 @@ const (
 	MessageOptions_Features_field_name                           protoreflect.Name = "features"
 	MessageOptions_UninterpretedOption_field_name                protoreflect.Name = "uninterpreted_option"
 
-	MessageOptions_MessageSetWireFormat_field_fullname               protoreflect.FullName = "google.protobuf.MessageOptions.message_set_wire_format"
 	MessageOptions_NoStandardDescriptorAccessor_field_fullname       protoreflect.FullName = "google.protobuf.MessageOptions.no_standard_descriptor_accessor"
 	MessageOptions_Deprecated_field_fullname                         protoreflect.FullName = "google.protobuf.MessageOptions.deprecated"
 	MessageOptions_MapEntry_field_fullname                           protoreflect.FullName = "google.protobuf.MessageOptions.map_entry"
@@ -624,7 +620,6 @@ const (
 
 // Field numbers for google.protobuf.MessageOptions.
 const (
-	MessageOptions_MessageSetWireFormat_field_number               protoreflect.FieldNumber = 1
 	MessageOptions_NoStandardDescriptorAccessor_field_number       protoreflect.FieldNumber = 2
 	MessageOptions_Deprecated_field_number                         protoreflect.FieldNumber = 3
 	MessageOptions_MapEntry_field_number                           protoreflect.FieldNumber = 7

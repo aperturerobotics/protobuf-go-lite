@@ -6,9 +6,7 @@
 
 package genid
 
-import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-)
+import "google.golang.org/protobuf/reflect/protoreflect"
 
 const File_google_protobuf_api_proto = "google/protobuf/api.proto"
 

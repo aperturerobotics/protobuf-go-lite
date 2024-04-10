@@ -11,8 +11,8 @@ import (
 )
 
 func TestErrors(t *testing.T) {
-	var sentinel = New("sentinel")
-	var foreign = errors.New("foreign")
+	sentinel := New("sentinel")
+	foreign := errors.New("foreign")
 	for _, test := range []struct {
 		what     string
 		err      error

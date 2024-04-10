@@ -5,7 +5,7 @@
 package proto_test
 
 import (
-	"google.golang.org/protobuf/proto"
+	"github.com/aperturerobotics/protobuf-go-lite/proto"
 )
 
 // Checking if [Size] returns 0 is an easy way to recognize empty messages:
