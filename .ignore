@@ -1,0 +1,4 @@
+# *.pb.go
+go.sum
+testdata
+thirdparty

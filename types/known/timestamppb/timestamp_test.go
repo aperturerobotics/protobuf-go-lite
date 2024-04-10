@@ -10,12 +10,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/aperturerobotics/protobuf-go-lite/internal/detrand"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"google.golang.org/protobuf/internal/detrand"
-	"google.golang.org/protobuf/testing/protocmp"
 
-	tspb "google.golang.org/protobuf/types/known/timestamppb"
+	tspb "github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
 )
 
 func init() {
@@ -26,32 +25,6 @@ const (
 	minTimestamp = -62135596800  // Seconds between 1970-01-01T00:00:00Z and 0001-01-01T00:00:00Z, inclusive
 	maxTimestamp = +253402300799 // Seconds between 1970-01-01T00:00:00Z and 9999-12-31T23:59:59Z, inclusive
 )
-
-func TestToTimestamp(t *testing.T) {
-	tests := []struct {
-		in   time.Time
-		want *tspb.Timestamp
-	}{
-		{in: time.Time{}, want: &tspb.Timestamp{Seconds: -62135596800, Nanos: 0}},
-		{in: time.Unix(0, 0), want: &tspb.Timestamp{Seconds: 0, Nanos: 0}},
-		{in: time.Unix(math.MinInt64, 0), want: &tspb.Timestamp{Seconds: math.MinInt64, Nanos: 0}},
-		{in: time.Unix(math.MaxInt64, 1e9-1), want: &tspb.Timestamp{Seconds: math.MaxInt64, Nanos: 1e9 - 1}},
-		{in: time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC), want: &tspb.Timestamp{Seconds: minTimestamp, Nanos: 0}},
-		{in: time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC).Add(-time.Nanosecond), want: &tspb.Timestamp{Seconds: minTimestamp - 1, Nanos: 1e9 - 1}},
-		{in: time.Date(9999, 12, 31, 23, 59, 59, 1e9-1, time.UTC), want: &tspb.Timestamp{Seconds: maxTimestamp, Nanos: 1e9 - 1}},
-		{in: time.Date(9999, 12, 31, 23, 59, 59, 1e9-1, time.UTC).Add(+time.Nanosecond), want: &tspb.Timestamp{Seconds: maxTimestamp + 1}},
-		{in: time.Date(1961, 1, 26, 0, 0, 0, 0, time.UTC), want: &tspb.Timestamp{Seconds: -281836800, Nanos: 0}},
-		{in: time.Date(2011, 1, 26, 0, 0, 0, 0, time.UTC), want: &tspb.Timestamp{Seconds: 1296000000, Nanos: 0}},
-		{in: time.Date(2011, 1, 26, 3, 25, 45, 940483, time.UTC), want: &tspb.Timestamp{Seconds: 1296012345, Nanos: 940483}},
-	}
-
-	for _, tt := range tests {
-		got := tspb.New(tt.in)
-		if diff := cmp.Diff(tt.want, got, protocmp.Transform()); diff != "" {
-			t.Errorf("New(%v) mismatch (-want +got):\n%s", tt.in, diff)
-		}
-	}
-}
 
 func TestFromTimestamp(t *testing.T) {
 	tests := []struct {

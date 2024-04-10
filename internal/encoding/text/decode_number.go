@@ -61,7 +61,6 @@ func (num number) string(data []byte) string {
 		return string(str)
 	}
 	return string(data[:strSize])
-
 }
 
 // parseNumber constructs a number object from given input. It allows for the

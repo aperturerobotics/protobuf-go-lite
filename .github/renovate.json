@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":semanticPrefixFixDepsChoreOthers",
+    ":ignoreModulesAndTests",
+    "group:all",
+    "workarounds:all"
+  ],
+  "branchConcurrentLimit": 0,
+  "packageRules": [{
+    "matchManagers": ["gomod"],
+    "matchDepTypes": ["replace"],
+    "enabled": false
+  }, {
+    "matchPackageNames": ["github.com/libp2p/go-libp2p"],
+    "allowedVersions": ["^v0.*"]
+  }]
+}

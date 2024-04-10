@@ -13,8 +13,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"google.golang.org/protobuf/internal/encoding/text"
-	"google.golang.org/protobuf/internal/flags"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/encoding/text"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/flags"
 )
 
 var eofErr = text.ErrUnexpectedEOF.Error()
@@ -1033,8 +1033,8 @@ func TestDecoder(t *testing.T) {
 				{K: text.Scalar, T: ST{ok: Uint64{9876543210}}},
 				{K: text.Scalar, T: ST{ok: Uint64{0x0123456789abcdef}}},
 				{K: text.Scalar, T: ST{ok: Int64{-0x0123456789abcdef}}},
-				{K: text.Scalar, T: ST{ok: Uint64{01234567}}},
-				{K: text.Scalar, T: ST{ok: Int64{-01234567}}},
+				{K: text.Scalar, T: ST{ok: Uint64{0o1234567}}},
+				{K: text.Scalar, T: ST{ok: Int64{-0o1234567}}},
 				{K: text.ListClose},
 			},
 		},
@@ -1050,8 +1050,8 @@ func TestDecoder(t *testing.T) {
 				{K: text.Scalar, T: ST{ok: Uint32{876543210}}},
 				{K: text.Scalar, T: ST{ok: Uint32{0x01234}}},
 				{K: text.Scalar, T: ST{ok: Int32{-0x01234}}},
-				{K: text.Scalar, T: ST{ok: Uint32{01234567}}},
-				{K: text.Scalar, T: ST{ok: Int32{-01234567}}},
+				{K: text.Scalar, T: ST{ok: Uint32{0o1234567}}},
+				{K: text.Scalar, T: ST{ok: Int32{-0o1234567}}},
 				{K: text.ListClose},
 			},
 		},
@@ -1708,10 +1708,7 @@ func checkToken(t *testing.T, tok text.Token, idx int, r R, in string) {
 
 func errorf(t *testing.T, in string, fmtStr string, args ...interface{}) {
 	t.Helper()
-	vargs := []interface{}{in}
-	for _, arg := range args {
-		vargs = append(vargs, arg)
-	}
+	vargs := append([]interface{}{in}, args...)
 	t.Errorf("input:\n%s\n~end~\n"+fmtStr, vargs...)
 }
 

@@ -1,10 +1,10 @@
-module google.golang.org/protobuf
+module github.com/aperturerobotics/protobuf-go-lite
 
-go 1.17
+go 1.21
 
 require (
-	github.com/golang/protobuf v1.5.0
-	github.com/google/go-cmp v0.5.5
+	github.com/golang/protobuf v1.5.4
+	github.com/google/go-cmp v0.6.0
+	github.com/pkg/errors v0.9.1
+	google.golang.org/protobuf v1.33.0
 )
-
-require golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
