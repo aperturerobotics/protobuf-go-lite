@@ -41,6 +41,8 @@ import (
 
 const goPackageDocURL = "https://protobuf.dev/reference/go/go-generated#package"
 
+const typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
+
 // Run executes a function as a protoc plugin.
 //
 // It reads a [pluginpb.CodeGeneratorRequest] message from [os.Stdin], invokes the plugin
@@ -237,6 +239,11 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		// the "go_package" option in the .proto source file.
 		filename := fdesc.GetName()
 		impPath, pkgName := splitImportPathAndPackageName(fdesc.GetOptions().GetGoPackage())
+		// HACK: replace well known types path
+		trimTypesPrefix := "google.golang.org/protobuf/types/"
+		if strings.HasPrefix(string(impPath), trimTypesPrefix) {
+			impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
+		}
 		if importPaths[filename] == "" && impPath != "" {
 			importPaths[filename] = impPath
 		}
