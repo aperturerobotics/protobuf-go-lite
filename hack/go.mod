@@ -6,7 +6,7 @@ replace github.com/aperturerobotics/protobuf-go-lite => ../
 
 require (
 	github.com/aperturerobotics/goprotowrap v0.3.1
-	github.com/aperturerobotics/protobuf-go-lite v0.0.0-00010101000000-000000000000
+	github.com/aperturerobotics/protobuf-go-lite v0.1.2
 	github.com/golangci/golangci-lint v1.57.2
 	golang.org/x/tools v0.20.0
 	mvdan.cc/gofumpt v0.6.0
