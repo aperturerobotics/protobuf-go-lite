@@ -6,6 +6,7 @@
     "group:all",
     "workarounds:all"
   ],
+  "forkProcessing": "enabled",
   "branchConcurrentLimit": 0,
   "packageRules": [{
     "matchManagers": ["gomod"],
