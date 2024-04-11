@@ -40,6 +40,7 @@ const (
 	reflectPackage = protogen.GoImportPath("reflect")
 	sortPackage    = protogen.GoImportPath("sort")
 	stringsPackage = protogen.GoImportPath("strings")
+	strconvPackage = protogen.GoImportPath("strconv")
 	syncPackage    = protogen.GoImportPath("sync")
 	timePackage    = protogen.GoImportPath("time")
 	utf8Package    = protogen.GoImportPath("unicode/utf8")
@@ -241,7 +242,16 @@ func genEnum(g *protogen.GeneratedFile, f *fileInfo, e *enumInfo) {
 	g.P("}")
 	g.P()
 
-	// TODO: Generate static String() function.
+	// String method.
+	//
+	// Returns the enum value as a string, either as the name if the number is
+	// resolvable, or the number formatted as a string.
+	g.P("func (x ", e.GoIdent, ") String() string {")
+	g.P("name, valid := ", e.GoIdent.GoName+"_name[int32(x)]")
+	g.P("if valid { return name }")
+	g.P("return ", strconvPackage.Ident("Itoa"), "(int(x))")
+	g.P("}")
+	g.P()
 }
 
 func genMessage(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {

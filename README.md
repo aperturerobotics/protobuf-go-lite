@@ -49,3 +49,22 @@ Summary of the packages provided by this module:
     The `protoc-gen-go-lite` binary is a protoc plugin to generate a Go protocol
     buffer package.
 
+## Usage
+
+1. Install `protoc-gen-go-lite`:
+
+    ```
+    go install github.com/aperturerobotics/protobuf-go-lite/cmd/protoc-gen-go-lite@latest
+    ```
+
+2. Ensure your project is already using the ProtoBuf v2 API (i.e. `google.golang.org/protobuf`). The `vtprotobuf` compiler is not compatible with APIv1 generated code.
+
+3. Update your `protoc` generator to use the new plug-in.
+
+    ```
+    for name in $(PROTO_SRC_NAMES); do \
+        $(VTROOT)/bin/protoc \
+        --go-lite_out=. --plugin protoc-gen-go-lite="${GOBIN}/protoc-gen-go-lite" \
+        proto/$${name}.proto; \
+    done
+    ```
