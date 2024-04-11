@@ -9,8 +9,6 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-const ProtoPkg = "google.golang.org/protobuf/proto"
-
 func KeySize(fieldNumber protoreflect.FieldNumber, wireType protowire.Type) int {
 	x := uint32(fieldNumber)<<3 | uint32(wireType)
 	size := 0

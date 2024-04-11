@@ -8,13 +8,12 @@ package unmarshal
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/encoding/protowire"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	"github.com/planetscale/vtprotobuf/generator"
+	"github.com/aperturerobotics/vtprotobuf-lite/generator"
 )
 
 func init() {
@@ -64,16 +63,8 @@ func (p *unmarshal) decodeMessage(varName, buf string, message *protogen.Message
 		p.P(`}`)
 
 	default:
-		p.P(`if unmarshal, ok := interface{}(`, varName, `).(interface{`)
-		p.P(p.methodUnmarshal(), `([]byte) error`)
-		p.P(`}); ok{`)
-		p.P(`if err := unmarshal.`, p.methodUnmarshal(), `(`, buf, `); err != nil {`)
+		p.P(`if err := `, varName, `.`, p.methodUnmarshal(), `(`, buf, `); err != nil {`)
 		p.P(`return err`)
-		p.P(`}`)
-		p.P(`} else {`)
-		p.P(`if err := `, p.Ident(generator.ProtoPkg, "Unmarshal"), `(`, buf, `, `, varName, `); err != nil {`)
-		p.P(`return err`)
-		p.P(`}`)
 		p.P(`}`)
 	}
 }
@@ -480,11 +471,7 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 			p.P(`if oneof, ok := m.`, fieldname, `.(*`, field.GoIdent, `); ok {`)
 			p.decodeMessage("oneof."+field.GoName, buf, field.Message)
 			p.P(`} else {`)
-			if p.ShouldPool(message) && p.ShouldPool(field.Message) {
-				p.P(`v := `, msgname, `FromVTPool()`)
-			} else {
-				p.P(`v := &`, msgname, `{}`)
-			}
+			p.P(`v := &`, msgname, `{}`)
 			p.decodeMessage("v", buf, field.Message)
 			p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
 			p.P(`}`)
@@ -527,28 +514,13 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 			p.P(`}`)
 			p.P(`m.`, fieldname, `[mapkey] = mapvalue`)
 		} else if repeated {
-			if p.ShouldPool(message) {
-				p.P(`if len(m.`, fieldname, `) == cap(m.`, fieldname, `) {`)
-				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, &`, field.Message.GoIdent, `{})`)
-				p.P(`} else {`)
-				p.P(`m.`, fieldname, ` = m.`, fieldname, `[:len(m.`, fieldname, `) + 1]`)
-				p.P(`if m.`, fieldname, `[len(m.`, fieldname, `) - 1] == nil {`)
-				p.P(`m.`, fieldname, `[len(m.`, fieldname, `) - 1] = &`, field.Message.GoIdent, `{}`)
-				p.P(`}`)
-				p.P(`}`)
-			} else {
-				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, &`, field.Message.GoIdent, `{})`)
-			}
+			p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, &`, field.Message.GoIdent, `{})`)
 			varname := fmt.Sprintf("m.%s[len(m.%s) - 1]", fieldname, fieldname)
 			buf := `dAtA[iNdEx:postIndex]`
 			p.decodeMessage(varname, buf, field.Message)
 		} else {
 			p.P(`if m.`, fieldname, ` == nil {`)
-			if p.ShouldPool(message) && p.ShouldPool(field.Message) {
-				p.P(`m.`, fieldname, ` = `, field.Message.GoIdent, `FromVTPool()`)
-			} else {
-				p.P(`m.`, fieldname, ` = &`, field.Message.GoIdent, `{}`)
-			}
+			p.P(`m.`, fieldname, ` = &`, field.Message.GoIdent, `{}`)
 			p.P(`}`)
 			p.decodeMessage("m."+fieldname, "dAtA[iNdEx:postIndex]", field.Message)
 		}
@@ -737,11 +709,7 @@ func (p *unmarshal) field(proto3, oneof bool, field *protogen.Field, message *pr
 			p.P(`elementCount = packedLen`)
 		}
 
-		if p.ShouldPool(message) {
-			p.P(`if elementCount != 0 && len(m.`, fieldname, `) == 0 && cap(m.`, fieldname, `) < elementCount {`)
-		} else {
-			p.P(`if elementCount != 0 && len(m.`, fieldname, `) == 0 {`)
-		}
+		p.P(`if elementCount != 0 && len(m.`, fieldname, `) == 0 {`)
 
 		fieldtyp, _ := p.FieldGoType(field)
 		p.P(`m.`, fieldname, ` = make(`, fieldtyp, `, 0, elementCount)`)
@@ -821,21 +789,7 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 	p.P(`if (iNdEx + skippy) > l {`)
 	p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
 	p.P(`}`)
-	if message.Desc.ExtensionRanges().Len() > 0 {
-		c := []string{}
-		eranges := message.Desc.ExtensionRanges()
-		for e := 0; e < eranges.Len(); e++ {
-			erange := eranges.Get(e)
-			c = append(c, `((fieldNum >= `+strconv.Itoa(int(erange[0]))+`) && (fieldNum < `+strconv.Itoa(int(erange[1]))+`))`)
-		}
-		p.P(`if `, strings.Join(c, "||"), `{`)
-		p.P(`err = `, p.Ident(generator.ProtoPkg, "UnmarshalOptions"), `{AllowPartial: true}.Unmarshal(dAtA[iNdEx:iNdEx+skippy], m)`)
-		p.P(`if err != nil {`)
-		p.P(`return err`)
-		p.P(`}`)
-		p.P(`iNdEx += skippy`)
-		p.P(`} else {`)
-	}
+	// NOTE: extensions are not supported.
 	if !p.Wrapper() {
 		p.P(`m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)`)
 	}

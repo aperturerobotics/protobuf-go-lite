@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/planetscale/vtprotobuf/generator"
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
+	"github.com/aperturerobotics/vtprotobuf-lite/generator"
 	"google.golang.org/protobuf/encoding/protowire"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -640,7 +640,7 @@ func (p *marshal) message(message *protogen.Message) {
 		}
 	} else {
 		// To match the wire format of proto.Marshal, oneofs have to be marshaled
-		// before fields. See https://github.com/planetscale/vtprotobuf/pull/22
+		// before fields. See https://github.com/aperturerobotics/vtprotobuf-lite/pull/22
 
 		oneofs := make(map[string]struct{}, len(message.Fields))
 		for i := len(message.Fields) - 1; i >= 0; i-- {
@@ -724,25 +724,10 @@ func (p *marshal) marshalBackward(varName string, varInt bool, message *protogen
 		p.marshalBackwardSize(varInt)
 
 	case p.IsLocalMessage(message):
-		p.P(`size, err := `, varName, `.`, p.methodMarshalToSizedBuffer(), `(dAtA[:i])`)
-		p.marshalBackwardSize(varInt)
+		fallthrough
 
 	default:
-		p.P(`if vtmsg, ok := interface{}(`, varName, `).(interface{`)
-		p.P(p.methodMarshalToSizedBuffer(), `([]byte) (int, error)`)
-		p.P(`}); ok{`)
-		p.P(`size, err := vtmsg.`, p.methodMarshalToSizedBuffer(), `(dAtA[:i])`)
+		p.P(`size, err := `, varName, `.`, p.methodMarshalToSizedBuffer(), `(dAtA[:i])`)
 		p.marshalBackwardSize(varInt)
-		p.P(`} else {`)
-		p.P(`encoded, err := `, p.Ident(generator.ProtoPkg, "Marshal"), `(`, varName, `)`)
-		p.P(`if err != nil {`)
-		p.P(`return 0, err`)
-		p.P(`}`)
-		p.P(`i -= len(encoded)`)
-		p.P(`copy(dAtA[i:], encoded)`)
-		if varInt {
-			p.encodeVarint(`len(encoded)`)
-		}
-		p.P(`}`)
 	}
 }

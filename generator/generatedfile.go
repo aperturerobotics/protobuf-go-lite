@@ -7,10 +7,7 @@ package generator
 import (
 	"fmt"
 
-	"github.com/planetscale/vtprotobuf/vtproto"
-
-	"google.golang.org/protobuf/compiler/protogen"
-	"google.golang.org/protobuf/proto"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
@@ -24,34 +21,13 @@ func (p *GeneratedFile) Ident(path, ident string) string {
 	return p.QualifiedGoIdent(protogen.GoImportPath(path).Ident(ident))
 }
 
-func (b *GeneratedFile) ShouldPool(message *protogen.Message) bool {
-	// Do not generate pool if message is nil or message excluded by external rules
-	if message == nil || b.Config.PoolableExclude.Contains(message.GoIdent) {
-		return false
-	}
-
-	if b.Config.Poolable.Contains(message.GoIdent) {
-		return true
-	}
-
-	ext := proto.GetExtension(message.Desc.Options(), vtproto.E_Mempool)
-	if mempool, ok := ext.(bool); ok {
-		return mempool
-	}
-	return false
-}
-
 func (b *GeneratedFile) Alloc(vname string, message *protogen.Message, isQualifiedIdent bool) {
 	ident := message.GoIdent.GoName
 	if isQualifiedIdent {
 		ident = b.QualifiedGoIdent(message.GoIdent)
 	}
 
-	if b.ShouldPool(message) {
-		b.P(vname, " := ", ident, `FromVTPool()`)
-	} else {
-		b.P(vname, " := new(", ident, `)`)
-	}
+	b.P(vname, " := new(", ident, `)`)
 }
 
 func (p *GeneratedFile) FieldGoType(field *protogen.Field) (goType string, pointer bool) {
@@ -113,7 +89,7 @@ func (p *GeneratedFile) IsLocalField(field *protogen.Field) bool {
 	return p.LocalPackages[pkg]
 }
 
-const vtHelpersPackage = protogen.GoImportPath("github.com/planetscale/vtprotobuf/protohelpers")
+const vtHelpersPackage = protogen.GoImportPath("github.com/aperturerobotics/vtprotobuf-lite/protohelpers")
 
 var helpers = map[string]protogen.GoIdent{
 	"EncodeVarint":            {GoName: "EncodeVarint", GoImportPath: vtHelpersPackage},
@@ -129,13 +105,11 @@ func (p *GeneratedFile) Helper(name string) protogen.GoIdent {
 	return helpers[name]
 }
 
-const vtWellKnownPackage = protogen.GoImportPath("github.com/planetscale/vtprotobuf/types/known/")
+const vtWellKnownPackage = protogen.GoImportPath("github.com/aperturerobotics/vtprotobuf-lite/types/known/")
 
 var wellKnownTypes = map[protoreflect.FullName]protogen.GoIdent{
-	"google.protobuf.Any":         {GoName: "Any", GoImportPath: vtWellKnownPackage + "anypb"},
 	"google.protobuf.Duration":    {GoName: "Duration", GoImportPath: vtWellKnownPackage + "durationpb"},
 	"google.protobuf.Empty":       {GoName: "Empty", GoImportPath: vtWellKnownPackage + "emptypb"},
-	"google.protobuf.FieldMask":   {GoName: "FieldMask", GoImportPath: vtWellKnownPackage + "fieldmaskpb"},
 	"google.protobuf.Timestamp":   {GoName: "Timestamp", GoImportPath: vtWellKnownPackage + "timestamppb"},
 	"google.protobuf.DoubleValue": {GoName: "DoubleValue", GoImportPath: vtWellKnownPackage + "wrapperspb"},
 	"google.protobuf.FloatValue":  {GoName: "FloatValue", GoImportPath: vtWellKnownPackage + "wrapperspb"},

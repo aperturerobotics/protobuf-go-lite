@@ -1,109 +1,119 @@
-export GOBIN=$(PWD)/bin
-export PROTOBUF_ROOT=$(PWD)/_vendor/protobuf-21.12
+SHELL:=bash
+PROTOWRAP=hack/bin/protowrap
+PROTOC_GEN_GO_LITE=hack/bin/protoc-gen-go-lite
+PROTOC_GEN_VTPROTO_LITE=hack/bin/protoc-gen-go-lite-vtproto
+GOIMPORTS=hack/bin/goimports
+GOFUMPT=hack/bin/gofumpt
+GOLANGCI_LINT=hack/bin/golangci-lint
+GO_MOD_OUTDATED=hack/bin/go-mod-outdated
+GOLIST=go list -f "{{ .Dir }}" -m
 
-.PHONY: install test gen-conformance gen-include gen-wkt genall bin/protoc-gen-go bin/protoc-gen-go-vtproto
+export GO111MODULE=on
+undefine GOOS
+undefine GOARCH
 
-install: bin/protoc-gen-go-vtproto bin/protoc-gen-go
+all:
 
-bin/protoc-gen-go-vtproto:
-	go install -tags protolegacy ./cmd/protoc-gen-go-vtproto
+vendor:
+	go mod vendor
 
-bin/protoc-gen-go:
-	go install -tags protolegacy google.golang.org/protobuf/cmd/protoc-gen-go
+$(PROTOC_GEN_GO_LITE):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/protoc-gen-go-lite \
+		github.com/aperturerobotics/protobuf-go-lite/cmd/protoc-gen-go-lite
 
-gen-conformance: install
-	$(PROTOBUF_ROOT)/src/protoc \
-		--proto_path=$(PROTOBUF_ROOT) \
-		--go_out=conformance --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-		--go-vtproto_out=conformance --plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-		-I$(PROTOBUF_ROOT)/src \
-		--go_opt=Msrc/google/protobuf/test_messages_proto2.proto=internal/conformance \
-		--go_opt=Msrc/google/protobuf/test_messages_proto3.proto=internal/conformance \
-		--go_opt=Mconformance/conformance.proto=internal/conformance \
-		--go-vtproto_opt=Msrc/google/protobuf/test_messages_proto2.proto=internal/conformance \
-		--go-vtproto_opt=Msrc/google/protobuf/test_messages_proto3.proto=internal/conformance \
-		--go-vtproto_opt=Mconformance/conformance.proto=internal/conformance \
-		src/google/protobuf/test_messages_proto2.proto \
-		src/google/protobuf/test_messages_proto3.proto \
-		conformance/conformance.proto
+$(PROTOC_GEN_VTPROTO_LITE):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/protoc-gen-go-lite-vtproto \
+		github.com/aperturerobotics/vtprotobuf-lite/cmd/protoc-gen-go-lite-vtproto
 
-gen-include: bin/protoc-gen-go
-	$(PROTOBUF_ROOT)/src/protoc \
-		--proto_path=include \
-		--go_out=include --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-		-I$(PROTOBUF_ROOT)/src \
-		github.com/planetscale/vtprotobuf/vtproto/ext.proto
-	mv include/github.com/planetscale/vtprotobuf/vtproto/*.go ./vtproto
+$(GOIMPORTS):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/goimports \
+		golang.org/x/tools/cmd/goimports
 
-gen-wkt: bin/protoc-gen-go-vtproto
-	$(PROTOBUF_ROOT)/src/protoc \
-		-I$(PROTOBUF_ROOT)/src \
-		--plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-		--go-vtproto_out=. \
-		--go-vtproto_opt=module=google.golang.org/protobuf,wrap=true \
-		$(PROTOBUF_ROOT)/src/google/protobuf/any.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/duration.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/empty.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/field_mask.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/timestamp.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/wrappers.proto \
-        $(PROTOBUF_ROOT)/src/google/protobuf/struct.proto
+$(GOFUMPT):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/gofumpt \
+		mvdan.cc/gofumpt
 
-gen-testproto: get-grpc-testproto gen-wkt-testproto install
-	$(PROTOBUF_ROOT)/src/protoc \
-		--proto_path=testproto \
-		--proto_path=include \
-		--go_out=. --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-		--go-vtproto_out=allow-empty=true:. --plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-		-I$(PROTOBUF_ROOT)/src \
-		testproto/empty/empty.proto \
-		testproto/pool/pool.proto \
-		testproto/pool/pool_with_slice_reuse.proto \
-		testproto/pool/pool_with_oneof.proto \
-		testproto/proto3opt/opt.proto \
-		testproto/proto2/scalars.proto \
-		testproto/unsafe/unsafe.proto \
-		|| exit 1;
-	$(PROTOBUF_ROOT)/src/protoc \
-		--proto_path=testproto \
-		--proto_path=include \
-		--go_out=. --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-		--go-vtproto_opt=paths=source_relative \
-		--go-vtproto_opt=buildTag=vtprotobuf \
-		--go-vtproto_out=allow-empty=true:./testproto/buildtag --plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-		-I$(PROTOBUF_ROOT)/src \
-		testproto/empty/empty.proto \
-		|| exit 1;
+$(PROTOWRAP):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/protowrap \
+		github.com/aperturerobotics/goprotowrap/cmd/protowrap
 
-get-grpc-testproto: install
-	$(PROTOBUF_ROOT)/src/protoc \
-		--proto_path=. \
-		--proto_path=include \
-		--go_out=. --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-		--go-vtproto_out=. --plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-		-I$(PROTOBUF_ROOT)/src \
-		-I. \
-		--go_opt=paths=source_relative \
-		--go_opt=Mtestproto/grpc/inner/inner.proto=github.com/planetscale/vtprotobuf/testproto/grpc/inner \
-		--go-vtproto_opt=paths=source_relative \
-        --go-vtproto_opt=Mtestproto/grpc/inner/inner.proto=github.com/planetscale/vtprotobuf/testproto/grpc/inner \
-		testproto/grpc/inner/inner.proto \
-		testproto/grpc/grpc.proto \
-		|| exit 1;
+$(GOLANGCI_LINT):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/golangci-lint \
+		github.com/golangci/golangci-lint/cmd/golangci-lint
 
-gen-wkt-testproto: install
-	$(PROTOBUF_ROOT)/src/protoc \
-    	--proto_path=testproto \
-    	--proto_path=include \
-    	--go_out=. --plugin protoc-gen-go="${GOBIN}/protoc-gen-go" \
-    	--go-vtproto_out=allow-empty=true:. --plugin protoc-gen-go-vtproto="${GOBIN}/protoc-gen-go-vtproto" \
-    	-I$(PROTOBUF_ROOT)/src \
-    	testproto/wkt/wkt.proto \
-    	|| exit 1;
+$(GO_MOD_OUTDATED):
+	cd ./hack; \
+	go build -v \
+		-o ./bin/go-mod-outdated \
+		github.com/psampaz/go-mod-outdated
 
-genall: gen-include gen-conformance gen-testproto gen-wkt
+.PHONY: gengo
+gengo: vendor $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO_LITE) $(PROTOC_GEN_VTPROTO_LITE)
+	shopt -s globstar; \
+	set -eo pipefail; \
+	export PROJECT=$$(go list -m); \
+	export PATH=$$(pwd)/hack/bin:$${PATH}; \
+	mkdir -p $$(pwd)/vendor/$$(dirname $${PROJECT}); \
+	rm $$(pwd)/vendor/$${PROJECT} || true; \
+	ln -s $$(pwd) $$(pwd)/vendor/$${PROJECT} ; \
+	$(PROTOWRAP) \
+		-I $$(pwd)/vendor \
+		--go-lite_out=$$(pwd)/vendor \
+		--go-lite-vtproto_out=$$(pwd)/vendor \
+		--go-lite-vtproto_opt=features=marshal+unmarshal+size+equal+clone \
+		--proto_path $$(pwd)/vendor \
+		--print_structure \
+		--only_specified_files \
+		$$(\
+			git \
+				ls-files "*.proto" |\
+				xargs printf -- \
+				"$$(pwd)/vendor/$${PROJECT}/%s "); \
+	rm $$(pwd)/vendor/$${PROJECT} || true
+	$(GOIMPORTS) -w ./
 
-test: install gen-conformance
-	go test -short ./...
-	go test -count=1 ./conformance/...
-	GOGC="off" go test -count=1 ./testproto/pool/...
+node_modules:
+	yarn install
+
+.PHONY: genproto
+genproto: gengo
+
+.PHONY: gen
+gen: genproto
+
+.PHONY: outdated
+outdated: $(GO_MOD_OUTDATED)
+	go list -mod=mod -u -m -json all | $(GO_MOD_OUTDATED) -update -direct
+
+.PHONY: list
+list: $(GO_MOD_OUTDATED)
+	go list -mod=mod -u -m -json all | $(GO_MOD_OUTDATED)
+
+.PHONY: lint
+lint: $(GOLANGCI_LINT)
+	$(GOLANGCI_LINT) run --timeout=10m
+
+.PHONY: fix
+fix: $(GOLANGCI_LINT)
+	$(GOLANGCI_LINT) run --fix --timeout=10m
+
+.PHONY: format
+format: $(GOFUMPT) $(GOIMPORTS)
+	$(GOIMPORTS) -w ./
+	$(GOFUMPT) -w ./
+
+.PHONY: test
+test:
+	go test -v ./...

@@ -6,19 +6,15 @@
 package clone
 
 import (
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	"github.com/planetscale/vtprotobuf/generator"
+	"github.com/aperturerobotics/vtprotobuf-lite/generator"
 )
 
 const (
 	cloneName        = "CloneVT"
 	cloneMessageName = "CloneMessageVT"
-)
-
-var (
-	protoPkg = protogen.GoImportPath("google.golang.org/protobuf/proto")
 )
 
 func init() {
@@ -78,13 +74,7 @@ func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, mess
 		case p.IsLocalMessage(message):
 			p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
 		default:
-			// rhs is a concrete type, we need to first convert it to an interface in order to use an interface
-			// type assertion.
-			p.P(`if vtpb, ok := interface{}(`, rhs, `).(interface{ `, cloneName, `() *`, message.GoIdent, ` }); ok {`)
 			p.P(lhs, ` = vtpb.`, cloneName, `()`)
-			p.P(`} else {`)
-			p.P(lhs, ` = `, protoPkg.Ident("Clone"), `(`, rhs, `).(*`, message.GoIdent, `)`)
-			p.P(`}`)
 		}
 	case kind == protoreflect.BytesKind:
 		p.P(`tmpBytes := make([]byte, len(`, rhs, `))`)
@@ -159,7 +149,7 @@ func (p *clone) generateCloneMethodsForMessage(proto3 bool, message *protogen.Me
 	p.P()
 
 	if !p.Wrapper() {
-		p.P(`func (m *`, ccTypeName, `) `, cloneMessageName, `() `, protoPkg.Ident("Message"), ` {`)
+		p.P(`func (m *`, ccTypeName, `) `, cloneMessageName, `() any {`)
 		p.P(`return m.`, cloneName, `()`)
 		p.P(`}`)
 		p.P()

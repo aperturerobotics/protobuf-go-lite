@@ -8,8 +8,8 @@ package size
 import (
 	"strconv"
 
-	"github.com/planetscale/vtprotobuf/generator"
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
+	"github.com/aperturerobotics/vtprotobuf-lite/generator"
 	"google.golang.org/protobuf/encoding/protowire"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -45,16 +45,10 @@ func (p *size) messageSize(varName, sizeName string, message *protogen.Message) 
 		p.P(`l = (*`, p.WellKnownTypeMap(message), `)(`, varName, `).`, sizeName, `()`)
 
 	case p.IsLocalMessage(message):
-		p.P(`l = `, varName, `.`, sizeName, `()`)
+		fallthrough
 
 	default:
-		p.P(`if size, ok := interface{}(`, varName, `).(interface{`)
-		p.P(sizeName, `() int`)
-		p.P(`}); ok{`)
-		p.P(`l = size.`, sizeName, `()`)
-		p.P(`} else {`)
-		p.P(`l = `, p.Ident(generator.ProtoPkg, "Size"), `(`, varName, `)`)
-		p.P(`}`)
+		p.P(`l = `, varName, `.`, sizeName, `()`)
 	}
 }
 
@@ -266,10 +260,10 @@ func (p *size) field(oneof bool, field *protogen.Field, sizeName string) {
 		panic("not implemented")
 	}
 	// Empty protobufs should emit a message or compatibility with Golang protobuf;
-	// See https://github.com/planetscale/vtprotobuf/issues/61
+	// See https://github.com/aperturerobotics/vtprotobuf-lite/issues/61
 	// Size is always keysize + 1 so just hardcode that here
 	if oneof && field.Desc.Kind() == protoreflect.MessageKind && !field.Desc.IsMap() && !field.Desc.IsList() {
-		p.P("} else { n += ", strconv.Itoa(key + 1), " }")
+		p.P("} else { n += ", strconv.Itoa(key+1), " }")
 	} else if repeated || nullable {
 		p.P(`}`)
 	}

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"sort"
 
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	"github.com/planetscale/vtprotobuf/generator"
+	"github.com/aperturerobotics/vtprotobuf-lite/generator"
 )
 
 func init() {
@@ -17,10 +17,6 @@ func init() {
 		return &equal{GeneratedFile: gen}
 	})
 }
-
-var (
-	protoPkg = protogen.GoImportPath("google.golang.org/protobuf/proto")
-)
 
 type equal struct {
 	*generator.GeneratedFile
@@ -122,7 +118,7 @@ func (p *equal) message(proto3 bool, message *protogen.Message) {
 	p.P()
 
 	if !p.Wrapper() {
-		p.P(`func (this *`, ccTypeName, `) `, equalMessageName, `(thatMsg `, protoPkg.Ident("Message"), `) bool {`)
+		p.P(`func (this *`, ccTypeName, `) `, equalMessageName, `(thatMsg any) bool {`)
 		p.P(`that, ok := thatMsg.(*`, ccTypeName, `)`)
 		p.P(`if !ok {`)
 		p.P(`return false`)

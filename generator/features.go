@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"sort"
 
-	"google.golang.org/protobuf/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 )
 
 var defaultFeatures = make(map[string]Feature)
