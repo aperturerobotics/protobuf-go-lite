@@ -59,39 +59,31 @@ $(GO_MOD_OUTDATED):
 		-o ./bin/go-mod-outdated \
 		github.com/psampaz/go-mod-outdated
 
-.PHONY: gengo
-gengo: vendor $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO_LITE) $(PROTOC_GEN_VTPROTO_LITE)
-	shopt -s globstar; \
-	set -eo pipefail; \
-	export PROJECT=$$(go list -m); \
-	export PATH=$$(pwd)/hack/bin:$${PATH}; \
-	mkdir -p $$(pwd)/vendor/$$(dirname $${PROJECT}); \
-	rm $$(pwd)/vendor/$${PROJECT} || true; \
-	ln -s $$(pwd) $$(pwd)/vendor/$${PROJECT} ; \
-	$(PROTOWRAP) \
-		-I $$(pwd)/vendor \
-		--go-lite_out=$$(pwd)/vendor \
-		--go-lite-vtproto_out=$$(pwd)/vendor \
-		--go-lite-vtproto_opt=features=marshal+unmarshal+size+equal+clone \
-		--proto_path $$(pwd)/vendor \
-		--print_structure \
-		--only_specified_files \
-		$$(\
-			git \
-				ls-files "*.proto" |\
-				xargs printf -- \
-				"$$(pwd)/vendor/$${PROJECT}/%s "); \
-	rm $$(pwd)/vendor/$${PROJECT} || true
-	$(GOIMPORTS) -w ./
-
 node_modules:
 	yarn install
 
-.PHONY: genproto
-genproto: gengo
-
 .PHONY: gen
-gen: genproto
+gen: gen-wkt
+
+PROTOBUF_ROOT=./lib/protobuf
+
+.PHONY: gen-deps
+gen-deps: vendor $(GOIMPORTS) $(PROTOWRAP) $(PROTOC) $(PROTOC_GEN_GO_LITE) $(PROTOC_GEN_VTPROTO_LITE)
+	git submodule update --init ./lib/protobuf
+
+.PHONY: gen-wkt
+gen-wkt: gen-deps
+	protoc \
+		-I$(PROTOBUF_ROOT)/src \
+		--plugin protoc-gen-go-lite-vtproto="$(PROTOC_GEN_VTPROTO_LITE)" \
+		--go-lite-vtproto_out=. \
+		--go-lite-vtproto_opt=module=google.golang.org/protobuf,wrap=true \
+		--go-lite-vtproto_opt=module=github.com/aperturerobotics/protobuf-go-lite,wrap=true \
+			$(PROTOBUF_ROOT)/src/google/protobuf/duration.proto \
+			$(PROTOBUF_ROOT)/src/google/protobuf/empty.proto \
+			$(PROTOBUF_ROOT)/src/google/protobuf/timestamp.proto \
+			$(PROTOBUF_ROOT)/src/google/protobuf/wrappers.proto \
+			$(PROTOBUF_ROOT)/src/google/protobuf/struct.proto
 
 .PHONY: outdated
 outdated: $(GO_MOD_OUTDATED)
