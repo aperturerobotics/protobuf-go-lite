@@ -794,9 +794,6 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 		p.P(`m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)`)
 	}
 	p.P(`iNdEx += skippy`)
-	if message.Desc.ExtensionRanges().Len() > 0 {
-		p.P(`}`)
-	}
 	p.P(`}`)
 	p.P(`}`)
 
