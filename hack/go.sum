@@ -76,8 +76,8 @@ github.com/alingse/asasalint v0.0.11 h1:SFwnQXJ49Kx/1GghOFz1XGqHYKp21Kq1nHad/0WQ
 github.com/alingse/asasalint v0.0.11/go.mod h1:nCaoMhw7a9kSJObvQyVzNTPBDbNpdocqrSP7t/cW5+I=
 github.com/aperturerobotics/goprotowrap v0.3.1 h1:nFCWZ4QNQEzpsgCN1mVWLDVTF/Jm0hWtlCMUMGm3p1Y=
 github.com/aperturerobotics/goprotowrap v0.3.1/go.mod h1:5tRlYsb4VF0ySzx2/My3u9PtzTWNu5o2bqYHj0TRw+U=
-github.com/aperturerobotics/protobuf-go-lite v0.1.1 h1:i/vp213GcUBoVXv+mnmG+xWQyF/795kxUrIO+QaWRuQ=
-github.com/aperturerobotics/protobuf-go-lite v0.1.1/go.mod h1:mtG4PgCvwlH313gS4NF2H/QBfzqjl/Fzrbu8GMgGDQ8=
+github.com/aperturerobotics/protobuf-go-lite v0.1.2-0.20240411060140-6b37589e78ce h1:L6PeswqgRElaD1IM+SrmnGKFdIlsTzxKN1gGbSZ7mWQ=
+github.com/aperturerobotics/protobuf-go-lite v0.1.2-0.20240411060140-6b37589e78ce/go.mod h1:mtG4PgCvwlH313gS4NF2H/QBfzqjl/Fzrbu8GMgGDQ8=
 github.com/ashanbrown/forbidigo v1.6.0 h1:D3aewfM37Yb3pxHujIPSpTf6oQk9sc9WZi8gerOIVIY=
 github.com/ashanbrown/forbidigo v1.6.0/go.mod h1:Y8j9jy9ZYAEHXdu723cUlraTqbzjKF1MUyfOKL+AjcU=
 github.com/ashanbrown/makezero v1.1.1 h1:iCQ87C0V0vSyO+M9E/FZYbu65auqH0lnsOkf5FcB28s=

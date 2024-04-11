@@ -13,7 +13,7 @@ require (
 
 require (
 	github.com/aperturerobotics/goprotowrap v0.3.1
-	github.com/aperturerobotics/protobuf-go-lite v0.1.1
+	github.com/aperturerobotics/protobuf-go-lite v0.1.2-0.20240411060140-6b37589e78ce
 )
 
 require (
