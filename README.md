@@ -68,7 +68,7 @@ The following features can be generated:
 
 2. Ensure your project is already using the ProtoBuf v2 API (i.e. `google.golang.org/protobuf`). The `vtprotobuf` compiler is not compatible with APIv1 generated code.
 
-3. Update your `protoc` generator to use the new plug-in. Example from Vitess:
+3. Update your `protoc` generator to use the new plug-in.
 
     ```
     for name in $(PROTO_SRC_NAMES); do \
@@ -128,7 +128,7 @@ To use `vtprotobuf` as a DRPC encoding, simply pass `github.com/aperturerobotics
 Example:
 
 ```
-protoc --go_out=. --go-vtproto_out=. --go-drpc_out=. --go-drpc_opt=protolib=github.com/aperturerobotics/vtprotobuf-lite/codec/drpc
+protoc --go-lite_out=. --go-lite-vtproto_out=. --go-drpc_out=. --go-drpc_opt=protolib=github.com/aperturerobotics/vtprotobuf-lite/codec/drpc
 ```
 
 ## Integrating with [`buf`](http://github.com/bufbuild/buf)
