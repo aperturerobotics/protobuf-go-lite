@@ -73,6 +73,8 @@ func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, mess
 			p.P(lhs, ` = (*`, message.GoIdent, `)((*`, p.WellKnownTypeMap(message), `)(`, rhs, `).`, cloneName, `())`)
 		case p.IsLocalMessage(message):
 			p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
+		case p.Wrapper():
+			p.P(lhs, ` = (*`, message.GoIdent, `)((*`, message.GoIdent.GoName, `)(`, rhs, `).`, cloneName, `())`)
 		default:
 			p.P(lhs, ` = vtpb.`, cloneName, `()`)
 		}

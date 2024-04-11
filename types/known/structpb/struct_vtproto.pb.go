@@ -15,6 +15,7 @@ import (
 )
 
 type Struct structpb.Struct
+type Struct_FieldsEntry structpb.Struct_FieldsEntry
 type Value structpb.Value
 type Value_NullValue structpb.Value_NullValue
 type Value_NumberValue structpb.Value_NumberValue

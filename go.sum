@@ -1,5 +1,5 @@
-github.com/aperturerobotics/protobuf-go-lite v0.1.3-0.20240411193515-99a7042b2ff1 h1:kMCl8SVaG7L8051EmTCISZUigl5igtROFSJp4wopuQQ=
-github.com/aperturerobotics/protobuf-go-lite v0.1.3-0.20240411193515-99a7042b2ff1/go.mod h1:mtG4PgCvwlH313gS4NF2H/QBfzqjl/Fzrbu8GMgGDQ8=
+github.com/aperturerobotics/protobuf-go-lite v0.1.3 h1:jq1r0/1gV19+0iQMKov6sMIguGq3attUgUWLJE2svNk=
+github.com/aperturerobotics/protobuf-go-lite v0.1.3/go.mod h1:mtG4PgCvwlH313gS4NF2H/QBfzqjl/Fzrbu8GMgGDQ8=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=

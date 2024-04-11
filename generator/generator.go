@@ -131,13 +131,21 @@ func (gen *Generator) generateFile(gf *protogen.GeneratedFile, file *protogen.Fi
 	p.P()
 
 	if p.Wrapper() {
-		for _, msg := range file.Messages {
+		var wrapMessage func(msg *protogen.Message)
+		wrapMessage = func(msg *protogen.Message) {
 			p.P(`type `, msg.GoIdent.GoName, ` `, msg.GoIdent)
 			for _, one := range msg.Oneofs {
 				for _, field := range one.Fields {
 					p.P(`type `, field.GoIdent.GoName, ` `, field.GoIdent)
 				}
 			}
+			for _, subMsg := range msg.Messages {
+				wrapMessage(subMsg)
+			}
+		}
+
+		for _, msg := range file.Messages {
+			wrapMessage(msg)
 		}
 	}
 

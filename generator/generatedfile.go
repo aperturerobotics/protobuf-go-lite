@@ -142,6 +142,14 @@ func (p *GeneratedFile) IsWellKnownType(message *protogen.Message) bool {
 	return ok
 }
 
+func (p *GeneratedFile) RequiresTypeCast(message *protogen.Message) bool {
+	if message == nil {
+		return false
+	}
+	_, ok := wellKnownTypes[message.Desc.FullName()]
+	return ok
+}
+
 func (p *GeneratedFile) WellKnownFieldMap(field *protogen.Field) protogen.GoIdent {
 	if field == nil {
 		return protogen.GoIdent{}
