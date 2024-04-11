@@ -23,12 +23,6 @@ type fileInfo struct {
 	allEnumsByPtr         map[*enumInfo]int    // value is index into allEnums
 	allMessagesByPtr      map[*messageInfo]int // value is index into allMessages
 	allMessageFieldsByPtr map[*messageInfo]*structFields
-
-	// needRawDesc specifies whether the generator should emit logic to provide
-	// the legacy raw descriptor in GZIP'd form.
-	// This is updated by enum and message generation logic as necessary,
-	// and checked at the end of file generation.
-	needRawDesc bool
 }
 
 type structFields struct {

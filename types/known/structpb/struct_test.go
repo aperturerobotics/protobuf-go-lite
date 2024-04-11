@@ -5,7 +5,6 @@
 package structpb_test
 
 import (
-	"encoding/json"
 	"math"
 	"testing"
 
@@ -15,13 +14,6 @@ import (
 
 	spb "github.com/aperturerobotics/protobuf-go-lite/types/known/structpb"
 )
-
-var equateJSON = cmpopts.AcyclicTransformer("UnmarshalJSON", func(in []byte) (out interface{}) {
-	if err := json.Unmarshal(in, &out); err != nil {
-		return in
-	}
-	return out
-})
 
 func TestToStruct(t *testing.T) {
 	tests := []struct {

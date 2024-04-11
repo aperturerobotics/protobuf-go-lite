@@ -47,11 +47,6 @@ const (
 	errorsPackage  = protogen.GoImportPath("github.com/pkg/errors")
 )
 
-type goImportPath interface {
-	String() string
-	Ident(string) protogen.GoIdent
-}
-
 // GenerateFile generates the contents of a .pb.go file.
 func GenerateFile(gen *protogen.Plugin, file *protogen.File) *protogen.GeneratedFile {
 	filename := file.GeneratedFilenamePrefix + ".pb.go"
@@ -542,9 +537,9 @@ func fieldGoType(g *protogen.GeneratedFile, f *fileInfo, field *protogen.Field) 
 
 func fieldProtobufTagValue(field *protogen.Field) string {
 	var enumName string
-	if field.Desc.Kind() == protoreflect.EnumKind {
-		// enumName = protoimpl.X.LegacyEnumName(field.Enum.Desc)
-	}
+	//if field.Desc.Kind() == protoreflect.EnumKind {
+	// enumName = protoimpl.X.LegacyEnumName(field.Enum.Desc)
+	//}
 	return tag.Marshal(field.Desc, enumName)
 }
 
