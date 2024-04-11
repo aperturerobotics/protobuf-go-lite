@@ -79,7 +79,9 @@ gen-wkt: gen-deps
 		--go-lite-vtproto_out=. \
 		--go-lite-vtproto_opt=module=google.golang.org/protobuf,wrap=true \
 		--go-lite-vtproto_opt=module=github.com/aperturerobotics/protobuf-go-lite,wrap=true \
+		--go-lite-vtproto_opt=Msrc/google/protobuf/descriptor.proto=github.com/aperturerobotics/vtprotobuf-lite/types/descriptorpb\;descriptorpb \
 			$(PROTOBUF_ROOT)/src/google/protobuf/duration.proto \
+			$(PROTOBUF_ROOT)/src/google/protobuf/descriptor.proto \
 			$(PROTOBUF_ROOT)/src/google/protobuf/empty.proto \
 			$(PROTOBUF_ROOT)/src/google/protobuf/timestamp.proto \
 			$(PROTOBUF_ROOT)/src/google/protobuf/wrappers.proto \
