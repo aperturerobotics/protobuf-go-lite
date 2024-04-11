@@ -36,6 +36,7 @@ package structpb
 import (
 	base64 "encoding/base64"
 	math "math"
+	strconv "strconv"
 	utf8 "unicode/utf8"
 
 	errors "github.com/pkg/errors"
@@ -66,6 +67,14 @@ func (x NullValue) Enum() *NullValue {
 	p := new(NullValue)
 	*p = x
 	return p
+}
+
+func (x NullValue) String() string {
+	name, valid := NullValue_name[int32(x)]
+	if valid {
+		return name
+	}
+	return strconv.Itoa(int(x))
 }
 
 // `Struct` represents a structured data value, consisting of fields
