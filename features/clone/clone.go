@@ -71,10 +71,10 @@ func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, mess
 		switch {
 		case p.IsWellKnownType(message):
 			p.P(lhs, ` = (*`, message.GoIdent, `)((*`, p.WellKnownTypeMap(message), `)(`, rhs, `).`, cloneName, `())`)
-		case p.IsLocalMessage(message):
-			p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
 		case p.Wrapper():
 			p.P(lhs, ` = (*`, message.GoIdent, `)((*`, message.GoIdent.GoName, `)(`, rhs, `).`, cloneName, `())`)
+		case p.IsLocalMessage(message):
+			p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
 		default:
 			p.P(lhs, ` = vtpb.`, cloneName, `()`)
 		}
@@ -200,7 +200,11 @@ func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protoge
 				p.P(`r.`, field.GoName, ` = (*`, field.Message.GoIdent, `)((*`, p.WellKnownTypeMap(field.Message), `)(m.`, field.GoName, `).`, cloneName, `())`)
 				continue
 			case p.IsLocalMessage(field.Message):
-				p.P(`r.`, field.GoName, ` = m.`, field.GoName, `.`, cloneName, `()`)
+				if p.Wrapper() {
+					p.P(`r.`, field.GoName, ` = (*`, field.GoIdent, `)((*`, field.GoIdent.GoName, `)(m.`, field.GoName, `)).`, cloneName, `()`)
+				} else {
+					p.P(`r.`, field.GoName, ` = m.`, field.GoName, `.`, cloneName, `()`)
+				}
 				continue
 			}
 		}

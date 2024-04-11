@@ -71,21 +71,23 @@ PROTOBUF_ROOT=./lib/protobuf
 gen-deps: vendor $(GOIMPORTS) $(PROTOWRAP) $(PROTOC) $(PROTOC_GEN_GO_LITE) $(PROTOC_GEN_VTPROTO_LITE)
 	git submodule update --init ./lib/protobuf
 
+WKT_ROOT=./vendor/github.com/aperturerobotics/protobuf-go-lite
+
 .PHONY: gen-wkt
 gen-wkt: gen-deps
 	protoc \
-		-I$(PROTOBUF_ROOT)/src \
+		-I$(WKT_ROOT) \
 		--plugin protoc-gen-go-lite-vtproto="$(PROTOC_GEN_VTPROTO_LITE)" \
 		--go-lite-vtproto_out=. \
 		--go-lite-vtproto_opt=module=google.golang.org/protobuf,wrap=true \
 		--go-lite-vtproto_opt=module=github.com/aperturerobotics/protobuf-go-lite,wrap=true \
 		--go-lite-vtproto_opt=Msrc/google/protobuf/descriptor.proto=github.com/aperturerobotics/vtprotobuf-lite/types/descriptorpb\;descriptorpb \
-			$(PROTOBUF_ROOT)/src/google/protobuf/duration.proto \
-			$(PROTOBUF_ROOT)/src/google/protobuf/descriptor.proto \
-			$(PROTOBUF_ROOT)/src/google/protobuf/empty.proto \
-			$(PROTOBUF_ROOT)/src/google/protobuf/timestamp.proto \
-			$(PROTOBUF_ROOT)/src/google/protobuf/wrappers.proto \
-			$(PROTOBUF_ROOT)/src/google/protobuf/struct.proto
+			$(WKT_ROOT)/types/descriptorpb/descriptor.proto \
+			$(WKT_ROOT)/types/known/durationpb/duration.proto \
+			$(WKT_ROOT)/types/known/emptypb/empty.proto \
+			$(WKT_ROOT)/types/known/timestamppb/timestamp.proto \
+			$(WKT_ROOT)/types/known/wrapperspb/wrappers.proto \
+			$(WKT_ROOT)/types/known/structpb/struct.proto
 
 .PHONY: outdated
 outdated: $(GO_MOD_OUTDATED)

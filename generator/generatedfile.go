@@ -59,7 +59,11 @@ func (p *GeneratedFile) FieldGoType(field *protogen.Field) (goType string, point
 		goType = "[]byte"
 		pointer = false // rely on nullability of slices for presence
 	case protoreflect.MessageKind, protoreflect.GroupKind:
-		goType = "*" + p.QualifiedGoIdent(field.Message.GoIdent)
+		if p.Wrapper() && p.IsLocalMessage(field.Message) {
+			goType = "*" + field.Message.GoIdent.GoName
+		} else {
+			goType = "*" + p.QualifiedGoIdent(field.Message.GoIdent)
+		}
 		pointer = false // pointer captured as part of the type
 	}
 	switch {
