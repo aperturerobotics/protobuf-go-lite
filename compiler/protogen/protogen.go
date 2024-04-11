@@ -41,7 +41,13 @@ import (
 
 const goPackageDocURL = "https://protobuf.dev/reference/go/go-generated#package"
 
-const typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
+var typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
+
+func init() {
+	if envPkg := os.Getenv("PROTOBUF_GO_TYPES_PKG"); envPkg != "" {
+		typesPackage = envPkg
+	}
+}
 
 // Run executes a function as a protoc plugin.
 //
