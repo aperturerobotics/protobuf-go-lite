@@ -42,6 +42,15 @@ import (
 
 const goPackageDocURL = "https://protobuf.dev/reference/go/go-generated#package"
 
+// optional env var to set the well known types pkg prefix
+var typesPackage string = os.Getenv("PROTOBUF_GO_TYPES_PKG")
+
+func init() {
+	if len(typesPackage) != 0 && !strings.HasSuffix(typesPackage, "/") {
+		typesPackage = typesPackage + "/"
+	}
+}
+
 // Run executes a function as a protoc plugin.
 //
 // It reads a [pluginpb.CodeGeneratorRequest] message from [os.Stdin], invokes the plugin
@@ -240,12 +249,31 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		// the "go_package" option in the .proto source file.
 		filename := fdesc.GetName()
 		impPath, pkgName := splitImportPathAndPackageName(fdesc.GetOptions().GetGoPackage())
+		// HACK: replace well known types path
+		trimTypesPrefix := "google.golang.org/protobuf/types/"
+		if typesPackage != "" && strings.HasPrefix(string(impPath), trimTypesPrefix) {
+			impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
+		}
 		if importPaths[filename] == "" && impPath != "" {
 			importPaths[filename] = impPath
 		}
 		if packageNames[filename] == "" && pkgName != "" {
 			packageNames[filename] = pkgName
 		}
+
+		// HACK: assume that the import path is the fdesc name sub .proto
+		if importPaths[filename] == "" {
+			descName := fdesc.GetName()
+			if strings.HasSuffix(descName, ".proto") {
+				importPaths[filename] = GoImportPath(path.Dir(descName))
+			}
+		}
+		if packageNames[filename] == "" {
+			pkgName := fdesc.GetPackage()
+			pkgName = strings.Replace(pkgName, ".", "_", -1)
+			packageNames[filename] = GoPackageName(pkgName)
+		}
+
 		switch {
 		case importPaths[filename] == "":
 			// The import path must be specified one way or another.
@@ -256,15 +284,6 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 					"\t• a \"M\" argument on the command line.\n\n"+
 					"See %v for more information.\n",
 				fdesc.GetName(), goPackageDocURL)
-		case !strings.Contains(string(importPaths[filename]), ".") &&
-			!strings.Contains(string(importPaths[filename]), "/"):
-			// Check that import paths contain at least a dot or slash to avoid
-			// a common mistake where import path is confused with package name.
-			return nil, fmt.Errorf(
-				"invalid Go import path %q for %q\n\n"+
-					"The import path must contain at least one period ('.') or forward slash ('/') character.\n\n"+
-					"See %v for more information.\n",
-				string(importPaths[filename]), fdesc.GetName(), goPackageDocURL)
 		case packageNames[filename] == "":
 			// If the package name is not explicitly specified,
 			// then derive a reasonable package name from the import path.
@@ -280,26 +299,6 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 				impPath = importPaths[filename]
 			}
 			packageNames[filename] = cleanPackageName(path.Base(string(impPath)))
-		}
-	}
-
-	// Consistency check: Every file with the same Go import path should have
-	// the same Go package name.
-	packageFiles := make(map[GoImportPath][]string)
-	for filename, importPath := range importPaths {
-		if _, ok := packageNames[filename]; !ok {
-			// Skip files mentioned in a M<file>=<import_path> parameter
-			// but which do not appear in the CodeGeneratorRequest.
-			continue
-		}
-		packageFiles[importPath] = append(packageFiles[importPath], filename)
-	}
-	for importPath, filenames := range packageFiles {
-		for i := 1; i < len(filenames); i++ {
-			if a, b := packageNames[filenames[0]], packageNames[filenames[i]]; a != b {
-				return nil, fmt.Errorf("Go package %v has inconsistent names %v (%v) and %v (%v)",
-					importPath, a, filenames[0], b, filenames[i])
-			}
 		}
 	}
 
