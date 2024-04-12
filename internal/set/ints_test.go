@@ -5,7 +5,7 @@
 package set
 
 import (
-	"math/rand"
+	"math/rand/v2"
 	"testing"
 )
 
@@ -14,10 +14,12 @@ const maxLimit = 1024
 var toSet, toClear [maxLimit]bool
 
 func init() {
-	r := rand.New(rand.NewSource(0))
+	var seed [32]byte
+
+	r := rand.New(rand.NewChaCha8(seed))
 	for i := 0; i < maxLimit; i++ {
-		toSet[i] = r.Intn(2) == 0
-		toClear[i] = r.Intn(2) == 0
+		toSet[i] = r.Int32N(2) == 0
+		toClear[i] = r.Int32N(2) == 0
 	}
 }
 

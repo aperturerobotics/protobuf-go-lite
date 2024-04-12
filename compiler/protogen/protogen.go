@@ -19,7 +19,7 @@ import (
 	"go/printer"
 	"go/token"
 	"go/types"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -27,14 +27,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/aperturerobotics/protobuf-go-lite/internal/genid"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/strs"
 	"google.golang.org/protobuf/encoding/prototext"
-	"google.golang.org/protobuf/internal/genid"
-	"google.golang.org/protobuf/internal/strs"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
-
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/dynamicpb"
 	"google.golang.org/protobuf/types/pluginpb"
@@ -42,12 +41,11 @@ import (
 
 const goPackageDocURL = "https://protobuf.dev/reference/go/go-generated#package"
 
-// optional env var to set the well known types pkg prefix
-var typesPackage string = os.Getenv("PROTOBUF_GO_TYPES_PKG")
+var typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
 
 func init() {
-	if len(typesPackage) != 0 && !strings.HasSuffix(typesPackage, "/") {
-		typesPackage = typesPackage + "/"
+	if envPkg := os.Getenv("PROTOBUF_GO_TYPES_PKG"); envPkg != "" {
+		typesPackage = envPkg
 	}
 }
 
@@ -69,7 +67,7 @@ func run(opts Options, f func(*Plugin) error) error {
 	if len(os.Args) > 1 {
 		return fmt.Errorf("unknown argument %q (this program should be run by protoc, not directly)", os.Args[1])
 	}
-	in, err := ioutil.ReadAll(os.Stdin)
+	in, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		return err
 	}
@@ -139,7 +137,7 @@ type Options struct {
 	// passed in the --<lang>_out protoc, separated from the output
 	// directory with a colon; e.g.,
 	//
-	//   --go_out=<param1>=<value1>,<param2>=<value2>:<output_directory>
+	//   --go-lite_out=<param1>=<value1>,<param2>=<value2>:<output_directory>
 	//
 	// Parameters passed in this fashion as a comma-separated list of
 	// key=value pairs will be passed to the ParamFunc.
@@ -240,8 +238,6 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 	// .proto source file specifying the full import path of the Go package
 	// associated with this file.
 	//
-	//     option go_package = "google.golang.org/protobuf/types/known/anypb";
-	//
 	// Alternatively, build systems which want to exert full control over
 	// import paths may specify M<filename>=<import_path> flags.
 	for _, fdesc := range gen.Request.ProtoFile {
@@ -251,7 +247,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		impPath, pkgName := splitImportPathAndPackageName(fdesc.GetOptions().GetGoPackage())
 		// HACK: replace well known types path
 		trimTypesPrefix := "google.golang.org/protobuf/types/"
-		if typesPackage != "" && strings.HasPrefix(string(impPath), trimTypesPrefix) {
+		if strings.HasPrefix(string(impPath), trimTypesPrefix) {
 			impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
 		}
 		if importPaths[filename] == "" && impPath != "" {
@@ -1018,8 +1014,6 @@ func (g *GeneratedFile) Unskip() {
 // The symbol may refer to a type, constant, variable, function, method, or
 // struct field.  The "T.sel" syntax is used to identify the method or field
 // 'sel' on type 'T'.
-//
-// Deprecated: Use the [GeneratedFile.AnnotateSymbol] method instead.
 func (g *GeneratedFile) Annotate(symbol string, loc Location) {
 	g.AnnotateSymbol(symbol, Annotation{Location: loc})
 }
@@ -1077,7 +1071,7 @@ func (g *GeneratedFile) Content() ([]byte, error) {
 		return importPath
 	}
 	for importPath := range g.packageNames {
-		pkgName := string(g.packageNames[GoImportPath(importPath)])
+		pkgName := string(g.packageNames[importPath])
 		pkgPath := rewriteImport(string(importPath))
 		importPaths = append(importPaths, [2]string{pkgName, pkgPath})
 	}
@@ -1241,7 +1235,7 @@ func newGoIdent(f *File, d protoreflect.Descriptor) GoIdent {
 }
 
 // A GoImportPath is the import path of a Go package.
-// For example: "google.golang.org/protobuf/compiler/protogen"
+// For example: "github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 type GoImportPath string
 
 func (p GoImportPath) String() string { return strconv.Quote(string(p)) }
@@ -1363,16 +1357,6 @@ func (e *extensionRegistry) hasNovelExtensions() bool {
 func (e *extensionRegistry) registerAllExtensionsFromFile(f protoreflect.FileDescriptor) error {
 	if err := e.registerAllExtensions(f.Extensions()); err != nil {
 		return err
-	}
-	return nil
-}
-
-func (e *extensionRegistry) registerAllExtensionsFromMessage(ms protoreflect.MessageDescriptors) error {
-	for i := 0; i < ms.Len(); i++ {
-		m := ms.Get(i)
-		if err := e.registerAllExtensions(m.Extensions()); err != nil {
-			return err
-		}
 	}
 	return nil
 }

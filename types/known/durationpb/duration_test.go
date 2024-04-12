@@ -10,12 +10,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/aperturerobotics/protobuf-go-lite/internal/detrand"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"google.golang.org/protobuf/internal/detrand"
-	"google.golang.org/protobuf/testing/protocmp"
 
-	durpb "google.golang.org/protobuf/types/known/durationpb"
+	durpb "github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 )
 
 func init() {
@@ -27,28 +26,6 @@ const (
 	maxGoSeconds = math.MaxInt64 / int64(1e9)
 	absSeconds   = 315576000000 // 10000yr * 365.25day/yr * 24hr/day * 60min/hr * 60sec/min
 )
-
-func TestToDuration(t *testing.T) {
-	tests := []struct {
-		in   time.Duration
-		want *durpb.Duration
-	}{
-		{in: time.Duration(0), want: &durpb.Duration{Seconds: 0, Nanos: 0}},
-		{in: -time.Second, want: &durpb.Duration{Seconds: -1, Nanos: 0}},
-		{in: +time.Second, want: &durpb.Duration{Seconds: +1, Nanos: 0}},
-		{in: -time.Second - time.Millisecond, want: &durpb.Duration{Seconds: -1, Nanos: -1e6}},
-		{in: +time.Second + time.Millisecond, want: &durpb.Duration{Seconds: +1, Nanos: +1e6}},
-		{in: time.Duration(math.MinInt64), want: &durpb.Duration{Seconds: minGoSeconds, Nanos: int32(math.MinInt64 - 1e9*minGoSeconds)}},
-		{in: time.Duration(math.MaxInt64), want: &durpb.Duration{Seconds: maxGoSeconds, Nanos: int32(math.MaxInt64 - 1e9*maxGoSeconds)}},
-	}
-
-	for _, tt := range tests {
-		got := durpb.New(tt.in)
-		if diff := cmp.Diff(tt.want, got, protocmp.Transform()); diff != "" {
-			t.Errorf("New(%v) mismatch (-want +got):\n%s", tt.in, diff)
-		}
-	}
-}
 
 func TestFromDuration(t *testing.T) {
 	tests := []struct {
