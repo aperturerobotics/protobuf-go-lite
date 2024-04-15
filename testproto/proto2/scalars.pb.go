@@ -6,13 +6,13 @@ package proto2
 
 import (
 	binary "encoding/binary"
-	fmt "fmt"
 	io "io"
 	math "math"
 	strconv "strconv"
 	unsafe "unsafe"
 
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	errors "github.com/pkg/errors"
 )
 
 type EnumMessage_Num int32
@@ -2022,7 +2022,7 @@ func (m *DoubleMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.RequiredField))))
@@ -2088,7 +2088,7 @@ func (m *FloatMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.RequiredField))))
@@ -2162,7 +2162,7 @@ func (m *Int32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -2235,7 +2235,7 @@ func (m *Int64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -2307,7 +2307,7 @@ func (m *Uint32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -2379,7 +2379,7 @@ func (m *Uint64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -2453,7 +2453,7 @@ func (m *Sint32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint32(*m.RequiredField)<<1)^uint32((*m.RequiredField>>31))))
 		i--
@@ -2527,7 +2527,7 @@ func (m *Sint64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint64(*m.RequiredField)<<1)^uint64((*m.RequiredField>>63))))
 		i--
@@ -2590,7 +2590,7 @@ func (m *Fixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
@@ -2654,7 +2654,7 @@ func (m *Fixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
@@ -2718,7 +2718,7 @@ func (m *Sfixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
@@ -2782,7 +2782,7 @@ func (m *Sfixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
@@ -2858,7 +2858,7 @@ func (m *BoolMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i--
 		if *m.RequiredField {
@@ -2919,7 +2919,7 @@ func (m *StringMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= len(*m.RequiredField)
 		copy(dAtA[i:], *m.RequiredField)
@@ -2977,7 +2977,7 @@ func (m *BytesMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= len(m.RequiredField)
 		copy(dAtA[i:], m.RequiredField)
@@ -3052,7 +3052,7 @@ func (m *EnumMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -3117,7 +3117,7 @@ func (m *DoubleMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.RequiredField))))
@@ -3183,7 +3183,7 @@ func (m *FloatMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.RequiredField))))
@@ -3257,7 +3257,7 @@ func (m *Int32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -3330,7 +3330,7 @@ func (m *Int64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -3402,7 +3402,7 @@ func (m *Uint32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -3474,7 +3474,7 @@ func (m *Uint64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -3548,7 +3548,7 @@ func (m *Sint32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint32(*m.RequiredField)<<1)^uint32((*m.RequiredField>>31))))
 		i--
@@ -3622,7 +3622,7 @@ func (m *Sint64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint64(*m.RequiredField)<<1)^uint64((*m.RequiredField>>63))))
 		i--
@@ -3685,7 +3685,7 @@ func (m *Fixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
@@ -3749,7 +3749,7 @@ func (m *Fixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
@@ -3813,7 +3813,7 @@ func (m *Sfixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 4
 		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
@@ -3877,7 +3877,7 @@ func (m *Sfixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= 8
 		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
@@ -3953,7 +3953,7 @@ func (m *BoolMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i--
 		if *m.RequiredField {
@@ -4014,7 +4014,7 @@ func (m *StringMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= len(*m.RequiredField)
 		copy(dAtA[i:], *m.RequiredField)
@@ -4072,7 +4072,7 @@ func (m *BytesMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i -= len(m.RequiredField)
 		copy(dAtA[i:], m.RequiredField)
@@ -4147,7 +4147,7 @@ func (m *EnumMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
-		return 0, fmt.Errorf("proto: required field required_field not set")
+		return 0, errors.Errorf("proto: required field required_field not set")
 	} else {
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.RequiredField))
 		i--
@@ -4578,15 +4578,15 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoubleMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: DoubleMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoubleMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: DoubleMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -4599,7 +4599,7 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -4661,7 +4661,7 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -4715,7 +4715,7 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -4734,7 +4734,7 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -4766,15 +4766,15 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: FloatMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: FloatMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FloatMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: FloatMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -4787,7 +4787,7 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -4849,7 +4849,7 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -4903,7 +4903,7 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -4922,7 +4922,7 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -4954,15 +4954,15 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Int32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -4983,7 +4983,7 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -5075,7 +5075,7 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -5151,7 +5151,7 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -5170,7 +5170,7 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -5202,15 +5202,15 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Int64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -5231,7 +5231,7 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -5323,7 +5323,7 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -5399,7 +5399,7 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -5418,7 +5418,7 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -5450,15 +5450,15 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Uint32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Uint32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Uint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Uint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -5479,7 +5479,7 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -5571,7 +5571,7 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -5647,7 +5647,7 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -5666,7 +5666,7 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -5698,15 +5698,15 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Uint64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Uint64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Uint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Uint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -5727,7 +5727,7 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -5819,7 +5819,7 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -5895,7 +5895,7 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -5914,7 +5914,7 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -5946,15 +5946,15 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sint32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sint32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -5976,7 +5976,7 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -6071,7 +6071,7 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -6149,7 +6149,7 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -6168,7 +6168,7 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -6200,15 +6200,15 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sint64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sint64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -6231,7 +6231,7 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -6327,7 +6327,7 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, int64(v))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -6405,7 +6405,7 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, int64(v))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -6424,7 +6424,7 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -6456,15 +6456,15 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Fixed32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Fixed32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Fixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Fixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -6476,7 +6476,7 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -6535,7 +6535,7 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -6587,7 +6587,7 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -6606,7 +6606,7 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -6638,15 +6638,15 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Fixed64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Fixed64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Fixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Fixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -6658,7 +6658,7 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -6717,7 +6717,7 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -6769,7 +6769,7 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -6788,7 +6788,7 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -6820,15 +6820,15 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sfixed32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sfixed32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sfixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sfixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -6840,7 +6840,7 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -6899,7 +6899,7 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -6951,7 +6951,7 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -6970,7 +6970,7 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7002,15 +7002,15 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sfixed64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sfixed64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sfixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sfixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -7022,7 +7022,7 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -7081,7 +7081,7 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -7133,7 +7133,7 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -7152,7 +7152,7 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7184,15 +7184,15 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BoolMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: BoolMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BoolMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BoolMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -7214,7 +7214,7 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -7301,7 +7301,7 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -7371,7 +7371,7 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, bool(v != 0))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -7390,7 +7390,7 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7422,15 +7422,15 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StringMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: StringMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StringMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: StringMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -7464,7 +7464,7 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -7497,7 +7497,7 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -7544,7 +7544,7 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7576,15 +7576,15 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BytesMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: BytesMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BytesMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BytesMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -7619,7 +7619,7 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -7653,7 +7653,7 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -7700,7 +7700,7 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7732,15 +7732,15 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: EnumMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: EnumMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: EnumMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: EnumMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v EnumMessage_Num
 			for shift := uint(0); ; shift += 7 {
@@ -7761,7 +7761,7 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v EnumMessage_Num
 			for shift := uint(0); ; shift += 7 {
@@ -7846,7 +7846,7 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -7915,7 +7915,7 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -7934,7 +7934,7 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -7966,15 +7966,15 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoubleMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: DoubleMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoubleMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: DoubleMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -7987,7 +7987,7 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -8049,7 +8049,7 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -8103,7 +8103,7 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -8122,7 +8122,7 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -8154,15 +8154,15 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: FloatMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: FloatMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FloatMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: FloatMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -8175,7 +8175,7 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -8237,7 +8237,7 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -8291,7 +8291,7 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v2)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -8310,7 +8310,7 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -8342,15 +8342,15 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Int32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -8371,7 +8371,7 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -8463,7 +8463,7 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -8539,7 +8539,7 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -8558,7 +8558,7 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -8590,15 +8590,15 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Int64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -8619,7 +8619,7 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -8711,7 +8711,7 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -8787,7 +8787,7 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -8806,7 +8806,7 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -8838,15 +8838,15 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Uint32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Uint32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Uint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Uint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -8867,7 +8867,7 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -8959,7 +8959,7 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -9035,7 +9035,7 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -9054,7 +9054,7 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -9086,15 +9086,15 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Uint64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Uint64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Uint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Uint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9115,7 +9115,7 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9207,7 +9207,7 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -9283,7 +9283,7 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -9302,7 +9302,7 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -9334,15 +9334,15 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sint32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sint32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sint32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -9364,7 +9364,7 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -9459,7 +9459,7 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -9537,7 +9537,7 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -9556,7 +9556,7 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -9588,15 +9588,15 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sint64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sint64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sint64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9619,7 +9619,7 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -9715,7 +9715,7 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, int64(v))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -9793,7 +9793,7 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, int64(v))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -9812,7 +9812,7 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -9844,15 +9844,15 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Fixed32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Fixed32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Fixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Fixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -9864,7 +9864,7 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -9923,7 +9923,7 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -9975,7 +9975,7 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -9994,7 +9994,7 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10026,15 +10026,15 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Fixed64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Fixed64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Fixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Fixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -10046,7 +10046,7 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -10105,7 +10105,7 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -10157,7 +10157,7 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10176,7 +10176,7 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10208,15 +10208,15 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sfixed32Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sfixed32Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sfixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sfixed32Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -10228,7 +10228,7 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -10287,7 +10287,7 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 5 {
@@ -10339,7 +10339,7 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10358,7 +10358,7 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10390,15 +10390,15 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Sfixed64Message: wiretype end group for non-group")
+			return errors.Errorf("proto: Sfixed64Message: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Sfixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Sfixed64Message: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -10410,7 +10410,7 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -10469,7 +10469,7 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 1 {
@@ -10521,7 +10521,7 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10540,7 +10540,7 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10572,15 +10572,15 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BoolMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: BoolMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BoolMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BoolMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -10602,7 +10602,7 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -10689,7 +10689,7 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -10759,7 +10759,7 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, bool(v != 0))
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -10778,7 +10778,7 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10810,15 +10810,15 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StringMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: StringMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StringMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: StringMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -10856,7 +10856,7 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -10893,7 +10893,7 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -10944,7 +10944,7 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -10976,15 +10976,15 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BytesMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: BytesMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BytesMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BytesMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -11016,7 +11016,7 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -11047,7 +11047,7 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -11093,7 +11093,7 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {
@@ -11125,15 +11125,15 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: EnumMessage: wiretype end group for non-group")
+			return errors.Errorf("proto: EnumMessage: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: EnumMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: EnumMessage: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v EnumMessage_Num
 			for shift := uint(0); ; shift += 7 {
@@ -11154,7 +11154,7 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v EnumMessage_Num
 			for shift := uint(0); ; shift += 7 {
@@ -11239,7 +11239,7 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
@@ -11308,7 +11308,7 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
 			}
 		default:
 			iNdEx = preIndex
@@ -11327,7 +11327,7 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		}
 	}
 	if hasFields[0]&uint64(0x00000001) == 0 {
-		return fmt.Errorf("proto: required field required_field not set")
+		return errors.Errorf("proto: required field required_field not set")
 	}
 
 	if iNdEx > l {

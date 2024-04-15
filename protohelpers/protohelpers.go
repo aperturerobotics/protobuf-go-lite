@@ -3,18 +3,19 @@
 package protohelpers
 
 import (
-	"fmt"
 	"io"
 	"math/bits"
+
+	"github.com/pkg/errors"
 )
 
 var (
 	// ErrInvalidLength is returned when decoding a negative length.
-	ErrInvalidLength = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrInvalidLength = errors.New("proto: negative length found during unmarshaling")
 	// ErrIntOverflow is returned when decoding a varint representation of an integer that overflows 64 bits.
-	ErrIntOverflow = fmt.Errorf("proto: integer overflow")
+	ErrIntOverflow = errors.New("proto: integer overflow")
 	// ErrUnexpectedEndOfGroup is returned when decoding a group end without a corresponding group start.
-	ErrUnexpectedEndOfGroup = fmt.Errorf("proto: unexpected end of group")
+	ErrUnexpectedEndOfGroup = errors.New("proto: unexpected end of group")
 )
 
 // EncodeVarint encodes a uint64 into a varint-encoded byte slice and returns the offset of the encoded value.
@@ -109,7 +110,7 @@ func Skip(dAtA []byte) (n int, err error) {
 		case 5:
 			iNdEx += 4
 		default:
-			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+			return 0, errors.Errorf("proto: illegal wireType %d", wireType)
 		}
 		if iNdEx < 0 {
 			return 0, ErrInvalidLength

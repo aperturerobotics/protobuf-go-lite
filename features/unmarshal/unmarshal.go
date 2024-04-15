@@ -16,6 +16,8 @@ import (
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
 )
 
+var errorsPackage = protogen.GoImportPath("github.com/pkg/errors")
+
 func init() {
 	generator.RegisterFeature("unmarshal", func(gen *generator.GeneratedFile) generator.FeatureGenerator {
 		return &unmarshal{GeneratedFile: gen}
@@ -670,11 +672,11 @@ func (p *unmarshal) field(proto3, oneof bool, field *protogen.Field, message *pr
 		p.fieldItem(field, fieldname, message, false)
 		p.P(`}`)
 		p.P(`} else {`)
-		p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: wrong wireType = %d for field `, errFieldname, `", wireType)`)
+		p.P(`return `, errorsPackage.Ident("Errorf"), `("proto: wrong wireType = %d for field `, errFieldname, `", wireType)`)
 		p.P(`}`)
 	} else {
 		p.P(`if wireType != `, strconv.Itoa(int(wireType)), `{`)
-		p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: wrong wireType = %d for field `, errFieldname, `", wireType)`)
+		p.P(`return `, errorsPackage.Ident("Errorf"), `("proto: wrong wireType = %d for field `, errFieldname, `", wireType)`)
 		p.P(`}`)
 		p.fieldItem(field, fieldname, message, proto3)
 	}
@@ -719,10 +721,10 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 	p.P(`fieldNum := int32(wire >> 3)`)
 	p.P(`wireType := int(wire & 0x7)`)
 	p.P(`if wireType == `, strconv.Itoa(int(protowire.EndGroupType)), ` {`)
-	p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: `, message.GoIdent.GoName, `: wiretype end group for non-group")`)
+	p.P(`return `, errorsPackage.Ident("Errorf"), `("proto: `, message.GoIdent.GoName, `: wiretype end group for non-group")`)
 	p.P(`}`)
 	p.P(`if fieldNum <= 0 {`)
-	p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: `, message.GoIdent.GoName, `: illegal tag %d (wire type %d)", fieldNum, wire)`)
+	p.P(`return `, errorsPackage.Ident("Errorf"), `("proto: `, message.GoIdent.GoName, `: illegal tag %d (wire type %d)", fieldNum, wire)`)
 	p.P(`}`)
 	p.P(`switch fieldNum {`)
 	for _, field := range message.Fields {
@@ -760,7 +762,7 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 			panic("missing required field")
 		}
 		p.P(`if hasFields[`, strconv.Itoa(fieldBit/64), `] & uint64(`, fmt.Sprintf("0x%08x", uint64(1)<<(fieldBit%64)), `) == 0 {`)
-		p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: required field `, field.Desc.Name(), ` not set")`)
+		p.P(`return `, errorsPackage.Ident("Errorf"), `("proto: required field `, field.Desc.Name(), ` not set")`)
 		p.P(`}`)
 	}
 	p.P()

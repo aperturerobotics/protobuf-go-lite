@@ -5,7 +5,6 @@
 package timestamppb
 
 import (
-	fmt "fmt"
 	io "io"
 	time "time"
 
@@ -397,15 +396,15 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Timestamp: wiretype end group for non-group")
+			return errors.Errorf("proto: Timestamp: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Timestamp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Timestamp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
@@ -424,7 +423,7 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 			}
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {
@@ -486,15 +485,15 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Timestamp: wiretype end group for non-group")
+			return errors.Errorf("proto: Timestamp: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Timestamp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Timestamp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
@@ -513,7 +512,7 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 			}
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {

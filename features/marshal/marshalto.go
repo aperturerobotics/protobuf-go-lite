@@ -17,6 +17,8 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
+var errorsPackage = protogen.GoImportPath("github.com/pkg/errors")
+
 func init() {
 	generator.RegisterFeature("marshal", func(gen *generator.GeneratedFile) generator.FeatureGenerator {
 		return &marshal{GeneratedFile: gen, Stable: false, strict: false}
@@ -121,7 +123,7 @@ func (p *marshal) field(oneof bool, numGen *counter, field *protogen.Field) {
 	} else if nullable {
 		if field.Desc.Cardinality() == protoreflect.Required {
 			p.P(`if m.`, fieldname, ` == nil {`)
-			p.P(`return 0, `, p.Ident("fmt", "Errorf"), `("proto: required field `, field.Desc.Name(), ` not set")`)
+			p.P(`return 0, `, errorsPackage.Ident("Errorf"), `("proto: required field `, field.Desc.Name(), ` not set")`)
 			p.P(`} else {`)
 		} else {
 			p.P(`if m.`, fieldname, ` != nil {`)

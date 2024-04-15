@@ -6,13 +6,13 @@ package proto3opt
 
 import (
 	binary "encoding/binary"
-	fmt "fmt"
 	io "io"
 	math "math"
 	strconv "strconv"
 	unsafe "unsafe"
 
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	errors "github.com/pkg/errors"
 )
 
 type SimpleEnum int32
@@ -677,15 +677,15 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: OptionalFieldInProto3: wiretype end group for non-group")
+			return errors.Errorf("proto: OptionalFieldInProto3: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: OptionalFieldInProto3: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: OptionalFieldInProto3: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalInt32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalInt32", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -705,7 +705,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalInt32 = &v
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalInt64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalInt64", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -725,7 +725,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalInt64 = &v
 		case 3:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalUint32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalUint32", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -745,7 +745,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalUint32 = &v
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalUint64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalUint64", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -765,7 +765,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalUint64 = &v
 		case 5:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -786,7 +786,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalSint32 = &v
 		case 6:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -808,7 +808,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalSint64 = &v2
 		case 7:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -819,7 +819,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalFixed32 = &v
 		case 8:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFixed64", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -830,7 +830,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalFixed64 = &v
 		case 9:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSfixed32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSfixed32", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -841,7 +841,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalSfixed32 = &v
 		case 10:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSfixed64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSfixed64", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -852,7 +852,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalSfixed64 = &v
 		case 11:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFloat", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFloat", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -864,7 +864,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalFloat = &v2
 		case 12:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalDouble", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalDouble", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -876,7 +876,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalDouble = &v2
 		case 13:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -897,7 +897,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalBool = &b
 		case 14:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -930,7 +930,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 15:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -964,7 +964,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 16:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)
 			}
 			var v SimpleEnum
 			for shift := uint(0); ; shift += 7 {
@@ -1027,15 +1027,15 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: OptionalFieldInProto3: wiretype end group for non-group")
+			return errors.Errorf("proto: OptionalFieldInProto3: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: OptionalFieldInProto3: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: OptionalFieldInProto3: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalInt32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalInt32", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -1055,7 +1055,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalInt32 = &v
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalInt64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalInt64", wireType)
 			}
 			var v int64
 			for shift := uint(0); ; shift += 7 {
@@ -1075,7 +1075,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalInt64 = &v
 		case 3:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalUint32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalUint32", wireType)
 			}
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
@@ -1095,7 +1095,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalUint32 = &v
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalUint64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalUint64", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1115,7 +1115,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalUint64 = &v
 		case 5:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
@@ -1136,7 +1136,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalSint32 = &v
 		case 6:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
 			}
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1158,7 +1158,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalSint64 = &v2
 		case 7:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -1169,7 +1169,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalFixed32 = &v
 		case 8:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFixed64", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1180,7 +1180,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalFixed64 = &v
 		case 9:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSfixed32", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSfixed32", wireType)
 			}
 			var v int32
 			if (iNdEx + 4) > l {
@@ -1191,7 +1191,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalSfixed32 = &v
 		case 10:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSfixed64", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalSfixed64", wireType)
 			}
 			var v int64
 			if (iNdEx + 8) > l {
@@ -1202,7 +1202,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalSfixed64 = &v
 		case 11:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFloat", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalFloat", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -1214,7 +1214,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalFloat = &v2
 		case 12:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalDouble", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalDouble", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1226,7 +1226,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalDouble = &v2
 		case 13:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -1247,7 +1247,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalBool = &b
 		case 14:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1284,7 +1284,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			iNdEx = postIndex
 		case 15:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -1315,7 +1315,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			iNdEx = postIndex
 		case 16:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)
 			}
 			var v SimpleEnum
 			for shift := uint(0); ; shift += 7 {

@@ -6,12 +6,12 @@ package wrapperspb
 
 import (
 	binary "encoding/binary"
-	fmt "fmt"
 	io "io"
 	math "math"
 	unsafe "unsafe"
 
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	errors "github.com/pkg/errors"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -1473,15 +1473,15 @@ func (m *DoubleValue) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoubleValue: wiretype end group for non-group")
+			return errors.Errorf("proto: DoubleValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoubleValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: DoubleValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1535,15 +1535,15 @@ func (m *FloatValue) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: FloatValue: wiretype end group for non-group")
+			return errors.Errorf("proto: FloatValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FloatValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: FloatValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -1597,15 +1597,15 @@ func (m *Int64Value) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int64Value: wiretype end group for non-group")
+			return errors.Errorf("proto: Int64Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int64Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int64Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -1667,15 +1667,15 @@ func (m *UInt64Value) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UInt64Value: wiretype end group for non-group")
+			return errors.Errorf("proto: UInt64Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UInt64Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: UInt64Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -1737,15 +1737,15 @@ func (m *Int32Value) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int32Value: wiretype end group for non-group")
+			return errors.Errorf("proto: Int32Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int32Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int32Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -1807,15 +1807,15 @@ func (m *UInt32Value) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UInt32Value: wiretype end group for non-group")
+			return errors.Errorf("proto: UInt32Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UInt32Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: UInt32Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -1877,15 +1877,15 @@ func (m *BoolValue) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BoolValue: wiretype end group for non-group")
+			return errors.Errorf("proto: BoolValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BoolValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BoolValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -1948,15 +1948,15 @@ func (m *StringValue) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StringValue: wiretype end group for non-group")
+			return errors.Errorf("proto: StringValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StringValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: StringValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2031,15 +2031,15 @@ func (m *BytesValue) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BytesValue: wiretype end group for non-group")
+			return errors.Errorf("proto: BytesValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BytesValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BytesValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -2116,15 +2116,15 @@ func (m *DoubleValue) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: DoubleValue: wiretype end group for non-group")
+			return errors.Errorf("proto: DoubleValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DoubleValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: DoubleValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -2178,15 +2178,15 @@ func (m *FloatValue) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: FloatValue: wiretype end group for non-group")
+			return errors.Errorf("proto: FloatValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FloatValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: FloatValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 5 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v uint32
 			if (iNdEx + 4) > l {
@@ -2240,15 +2240,15 @@ func (m *Int64Value) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int64Value: wiretype end group for non-group")
+			return errors.Errorf("proto: Int64Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int64Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int64Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -2310,15 +2310,15 @@ func (m *UInt64Value) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UInt64Value: wiretype end group for non-group")
+			return errors.Errorf("proto: UInt64Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UInt64Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: UInt64Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -2380,15 +2380,15 @@ func (m *Int32Value) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Int32Value: wiretype end group for non-group")
+			return errors.Errorf("proto: Int32Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Int32Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: Int32Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -2450,15 +2450,15 @@ func (m *UInt32Value) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UInt32Value: wiretype end group for non-group")
+			return errors.Errorf("proto: UInt32Value: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UInt32Value: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: UInt32Value: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			m.Value = 0
 			for shift := uint(0); ; shift += 7 {
@@ -2520,15 +2520,15 @@ func (m *BoolValue) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BoolValue: wiretype end group for non-group")
+			return errors.Errorf("proto: BoolValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BoolValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BoolValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -2591,15 +2591,15 @@ func (m *StringValue) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: StringValue: wiretype end group for non-group")
+			return errors.Errorf("proto: StringValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StringValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: StringValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2678,15 +2678,15 @@ func (m *BytesValue) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: BytesValue: wiretype end group for non-group")
+			return errors.Errorf("proto: BytesValue: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: BytesValue: illegal tag %d (wire type %d)", fieldNum, wire)
+			return errors.Errorf("proto: BytesValue: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+				return errors.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
