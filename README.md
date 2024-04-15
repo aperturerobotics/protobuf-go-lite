@@ -19,6 +19,10 @@ which has limited reflection support.
 
 [tinygo]: https://github.com/tinygo-org/tinygo
 
+Lightweight Protobuf 3 RPCs are implemented in [StaRPC] for Go and TypeScript.
+
+[StaRPC]: https://github.com/aperturerobotics/starpc
+
 ## Protobuf
 
 [protocol buffers](https://protobuf.dev) are a cross-platform cross-language
