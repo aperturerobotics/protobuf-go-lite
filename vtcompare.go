@@ -1,4 +1,4 @@
-package vtcompare
+package protobuf_go_lite
 
 // EqualVT is a message with a EqualVT function (VTProtobuf).
 type EqualVT[T comparable] interface {

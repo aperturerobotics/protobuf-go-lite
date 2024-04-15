@@ -1,4 +1,4 @@
-package vtcompare
+package protobuf_go_lite
 
 import "testing"
 
