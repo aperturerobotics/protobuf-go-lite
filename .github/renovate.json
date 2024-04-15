@@ -8,12 +8,12 @@
   ],
   "forkProcessing": "enabled",
   "branchConcurrentLimit": 0,
-  "packageRules": [{
-    "matchManagers": ["gomod"],
-    "matchDepTypes": ["replace"],
-    "enabled": false
-  }, {
-    "matchPackageNames": ["github.com/libp2p/go-libp2p"],
-    "allowedVersions": ["^v0.*"]
-  }]
+  "ignorePaths": ["hack"],
+  "packageRules": [
+    {
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["replace", "toolchain"],
+      "enabled": false
+    }
+  ]
 }
