@@ -9,6 +9,7 @@ import (
 	io "io"
 
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	anypb "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb"
 	durationpb "github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 	emptypb "github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb"
 	structpb "github.com/aperturerobotics/protobuf-go-lite/types/known/structpb"
@@ -18,6 +19,7 @@ import (
 
 type MessageWithWKT struct {
 	unknownFields  []byte
+	Any            *anypb.Any              `protobuf:"bytes,1,opt,name=any,proto3" json:"any,omitempty"`
 	Duration       *durationpb.Duration    `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`
 	Empty          *emptypb.Empty          `protobuf:"bytes,3,opt,name=empty,proto3" json:"empty,omitempty"`
 	Timestamp      *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -41,6 +43,13 @@ func (x *MessageWithWKT) Reset() {
 }
 
 func (*MessageWithWKT) ProtoMessage() {}
+
+func (x *MessageWithWKT) GetAny() *anypb.Any {
+	if x != nil {
+		return x.Any
+	}
+	return nil
+}
 
 func (x *MessageWithWKT) GetDuration() *durationpb.Duration {
 	if x != nil {
@@ -160,6 +169,9 @@ func (m *MessageWithWKT) CloneVT() *MessageWithWKT {
 	}
 	r := new(MessageWithWKT)
 	r.NullValue = m.NullValue
+	if rhs := m.Any; rhs != nil {
+		r.Any = rhs.CloneVT()
+	}
 	if rhs := m.Duration; rhs != nil {
 		r.Duration = rhs.CloneVT()
 	}
@@ -220,6 +232,9 @@ func (this *MessageWithWKT) EqualVT(that *MessageWithWKT) bool {
 	if this == that {
 		return true
 	} else if this == nil || that == nil {
+		return false
+	}
+	if !this.Any.EqualVT(that.Any) {
 		return false
 	}
 	if !this.Duration.EqualVT(that.Duration) {
@@ -471,6 +486,16 @@ func (m *MessageWithWKT) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
+	if m.Any != nil {
+		size, err := m.Any.MarshalToSizedBufferVT(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = protohelpers.EncodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -665,6 +690,16 @@ func (m *MessageWithWKT) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 		i--
 		dAtA[i] = 0x12
 	}
+	if m.Any != nil {
+		size, err := m.Any.MarshalToSizedBufferVTStrict(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = protohelpers.EncodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -674,6 +709,10 @@ func (m *MessageWithWKT) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Any != nil {
+		l = m.Any.SizeVT()
+		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
+	}
 	if m.Duration != nil {
 		l = m.Duration.SizeVT()
 		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
@@ -770,6 +809,42 @@ func (m *MessageWithWKT) UnmarshalVT(dAtA []byte) error {
 			return fmt.Errorf("proto: MessageWithWKT: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Any", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protohelpers.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Any == nil {
+				m.Any = &anypb.Any{}
+			}
+			if err := m.Any.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Duration", wireType)
@@ -1380,6 +1455,42 @@ func (m *MessageWithWKT) UnmarshalVTUnsafe(dAtA []byte) error {
 			return fmt.Errorf("proto: MessageWithWKT: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Any", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protohelpers.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Any == nil {
+				m.Any = &anypb.Any{}
+			}
+			if err := m.Any.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Duration", wireType)

@@ -1,5 +1,12 @@
 package protobuf_go_lite
 
+// Message is the base vtprotobuf message marshal/unmarshal interface.
+type Message interface {
+	MarshalVT() ([]byte, error)
+	UnmarshalVT([]byte) error
+	Reset()
+}
+
 // EqualVT is a message with a EqualVT function (VTProtobuf).
 type EqualVT[T comparable] interface {
 	comparable
@@ -10,7 +17,7 @@ type EqualVT[T comparable] interface {
 // CompareEqualVT returns a compare function to compare two VTProtobuf messages.
 func CompareEqualVT[T EqualVT[T]]() func(t1, t2 T) bool {
 	return func(t1, t2 T) bool {
-		return IsEqualVT[T](t1, t2)
+		return IsEqualVT(t1, t2)
 	}
 }
 

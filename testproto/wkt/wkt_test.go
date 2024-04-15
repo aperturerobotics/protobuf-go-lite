@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/aperturerobotics/protobuf-go-lite/types/known/anypb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
@@ -15,7 +16,11 @@ import (
 func TestWellKnownTypes(t *testing.T) {
 	dur := durationpb.New(4*time.Hour + 2*time.Second)
 
+	anyVal, err := anypb.New(dur, "cool.apps/test-value")
+	require.NoError(t, err)
+
 	m := &MessageWithWKT{
+		Any:         anyVal,
 		Duration:    dur,
 		Empty:       &emptypb.Empty{},
 		Timestamp:   timestamppb.Now(),
