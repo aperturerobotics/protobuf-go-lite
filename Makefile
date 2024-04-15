@@ -89,7 +89,10 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 					xargs printf -- \
 					"$$(pwd)/vendor/$${PROJECT}/%s "); \
 	}; \
-	protogen "./types/*.proto"; \
+	for d in ./types/known/*; do \
+		protogen "$${d}/*.proto"; \
+	done; \
+	protogen "./types/descriptorpb/*.proto"; \
 	protogen "./testproto/*.proto"; \
 	rm $$(pwd)/vendor/$${PROJECT} || true
 	$(GOIMPORTS) -w ./
