@@ -626,12 +626,7 @@ func (p *marshal) message(message *protogen.Message) {
 			if !oneof {
 				p.field(false, &numGen, field)
 			} else {
-				if p.IsWellKnownType(message) {
-					p.P(`if m, ok := m.`, field.Oneof.GoName, `.(*`, field.GoIdent, `); ok {`)
-					p.P(`msg := ((*`, p.WellKnownFieldMap(field), `)(m))`)
-				} else {
-					p.P(`if msg, ok := m.`, field.Oneof.GoName, `.(*`, field.GoIdent.GoName, `); ok {`)
-				}
+				p.P(`if msg, ok := m.`, field.Oneof.GoName, `.(*`, field.GoIdent.GoName, `); ok {`)
 				marshalForwardOneOf("msg")
 				p.P(`}`)
 			}
@@ -650,20 +645,11 @@ func (p *marshal) message(message *protogen.Message) {
 					continue
 				}
 				oneofs[fieldname] = struct{}{}
-				if p.IsWellKnownType(message) {
-					p.P(`switch c := m.`, fieldname, `.(type) {`)
-					for _, f := range field.Oneof.Fields {
-						p.P(`case *`, f.GoIdent, `:`)
-						marshalForwardOneOf(`(*`, p.WellKnownFieldMap(f), `)(c)`)
-					}
-					p.P(`}`)
-				} else {
-					p.P(`if vtmsg, ok := m.`, fieldname, `.(interface{`)
-					p.P(p.methodMarshalToSizedBuffer(), ` ([]byte) (int, error)`)
-					p.P(`}); ok {`)
-					marshalForwardOneOf("vtmsg")
-					p.P(`}`)
-				}
+				p.P(`if vtmsg, ok := m.`, fieldname, `.(interface{`)
+				p.P(p.methodMarshalToSizedBuffer(), ` ([]byte) (int, error)`)
+				p.P(`}); ok {`)
+				marshalForwardOneOf("vtmsg")
+				p.P(`}`)
 			}
 		}
 
@@ -717,10 +703,6 @@ func (p *marshal) marshalBackwardSize(varInt bool) {
 
 func (p *marshal) marshalBackward(varName string, varInt bool, message *protogen.Message) {
 	switch {
-	case p.IsWellKnownType(message):
-		p.P(`size, err := (*`, p.WellKnownTypeMap(message), `)(`, varName, `).`, p.methodMarshalToSizedBuffer(), `(dAtA[:i])`)
-		p.marshalBackwardSize(varInt)
-
 	case p.IsLocalMessage(message):
 		fallthrough
 

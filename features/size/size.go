@@ -41,9 +41,6 @@ func (p *size) GenerateFile(file *protogen.File) bool {
 
 func (p *size) messageSize(varName, sizeName string, message *protogen.Message) {
 	switch {
-	case p.IsWellKnownType(message):
-		p.P(`l = (*`, p.WellKnownTypeMap(message), `)(`, varName, `).`, sizeName, `()`)
-
 	case p.IsLocalMessage(message):
 		fallthrough
 
@@ -300,18 +297,9 @@ func (p *size) message(message *protogen.Message) {
 				continue
 			}
 			oneofs[fieldname] = struct{}{}
-			if p.IsWellKnownType(message) {
-				p.P(`switch c := m.`, fieldname, `.(type) {`)
-				for _, f := range field.Oneof.Fields {
-					p.P(`case *`, f.GoIdent, `:`)
-					p.P(`n += (*`, p.WellKnownFieldMap(f), `)(c).`, sizeName, `()`)
-				}
-				p.P(`}`)
-			} else {
-				p.P(`if vtmsg, ok := m.`, fieldname, `.(interface{ SizeVT() int }); ok {`)
-				p.P(`n+=vtmsg.`, sizeName, `()`)
-				p.P(`}`)
-			}
+			p.P(`if vtmsg, ok := m.`, fieldname, `.(interface{ SizeVT() int }); ok {`)
+			p.P(`n += vtmsg.`, sizeName, `()`)
+			p.P(`}`)
 		}
 	}
 	p.P(`n+=len(m.unknownFields)`)
@@ -324,9 +312,6 @@ func (p *size) message(message *protogen.Message) {
 			continue
 		}
 		ccTypeName := field.GoIdent
-		if p.IsWellKnownType(message) && p.IsLocalMessage(message) {
-			ccTypeName.GoImportPath = ""
-		}
 		p.P(`func (m *`, ccTypeName, `) `, sizeName, `() (n int) {`)
 		p.P(`if m == nil {`)
 		p.P(`return 0`)

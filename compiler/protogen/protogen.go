@@ -43,6 +43,15 @@ const goPackageDocURL = "https://protobuf.dev/reference/go/go-generated#package"
 
 var typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
 
+var trimTypesPrefix = "google.golang.org/protobuf/types/"
+
+func fixTypesPrefix(impPath GoImportPath) GoImportPath {
+	if strings.HasPrefix(string(impPath), trimTypesPrefix) {
+		impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
+	}
+	return impPath
+}
+
 func init() {
 	if envPkg := os.Getenv("PROTOBUF_GO_TYPES_PKG"); envPkg != "" {
 		typesPackage = envPkg
@@ -246,10 +255,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		filename := fdesc.GetName()
 		impPath, pkgName := splitImportPathAndPackageName(fdesc.GetOptions().GetGoPackage())
 		// HACK: replace well known types path
-		trimTypesPrefix := "google.golang.org/protobuf/types/"
-		if strings.HasPrefix(string(impPath), trimTypesPrefix) {
-			impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
-		}
+		impPath = fixTypesPrefix(impPath)
 		if importPaths[filename] == "" && impPath != "" {
 			importPaths[filename] = impPath
 		}
@@ -968,17 +974,19 @@ func (g *GeneratedFile) P(v ...interface{}) {
 // the returned name will be qualified (package.name) and an import statement
 // for the identifier's package will be included in the file.
 func (g *GeneratedFile) QualifiedGoIdent(ident GoIdent) string {
-	if ident.GoImportPath == g.goImportPath {
+	// goImportPath is of type string
+	goImportPath := fixTypesPrefix(ident.GoImportPath)
+	if goImportPath == g.goImportPath {
 		return ident.GoName
 	}
-	if packageName, ok := g.packageNames[ident.GoImportPath]; ok {
+	if packageName, ok := g.packageNames[goImportPath]; ok {
 		return string(packageName) + "." + ident.GoName
 	}
-	packageName := cleanPackageName(path.Base(string(ident.GoImportPath)))
+	packageName := cleanPackageName(path.Base(string(goImportPath)))
 	for i, orig := 1, packageName; g.usedPackageNames[packageName]; i++ {
 		packageName = orig + GoPackageName(strconv.Itoa(i))
 	}
-	g.packageNames[ident.GoImportPath] = packageName
+	g.packageNames[goImportPath] = packageName
 	g.usedPackageNames[packageName] = true
 	return string(packageName) + "." + ident.GoName
 }
@@ -1073,6 +1081,9 @@ func (g *GeneratedFile) Content() ([]byte, error) {
 	for importPath := range g.packageNames {
 		pkgName := string(g.packageNames[importPath])
 		pkgPath := rewriteImport(string(importPath))
+		if pkgPath == "" {
+			continue
+		}
 		importPaths = append(importPaths, [2]string{pkgName, pkgPath})
 	}
 	for importPath := range g.manualImports {

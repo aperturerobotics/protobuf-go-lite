@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = "testproto/wkt";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/struct.proto";
+
+message MessageWithWKT {
+  google.protobuf.Duration duration = 2;
+  google.protobuf.Empty empty = 3;
+  google.protobuf.Timestamp timestamp = 5;
+  google.protobuf.DoubleValue double_value = 6;
+  google.protobuf.FloatValue float_value = 7;
+  google.protobuf.Int64Value int64_value = 8;
+  google.protobuf.UInt64Value uint64_value = 9;
+  google.protobuf.Int32Value int32_value = 10;
+  google.protobuf.UInt32Value uint32_value = 11;
+  google.protobuf.BoolValue bool_value = 12;
+  google.protobuf.StringValue string_value = 13;
+  google.protobuf.BytesValue bytes_value = 14;
+  google.protobuf.Struct struct_value = 15;
+  google.protobuf.Value value_value = 16;
+  google.protobuf.ListValue listvalue_value = 17;
+  google.protobuf.NullValue null_value = 18;
+}

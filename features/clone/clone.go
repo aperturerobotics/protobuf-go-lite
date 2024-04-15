@@ -51,16 +51,7 @@ func (p *clone) cloneOneofField(lhsBase, rhsBase string, oneof *protogen.Oneof) 
 	lhs := lhsBase + "." + fieldname
 	rhs := rhsBase + "." + fieldname
 	p.P(`if `, rhs, ` != nil {`)
-	if p.IsWellKnownType(oneof.Parent) {
-		p.P(`switch c := `, rhs, `.(type) {`)
-		for _, f := range oneof.Fields {
-			p.P(`case *`, f.GoIdent, `:`)
-			p.P(lhs, `= (*`, f.GoIdent, `)((*`, p.WellKnownFieldMap(f), `)(c).`, cloneName, `())`)
-		}
-		p.P(`}`)
-	} else {
-		p.P(lhs, ` = `, rhs, `.(interface{ `, cloneName, `() `, ccInterfaceName, ` }).`, cloneName, `()`)
-	}
+	p.P(lhs, ` = `, rhs, `.(interface{ `, cloneName, `() `, ccInterfaceName, ` }).`, cloneName, `()`)
 	p.P(`}`)
 }
 
@@ -68,14 +59,13 @@ func (p *clone) cloneOneofField(lhsBase, rhsBase string, oneof *protogen.Oneof) 
 func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, message *protogen.Message) {
 	switch {
 	case kind == protoreflect.MessageKind, kind == protoreflect.GroupKind:
-		switch {
-		case p.IsWellKnownType(message):
-			p.P(lhs, ` = (*`, message.GoIdent, `)((*`, p.WellKnownTypeMap(message), `)(`, rhs, `).`, cloneName, `())`)
-		case p.IsLocalMessage(message):
-			p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
-		default:
-			p.P(lhs, ` = vtpb.`, cloneName, `()`)
-		}
+		//switch {
+		//case p.IsWellKnownType(message):
+		//p.P(lhs, ` = (*`, message.GoIdent, `)((*`, p.WellKnownTypeMap(message), `)(`, rhs, `).`, cloneName, `())`)
+		// case p.IsLocalMessage(message):
+		//default:
+		p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
+		//}
 	case kind == protoreflect.BytesKind:
 		p.P(`tmpBytes := make([]byte, len(`, rhs, `))`)
 		p.P(`copy(tmpBytes, `, rhs, `)`)
@@ -192,9 +182,6 @@ func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protoge
 		// nil-safe.
 		if field.Desc.Cardinality() != protoreflect.Repeated {
 			switch {
-			case p.IsWellKnownType(field.Message):
-				p.P(`r.`, field.GoName, ` = (*`, field.Message.GoIdent, `)((*`, p.WellKnownTypeMap(field.Message), `)(m.`, field.GoName, `).`, cloneName, `())`)
-				continue
 			case p.IsLocalMessage(field.Message):
 				p.P(`r.`, field.GoName, ` = m.`, field.GoName, `.`, cloneName, `()`)
 				continue
@@ -237,16 +224,9 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 	// Shortcut: for types where we know that an optimized clone method exists, we can call it directly as it is
 	// nil-safe.
 	if field.Desc.Cardinality() != protoreflect.Repeated && field.Message != nil {
-		switch {
-		case p.IsWellKnownType(field.Message):
-			p.P(`r.`, field.GoName, ` = (*`, field.Message.GoIdent, `)((*`, p.WellKnownTypeMap(field.Message), `)(m.`, field.GoName, `).`, cloneName, `())`)
-			p.P(`return r`)
-			return
-		case p.IsLocalMessage(field.Message):
-			p.P(`r.`, field.GoName, ` = m.`, field.GoName, `.`, cloneName, `()`)
-			p.P(`return r`)
-			return
-		}
+		p.P(`r.`, field.GoName, ` = m.`, field.GoName, `.`, cloneName, `()`)
+		p.P(`return r`)
+		return
 	}
 
 	// Generate explicit assignment statements for reference field.
@@ -259,12 +239,7 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 // field in a oneof.
 func (p *clone) generateCloneMethodsForOneof(message *protogen.Message, field *protogen.Field) {
 	ccTypeName := field.GoIdent.GoName
-	ccInterfaceName := "is" + field.Oneof.GoIdent.GoName
-	if p.IsWellKnownType(message) {
-		p.P(`func (m *`, ccTypeName, `) `, cloneName, `() *`, ccTypeName, ` {`)
-	} else {
-		p.P(`func (m *`, ccTypeName, `) `, cloneName, `() `, ccInterfaceName, ` {`)
-	}
+	p.P(`func (m *`, ccTypeName, `) `, cloneName, `() *`, ccTypeName, ` {`)
 
 	// Create a "fake" field for the single oneof member, pretending it is not a oneof field.
 	fieldInOneof := *field

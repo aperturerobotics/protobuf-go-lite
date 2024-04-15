@@ -84,7 +84,19 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 		--only_specified_files \
 		$$(\
 			git \
-				ls-files "*.proto" |\
+				ls-files "types/*.proto" |\
+				xargs printf -- \
+				"$$(pwd)/vendor/$${PROJECT}/%s "); \
+	$(PROTOWRAP) \
+		-I $$(pwd)/vendor \
+		-I $$(pwd) \
+		--go-lite_out=$$(pwd)/vendor \
+		--proto_path $$(pwd)/vendor \
+		--print_structure \
+		--only_specified_files \
+		$$(\
+			git \
+				ls-files "testproto/*.proto" |\
 				xargs printf -- \
 				"$$(pwd)/vendor/$${PROJECT}/%s "); \
 	rm $$(pwd)/vendor/$${PROJECT} || true

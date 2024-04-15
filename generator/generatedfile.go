@@ -134,24 +134,8 @@ var wellKnownFields = map[protoreflect.FullName]protogen.GoIdent{
 	"google.protobuf.Value.list_value":   {GoName: "Value_ListValue", GoImportPath: vtWellKnownPackage + "structpb"},
 }
 
-func (p *GeneratedFile) IsWellKnownType(message *protogen.Message) bool {
-	if message == nil {
-		return false
-	}
-	_, ok := wellKnownTypes[message.Desc.FullName()]
-	return ok
-}
-
-func (p *GeneratedFile) RequiresTypeCast(message *protogen.Message) bool {
-	if message == nil {
-		return false
-	}
-	_, ok := wellKnownTypes[message.Desc.FullName()]
-	return ok
-}
-
 func (p *GeneratedFile) WellKnownFieldMap(field *protogen.Field) protogen.GoIdent {
-	if field == nil {
+	if field == nil || true {
 		return protogen.GoIdent{}
 	}
 	res, ff := wellKnownFields[field.Desc.FullName()]
@@ -165,7 +149,7 @@ func (p *GeneratedFile) WellKnownFieldMap(field *protogen.Field) protogen.GoIden
 }
 
 func (p *GeneratedFile) WellKnownTypeMap(message *protogen.Message) protogen.GoIdent {
-	if message == nil {
+	if message == nil || true {
 		return protogen.GoIdent{}
 	}
 	res := wellKnownTypes[message.Desc.FullName()]

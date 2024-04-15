@@ -19,6 +19,12 @@ import (
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
 	"github.com/aperturerobotics/protobuf-go-lite/internal/version"
+
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/clone"
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/equal"
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/marshal"
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/size"
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/unmarshal"
 )
 
 func main() {

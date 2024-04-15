@@ -243,13 +243,13 @@ func genMessage(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
 
 func genMessageFields(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
 	sf := f.allMessageFieldsByPtr[m]
-	genMessageInternalFields(g, f, m, sf)
+	genMessageInternalFields(g, sf)
 	for _, field := range m.Fields {
 		genMessageField(g, f, m, field, sf)
 	}
 }
 
-func genMessageInternalFields(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, sf *structFields) {
+func genMessageInternalFields(g *protogen.GeneratedFile, sf *structFields) {
 	g.P(genid.UnknownFields_goname, " ", "[]byte") // NOTE: this is inlined version of protoimpl.UnknownFields
 	sf.append(genid.UnknownFields_goname)
 	// NOTE: extensions, weak fields not supported.
