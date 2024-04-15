@@ -35,8 +35,10 @@ func (p *equal) GenerateFile(file *protogen.File) bool {
 	return p.once
 }
 
-const equalName = "EqualVT"
-const equalMessageName = "EqualMessageVT"
+const (
+	equalName        = "EqualVT"
+	equalMessageName = "EqualMessageVT"
+)
 
 func (p *equal) message(proto3 bool, message *protogen.Message) {
 	for _, nested := range message.Messages {
@@ -238,20 +240,9 @@ func (p *equal) compareCall(lhs, rhs string, msg *protogen.Message, nullable boo
 		p.P(`}`)
 		lhs, rhs = "p", "q"
 	}
-	switch {
-	case p.IsLocalMessage(msg):
-		p.P(`if !`, lhs, `.`, equalName, `(`, rhs, `) {`)
-		p.P(`	return false`)
-		p.P(`}`)
-	default:
-		p.P(`if equal, ok := interface{}(`, lhs, `).(interface { `, equalName, `(*`, p.QualifiedGoIdent(msg.GoIdent), `) bool }); ok {`)
-		p.P(`	if !equal.`, equalName, `(`, rhs, `) {`)
-		p.P(`		return false`)
-		p.P(`	}`)
-		p.P(`} else if !`, p.Ident("google.golang.org/protobuf/proto", "Equal"), `(`, lhs, `, `, rhs, `) {`)
-		p.P(`	return false`)
-		p.P(`}`)
-	}
+	p.P(`if !`, lhs, `.`, equalName, `(`, rhs, `) {`)
+	p.P(`	return false`)
+	p.P(`}`)
 }
 
 func isScalar(kind protoreflect.Kind) bool {
