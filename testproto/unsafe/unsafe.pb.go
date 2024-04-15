@@ -8,8 +8,10 @@ import (
 	io "io"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 type UnsafeTest struct {
@@ -774,6 +776,150 @@ func (this *UnsafeTest_Sub5_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 		}
 	}
 	return true
+}
+
+func (m *UnsafeTest) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Sub1 != nil {
+		if m.Sub1 != nil {
+			jsonData, err := m.Sub1.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub1")
+		}
+	}
+	if m.Sub2 != nil {
+		if m.Sub2 != nil {
+			jsonData, err := m.Sub2.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub2")
+		}
+	}
+	if m.Sub3 != nil {
+		if m.Sub3 != nil {
+			jsonData, err := m.Sub3.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub3")
+		}
+	}
+	if m.Sub4 != nil {
+		if m.Sub4 != nil {
+			jsonData, err := m.Sub4.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub4")
+		}
+	}
+	if m.Sub5 != nil {
+		if m.Sub5 != nil {
+			jsonData, err := m.Sub5.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub5")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("sub1") {
+		if v.Exists("sub1") {
+			jsonData := v.GetStringBytes("sub1")
+			err := m.Sub1.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("sub1") {
+		if v.Exists("sub1") {
+			jsonData := v.GetStringBytes("sub1")
+			err := m.Sub1.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sub2") {
+		if v.Exists("sub2") {
+			jsonData := v.GetStringBytes("sub2")
+			err := m.Sub2.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("sub2") {
+		if v.Exists("sub2") {
+			jsonData := v.GetStringBytes("sub2")
+			err := m.Sub2.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sub3") {
+		if v.Exists("sub3") {
+			jsonData := v.GetStringBytes("sub3")
+			err := m.Sub3.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("sub3") {
+		if v.Exists("sub3") {
+			jsonData := v.GetStringBytes("sub3")
+			err := m.Sub3.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sub4") {
+		if v.Exists("sub4") {
+			jsonData := v.GetStringBytes("sub4")
+			err := m.Sub4.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("sub4") {
+		if v.Exists("sub4") {
+			jsonData := v.GetStringBytes("sub4")
+			err := m.Sub4.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sub5") {
+		if v.Exists("sub5") {
+			jsonData := v.GetStringBytes("sub5")
+			err := m.Sub5.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("sub5") {
+		if v.Exists("sub5") {
+			jsonData := v.GetStringBytes("sub5")
+			err := m.Sub5.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }
 
 func (m *UnsafeTest_Sub1) MarshalVT() (dAtA []byte, err error) {

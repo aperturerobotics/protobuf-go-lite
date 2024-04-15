@@ -8,8 +8,10 @@ import (
 	io "io"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -100,6 +102,28 @@ func (this *SourceContext) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *SourceContext) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.FileName != "" {
+		container.Set(m.FileName, "fileName")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *SourceContext) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("fileName") {
+		m.FileName = string(v.GetStringBytes("fileName"))
+	} else if v.Exists("file_name") {
+		m.FileName = string(v.GetStringBytes("file_name"))
+	}
+	return nil
+}
+
 func (m *SourceContext) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

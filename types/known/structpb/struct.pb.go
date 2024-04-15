@@ -13,8 +13,10 @@ import (
 	utf8 "unicode/utf8"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -776,6 +778,184 @@ func (this *ListValue) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *Struct) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.Fields) > 0 {
+		if m.Fields != nil {
+			jsonData, err := m.Fields.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "fields")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Struct) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("fields") {
+		if v.Exists("fields") {
+			jsonData := v.GetStringBytes("fields")
+			err := m.Fields.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("fields") {
+		if v.Exists("fields") {
+			jsonData := v.GetStringBytes("fields")
+			err := m.Fields.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (m *Value) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.NullValue != nil {
+		container.Set(m.NullValue.String(), "nullValue")
+	}
+	if m.NumberValue != nil {
+		container.Set(m.NumberValue, "numberValue")
+	}
+	if m.StringValue != nil {
+		container.Set(m.StringValue, "stringValue")
+	}
+	if m.BoolValue != nil {
+		container.Set(m.BoolValue, "boolValue")
+	}
+	if m.StructValue != nil {
+		if m.StructValue != nil {
+			jsonData, err := m.StructValue.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "structValue")
+		}
+	}
+	if m.ListValue != nil {
+		if m.ListValue != nil {
+			jsonData, err := m.ListValue.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "listValue")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Value) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("nullValue") {
+		m.NullValue = NullValue(v.GetInt("nullValue"))
+	} else if v.Exists("null_value") {
+		m.NullValue = NullValue(v.GetInt("null_value"))
+	}
+	if v.Exists("numberValue") {
+		m.NumberValue = v.GetFloat64("numberValue")
+	} else if v.Exists("number_value") {
+		m.NumberValue = v.GetFloat64("number_value")
+	}
+	if v.Exists("stringValue") {
+		m.StringValue = string(v.GetStringBytes("stringValue"))
+	} else if v.Exists("string_value") {
+		m.StringValue = string(v.GetStringBytes("string_value"))
+	}
+	if v.Exists("boolValue") {
+		m.BoolValue = v.GetBool("boolValue")
+	} else if v.Exists("bool_value") {
+		m.BoolValue = v.GetBool("bool_value")
+	}
+	if v.Exists("structValue") {
+		if v.Exists("structValue") {
+			jsonData := v.GetStringBytes("structValue")
+			err := m.StructValue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("struct_value") {
+		if v.Exists("struct_value") {
+			jsonData := v.GetStringBytes("struct_value")
+			err := m.StructValue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("listValue") {
+		if v.Exists("listValue") {
+			jsonData := v.GetStringBytes("listValue")
+			err := m.ListValue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("list_value") {
+		if v.Exists("list_value") {
+			jsonData := v.GetStringBytes("list_value")
+			err := m.ListValue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (m *ListValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.Values) > 0 {
+		if m.Values != nil {
+			jsonData, err := m.Values.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "values")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *ListValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("values") {
+		if v.Exists("values") {
+			jsonData := v.GetStringBytes("values")
+			err := m.Values.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("values") {
+		if v.Exists("values") {
+			jsonData := v.GetStringBytes("values")
+			err := m.Values.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func (m *Struct) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

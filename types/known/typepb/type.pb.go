@@ -9,10 +9,12 @@ import (
 	strconv "strconv"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	anypb "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb"
 	sourcecontextpb "github.com/aperturerobotics/protobuf-go-lite/types/known/sourcecontextpb"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -951,6 +953,462 @@ func (this *Option) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *Type) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Name != "" {
+		container.Set(m.Name, "name")
+	}
+	if len(m.Fields) > 0 {
+		if m.Fields != nil {
+			jsonData, err := m.Fields.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "fields")
+		}
+	}
+	if len(m.Oneofs) > 0 {
+		container.Set(m.Oneofs, "oneofs")
+	}
+	if len(m.Options) > 0 {
+		if m.Options != nil {
+			jsonData, err := m.Options.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "options")
+		}
+	}
+	if m.SourceContext != nil {
+		if m.SourceContext != nil {
+			jsonData, err := m.SourceContext.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sourceContext")
+		}
+	}
+	if m.Syntax != Syntax_name[0] {
+		container.Set(m.Syntax.String(), "syntax")
+	}
+	if m.Edition != "" {
+		container.Set(m.Edition, "edition")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Type) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	} else if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	}
+	if v.Exists("fields") {
+		if v.Exists("fields") {
+			jsonData := v.GetStringBytes("fields")
+			err := m.Fields.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("fields") {
+		if v.Exists("fields") {
+			jsonData := v.GetStringBytes("fields")
+			err := m.Fields.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("oneofs") {
+		m.Oneofs = string(v.GetStringBytes("oneofs"))
+	} else if v.Exists("oneofs") {
+		m.Oneofs = string(v.GetStringBytes("oneofs"))
+	}
+	if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sourceContext") {
+		if v.Exists("sourceContext") {
+			jsonData := v.GetStringBytes("sourceContext")
+			err := m.SourceContext.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("source_context") {
+		if v.Exists("source_context") {
+			jsonData := v.GetStringBytes("source_context")
+			err := m.SourceContext.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("syntax") {
+		m.Syntax = Syntax(v.GetInt("syntax"))
+	} else if v.Exists("syntax") {
+		m.Syntax = Syntax(v.GetInt("syntax"))
+	}
+	if v.Exists("edition") {
+		m.Edition = string(v.GetStringBytes("edition"))
+	} else if v.Exists("edition") {
+		m.Edition = string(v.GetStringBytes("edition"))
+	}
+	return nil
+}
+
+func (m *Field) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Kind != Field_Kind_name[0] {
+		container.Set(m.Kind.String(), "kind")
+	}
+	if m.Cardinality != Field_Cardinality_name[0] {
+		container.Set(m.Cardinality.String(), "cardinality")
+	}
+	if m.Number != 0 {
+		container.Set(m.Number, "number")
+	}
+	if m.Name != "" {
+		container.Set(m.Name, "name")
+	}
+	if m.TypeUrl != "" {
+		container.Set(m.TypeUrl, "typeUrl")
+	}
+	if m.OneofIndex != 0 {
+		container.Set(m.OneofIndex, "oneofIndex")
+	}
+	if m.Packed {
+		container.Set(m.Packed, "packed")
+	}
+	if len(m.Options) > 0 {
+		if m.Options != nil {
+			jsonData, err := m.Options.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "options")
+		}
+	}
+	if m.JsonName != "" {
+		container.Set(m.JsonName, "jsonName")
+	}
+	if m.DefaultValue != "" {
+		container.Set(m.DefaultValue, "defaultValue")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Field) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("kind") {
+		m.Kind = Field_Kind(v.GetInt("kind"))
+	} else if v.Exists("kind") {
+		m.Kind = Field_Kind(v.GetInt("kind"))
+	}
+	if v.Exists("cardinality") {
+		m.Cardinality = Field_Cardinality(v.GetInt("cardinality"))
+	} else if v.Exists("cardinality") {
+		m.Cardinality = Field_Cardinality(v.GetInt("cardinality"))
+	}
+	if v.Exists("number") {
+		m.Number = int32(v.GetInt("number"))
+	} else if v.Exists("number") {
+		m.Number = int32(v.GetInt("number"))
+	}
+	if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	} else if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	}
+	if v.Exists("typeUrl") {
+		m.TypeUrl = string(v.GetStringBytes("typeUrl"))
+	} else if v.Exists("type_url") {
+		m.TypeUrl = string(v.GetStringBytes("type_url"))
+	}
+	if v.Exists("oneofIndex") {
+		m.OneofIndex = int32(v.GetInt("oneofIndex"))
+	} else if v.Exists("oneof_index") {
+		m.OneofIndex = int32(v.GetInt("oneof_index"))
+	}
+	if v.Exists("packed") {
+		m.Packed = v.GetBool("packed")
+	} else if v.Exists("packed") {
+		m.Packed = v.GetBool("packed")
+	}
+	if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("jsonName") {
+		m.JsonName = string(v.GetStringBytes("jsonName"))
+	} else if v.Exists("json_name") {
+		m.JsonName = string(v.GetStringBytes("json_name"))
+	}
+	if v.Exists("defaultValue") {
+		m.DefaultValue = string(v.GetStringBytes("defaultValue"))
+	} else if v.Exists("default_value") {
+		m.DefaultValue = string(v.GetStringBytes("default_value"))
+	}
+	return nil
+}
+
+func (m *Enum) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Name != "" {
+		container.Set(m.Name, "name")
+	}
+	if len(m.Enumvalue) > 0 {
+		if m.Enumvalue != nil {
+			jsonData, err := m.Enumvalue.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "enumvalue")
+		}
+	}
+	if len(m.Options) > 0 {
+		if m.Options != nil {
+			jsonData, err := m.Options.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "options")
+		}
+	}
+	if m.SourceContext != nil {
+		if m.SourceContext != nil {
+			jsonData, err := m.SourceContext.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sourceContext")
+		}
+	}
+	if m.Syntax != Syntax_name[0] {
+		container.Set(m.Syntax.String(), "syntax")
+	}
+	if m.Edition != "" {
+		container.Set(m.Edition, "edition")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Enum) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	} else if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	}
+	if v.Exists("enumvalue") {
+		if v.Exists("enumvalue") {
+			jsonData := v.GetStringBytes("enumvalue")
+			err := m.Enumvalue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("enumvalue") {
+		if v.Exists("enumvalue") {
+			jsonData := v.GetStringBytes("enumvalue")
+			err := m.Enumvalue.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("sourceContext") {
+		if v.Exists("sourceContext") {
+			jsonData := v.GetStringBytes("sourceContext")
+			err := m.SourceContext.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("source_context") {
+		if v.Exists("source_context") {
+			jsonData := v.GetStringBytes("source_context")
+			err := m.SourceContext.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if v.Exists("syntax") {
+		m.Syntax = Syntax(v.GetInt("syntax"))
+	} else if v.Exists("syntax") {
+		m.Syntax = Syntax(v.GetInt("syntax"))
+	}
+	if v.Exists("edition") {
+		m.Edition = string(v.GetStringBytes("edition"))
+	} else if v.Exists("edition") {
+		m.Edition = string(v.GetStringBytes("edition"))
+	}
+	return nil
+}
+
+func (m *EnumValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Name != "" {
+		container.Set(m.Name, "name")
+	}
+	if m.Number != 0 {
+		container.Set(m.Number, "number")
+	}
+	if len(m.Options) > 0 {
+		if m.Options != nil {
+			jsonData, err := m.Options.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "options")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *EnumValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	} else if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	}
+	if v.Exists("number") {
+		m.Number = int32(v.GetInt("number"))
+	} else if v.Exists("number") {
+		m.Number = int32(v.GetInt("number"))
+	}
+	if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("options") {
+		if v.Exists("options") {
+			jsonData := v.GetStringBytes("options")
+			err := m.Options.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (m *Option) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Name != "" {
+		container.Set(m.Name, "name")
+	}
+	if m.Value != nil {
+		if m.Value != nil {
+			jsonData, err := m.Value.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "value")
+		}
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Option) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	} else if v.Exists("name") {
+		m.Name = string(v.GetStringBytes("name"))
+	}
+	if v.Exists("value") {
+		if v.Exists("value") {
+			jsonData := v.GetStringBytes("value")
+			err := m.Value.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	} else if v.Exists("value") {
+		if v.Exists("value") {
+			jsonData := v.GetStringBytes("value")
+			err := m.Value.UnmarshalJSON(jsonData)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func (m *Type) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

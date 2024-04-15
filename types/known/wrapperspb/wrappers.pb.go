@@ -10,8 +10,10 @@ import (
 	math "math"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -625,6 +627,204 @@ func (this *BytesValue) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *DoubleValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *DoubleValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetFloat64("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetFloat64("value")
+	}
+	return nil
+}
+
+func (m *FloatValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *FloatValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = float32(v.GetFloat64("value"))
+	} else if v.Exists("value") {
+		m.Value = float32(v.GetFloat64("value"))
+	}
+	return nil
+}
+
+func (m *Int64Value) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Int64Value) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetInt64("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetInt64("value")
+	}
+	return nil
+}
+
+func (m *UInt64Value) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UInt64Value) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetUint64("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetUint64("value")
+	}
+	return nil
+}
+
+func (m *Int32Value) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Int32Value) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = int32(v.GetInt("value"))
+	} else if v.Exists("value") {
+		m.Value = int32(v.GetInt("value"))
+	}
+	return nil
+}
+
+func (m *UInt32Value) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != 0 {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UInt32Value) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetUint64("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetUint64("value")
+	}
+	return nil
+}
+
+func (m *BoolValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *BoolValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetBool("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetBool("value")
+	}
+	return nil
+}
+
+func (m *StringValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Value != "" {
+		container.Set(m.Value, "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *StringValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = string(v.GetStringBytes("value"))
+	} else if v.Exists("value") {
+		m.Value = string(v.GetStringBytes("value"))
+	}
+	return nil
+}
+
+func (m *BytesValue) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.Value) > 0 {
+		container.Set(string(m.Value), "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *BytesValue) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("value") {
+		m.Value = v.GetStringBytes("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetStringBytes("value")
+	}
+	return nil
+}
+
 func (m *DoubleValue) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

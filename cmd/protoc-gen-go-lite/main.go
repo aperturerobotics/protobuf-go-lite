@@ -22,6 +22,7 @@ import (
 
 	_ "github.com/aperturerobotics/protobuf-go-lite/features/clone"
 	_ "github.com/aperturerobotics/protobuf-go-lite/features/equal"
+	_ "github.com/aperturerobotics/protobuf-go-lite/features/json"
 	_ "github.com/aperturerobotics/protobuf-go-lite/features/marshal"
 	_ "github.com/aperturerobotics/protobuf-go-lite/features/size"
 	_ "github.com/aperturerobotics/protobuf-go-lite/features/unmarshal"

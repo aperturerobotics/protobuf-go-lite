@@ -9,8 +9,10 @@ import (
 	math "math"
 	time "time"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -261,6 +263,36 @@ func (this *Duration) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *Duration) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.Seconds != 0 {
+		container.Set(m.Seconds, "seconds")
+	}
+	if m.Nanos != 0 {
+		container.Set(m.Nanos, "nanos")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Duration) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("seconds") {
+		m.Seconds = v.GetInt64("seconds")
+	} else if v.Exists("seconds") {
+		m.Seconds = v.GetInt64("seconds")
+	}
+	if v.Exists("nanos") {
+		m.Nanos = int32(v.GetInt("nanos"))
+	} else if v.Exists("nanos") {
+		m.Nanos = int32(v.GetInt("nanos"))
+	}
+	return nil
+}
+
 func (m *Duration) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

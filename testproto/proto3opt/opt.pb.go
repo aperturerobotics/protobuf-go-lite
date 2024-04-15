@@ -11,8 +11,10 @@ import (
 	strconv "strconv"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 type SimpleEnum int32
@@ -334,6 +336,148 @@ func (this *OptionalFieldInProto3) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *OptionalFieldInProto3) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.OptionalInt32 != nil {
+		container.Set(m.OptionalInt32, "optionalInt32")
+	}
+	if m.OptionalInt64 != nil {
+		container.Set(m.OptionalInt64, "optionalInt64")
+	}
+	if m.OptionalUint32 != nil {
+		container.Set(m.OptionalUint32, "optionalUint32")
+	}
+	if m.OptionalUint64 != nil {
+		container.Set(m.OptionalUint64, "optionalUint64")
+	}
+	if m.OptionalSint32 != nil {
+		// Unsupported type sint32
+	}
+	if m.OptionalSint64 != nil {
+		// Unsupported type sint64
+	}
+	if m.OptionalFixed32 != nil {
+		// Unsupported type fixed32
+	}
+	if m.OptionalFixed64 != nil {
+		// Unsupported type fixed64
+	}
+	if m.OptionalSfixed32 != nil {
+		// Unsupported type sfixed32
+	}
+	if m.OptionalSfixed64 != nil {
+		// Unsupported type sfixed64
+	}
+	if m.OptionalFloat != nil {
+		container.Set(m.OptionalFloat, "optionalFloat")
+	}
+	if m.OptionalDouble != nil {
+		container.Set(m.OptionalDouble, "optionalDouble")
+	}
+	if m.OptionalBool != nil {
+		container.Set(m.OptionalBool, "optionalBool")
+	}
+	if m.OptionalString != nil {
+		container.Set(m.OptionalString, "optionalString")
+	}
+	if m.OptionalBytes != nil {
+		container.Set(string(m.OptionalBytes), "optionalBytes")
+	}
+	if m.OptionalEnum != nil {
+		container.Set(m.OptionalEnum.String(), "optionalEnum")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *OptionalFieldInProto3) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("optionalInt32") {
+		m.OptionalInt32 = int32(v.GetInt("optionalInt32"))
+	} else if v.Exists("optional_int32") {
+		m.OptionalInt32 = int32(v.GetInt("optional_int32"))
+	}
+	if v.Exists("optionalInt64") {
+		m.OptionalInt64 = v.GetInt64("optionalInt64")
+	} else if v.Exists("optional_int64") {
+		m.OptionalInt64 = v.GetInt64("optional_int64")
+	}
+	if v.Exists("optionalUint32") {
+		m.OptionalUint32 = v.GetUint64("optionalUint32")
+	} else if v.Exists("optional_uint32") {
+		m.OptionalUint32 = v.GetUint64("optional_uint32")
+	}
+	if v.Exists("optionalUint64") {
+		m.OptionalUint64 = v.GetUint64("optionalUint64")
+	} else if v.Exists("optional_uint64") {
+		m.OptionalUint64 = v.GetUint64("optional_uint64")
+	}
+	if v.Exists("optionalSint32") {
+		// Unsupported type sint32
+	} else if v.Exists("optional_sint32") {
+		// Unsupported type sint32
+	}
+	if v.Exists("optionalSint64") {
+		// Unsupported type sint64
+	} else if v.Exists("optional_sint64") {
+		// Unsupported type sint64
+	}
+	if v.Exists("optionalFixed32") {
+		// Unsupported type fixed32
+	} else if v.Exists("optional_fixed32") {
+		// Unsupported type fixed32
+	}
+	if v.Exists("optionalFixed64") {
+		// Unsupported type fixed64
+	} else if v.Exists("optional_fixed64") {
+		// Unsupported type fixed64
+	}
+	if v.Exists("optionalSfixed32") {
+		// Unsupported type sfixed32
+	} else if v.Exists("optional_sfixed32") {
+		// Unsupported type sfixed32
+	}
+	if v.Exists("optionalSfixed64") {
+		// Unsupported type sfixed64
+	} else if v.Exists("optional_sfixed64") {
+		// Unsupported type sfixed64
+	}
+	if v.Exists("optionalFloat") {
+		m.OptionalFloat = float32(v.GetFloat64("optionalFloat"))
+	} else if v.Exists("optional_float") {
+		m.OptionalFloat = float32(v.GetFloat64("optional_float"))
+	}
+	if v.Exists("optionalDouble") {
+		m.OptionalDouble = v.GetFloat64("optionalDouble")
+	} else if v.Exists("optional_double") {
+		m.OptionalDouble = v.GetFloat64("optional_double")
+	}
+	if v.Exists("optionalBool") {
+		m.OptionalBool = v.GetBool("optionalBool")
+	} else if v.Exists("optional_bool") {
+		m.OptionalBool = v.GetBool("optional_bool")
+	}
+	if v.Exists("optionalString") {
+		m.OptionalString = string(v.GetStringBytes("optionalString"))
+	} else if v.Exists("optional_string") {
+		m.OptionalString = string(v.GetStringBytes("optional_string"))
+	}
+	if v.Exists("optionalBytes") {
+		m.OptionalBytes = v.GetStringBytes("optionalBytes")
+	} else if v.Exists("optional_bytes") {
+		m.OptionalBytes = v.GetStringBytes("optional_bytes")
+	}
+	if v.Exists("optionalEnum") {
+		m.OptionalEnum = SimpleEnum(v.GetInt("optionalEnum"))
+	} else if v.Exists("optional_enum") {
+		m.OptionalEnum = SimpleEnum(v.GetInt("optional_enum"))
+	}
+	return nil
+}
+
 func (m *OptionalFieldInProto3) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

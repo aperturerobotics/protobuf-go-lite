@@ -7,8 +7,10 @@ package emptypb
 import (
 	io "io"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -90,6 +92,20 @@ func (this *Empty) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *Empty) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	return container.MarshalJSON()
+}
+
+func (m *Empty) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (m *Empty) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

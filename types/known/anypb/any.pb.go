@@ -8,8 +8,10 @@ import (
 	io "io"
 	unsafe "unsafe"
 
+	v2 "github.com/Jeffail/gabs/v2"
 	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
 	errors "github.com/pkg/errors"
+	fastjson "github.com/valyala/fastjson"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -226,6 +228,36 @@ func (this *Any) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+func (m *Any) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.TypeUrl != "" {
+		container.Set(m.TypeUrl, "typeUrl")
+	}
+	if len(m.Value) > 0 {
+		container.Set(string(m.Value), "value")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *Any) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	if v.Exists("typeUrl") {
+		m.TypeUrl = string(v.GetStringBytes("typeUrl"))
+	} else if v.Exists("type_url") {
+		m.TypeUrl = string(v.GetStringBytes("type_url"))
+	}
+	if v.Exists("value") {
+		m.Value = v.GetStringBytes("value")
+	} else if v.Exists("value") {
+		m.Value = v.GetStringBytes("value")
+	}
+	return nil
+}
+
 func (m *Any) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
