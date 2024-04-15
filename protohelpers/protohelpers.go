@@ -38,7 +38,7 @@ func SizeOfVarint(x uint64) (n int) {
 
 // SizeOfZigzag returns the size of the zigzag-encoded value.
 func SizeOfZigzag(x uint64) (n int) {
-	return SizeOfVarint(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+	return SizeOfVarint(uint64((x << 1) ^ uint64((int64(x) >> 63)))) //nolint
 }
 
 // Skip the first record of the byte slice and return the offset of the next record.

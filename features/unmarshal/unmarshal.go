@@ -102,50 +102,6 @@ func (p *unmarshal) decodeFixed64(varName string, typeName string) {
 	p.P(`iNdEx += 8`)
 }
 
-func (p *unmarshal) declareMapField(varName string, nullable bool, field *protogen.Field) {
-	switch field.Desc.Kind() {
-	case protoreflect.DoubleKind:
-		p.P(`var `, varName, ` float64`)
-	case protoreflect.FloatKind:
-		p.P(`var `, varName, ` float32`)
-	case protoreflect.Int64Kind:
-		p.P(`var `, varName, ` int64`)
-	case protoreflect.Uint64Kind:
-		p.P(`var `, varName, ` uint64`)
-	case protoreflect.Int32Kind:
-		p.P(`var `, varName, ` int32`)
-	case protoreflect.Fixed64Kind:
-		p.P(`var `, varName, ` uint64`)
-	case protoreflect.Fixed32Kind:
-		p.P(`var `, varName, ` uint32`)
-	case protoreflect.BoolKind:
-		p.P(`var `, varName, ` bool`)
-	case protoreflect.StringKind:
-		p.P(`var `, varName, ` `, field.GoIdent)
-	case protoreflect.MessageKind:
-		msgname := field.GoIdent
-		if nullable {
-			p.P(`var `, varName, ` *`, msgname)
-		} else {
-			p.P(varName, ` := &`, msgname, `{}`)
-		}
-	case protoreflect.BytesKind:
-		p.P(varName, ` := []byte{}`)
-	case protoreflect.Uint32Kind:
-		p.P(`var `, varName, ` uint32`)
-	case protoreflect.EnumKind:
-		p.P(`var `, varName, ` `, field.GoIdent)
-	case protoreflect.Sfixed32Kind:
-		p.P(`var `, varName, ` int32`)
-	case protoreflect.Sfixed64Kind:
-		p.P(`var `, varName, ` int64`)
-	case protoreflect.Sint32Kind:
-		p.P(`var `, varName, ` int32`)
-	case protoreflect.Sint64Kind:
-		p.P(`var `, varName, ` int64`)
-	}
-}
-
 func (p *unmarshal) mapField(varName string, field *protogen.Field) {
 	switch field.Desc.Kind() {
 	case protoreflect.DoubleKind:
@@ -808,7 +764,7 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 		if fieldBit == required.Len() {
 			panic("missing required field")
 		}
-		p.P(`if hasFields[`, strconv.Itoa(int(fieldBit/64)), `] & uint64(`, fmt.Sprintf("0x%08x", uint64(1)<<(fieldBit%64)), `) == 0 {`)
+		p.P(`if hasFields[`, strconv.Itoa(fieldBit/64), `] & uint64(`, fmt.Sprintf("0x%08x", uint64(1)<<(fieldBit%64)), `) == 0 {`)
 		p.P(`return `, p.Ident("fmt", "Errorf"), `("proto: required field `, field.Desc.Name(), ` not set")`)
 		p.P(`}`)
 	}

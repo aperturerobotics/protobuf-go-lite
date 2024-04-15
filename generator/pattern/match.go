@@ -188,7 +188,7 @@ MATCH:
 				continue
 
 			case '{':
-				startOfSegment = false
+				startOfSegment = false //nolint
 				beforeIdx := patIdx
 				patIdx++
 				closingIdx := indexMatchedClosingAlt(pattern[patIdx:], separator != '\\')
