@@ -1,5 +1,4 @@
 syntax = "proto2";
-option go_package = "testproto/proto2";
 
 message DoubleMessage {
     required double required_field = 1 [default=1];

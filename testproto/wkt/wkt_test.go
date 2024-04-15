@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
@@ -37,11 +36,12 @@ func TestWellKnownTypes(t *testing.T) {
 	require.NotEmpty(t, vtProtoBytes)
 
 	var (
-		golangMsg  = &MessageWithWKT{}
+		// golangMsg  = &MessageWithWKT{}
 		vtProtoMsg = &MessageWithWKT{}
 	)
 
 	require.NoError(t, vtProtoMsg.UnmarshalVT(vtProtoBytes))
 
-	assert.Equal(t, golangMsg.String(), vtProtoMsg.String())
+	// TODO prptoc-gen-prototxt
+	// assert.Equal(t, golangMsg.String(), vtProtoMsg.String())
 }

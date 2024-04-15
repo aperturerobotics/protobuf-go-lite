@@ -1,2 +1,1 @@
 syntax = "proto3";
-option go_package = "testproto/empty";

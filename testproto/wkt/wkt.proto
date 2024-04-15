@@ -1,5 +1,4 @@
 syntax = "proto3";
-option go_package = "testproto/wkt";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";

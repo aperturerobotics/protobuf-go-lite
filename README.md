@@ -23,6 +23,10 @@ Lightweight Protobuf 3 RPCs are implemented in [StaRPC] for Go and TypeScript.
 
 [StaRPC]: https://github.com/aperturerobotics/starpc
 
+[protoc-gen-doc] is recommended for generating documentation.
+
+[protoc-gen-doc]: https://github.com/pseudomuto/protoc-gen-doc
+
 ## Protobuf
 
 [protocol buffers](https://protobuf.dev) are a cross-platform cross-language

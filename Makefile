@@ -75,29 +75,21 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 	mkdir -p $$(pwd)/vendor/$$(dirname $${PROJECT}); \
 	rm $$(pwd)/vendor/$${PROJECT} || true; \
 	ln -s $$(pwd) $$(pwd)/vendor/$${PROJECT} ; \
-	$(PROTOWRAP) \
-		-I $$(pwd)/vendor \
-		-I $$(pwd) \
-		--go-lite_out=$$(pwd)/vendor \
-		--proto_path $$(pwd)/vendor \
-		--print_structure \
-		--only_specified_files \
-		$$(\
-			git \
-				ls-files "types/*.proto" |\
-				xargs printf -- \
-				"$$(pwd)/vendor/$${PROJECT}/%s "); \
-	$(PROTOWRAP) \
-		-I $$(pwd)/vendor \
-		-I $$(pwd) \
-		--go-lite_out=$$(pwd)/vendor \
-		--proto_path $$(pwd)/vendor \
-		--print_structure \
-		--only_specified_files \
-		$$(\
-			git \
-				ls-files "testproto/*.proto" |\
-				xargs printf -- \
-				"$$(pwd)/vendor/$${PROJECT}/%s "); \
+	protogen() { \
+		$(PROTOWRAP) \
+			-I $$(pwd)/vendor \
+			-I $$(pwd) \
+			--go-lite_out=$$(pwd)/vendor \
+			--proto_path $$(pwd)/vendor \
+			--print_structure \
+			--only_specified_files \
+			$$(\
+				git \
+					ls-files "$$1" |\
+					xargs printf -- \
+					"$$(pwd)/vendor/$${PROJECT}/%s "); \
+	}; \
+	protogen "./types/*.proto"; \
+	protogen "./testproto/*.proto"; \
 	rm $$(pwd)/vendor/$${PROJECT} || true
 	$(GOIMPORTS) -w ./

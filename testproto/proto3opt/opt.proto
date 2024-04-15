@@ -1,5 +1,4 @@
 syntax = "proto3";
-option go_package = "testproto/proto3opt";
 
 enum SimpleEnum {
   ENUM1 = 0;

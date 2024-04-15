@@ -1,5 +1,4 @@
 syntax = "proto3";
-option go_package = "testproto/unsafe";
 
 message UnsafeTest {
     message Sub1 {
