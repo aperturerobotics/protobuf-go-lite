@@ -50,7 +50,7 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 	}
 	ccTypeName := message.GoIdent.GoName
 	p.generateMarshalJSON(message, ccTypeName)
-	p.generateUnmarshalJSON(message, ccTypeName)
+	p.generateUnmarshalJSON(ccTypeName)
 	p.generateUnmarshalJSONValue(message, ccTypeName)
 }
 
@@ -70,7 +70,7 @@ func (p *jsonMarshal) generateMarshalJSON(message *protogen.Message, ccTypeName 
 	p.P()
 }
 
-func (p *jsonMarshal) generateUnmarshalJSON(message *protogen.Message, ccTypeName string) {
+func (p *jsonMarshal) generateUnmarshalJSON(ccTypeName string) {
 	p.P(`func (m *`, ccTypeName, `) UnmarshalJSON(data []byte) error {`)
 	p.P(`var p `, fastjsonPackage.Ident("Parser"))
 	p.P(`v, err := p.ParseBytes(data)`)
