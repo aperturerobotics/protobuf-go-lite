@@ -103,6 +103,13 @@ func (m *Empty) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Empty) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	return nil
 }
 

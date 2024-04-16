@@ -280,14 +280,17 @@ func (m *Duration) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Duration) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("seconds") {
-		m.Seconds = v.GetInt64("seconds")
-	} else if v.Exists("seconds") {
 		m.Seconds = v.GetInt64("seconds")
 	}
 	if v.Exists("nanos") {
-		m.Nanos = int32(v.GetInt("nanos"))
-	} else if v.Exists("nanos") {
 		m.Nanos = int32(v.GetInt("nanos"))
 	}
 	return nil

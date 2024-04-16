@@ -5706,6 +5706,8 @@ func (this *GeneratedCodeInfo) EqualMessageVT(thatMsg any) bool {
 
 // UnmarshalJSON generator only supports proto3 files.
 
+// UnmarshalJSONValue generator only supports proto3 files.
+
 func (m *FileDescriptorSet) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

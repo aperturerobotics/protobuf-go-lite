@@ -1971,6 +1971,8 @@ func (this *EnumMessage) EqualMessageVT(thatMsg any) bool {
 
 // UnmarshalJSON generator only supports proto3 files.
 
+// UnmarshalJSONValue generator only supports proto3 files.
+
 func (m *DoubleMessage) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

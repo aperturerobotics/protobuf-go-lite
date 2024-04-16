@@ -575,22 +575,26 @@ func (m *Api) MarshalJSON() ([]byte, error) {
 		container.Set(m.Name, "name")
 	}
 	if len(m.Methods) > 0 {
-		if m.Methods != nil {
-			jsonData, err := m.Methods.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Methods))
+		for i, val := range m.Methods {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "methods")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "methods")
 	}
 	if len(m.Options) > 0 {
-		if m.Options != nil {
-			jsonData, err := m.Options.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Options))
+		for i, val := range m.Options {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "options")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "options")
 	}
 	if m.Version != "" {
 		container.Set(m.Version, "version")
@@ -605,15 +609,17 @@ func (m *Api) MarshalJSON() ([]byte, error) {
 		}
 	}
 	if len(m.Mixins) > 0 {
-		if m.Mixins != nil {
-			jsonData, err := m.Mixins.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Mixins))
+		for i, val := range m.Mixins {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "mixins")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "mixins")
 	}
-	if m.Syntax != Syntax_name[0] {
+	if int(m.Syntax) != 0 {
 		container.Set(m.Syntax.String(), "syntax")
 	}
 	return container.MarshalJSON()
@@ -625,87 +631,89 @@ func (m *Api) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("name") {
-		m.Name = string(v.GetStringBytes("name"))
-	} else if v.Exists("name") {
 		m.Name = string(v.GetStringBytes("name"))
 	}
 	if v.Exists("methods") {
-		if v.Exists("methods") {
-			jsonData := v.GetStringBytes("methods")
-			err := m.Methods.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("methods") {
-		if v.Exists("methods") {
-			jsonData := v.GetStringBytes("methods")
-			err := m.Methods.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("methods")
+		if jsonArray != nil {
+			m.Methods = make([]*Api_Methods, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Methods[i] = nil
+				} else {
+					err := m.Methods[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
 	if v.Exists("options") {
-		if v.Exists("options") {
-			jsonData := v.GetStringBytes("options")
-			err := m.Options.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("options") {
-		if v.Exists("options") {
-			jsonData := v.GetStringBytes("options")
-			err := m.Options.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("options")
+		if jsonArray != nil {
+			m.Options = make([]*Api_Options, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Options[i] = nil
+				} else {
+					err := m.Options[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
 	if v.Exists("version") {
 		m.Version = string(v.GetStringBytes("version"))
-	} else if v.Exists("version") {
-		m.Version = string(v.GetStringBytes("version"))
 	}
 	if v.Exists("sourceContext") {
-		if v.Exists("sourceContext") {
-			jsonData := v.GetStringBytes("sourceContext")
-			err := m.SourceContext.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sourceContext")
+		if jsonValue == nil {
+			m.SourceContext = nil
+		} else {
+			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("source_context") {
-		if v.Exists("source_context") {
-			jsonData := v.GetStringBytes("source_context")
-			err := m.SourceContext.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("source_context")
+		if jsonValue == nil {
+			m.SourceContext = nil
+		} else {
+			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("mixins") {
-		if v.Exists("mixins") {
-			jsonData := v.GetStringBytes("mixins")
-			err := m.Mixins.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("mixins") {
-		if v.Exists("mixins") {
-			jsonData := v.GetStringBytes("mixins")
-			err := m.Mixins.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("mixins")
+		if jsonArray != nil {
+			m.Mixins = make([]*Api_Mixins, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Mixins[i] = nil
+				} else {
+					err := m.Mixins[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
 	if v.Exists("syntax") {
-		m.Syntax = Syntax(v.GetInt("syntax"))
-	} else if v.Exists("syntax") {
 		m.Syntax = Syntax(v.GetInt("syntax"))
 	}
 	return nil
@@ -729,15 +737,17 @@ func (m *Method) MarshalJSON() ([]byte, error) {
 		container.Set(m.ResponseStreaming, "responseStreaming")
 	}
 	if len(m.Options) > 0 {
-		if m.Options != nil {
-			jsonData, err := m.Options.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Options))
+		for i, val := range m.Options {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "options")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "options")
 	}
-	if m.Syntax != Syntax_name[0] {
+	if int(m.Syntax) != 0 {
 		container.Set(m.Syntax.String(), "syntax")
 	}
 	return container.MarshalJSON()
@@ -749,9 +759,14 @@ func (m *Method) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Method) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("name") {
-		m.Name = string(v.GetStringBytes("name"))
-	} else if v.Exists("name") {
 		m.Name = string(v.GetStringBytes("name"))
 	}
 	if v.Exists("requestTypeUrl") {
@@ -775,25 +790,22 @@ func (m *Method) UnmarshalJSON(data []byte) error {
 		m.ResponseStreaming = v.GetBool("response_streaming")
 	}
 	if v.Exists("options") {
-		if v.Exists("options") {
-			jsonData := v.GetStringBytes("options")
-			err := m.Options.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("options") {
-		if v.Exists("options") {
-			jsonData := v.GetStringBytes("options")
-			err := m.Options.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("options")
+		if jsonArray != nil {
+			m.Options = make([]*Method_Options, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Options[i] = nil
+				} else {
+					err := m.Options[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
 	if v.Exists("syntax") {
-		m.Syntax = Syntax(v.GetInt("syntax"))
-	} else if v.Exists("syntax") {
 		m.Syntax = Syntax(v.GetInt("syntax"))
 	}
 	return nil
@@ -816,14 +828,17 @@ func (m *Mixin) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Mixin) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("name") {
-		m.Name = string(v.GetStringBytes("name"))
-	} else if v.Exists("name") {
 		m.Name = string(v.GetStringBytes("name"))
 	}
 	if v.Exists("root") {
-		m.Root = string(v.GetStringBytes("root"))
-	} else if v.Exists("root") {
 		m.Root = string(v.GetStringBytes("root"))
 	}
 	return nil

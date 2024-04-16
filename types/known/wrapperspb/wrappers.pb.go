@@ -641,9 +641,14 @@ func (m *DoubleValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *DoubleValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetFloat64("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetFloat64("value")
 	}
 	return nil
@@ -663,9 +668,14 @@ func (m *FloatValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *FloatValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = float32(v.GetFloat64("value"))
-	} else if v.Exists("value") {
 		m.Value = float32(v.GetFloat64("value"))
 	}
 	return nil
@@ -685,9 +695,14 @@ func (m *Int64Value) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Int64Value) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetInt64("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetInt64("value")
 	}
 	return nil
@@ -707,9 +722,14 @@ func (m *UInt64Value) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UInt64Value) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetUint64("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetUint64("value")
 	}
 	return nil
@@ -729,9 +749,14 @@ func (m *Int32Value) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Int32Value) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = int32(v.GetInt("value"))
-	} else if v.Exists("value") {
 		m.Value = int32(v.GetInt("value"))
 	}
 	return nil
@@ -751,9 +776,14 @@ func (m *UInt32Value) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UInt32Value) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetUint64("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetUint64("value")
 	}
 	return nil
@@ -773,9 +803,14 @@ func (m *BoolValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *BoolValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetBool("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetBool("value")
 	}
 	return nil
@@ -795,9 +830,14 @@ func (m *StringValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *StringValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = string(v.GetStringBytes("value"))
-	} else if v.Exists("value") {
 		m.Value = string(v.GetStringBytes("value"))
 	}
 	return nil
@@ -817,9 +857,14 @@ func (m *BytesValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *BytesValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("value") {
-		m.Value = v.GetStringBytes("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetStringBytes("value")
 	}
 	return nil

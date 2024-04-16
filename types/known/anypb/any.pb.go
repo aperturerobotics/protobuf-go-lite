@@ -245,14 +245,19 @@ func (m *Any) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Any) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("typeUrl") {
 		m.TypeUrl = string(v.GetStringBytes("typeUrl"))
 	} else if v.Exists("type_url") {
 		m.TypeUrl = string(v.GetStringBytes("type_url"))
 	}
 	if v.Exists("value") {
-		m.Value = v.GetStringBytes("value")
-	} else if v.Exists("value") {
 		m.Value = v.GetStringBytes("value")
 	}
 	return nil

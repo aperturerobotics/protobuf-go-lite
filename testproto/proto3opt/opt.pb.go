@@ -395,6 +395,13 @@ func (m *OptionalFieldInProto3) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *OptionalFieldInProto3) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("optionalInt32") {
 		m.OptionalInt32 = int32(v.GetInt("optionalInt32"))
 	} else if v.Exists("optional_int32") {

@@ -834,86 +834,63 @@ func (m *UnsafeTest) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("sub1") {
-		if v.Exists("sub1") {
-			jsonData := v.GetStringBytes("sub1")
-			err := m.Sub1.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("sub1") {
-		if v.Exists("sub1") {
-			jsonData := v.GetStringBytes("sub1")
-			err := m.Sub1.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sub1")
+		if jsonValue == nil {
+			m.Sub1 = nil
+		} else {
+			err := m.Sub1.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub2") {
-		if v.Exists("sub2") {
-			jsonData := v.GetStringBytes("sub2")
-			err := m.Sub2.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("sub2") {
-		if v.Exists("sub2") {
-			jsonData := v.GetStringBytes("sub2")
-			err := m.Sub2.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sub2")
+		if jsonValue == nil {
+			m.Sub2 = nil
+		} else {
+			err := m.Sub2.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub3") {
-		if v.Exists("sub3") {
-			jsonData := v.GetStringBytes("sub3")
-			err := m.Sub3.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("sub3") {
-		if v.Exists("sub3") {
-			jsonData := v.GetStringBytes("sub3")
-			err := m.Sub3.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sub3")
+		if jsonValue == nil {
+			m.Sub3 = nil
+		} else {
+			err := m.Sub3.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub4") {
-		if v.Exists("sub4") {
-			jsonData := v.GetStringBytes("sub4")
-			err := m.Sub4.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("sub4") {
-		if v.Exists("sub4") {
-			jsonData := v.GetStringBytes("sub4")
-			err := m.Sub4.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sub4")
+		if jsonValue == nil {
+			m.Sub4 = nil
+		} else {
+			err := m.Sub4.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub5") {
-		if v.Exists("sub5") {
-			jsonData := v.GetStringBytes("sub5")
-			err := m.Sub5.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("sub5") {
-		if v.Exists("sub5") {
-			jsonData := v.GetStringBytes("sub5")
-			err := m.Sub5.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("sub5")
+		if jsonValue == nil {
+			m.Sub5 = nil
+		} else {
+			err := m.Sub5.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}

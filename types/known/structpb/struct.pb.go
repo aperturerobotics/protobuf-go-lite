@@ -781,13 +781,15 @@ func (this *ListValue) EqualMessageVT(thatMsg any) bool {
 func (m *Struct) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	if len(m.Fields) > 0 {
-		if m.Fields != nil {
-			jsonData, err := m.Fields.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Fields))
+		for i, val := range m.Fields {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "fields")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "fields")
 	}
 	return container.MarshalJSON()
 }
@@ -798,20 +800,26 @@ func (m *Struct) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Struct) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("fields") {
-		if v.Exists("fields") {
-			jsonData := v.GetStringBytes("fields")
-			err := m.Fields.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("fields") {
-		if v.Exists("fields") {
-			jsonData := v.GetStringBytes("fields")
-			err := m.Fields.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("fields")
+		if jsonArray != nil {
+			m.Fields = make([]*Struct_Fields, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Fields[i] = nil
+				} else {
+					err := m.Fields[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
@@ -859,6 +867,13 @@ func (m *Value) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("nullValue") {
 		m.NullValue = NullValue(v.GetInt("nullValue"))
 	} else if v.Exists("null_value") {
@@ -880,34 +895,42 @@ func (m *Value) UnmarshalJSON(data []byte) error {
 		m.BoolValue = v.GetBool("bool_value")
 	}
 	if v.Exists("structValue") {
-		if v.Exists("structValue") {
-			jsonData := v.GetStringBytes("structValue")
-			err := m.StructValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("structValue")
+		if jsonValue == nil {
+			m.StructValue = nil
+		} else {
+			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("struct_value") {
-		if v.Exists("struct_value") {
-			jsonData := v.GetStringBytes("struct_value")
-			err := m.StructValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("struct_value")
+		if jsonValue == nil {
+			m.StructValue = nil
+		} else {
+			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("listValue") {
-		if v.Exists("listValue") {
-			jsonData := v.GetStringBytes("listValue")
-			err := m.ListValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("listValue")
+		if jsonValue == nil {
+			m.ListValue = nil
+		} else {
+			err := m.ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("list_value") {
-		if v.Exists("list_value") {
-			jsonData := v.GetStringBytes("list_value")
-			err := m.ListValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("list_value")
+		if jsonValue == nil {
+			m.ListValue = nil
+		} else {
+			err := m.ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
@@ -919,13 +942,15 @@ func (m *Value) UnmarshalJSON(data []byte) error {
 func (m *ListValue) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	if len(m.Values) > 0 {
-		if m.Values != nil {
-			jsonData, err := m.Values.MarshalJSON()
+		jsonFields := make([]interface{}, len(m.Values))
+		for i, val := range m.Values {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			container.Set(jsonData, "values")
+			jsonFields[i] = jsonData
 		}
+		container.Set(jsonFields, "values")
 	}
 	return container.MarshalJSON()
 }
@@ -936,20 +961,26 @@ func (m *ListValue) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *ListValue) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("values") {
-		if v.Exists("values") {
-			jsonData := v.GetStringBytes("values")
-			err := m.Values.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("values") {
-		if v.Exists("values") {
-			jsonData := v.GetStringBytes("values")
-			err := m.Values.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
+		jsonArray := v.GetArray("values")
+		if jsonArray != nil {
+			m.Values = make([]*ListValue_Values, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				if jsonValue == nil {
+					m.Values[i] = nil
+				} else {
+					err := m.Values[i].UnmarshalJSONValue(jsonValue)
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}

@@ -443,7 +443,7 @@ func (m *MessageWithWKT) MarshalJSON() ([]byte, error) {
 			container.Set(jsonData, "listvalueValue")
 		}
 	}
-	if m.NullValue != NullValue_name[0] {
+	if int(m.NullValue) != 0 {
 		container.Set(m.NullValue.String(), "nullValue")
 	}
 	return container.MarshalJSON()
@@ -455,273 +455,304 @@ func (m *MessageWithWKT) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("any") {
-		if v.Exists("any") {
-			jsonData := v.GetStringBytes("any")
-			err := m.Any.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("any") {
-		if v.Exists("any") {
-			jsonData := v.GetStringBytes("any")
-			err := m.Any.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("any")
+		if jsonValue == nil {
+			m.Any = nil
+		} else {
+			err := m.Any.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("duration") {
-		if v.Exists("duration") {
-			jsonData := v.GetStringBytes("duration")
-			err := m.Duration.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("duration") {
-		if v.Exists("duration") {
-			jsonData := v.GetStringBytes("duration")
-			err := m.Duration.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("duration")
+		if jsonValue == nil {
+			m.Duration = nil
+		} else {
+			err := m.Duration.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("empty") {
-		if v.Exists("empty") {
-			jsonData := v.GetStringBytes("empty")
-			err := m.Empty.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("empty") {
-		if v.Exists("empty") {
-			jsonData := v.GetStringBytes("empty")
-			err := m.Empty.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("empty")
+		if jsonValue == nil {
+			m.Empty = nil
+		} else {
+			err := m.Empty.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("timestamp") {
-		if v.Exists("timestamp") {
-			jsonData := v.GetStringBytes("timestamp")
-			err := m.Timestamp.UnmarshalJSON(jsonData)
-			if err != nil {
-				return err
-			}
-		}
-	} else if v.Exists("timestamp") {
-		if v.Exists("timestamp") {
-			jsonData := v.GetStringBytes("timestamp")
-			err := m.Timestamp.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("timestamp")
+		if jsonValue == nil {
+			m.Timestamp = nil
+		} else {
+			err := m.Timestamp.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("doubleValue") {
-		if v.Exists("doubleValue") {
-			jsonData := v.GetStringBytes("doubleValue")
-			err := m.DoubleValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("doubleValue")
+		if jsonValue == nil {
+			m.DoubleValue = nil
+		} else {
+			err := m.DoubleValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("double_value") {
-		if v.Exists("double_value") {
-			jsonData := v.GetStringBytes("double_value")
-			err := m.DoubleValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("double_value")
+		if jsonValue == nil {
+			m.DoubleValue = nil
+		} else {
+			err := m.DoubleValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("floatValue") {
-		if v.Exists("floatValue") {
-			jsonData := v.GetStringBytes("floatValue")
-			err := m.FloatValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("floatValue")
+		if jsonValue == nil {
+			m.FloatValue = nil
+		} else {
+			err := m.FloatValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("float_value") {
-		if v.Exists("float_value") {
-			jsonData := v.GetStringBytes("float_value")
-			err := m.FloatValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("float_value")
+		if jsonValue == nil {
+			m.FloatValue = nil
+		} else {
+			err := m.FloatValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("int64Value") {
-		if v.Exists("int64Value") {
-			jsonData := v.GetStringBytes("int64Value")
-			err := m.Int64Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("int64Value")
+		if jsonValue == nil {
+			m.Int64Value = nil
+		} else {
+			err := m.Int64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("int64_value") {
-		if v.Exists("int64_value") {
-			jsonData := v.GetStringBytes("int64_value")
-			err := m.Int64Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("int64_value")
+		if jsonValue == nil {
+			m.Int64Value = nil
+		} else {
+			err := m.Int64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("uint64Value") {
-		if v.Exists("uint64Value") {
-			jsonData := v.GetStringBytes("uint64Value")
-			err := m.Uint64Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("uint64Value")
+		if jsonValue == nil {
+			m.Uint64Value = nil
+		} else {
+			err := m.Uint64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("uint64_value") {
-		if v.Exists("uint64_value") {
-			jsonData := v.GetStringBytes("uint64_value")
-			err := m.Uint64Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("uint64_value")
+		if jsonValue == nil {
+			m.Uint64Value = nil
+		} else {
+			err := m.Uint64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("int32Value") {
-		if v.Exists("int32Value") {
-			jsonData := v.GetStringBytes("int32Value")
-			err := m.Int32Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("int32Value")
+		if jsonValue == nil {
+			m.Int32Value = nil
+		} else {
+			err := m.Int32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("int32_value") {
-		if v.Exists("int32_value") {
-			jsonData := v.GetStringBytes("int32_value")
-			err := m.Int32Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("int32_value")
+		if jsonValue == nil {
+			m.Int32Value = nil
+		} else {
+			err := m.Int32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("uint32Value") {
-		if v.Exists("uint32Value") {
-			jsonData := v.GetStringBytes("uint32Value")
-			err := m.Uint32Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("uint32Value")
+		if jsonValue == nil {
+			m.Uint32Value = nil
+		} else {
+			err := m.Uint32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("uint32_value") {
-		if v.Exists("uint32_value") {
-			jsonData := v.GetStringBytes("uint32_value")
-			err := m.Uint32Value.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("uint32_value")
+		if jsonValue == nil {
+			m.Uint32Value = nil
+		} else {
+			err := m.Uint32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("boolValue") {
-		if v.Exists("boolValue") {
-			jsonData := v.GetStringBytes("boolValue")
-			err := m.BoolValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("boolValue")
+		if jsonValue == nil {
+			m.BoolValue = nil
+		} else {
+			err := m.BoolValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("bool_value") {
-		if v.Exists("bool_value") {
-			jsonData := v.GetStringBytes("bool_value")
-			err := m.BoolValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("bool_value")
+		if jsonValue == nil {
+			m.BoolValue = nil
+		} else {
+			err := m.BoolValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("stringValue") {
-		if v.Exists("stringValue") {
-			jsonData := v.GetStringBytes("stringValue")
-			err := m.StringValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("stringValue")
+		if jsonValue == nil {
+			m.StringValue = nil
+		} else {
+			err := m.StringValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("string_value") {
-		if v.Exists("string_value") {
-			jsonData := v.GetStringBytes("string_value")
-			err := m.StringValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("string_value")
+		if jsonValue == nil {
+			m.StringValue = nil
+		} else {
+			err := m.StringValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("bytesValue") {
-		if v.Exists("bytesValue") {
-			jsonData := v.GetStringBytes("bytesValue")
-			err := m.BytesValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("bytesValue")
+		if jsonValue == nil {
+			m.BytesValue = nil
+		} else {
+			err := m.BytesValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("bytes_value") {
-		if v.Exists("bytes_value") {
-			jsonData := v.GetStringBytes("bytes_value")
-			err := m.BytesValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("bytes_value")
+		if jsonValue == nil {
+			m.BytesValue = nil
+		} else {
+			err := m.BytesValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("structValue") {
-		if v.Exists("structValue") {
-			jsonData := v.GetStringBytes("structValue")
-			err := m.StructValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("structValue")
+		if jsonValue == nil {
+			m.StructValue = nil
+		} else {
+			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("struct_value") {
-		if v.Exists("struct_value") {
-			jsonData := v.GetStringBytes("struct_value")
-			err := m.StructValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("struct_value")
+		if jsonValue == nil {
+			m.StructValue = nil
+		} else {
+			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("valueValue") {
-		if v.Exists("valueValue") {
-			jsonData := v.GetStringBytes("valueValue")
-			err := m.ValueValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("valueValue")
+		if jsonValue == nil {
+			m.ValueValue = nil
+		} else {
+			err := m.ValueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("value_value") {
-		if v.Exists("value_value") {
-			jsonData := v.GetStringBytes("value_value")
-			err := m.ValueValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("value_value")
+		if jsonValue == nil {
+			m.ValueValue = nil
+		} else {
+			err := m.ValueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("listvalueValue") {
-		if v.Exists("listvalueValue") {
-			jsonData := v.GetStringBytes("listvalueValue")
-			err := m.ListvalueValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("listvalueValue")
+		if jsonValue == nil {
+			m.ListvalueValue = nil
+		} else {
+			err := m.ListvalueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("listvalue_value") {
-		if v.Exists("listvalue_value") {
-			jsonData := v.GetStringBytes("listvalue_value")
-			err := m.ListvalueValue.UnmarshalJSON(jsonData)
+		jsonValue := v.Get("listvalue_value")
+		if jsonValue == nil {
+			m.ListvalueValue = nil
+		} else {
+			err := m.ListvalueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}

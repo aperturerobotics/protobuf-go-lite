@@ -618,7 +618,7 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 	}
 }
 
-func (p *unmarshal) field(proto3, oneof bool, field *protogen.Field, message *protogen.Message, required protoreflect.FieldNumbers) {
+func (p *unmarshal) field(proto3 bool, field *protogen.Field, message *protogen.Message, required protoreflect.FieldNumbers) {
 	fieldname := field.GoName
 	errFieldname := fieldname
 	if field.Oneof != nil && !field.Oneof.Desc.IsSynthetic() {
@@ -728,7 +728,7 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 	p.P(`}`)
 	p.P(`switch fieldNum {`)
 	for _, field := range message.Fields {
-		p.field(proto3, false, field, message, required)
+		p.field(proto3, field, message, required)
 	}
 	p.P(`default:`)
 	p.P(`iNdEx=preIndex`)

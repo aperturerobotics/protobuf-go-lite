@@ -476,7 +476,7 @@ func newFile(gen *Plugin, p *descriptorpb.FileDescriptorProto, packageName GoPac
 		f.Messages = append(f.Messages, newMessage(gen, f, nil, mds.Get(i)))
 	}
 	for i, xds := 0, desc.Extensions(); i < xds.Len(); i++ {
-		f.Extensions = append(f.Extensions, newField(gen, f, nil, xds.Get(i)))
+		f.Extensions = append(f.Extensions, newField(f, (*Message)(nil), xds.Get(i)))
 	}
 	for i, sds := 0, desc.Services(); i < sds.Len(); i++ {
 		f.Services = append(f.Services, newService(gen, f, sds.Get(i)))
@@ -612,13 +612,13 @@ func newMessage(gen *Plugin, f *File, parent *Message, desc protoreflect.Message
 		message.Messages = append(message.Messages, newMessage(gen, f, message, mds.Get(i)))
 	}
 	for i, fds := 0, desc.Fields(); i < fds.Len(); i++ {
-		message.Fields = append(message.Fields, newField(gen, f, message, fds.Get(i)))
+		message.Fields = append(message.Fields, newField(f, message, fds.Get(i)))
 	}
 	for i, ods := 0, desc.Oneofs(); i < ods.Len(); i++ {
 		message.Oneofs = append(message.Oneofs, newOneof(gen, f, message, ods.Get(i)))
 	}
 	for i, xds := 0, desc.Extensions(); i < xds.Len(); i++ {
-		message.Extensions = append(message.Extensions, newField(gen, f, message, xds.Get(i)))
+		message.Extensions = append(message.Extensions, newField(f, message, xds.Get(i)))
 	}
 
 	// Resolve local references between fields and oneofs.
@@ -748,7 +748,7 @@ type Field struct {
 	Comments CommentSet // comments associated with this field
 }
 
-func newField(gen *Plugin, f *File, message *Message, desc protoreflect.FieldDescriptor) *Field {
+func newField(f *File, message *Message, desc protoreflect.FieldDescriptor) *Field {
 	var loc Location
 	switch {
 	case desc.IsExtension() && message == nil:

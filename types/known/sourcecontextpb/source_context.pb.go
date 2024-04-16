@@ -116,6 +116,13 @@ func (m *SourceContext) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *SourceContext) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
 	if v.Exists("fileName") {
 		m.FileName = string(v.GetStringBytes("fileName"))
 	} else if v.Exists("file_name") {

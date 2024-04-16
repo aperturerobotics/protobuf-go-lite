@@ -1,7 +1,6 @@
 // Copyright (c) 2024 Aperture Robotics, LLC. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
 package json
 
 import (
@@ -30,16 +29,15 @@ func (p *jsonMarshal) GenerateFile(file *protogen.File) bool {
 	if file.Proto.GetSyntax() != "proto3" {
 		p.P("// MarshalJSON generator only supports proto3 files.")
 		p.P()
-
 		p.P("// UnmarshalJSON generator only supports proto3 files.")
+		p.P()
+		p.P("// UnmarshalJSONValue generator only supports proto3 files.")
 		p.P()
 		return true
 	}
-
 	for _, message := range file.Messages {
 		p.generateJSONMethods(message)
 	}
-
 	return true
 }
 
@@ -62,14 +60,8 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 		} else if repeated {
 			p.P(`if len(m.`, fieldName, `) > 0 {`)
 			p.P(`jsonFields := make([]interface{}, len(m.`, fieldName, `))`)
-			p.P(`for i, field := range m.`, fieldName, ` {`)
-			p.P(`if field != nil {`)
-			p.P(`jsonData, err := field.MarshalJSON()`)
-			p.P(`if err != nil {`)
-			p.P(`return nil, err`)
-			p.P(`}`)
-			p.P(`jsonFields[i] = jsonData`)
-			p.P(`}`)
+			p.P(`for i, val := range m.`, fieldName, ` {`)
+			p.marshalRepeatedField(field, `val`, `jsonFields`, `i`)
 			p.P(`}`)
 			p.P(`container.Set(jsonFields, "`, jsonName, `")`)
 			p.P(`}`)
@@ -84,8 +76,7 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 			case protoreflect.BytesKind:
 				p.P(`if len(m.`, fieldName, `) > 0 {`)
 			case protoreflect.EnumKind:
-				enumName := field.Enum.GoIdent.GoName
-				p.P(`if m.`, fieldName, ` != `, enumName, `_name[0] {`)
+				p.P(`if int(m.`, fieldName, `) != 0 {`)
 			case protoreflect.MessageKind, protoreflect.GroupKind:
 				// Always marshal non-nil message fields
 				p.marshalField(field, `m.`+fieldName, jsonName)
@@ -100,26 +91,49 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 	p.P(`return container.MarshalJSON()`)
 	p.P(`}`)
 	p.P()
-
 	p.P(`func (m *`, ccTypeName, `) UnmarshalJSON(data []byte) error {`)
 	p.P(`var p `, fastjsonPackage.Ident("Parser"))
 	p.P(`v, err := p.ParseBytes(data)`)
 	p.P(`if err != nil {`)
 	p.P(`return err`)
 	p.P(`}`)
+	p.P(`return m.UnmarshalJSONValue(v)`)
+	p.P(`}`)
+	p.P()
+	p.P(`func (m *`, ccTypeName, `) UnmarshalJSONValue(v *`, fastjsonPackage.Ident("Value"), `) error {`)
+	p.P("if v == nil { return nil }")
 	for _, field := range message.Fields {
-		jsonName := strs.JSONCamelCase(string(field.Desc.Name()))
+		protoName := string(field.Desc.Name())
+		jsonName := strs.JSONCamelCase(protoName)
 		fieldName := field.GoName
 		p.P(`if v.Exists("`, jsonName, `") {`)
 		p.unmarshalField(field, `m.`+fieldName, jsonName)
-		p.P(`} else if v.Exists("`, string(field.Desc.Name()), `") {`)
-		p.unmarshalField(field, `m.`+fieldName, string(field.Desc.Name()))
+		if protoName != jsonName {
+			p.P(`} else if v.Exists("`, string(field.Desc.Name()), `") {`)
+			p.unmarshalField(field, `m.`+fieldName, protoName)
+		}
 		p.P(`}`)
 	}
 	p.P(`return nil`)
 	p.P(`}`)
 	p.P()
 }
+
+func (p *jsonMarshal) marshalRepeatedField(field *protogen.Field, accessor, jsonFields, index string) {
+	switch field.Desc.Kind() {
+	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind, protoreflect.StringKind, protoreflect.BytesKind, protoreflect.EnumKind:
+		p.P(jsonFields, `[`, index, `] = `, accessor)
+	case protoreflect.MessageKind, protoreflect.GroupKind:
+		p.P(`jsonData, err := `, accessor, `.MarshalJSON()`)
+		p.P(`if err != nil {`)
+		p.P(`return nil, err`)
+		p.P(`}`)
+		p.P(jsonFields, `[`, index, `] = jsonData`)
+	default:
+		p.P(`// Unsupported type `, field.Desc.Kind())
+	}
+}
+
 func (p *jsonMarshal) marshalField(field *protogen.Field, accessor, jsonName string) {
 	switch field.Desc.Kind() {
 	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind:
@@ -144,30 +158,78 @@ func (p *jsonMarshal) marshalField(field *protogen.Field, accessor, jsonName str
 }
 
 func (p *jsonMarshal) unmarshalField(field *protogen.Field, accessor, jsonName string) {
+	repeated := field.Desc.Cardinality() == protoreflect.Repeated
+	if repeated {
+		p.P(`jsonArray := v.GetArray("`, jsonName, `")`)
+		p.P(`if jsonArray != nil {`)
+		p.P(accessor, ` = make([]*`, field.GoIdent.GoName, `, len(jsonArray))`)
+		p.P(`for i, jsonValue := range jsonArray {`)
+		p.unmarshalRepeatedField(field, accessor+`[i]`, `jsonValue`)
+		p.P(`}`)
+		p.P(`}`)
+	} else {
+		switch field.Desc.Kind() {
+		case protoreflect.Int32Kind:
+			p.P(accessor, ` = int32(v.GetInt("`, jsonName, `"))`)
+		case protoreflect.Int64Kind:
+			p.P(accessor, ` = v.GetInt64("`, jsonName, `")`)
+		case protoreflect.Uint32Kind, protoreflect.Uint64Kind:
+			p.P(accessor, ` = v.GetUint64("`, jsonName, `")`)
+		case protoreflect.FloatKind:
+			p.P(accessor, ` = float32(v.GetFloat64("`, jsonName, `"))`)
+		case protoreflect.DoubleKind:
+			p.P(accessor, ` = v.GetFloat64("`, jsonName, `")`)
+		case protoreflect.BoolKind:
+			p.P(accessor, ` = v.GetBool("`, jsonName, `")`)
+		case protoreflect.StringKind:
+			p.P(accessor, ` = string(v.GetStringBytes("`, jsonName, `"))`)
+		case protoreflect.BytesKind:
+			p.P(accessor, ` = v.GetStringBytes("`, jsonName, `")`)
+		case protoreflect.EnumKind:
+			enumName := field.Enum.GoIdent.GoName
+			p.P(accessor, ` = `, enumName, `(v.GetInt("`, jsonName, `"))`)
+		case protoreflect.MessageKind, protoreflect.GroupKind:
+			p.P(`jsonValue := v.Get("`, jsonName, `")`)
+			p.P(`if jsonValue == nil {`)
+			p.P(accessor, " = nil")
+			p.P(`} else {`)
+			p.P(`err := `, accessor, `.UnmarshalJSONValue(jsonValue)`)
+			p.P(`if err != nil {`)
+			p.P(`return err`)
+			p.P(`}`)
+			p.P(`}`)
+		default:
+			p.P(`// Unsupported type `, field.Desc.Kind())
+		}
+	}
+}
+
+func (p *jsonMarshal) unmarshalRepeatedField(field *protogen.Field, accessor, jsonValue string) {
 	switch field.Desc.Kind() {
 	case protoreflect.Int32Kind:
-		p.P(accessor, ` = int32(v.GetInt("`, jsonName, `"))`)
+		p.P(accessor, ` = int32(`, jsonValue, `.GetInt())`)
 	case protoreflect.Int64Kind:
-		p.P(accessor, ` = v.GetInt64("`, jsonName, `")`)
+		p.P(accessor, ` = `, jsonValue, `.GetInt64()`)
 	case protoreflect.Uint32Kind, protoreflect.Uint64Kind:
-		p.P(accessor, ` = v.GetUint64("`, jsonName, `")`)
+		p.P(accessor, ` = `, jsonValue, `.GetUint64()`)
 	case protoreflect.FloatKind:
-		p.P(accessor, ` = float32(v.GetFloat64("`, jsonName, `"))`)
+		p.P(accessor, ` = float32(`, jsonValue, `.GetFloat64())`)
 	case protoreflect.DoubleKind:
-		p.P(accessor, ` = v.GetFloat64("`, jsonName, `")`)
+		p.P(accessor, ` = `, jsonValue, `.GetFloat64()`)
 	case protoreflect.BoolKind:
-		p.P(accessor, ` = v.GetBool("`, jsonName, `")`)
+		p.P(accessor, ` = `, jsonValue, `.GetBool()`)
 	case protoreflect.StringKind:
-		p.P(accessor, ` = string(v.GetStringBytes("`, jsonName, `"))`)
+		p.P(accessor, ` = string(`, jsonValue, `.GetStringBytes())`)
 	case protoreflect.BytesKind:
-		p.P(accessor, ` = v.GetStringBytes("`, jsonName, `")`)
+		p.P(accessor, ` = `, jsonValue, `.GetStringBytes()`)
 	case protoreflect.EnumKind:
 		enumName := field.Enum.GoIdent.GoName
-		p.P(accessor, ` = `, enumName, `(v.GetInt("`, jsonName, `"))`)
+		p.P(accessor, ` = `, enumName, `(`, jsonValue, `.GetInt())`)
 	case protoreflect.MessageKind, protoreflect.GroupKind:
-		p.P(`if v.Exists("`, jsonName, `") {`)
-		p.P(`jsonData := v.GetStringBytes("`, jsonName, `")`)
-		p.P(`err := `, accessor, `.UnmarshalJSON(jsonData)`)
+		p.P(`if `, jsonValue, ` == nil {`)
+		p.P(accessor, " = nil")
+		p.P(`} else {`)
+		p.P(`err := `, accessor, `.UnmarshalJSONValue(`, jsonValue, `)`)
 		p.P(`if err != nil {`)
 		p.P(`return err`)
 		p.P(`}`)
