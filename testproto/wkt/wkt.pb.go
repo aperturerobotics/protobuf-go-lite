@@ -467,6 +467,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Any = nil
 		} else {
+			m.Any = &Any{}
 			err := m.Any.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -478,6 +479,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Duration = nil
 		} else {
+			m.Duration = &Duration{}
 			err := m.Duration.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -489,6 +491,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Empty = nil
 		} else {
+			m.Empty = &Empty{}
 			err := m.Empty.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -500,6 +503,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Timestamp = nil
 		} else {
+			m.Timestamp = &Timestamp{}
 			err := m.Timestamp.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -511,6 +515,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.DoubleValue = nil
 		} else {
+			m.DoubleValue = &DoubleValue{}
 			err := m.DoubleValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -521,6 +526,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.DoubleValue = nil
 		} else {
+			m.DoubleValue = &DoubleValue{}
 			err := m.DoubleValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -532,6 +538,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.FloatValue = nil
 		} else {
+			m.FloatValue = &FloatValue{}
 			err := m.FloatValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -542,6 +549,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.FloatValue = nil
 		} else {
+			m.FloatValue = &FloatValue{}
 			err := m.FloatValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -553,6 +561,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Int64Value = nil
 		} else {
+			m.Int64Value = &Int64Value{}
 			err := m.Int64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -563,6 +572,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Int64Value = nil
 		} else {
+			m.Int64Value = &Int64Value{}
 			err := m.Int64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -574,6 +584,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Uint64Value = nil
 		} else {
+			m.Uint64Value = &UInt64Value{}
 			err := m.Uint64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -584,6 +595,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Uint64Value = nil
 		} else {
+			m.Uint64Value = &UInt64Value{}
 			err := m.Uint64Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -595,6 +607,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Int32Value = nil
 		} else {
+			m.Int32Value = &Int32Value{}
 			err := m.Int32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -605,6 +618,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Int32Value = nil
 		} else {
+			m.Int32Value = &Int32Value{}
 			err := m.Int32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -616,6 +630,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Uint32Value = nil
 		} else {
+			m.Uint32Value = &UInt32Value{}
 			err := m.Uint32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -626,6 +641,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Uint32Value = nil
 		} else {
+			m.Uint32Value = &UInt32Value{}
 			err := m.Uint32Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -637,6 +653,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.BoolValue = nil
 		} else {
+			m.BoolValue = &BoolValue{}
 			err := m.BoolValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -647,6 +664,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.BoolValue = nil
 		} else {
+			m.BoolValue = &BoolValue{}
 			err := m.BoolValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -658,6 +676,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StringValue = nil
 		} else {
+			m.StringValue = &StringValue{}
 			err := m.StringValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -668,6 +687,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StringValue = nil
 		} else {
+			m.StringValue = &StringValue{}
 			err := m.StringValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -679,6 +699,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.BytesValue = nil
 		} else {
+			m.BytesValue = &BytesValue{}
 			err := m.BytesValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -689,6 +710,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.BytesValue = nil
 		} else {
+			m.BytesValue = &BytesValue{}
 			err := m.BytesValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -700,6 +722,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StructValue = nil
 		} else {
+			m.StructValue = &Struct{}
 			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -710,6 +733,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StructValue = nil
 		} else {
+			m.StructValue = &Struct{}
 			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -721,6 +745,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ValueValue = nil
 		} else {
+			m.ValueValue = &Value{}
 			err := m.ValueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -731,6 +756,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ValueValue = nil
 		} else {
+			m.ValueValue = &Value{}
 			err := m.ValueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -742,6 +768,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ListvalueValue = nil
 		} else {
+			m.ListvalueValue = &ListValue{}
 			err := m.ListvalueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -752,6 +779,7 @@ func (m *MessageWithWKT) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ListvalueValue = nil
 		} else {
+			m.ListvalueValue = &ListValue{}
 			err := m.ListvalueValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err

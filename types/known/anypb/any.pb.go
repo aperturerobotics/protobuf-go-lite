@@ -5,6 +5,7 @@
 package anypb
 
 import (
+	base64 "encoding/base64"
 	io "io"
 	unsafe "unsafe"
 
@@ -234,7 +235,7 @@ func (m *Any) MarshalJSON() ([]byte, error) {
 		container.Set(m.TypeUrl, "typeUrl")
 	}
 	if len(m.Value) > 0 {
-		container.Set(string(m.Value), "value")
+		container.Set(base64.StdEncoding.EncodeToString(m.Value), "value")
 	}
 	return container.MarshalJSON()
 }
@@ -258,7 +259,11 @@ func (m *Any) UnmarshalJSONValue(v *fastjson.Value) error {
 		m.TypeUrl = string(v.GetStringBytes("type_url"))
 	}
 	if v.Exists("value") {
-		m.Value = v.GetStringBytes("value")
+		jsonBytes := v.GetStringBytes("value")
+		m.Value, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

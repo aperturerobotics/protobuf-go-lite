@@ -846,6 +846,7 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Sub1 = nil
 		} else {
+			m.Sub1 = &UnsafeTest_Sub1{}
 			err := m.Sub1.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -857,6 +858,7 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Sub2 = nil
 		} else {
+			m.Sub2 = &UnsafeTest_Sub2{}
 			err := m.Sub2.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -868,6 +870,7 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Sub3 = nil
 		} else {
+			m.Sub3 = &UnsafeTest_Sub3{}
 			err := m.Sub3.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -879,6 +882,7 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Sub4 = nil
 		} else {
+			m.Sub4 = &UnsafeTest_Sub4{}
 			err := m.Sub4.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -890,6 +894,7 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Sub5 = nil
 		} else {
+			m.Sub5 = &UnsafeTest_Sub5{}
 			err := m.Sub5.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err

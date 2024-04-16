@@ -5,6 +5,7 @@
 package wrapperspb
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	io "io"
 	math "math"
@@ -846,7 +847,7 @@ func (m *StringValue) UnmarshalJSONValue(v *fastjson.Value) error {
 func (m *BytesValue) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	if len(m.Value) > 0 {
-		container.Set(string(m.Value), "value")
+		container.Set(base64.StdEncoding.EncodeToString(m.Value), "value")
 	}
 	return container.MarshalJSON()
 }
@@ -865,7 +866,11 @@ func (m *BytesValue) UnmarshalJSONValue(v *fastjson.Value) error {
 		return nil
 	}
 	if v.Exists("value") {
-		m.Value = v.GetStringBytes("value")
+		jsonBytes := v.GetStringBytes("value")
+		m.Value, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

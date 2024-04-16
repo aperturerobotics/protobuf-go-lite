@@ -782,12 +782,12 @@ func (m *Struct) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	if len(m.Fields) > 0 {
 		jsonFields := make(map[string]interface{}, len(m.Fields))
-		for key, val := range m.Fields {
+		for i, val := range m.Fields {
 			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			jsonFields[key] = jsonData
+			jsonFields[i] = jsonData
 		}
 		container.Set(jsonFields, "fields")
 	}
@@ -812,13 +812,10 @@ func (m *Struct) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Fields = make([]*Struct_FieldsEntry, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Fields[i] = nil
-				} else {
-					err := m.Fields[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Fields[i] = &Struct_FieldsEntry{}
+				err := m.Fields[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}
@@ -899,6 +896,7 @@ func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StructValue = nil
 		} else {
+			m.StructValue = &Struct{}
 			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -909,6 +907,7 @@ func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.StructValue = nil
 		} else {
+			m.StructValue = &Struct{}
 			err := m.StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -920,6 +919,7 @@ func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ListValue = nil
 		} else {
+			m.ListValue = &ListValue{}
 			err := m.ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -930,6 +930,7 @@ func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.ListValue = nil
 		} else {
+			m.ListValue = &ListValue{}
 			err := m.ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -973,13 +974,10 @@ func (m *ListValue) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Values = make([]*Value, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Values[i] = nil
-				} else {
-					err := m.Values[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Values[i] = &Value{}
+				err := m.Values[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}

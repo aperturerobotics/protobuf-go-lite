@@ -5,6 +5,7 @@
 package proto3opt
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	io "io"
 	math "math"
@@ -381,7 +382,7 @@ func (m *OptionalFieldInProto3) MarshalJSON() ([]byte, error) {
 		container.Set(m.OptionalString, "optionalString")
 	}
 	if m.OptionalBytes != nil {
-		container.Set(string(m.OptionalBytes), "optionalBytes")
+		container.Set(base64.StdEncoding.EncodeToString(m.OptionalBytes), "optionalBytes")
 	}
 	if m.OptionalEnum != nil {
 		container.Set(m.OptionalEnum.String(), "optionalEnum")
@@ -473,9 +474,17 @@ func (m *OptionalFieldInProto3) UnmarshalJSONValue(v *fastjson.Value) error {
 		m.OptionalString = string(v.GetStringBytes("optional_string"))
 	}
 	if v.Exists("optionalBytes") {
-		m.OptionalBytes = v.GetStringBytes("optionalBytes")
+		jsonBytes := v.GetStringBytes("optionalBytes")
+		m.OptionalBytes, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
 	} else if v.Exists("optional_bytes") {
-		m.OptionalBytes = v.GetStringBytes("optional_bytes")
+		jsonBytes := v.GetStringBytes("optional_bytes")
+		m.OptionalBytes, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
 	}
 	if v.Exists("optionalEnum") {
 		m.OptionalEnum = SimpleEnum(v.GetInt("optionalEnum"))

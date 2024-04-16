@@ -646,13 +646,10 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Methods = make([]*Method, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Methods[i] = nil
-				} else {
-					err := m.Methods[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Methods[i] = &Method{}
+				err := m.Methods[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}
@@ -662,13 +659,10 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Options[i] = nil
-				} else {
-					err := m.Options[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Options[i] = &Option{}
+				err := m.Options[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}
@@ -681,6 +675,7 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
+			m.SourceContext = &SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -691,6 +686,7 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
+			m.SourceContext = &SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -702,13 +698,10 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Mixins = make([]*Mixin, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Mixins[i] = nil
-				} else {
-					err := m.Mixins[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Mixins[i] = &Mixin{}
+				err := m.Mixins[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}
@@ -794,13 +787,10 @@ func (m *Method) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonArray != nil {
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
-				if jsonValue == nil {
-					m.Options[i] = nil
-				} else {
-					err := m.Options[i].UnmarshalJSONValue(jsonValue)
-					if err != nil {
-						return err
-					}
+				m.Options[i] = &Option{}
+				err := m.Options[i].UnmarshalJSONValue(jsonValue)
+				if err != nil {
+					return err
 				}
 			}
 		}
