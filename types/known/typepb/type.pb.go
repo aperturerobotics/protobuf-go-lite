@@ -1024,7 +1024,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("fields") {
 		jsonArray := v.GetArray("fields")
 		if jsonArray != nil {
-			m.Fields = make([]*Type_Fields, len(jsonArray))
+			m.Fields = make([]*Field, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Fields[i] = nil
@@ -1040,7 +1040,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("oneofs") {
 		jsonArray := v.GetArray("oneofs")
 		if jsonArray != nil {
-			m.Oneofs = make([]*Type_Oneofs, len(jsonArray))
+			m.Oneofs = make([]string, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Oneofs[i] = string(jsonValue.GetStringBytes())
 			}
@@ -1049,7 +1049,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			m.Options = make([]*Type_Options, len(jsonArray))
+			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Options[i] = nil
@@ -1176,7 +1176,7 @@ func (m *Field) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			m.Options = make([]*Field_Options, len(jsonArray))
+			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Options[i] = nil
@@ -1266,7 +1266,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("enumvalue") {
 		jsonArray := v.GetArray("enumvalue")
 		if jsonArray != nil {
-			m.Enumvalue = make([]*Enum_Enumvalue, len(jsonArray))
+			m.Enumvalue = make([]*EnumValue, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Enumvalue[i] = nil
@@ -1282,7 +1282,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			m.Options = make([]*Enum_Options, len(jsonArray))
+			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Options[i] = nil
@@ -1369,7 +1369,7 @@ func (m *EnumValue) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			m.Options = make([]*EnumValue_Options, len(jsonArray))
+			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				if jsonValue == nil {
 					m.Options[i] = nil

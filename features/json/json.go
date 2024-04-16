@@ -162,7 +162,20 @@ func (p *jsonMarshal) unmarshalField(field *protogen.Field, accessor, jsonName s
 	if repeated {
 		p.P(`jsonArray := v.GetArray("`, jsonName, `")`)
 		p.P(`if jsonArray != nil {`)
-		p.P(accessor, ` = make([]*`, field.GoIdent.GoName, `, len(jsonArray))`)
+		switch field.Desc.Kind() {
+		case protoreflect.MessageKind, protoreflect.GroupKind:
+			p.P(accessor, ` = make([]*`, field.Message.GoIdent.GoName, `, len(jsonArray))`)
+		case protoreflect.EnumKind:
+			p.P(accessor, ` = make([]`, field.Enum.GoIdent.GoName, `, len(jsonArray))`)
+		case protoreflect.Int32Kind, protoreflect.Int64Kind,
+			protoreflect.Uint32Kind, protoreflect.Uint64Kind,
+			protoreflect.FloatKind, protoreflect.DoubleKind:
+			p.P(accessor, ` = make([]`, field.Desc.Kind().String(), `, len(jsonArray))`)
+		case protoreflect.BoolKind:
+			p.P(accessor, ` = make([]bool, len(jsonArray))`)
+		case protoreflect.StringKind, protoreflect.BytesKind:
+			p.P(accessor, ` = make([]string, len(jsonArray))`)
+		}
 		p.P(`for i, jsonValue := range jsonArray {`)
 		p.unmarshalRepeatedField(field, accessor+`[i]`, `jsonValue`)
 		p.P(`}`)
