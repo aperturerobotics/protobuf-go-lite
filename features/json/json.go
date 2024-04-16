@@ -58,6 +58,17 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 			p.marshalField(field, `m.`+fieldName, jsonName)
 			p.P(`}`)
 		} else if repeated {
+			if field.Desc.IsMap() {
+				p.P(`if len(m.`, fieldName, `) > 0 {`)
+				p.P(`jsonFields := make(map[string]interface{}, len(m.`, fieldName, `))`)
+				p.P(`for key, val := range m.`, fieldName, ` {`)
+				p.marshalMapField(field, `key`, `val`, `jsonFields`)
+				p.P(`}`)
+				p.P(`container.Set(jsonFields, "`, jsonName, `")`)
+				p.P(`}`)
+				continue
+			}
+
 			p.P(`if len(m.`, fieldName, `) > 0 {`)
 			p.P(`jsonFields := make([]interface{}, len(m.`, fieldName, `))`)
 			p.P(`for i, val := range m.`, fieldName, ` {`)
@@ -134,6 +145,21 @@ func (p *jsonMarshal) marshalRepeatedField(field *protogen.Field, accessor, json
 	}
 }
 
+func (p *jsonMarshal) marshalMapField(field *protogen.Field, keyAccessor, valAccessor, jsonFields string) {
+	switch field.Desc.MapValue().Kind() {
+	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind, protoreflect.StringKind, protoreflect.BytesKind:
+		p.P(jsonFields, `[`, keyAccessor, `] = `, valAccessor)
+	case protoreflect.EnumKind:
+		p.P(jsonFields, `[`, keyAccessor, `] = `, valAccessor, `.String()`)
+	case protoreflect.MessageKind, protoreflect.GroupKind:
+		p.P(`jsonData, err := `, valAccessor, `.MarshalJSON()`)
+		p.P(`if err != nil {`)
+		p.P(`return nil, err`)
+		p.P(`}`)
+		p.P(jsonFields, `[`, keyAccessor, `] = jsonData`)
+	}
+}
+
 func (p *jsonMarshal) marshalField(field *protogen.Field, accessor, jsonName string) {
 	switch field.Desc.Kind() {
 	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind:
@@ -166,7 +192,7 @@ func (p *jsonMarshal) unmarshalField(field *protogen.Field, accessor, jsonName s
 		case protoreflect.MessageKind, protoreflect.GroupKind:
 			p.P(accessor, ` = make([]*`, field.Message.GoIdent.GoName, `, len(jsonArray))`)
 		case protoreflect.EnumKind:
-			p.P(accessor, ` = make([]`, field.Enum.GoIdent.GoName, `, len(jsonArray))`)
+			p.P(accessor, ` = make([]`, field.Enum.GoIdent, `, len(jsonArray))`)
 		case protoreflect.Int32Kind, protoreflect.Int64Kind,
 			protoreflect.Uint32Kind, protoreflect.Uint64Kind,
 			protoreflect.FloatKind, protoreflect.DoubleKind:

@@ -781,13 +781,13 @@ func (this *ListValue) EqualMessageVT(thatMsg any) bool {
 func (m *Struct) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	if len(m.Fields) > 0 {
-		jsonFields := make([]interface{}, len(m.Fields))
-		for i, val := range m.Fields {
+		jsonFields := make(map[string]interface{}, len(m.Fields))
+		for key, val := range m.Fields {
 			jsonData, err := val.MarshalJSON()
 			if err != nil {
 				return nil, err
 			}
-			jsonFields[i] = jsonData
+			jsonFields[key] = jsonData
 		}
 		container.Set(jsonFields, "fields")
 	}
