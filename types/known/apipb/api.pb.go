@@ -644,8 +644,7 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("methods") {
 		jsonArray := v.GetArray("methods")
 		if jsonArray != nil {
-			// message
-			m.Methods = make([]*Method, len(jsonArray))
+			m.Methods = make([][]*Method, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Methods[i] = &Method{}
 				err := m.Methods[i].UnmarshalJSONValue(jsonValue)
@@ -658,8 +657,7 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			// message
-			m.Options = make([]*typepb.Option, len(jsonArray))
+			m.Options = make([][]*typepb.Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &typepb.Option{}
 				err := m.Options[i].UnmarshalJSONValue(jsonValue)
@@ -698,8 +696,7 @@ func (m *Api) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("mixins") {
 		jsonArray := v.GetArray("mixins")
 		if jsonArray != nil {
-			// message
-			m.Mixins = make([]*Mixin, len(jsonArray))
+			m.Mixins = make([][]*Mixin, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Mixins[i] = &Mixin{}
 				err := m.Mixins[i].UnmarshalJSONValue(jsonValue)
@@ -788,8 +785,7 @@ func (m *Method) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
-			// message
-			m.Options = make([]*typepb.Option, len(jsonArray))
+			m.Options = make([][]*typepb.Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &typepb.Option{}
 				err := m.Options[i].UnmarshalJSONValue(jsonValue)

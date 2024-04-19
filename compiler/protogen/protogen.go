@@ -480,7 +480,7 @@ func newFile(gen *Plugin, p *descriptorpb.FileDescriptorProto, packageName GoPac
 		f.Extensions = append(f.Extensions, newField(f, (*Message)(nil), xds.Get(i)))
 	}
 	for i, sds := 0, desc.Services(); i < sds.Len(); i++ {
-		f.Services = append(f.Services, newService(gen, f, sds.Get(i)))
+		f.Services = append(f.Services, newService(f, sds.Get(i)))
 	}
 	for _, message := range f.Messages {
 		if err := message.resolveDependencies(gen); err != nil {
@@ -859,7 +859,7 @@ type Service struct {
 	Comments CommentSet // comments associated with this service
 }
 
-func newService(gen *Plugin, f *File, desc protoreflect.ServiceDescriptor) *Service {
+func newService(f *File, desc protoreflect.ServiceDescriptor) *Service {
 	loc := f.location.appendPath(genid.FileDescriptorProto_Service_field_number, desc.Index())
 	service := &Service{
 		Desc:     desc,
