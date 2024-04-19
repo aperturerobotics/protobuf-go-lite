@@ -1024,6 +1024,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("fields") {
 		jsonArray := v.GetArray("fields")
 		if jsonArray != nil {
+			// message
 			m.Fields = make([]*Field, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Fields[i] = &Field{}
@@ -1046,6 +1047,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
+			// message
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &Option{}
@@ -1061,7 +1063,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
-			m.SourceContext = &SourceContext{}
+			m.SourceContext = &sourcecontextpb.SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -1072,7 +1074,7 @@ func (m *Type) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
-			m.SourceContext = &SourceContext{}
+			m.SourceContext = &sourcecontextpb.SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -1172,6 +1174,7 @@ func (m *Field) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
+			// message
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &Option{}
@@ -1259,6 +1262,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("enumvalue") {
 		jsonArray := v.GetArray("enumvalue")
 		if jsonArray != nil {
+			// message
 			m.Enumvalue = make([]*EnumValue, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Enumvalue[i] = &EnumValue{}
@@ -1272,6 +1276,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
+			// message
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &Option{}
@@ -1287,7 +1292,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
-			m.SourceContext = &SourceContext{}
+			m.SourceContext = &sourcecontextpb.SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -1298,7 +1303,7 @@ func (m *Enum) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.SourceContext = nil
 		} else {
-			m.SourceContext = &SourceContext{}
+			m.SourceContext = &sourcecontextpb.SourceContext{}
 			err := m.SourceContext.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
@@ -1358,6 +1363,7 @@ func (m *EnumValue) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("options") {
 		jsonArray := v.GetArray("options")
 		if jsonArray != nil {
+			// message
 			m.Options = make([]*Option, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Options[i] = &Option{}
@@ -1409,7 +1415,7 @@ func (m *Option) UnmarshalJSONValue(v *fastjson.Value) error {
 		if jsonValue == nil {
 			m.Value = nil
 		} else {
-			m.Value = &Any{}
+			m.Value = &anypb.Any{}
 			err := m.Value.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err

@@ -475,13 +475,15 @@ func (m *OptionalFieldInProto3) UnmarshalJSONValue(v *fastjson.Value) error {
 	}
 	if v.Exists("optionalBytes") {
 		jsonBytes := v.GetStringBytes("optionalBytes")
-		m.OptionalBytes, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		var err error
+		m.OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
 		if err != nil {
 			return err
 		}
 	} else if v.Exists("optional_bytes") {
 		jsonBytes := v.GetStringBytes("optional_bytes")
-		m.OptionalBytes, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		var err error
+		m.OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
 		if err != nil {
 			return err
 		}

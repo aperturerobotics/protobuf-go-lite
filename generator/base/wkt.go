@@ -175,7 +175,7 @@ func GenPackageKnownComment(f *protogen.File) protogen.Comments {
 	}
 }
 
-func genMessageKnownFunctions(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
+func genMessageKnownFunctions(g *protogen.GeneratedFile, m *messageInfo) {
 	switch m.Desc.FullName() {
 	case genid.Timestamp_message_fullname:
 		g.P("// Now constructs a new Timestamp from the current time.")

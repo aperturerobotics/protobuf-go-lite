@@ -442,6 +442,7 @@ func newFile(gen *Plugin, p *descriptorpb.FileDescriptorProto, packageName GoPac
 	if err := gen.fileReg.RegisterFile(desc); err != nil {
 		return nil, errors.Errorf("cannot register descriptor %q: %v", p.GetName(), err)
 	}
+	importPath = fixTypesPrefix(importPath)
 	f := &File{
 		Desc:          desc,
 		Proto:         p,
@@ -537,7 +538,7 @@ func newEnum(gen *Plugin, f *File, parent *Message, desc protoreflect.EnumDescri
 	}
 	gen.enumsByName[desc.FullName()] = enum
 	for i, vds := 0, enum.Desc.Values(); i < vds.Len(); i++ {
-		enum.Values = append(enum.Values, newEnumValue(gen, f, parent, enum, vds.Get(i)))
+		enum.Values = append(enum.Values, newEnumValue(f, parent, enum, vds.Get(i)))
 	}
 	return enum
 }
@@ -554,7 +555,7 @@ type EnumValue struct {
 	Comments CommentSet // comments associated with this enum value
 }
 
-func newEnumValue(gen *Plugin, f *File, message *Message, enum *Enum, desc protoreflect.EnumValueDescriptor) *EnumValue {
+func newEnumValue(f *File, message *Message, enum *Enum, desc protoreflect.EnumValueDescriptor) *EnumValue {
 	// A top-level enum value's name is: EnumName_ValueName
 	// An enum value contained in a message is: MessageName_ValueName
 	//
@@ -615,7 +616,7 @@ func newMessage(gen *Plugin, f *File, parent *Message, desc protoreflect.Message
 		message.Fields = append(message.Fields, newField(f, message, fds.Get(i)))
 	}
 	for i, ods := 0, desc.Oneofs(); i < ods.Len(); i++ {
-		message.Oneofs = append(message.Oneofs, newOneof(gen, f, message, ods.Get(i)))
+		message.Oneofs = append(message.Oneofs, newOneof(f, message, ods.Get(i)))
 	}
 	for i, xds := 0, desc.Extensions(); i < xds.Len(); i++ {
 		message.Extensions = append(message.Extensions, newField(f, message, xds.Get(i)))
@@ -826,7 +827,7 @@ type Oneof struct {
 	Comments CommentSet // comments associated with this oneof
 }
 
-func newOneof(gen *Plugin, f *File, message *Message, desc protoreflect.OneofDescriptor) *Oneof {
+func newOneof(f *File, message *Message, desc protoreflect.OneofDescriptor) *Oneof {
 	loc := message.Location.appendPath(genid.DescriptorProto_OneofDecl_field_number, desc.Index())
 	camelCased := strs.GoCamelCase(string(desc.Name()))
 	parentPrefix := message.GoIdent.GoName + "_"
@@ -867,7 +868,7 @@ func newService(gen *Plugin, f *File, desc protoreflect.ServiceDescriptor) *Serv
 		Comments: makeCommentSet(f.Desc.SourceLocations().ByDescriptor(desc)),
 	}
 	for i, mds := 0, desc.Methods(); i < mds.Len(); i++ {
-		service.Methods = append(service.Methods, newMethod(gen, f, service, mds.Get(i)))
+		service.Methods = append(service.Methods, newMethod(f, service, mds.Get(i)))
 	}
 	return service
 }
@@ -887,7 +888,7 @@ type Method struct {
 	Comments CommentSet // comments associated with this method
 }
 
-func newMethod(gen *Plugin, f *File, service *Service, desc protoreflect.MethodDescriptor) *Method {
+func newMethod(f *File, service *Service, desc protoreflect.MethodDescriptor) *Method {
 	loc := service.Location.appendPath(genid.ServiceDescriptorProto_Method_field_number, desc.Index())
 	method := &Method{
 		Desc:     desc,
@@ -998,6 +999,7 @@ func (g *GeneratedFile) QualifiedGoIdent(ident GoIdent) string {
 // Explicitly importing a package with Import is generally only necessary
 // when the import will be blank (import _ "package").
 func (g *GeneratedFile) Import(importPath GoImportPath) {
+	importPath = fixTypesPrefix(importPath)
 	g.manualImports[importPath] = true
 }
 
@@ -1073,11 +1075,12 @@ func (g *GeneratedFile) Content() ([]byte, error) {
 
 	// Collect a sorted list of all imports.
 	var importPaths [][2]string
-	rewriteImport := func(importPath string) string {
+	rewriteImport := func(importPathStr string) string {
+		importPath := fixTypesPrefix(GoImportPath(importPathStr))
 		if f := g.gen.opts.ImportRewriteFunc; f != nil {
-			return string(f(GoImportPath(importPath)))
+			return string(f(importPath))
 		}
-		return importPath
+		return string(importPath)
 	}
 	for importPath := range g.packageNames {
 		pkgName := string(g.packageNames[importPath])

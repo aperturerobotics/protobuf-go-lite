@@ -59,13 +59,7 @@ func (p *clone) cloneOneofField(lhsBase, rhsBase string, oneof *protogen.Oneof) 
 func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, message *protogen.Message) {
 	switch {
 	case kind == protoreflect.MessageKind, kind == protoreflect.GroupKind:
-		// switch {
-		// case p.IsWellKnownType(message):
-		// p.P(lhs, ` = (*`, message.GoIdent, `)((*`, p.WellKnownTypeMap(message), `)(`, rhs, `).`, cloneName, `())`)
-		// case p.IsLocalMessage(message):
-		// default:
 		p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
-		//}
 	case kind == protoreflect.BytesKind:
 		p.P(`tmpBytes := make([]byte, len(`, rhs, `))`)
 		p.P(`copy(tmpBytes, `, rhs, `)`)

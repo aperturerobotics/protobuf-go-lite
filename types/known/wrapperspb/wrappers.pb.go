@@ -867,7 +867,8 @@ func (m *BytesValue) UnmarshalJSONValue(v *fastjson.Value) error {
 	}
 	if v.Exists("value") {
 		jsonBytes := v.GetStringBytes("value")
-		m.Value, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		var err error
+		m.Value, err = base64.StdEncoding.DecodeString(string(jsonBytes))
 		if err != nil {
 			return err
 		}

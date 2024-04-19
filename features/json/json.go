@@ -92,7 +92,7 @@ func (p *jsonMarshal) generateUnmarshalJSONValue(message *protogen.Message, ccTy
 		p.P(`if v.Exists("`, jsonName, `") {`)
 		p.unmarshalField(field, `m.`+fieldName, jsonName)
 		if protoName != jsonName {
-			p.P(`} else if v.Exists("`, string(field.Desc.Name()), `") {`)
+			p.P(`} else if v.Exists("`, protoName, `") {`)
 			p.unmarshalField(field, `m.`+fieldName, protoName)
 		}
 		p.P(`}`)
@@ -199,9 +199,10 @@ func (p *jsonMarshal) unmarshalRepeatedField(field *protogen.Field, accessor, js
 	p.P(`if jsonArray != nil {`)
 	switch field.Desc.Kind() {
 	case protoreflect.MessageKind, protoreflect.GroupKind:
-		p.P(accessor, ` = make([]*`, field.Message.GoIdent.GoName, `, len(jsonArray))`)
+		p.P(`// ` + field.Desc.Kind().String())
+		p.P(accessor, ` = make([]*`, p.QualifiedGoIdent(field.Message.GoIdent), `, len(jsonArray))`)
 	case protoreflect.EnumKind:
-		p.P(accessor, ` = make([]`, field.Enum.GoIdent.GoName, `, len(jsonArray))`)
+		p.P(accessor, ` = make([]`, p.QualifiedGoIdent(field.Enum.GoIdent), `, len(jsonArray))`)
 	case protoreflect.Int32Kind, protoreflect.Int64Kind,
 		protoreflect.Uint32Kind, protoreflect.Uint64Kind,
 		protoreflect.FloatKind, protoreflect.DoubleKind:
@@ -235,19 +236,19 @@ func (p *jsonMarshal) unmarshalSingularField(field *protogen.Field, accessor, js
 		p.P(accessor, ` = string(v.GetStringBytes("`, jsonName, `"))`)
 	case protoreflect.BytesKind:
 		p.P(`jsonBytes := v.GetStringBytes("`, jsonName, `")`)
-		p.P(accessor, `, err := `, base64Encoding, `.DecodeString(string(jsonBytes))`)
+		p.P(`var err error`)
+		p.P(accessor, `, err = `, base64Encoding, `.DecodeString(string(jsonBytes))`)
 		p.P(`if err != nil {`)
 		p.P(`return err`)
 		p.P(`}`)
 	case protoreflect.EnumKind:
-		enumName := field.Enum.GoIdent.GoName
-		p.P(accessor, ` = `, enumName, `(v.GetInt("`, jsonName, `"))`)
+		p.P(accessor, ` = `, p.QualifiedGoIdent(field.Enum.GoIdent), `(v.GetInt("`, jsonName, `"))`)
 	case protoreflect.MessageKind, protoreflect.GroupKind:
 		p.P(`jsonValue := v.Get("`, jsonName, `")`)
 		p.P(`if jsonValue == nil {`)
 		p.P(accessor, " = nil")
 		p.P(`} else {`)
-		p.P(accessor, ` = &`, field.Message.GoIdent.GoName, `{}`)
+		p.P(accessor, ` = &`, p.QualifiedGoIdent(field.Message.GoIdent), `{}`)
 		p.P(`err := `, accessor, `.UnmarshalJSONValue(jsonValue)`)
 		p.P(`if err != nil {`)
 		p.P(`return err`)
@@ -284,7 +285,7 @@ func (p *jsonMarshal) unmarshalRepeatedFieldValue(field *protogen.Field, accesso
 		enumName := field.Enum.GoIdent.GoName
 		p.P(accessor, ` = `, enumName, `(`, jsonValue, `.GetInt())`)
 	case protoreflect.MessageKind, protoreflect.GroupKind:
-		p.P(accessor, ` = &`, field.Message.GoIdent.GoName, `{}`)
+		p.P(accessor, ` = &`, p.QualifiedGoIdent(field.Message.GoIdent), `{}`)
 		p.P(`err := `, accessor, `.UnmarshalJSONValue(`, jsonValue, `)`)
 		p.P(`if err != nil {`)
 		p.P(`return err`)

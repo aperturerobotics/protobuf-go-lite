@@ -235,7 +235,7 @@ func genMessage(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
 	g.P("}")
 	g.P()
 
-	genMessageKnownFunctions(g, f, m)
+	genMessageKnownFunctions(g, m)
 	genMessageDefaultDecls(g, f, m)
 	genMessageMethods(g, f, m)
 	genMessageOneofWrapperTypes(g, f, m)

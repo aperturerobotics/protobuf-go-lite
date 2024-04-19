@@ -810,6 +810,7 @@ func (m *Struct) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("fields") {
 		jsonArray := v.GetArray("fields")
 		if jsonArray != nil {
+			// message
 			m.Fields = make([]*Struct_FieldsEntry, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Fields[i] = &Struct_FieldsEntry{}
@@ -972,6 +973,7 @@ func (m *ListValue) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("values") {
 		jsonArray := v.GetArray("values")
 		if jsonArray != nil {
+			// message
 			m.Values = make([]*Value, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Values[i] = &Value{}
