@@ -7,6 +7,7 @@ package proto3opt
 import (
 	base64 "encoding/base64"
 	binary "encoding/binary"
+	"fmt"
 	io "io"
 	math "math"
 	strconv "strconv"
@@ -339,53 +340,117 @@ func (this *OptionalFieldInProto3) EqualMessageVT(thatMsg any) bool {
 }
 func (m *OptionalFieldInProto3) MarshalJSON() ([]byte, error) {
 	container := v2.New()
-	if m.OptionalInt32 != nil {
-		container.Set(m.OptionalInt32, "optionalInt32")
+	switch x := m.XOptionalInt32.(type) {
+	case *OptionalFieldInProto3_OptionalInt32:
+		container.Set(x.OptionalInt32, "optionalInt32")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalInt64 != nil {
-		container.Set(m.OptionalInt64, "optionalInt64")
+	switch x := m.XOptionalInt64.(type) {
+	case *OptionalFieldInProto3_OptionalInt64:
+		container.Set(x.OptionalInt64, "optionalInt64")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalUint32 != nil {
-		container.Set(m.OptionalUint32, "optionalUint32")
+	switch x := m.XOptionalUint32.(type) {
+	case *OptionalFieldInProto3_OptionalUint32:
+		container.Set(x.OptionalUint32, "optionalUint32")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalUint64 != nil {
-		container.Set(m.OptionalUint64, "optionalUint64")
+	switch x := m.XOptionalUint64.(type) {
+	case *OptionalFieldInProto3_OptionalUint64:
+		container.Set(x.OptionalUint64, "optionalUint64")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalSint32 != nil {
-		// Unsupported type sint32
+	switch x := m.XOptionalSint32.(type) {
+	case *OptionalFieldInProto3_OptionalSint32:
+		container.Set(x.OptionalSint32, "optionalSint32")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalSint64 != nil {
-		// Unsupported type sint64
+	switch x := m.XOptionalSint64.(type) {
+	case *OptionalFieldInProto3_OptionalSint64:
+		container.Set(x.OptionalSint64, "optionalSint64")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalFixed32 != nil {
-		// Unsupported type fixed32
+	switch x := m.XOptionalFixed32.(type) {
+	case *OptionalFieldInProto3_OptionalFixed32:
+		container.Set(x.OptionalFixed32, "optionalFixed32")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalFixed64 != nil {
-		// Unsupported type fixed64
+	switch x := m.XOptionalFixed64.(type) {
+	case *OptionalFieldInProto3_OptionalFixed64:
+		container.Set(x.OptionalFixed64, "optionalFixed64")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalSfixed32 != nil {
-		// Unsupported type sfixed32
+	switch x := m.XOptionalSfixed32.(type) {
+	case *OptionalFieldInProto3_OptionalSfixed32:
+		container.Set(x.OptionalSfixed32, "optionalSfixed32")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalSfixed64 != nil {
-		// Unsupported type sfixed64
+	switch x := m.XOptionalSfixed64.(type) {
+	case *OptionalFieldInProto3_OptionalSfixed64:
+		container.Set(x.OptionalSfixed64, "optionalSfixed64")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalFloat != nil {
-		container.Set(m.OptionalFloat, "optionalFloat")
+	switch x := m.XOptionalFloat.(type) {
+	case *OptionalFieldInProto3_OptionalFloat:
+		container.Set(x.OptionalFloat, "optionalFloat")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalDouble != nil {
-		container.Set(m.OptionalDouble, "optionalDouble")
+	switch x := m.XOptionalDouble.(type) {
+	case *OptionalFieldInProto3_OptionalDouble:
+		container.Set(x.OptionalDouble, "optionalDouble")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalBool != nil {
-		container.Set(m.OptionalBool, "optionalBool")
+	switch x := m.XOptionalBool.(type) {
+	case *OptionalFieldInProto3_OptionalBool:
+		container.Set(x.OptionalBool, "optionalBool")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalString != nil {
-		container.Set(m.OptionalString, "optionalString")
+	switch x := m.XOptionalString.(type) {
+	case *OptionalFieldInProto3_OptionalString:
+		container.Set(x.OptionalString, "optionalString")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalBytes != nil {
-		container.Set(base64.StdEncoding.EncodeToString(m.OptionalBytes), "optionalBytes")
+	switch x := m.XOptionalBytes.(type) {
+	case *OptionalFieldInProto3_OptionalBytes:
+		container.Set(x.OptionalBytes, "optionalBytes")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
-	if m.OptionalEnum != nil {
-		container.Set(m.OptionalEnum.String(), "optionalEnum")
+	switch x := m.XOptionalEnum.(type) {
+	case *OptionalFieldInProto3_OptionalEnum:
+		container.Set(x.OptionalEnum.String(), "optionalEnum")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
 	return container.MarshalJSON()
 }
@@ -404,94 +469,126 @@ func (m *OptionalFieldInProto3) UnmarshalJSONValue(v *fastjson.Value) error {
 		return nil
 	}
 	if v.Exists("optionalInt32") {
-		m.OptionalInt32 = int32(v.GetInt("optionalInt32"))
+		m.XOptionalInt32 = &OptionalFieldInProto3_OptionalInt32{}
+		m.XOptionalInt32.(*OptionalFieldInProto3_OptionalInt32).OptionalInt32 = int32(v.GetInt("optionalInt32"))
 	} else if v.Exists("optional_int32") {
-		m.OptionalInt32 = int32(v.GetInt("optional_int32"))
+		m.XOptionalInt32 = &OptionalFieldInProto3_OptionalInt32{}
+		m.XOptionalInt32.(*OptionalFieldInProto3_OptionalInt32).OptionalInt32 = int32(v.GetInt("optional_int32"))
 	}
 	if v.Exists("optionalInt64") {
-		m.OptionalInt64 = v.GetInt64("optionalInt64")
+		m.XOptionalInt64 = &OptionalFieldInProto3_OptionalInt64{}
+		m.XOptionalInt64.(*OptionalFieldInProto3_OptionalInt64).OptionalInt64 = v.GetInt64("optionalInt64")
 	} else if v.Exists("optional_int64") {
-		m.OptionalInt64 = v.GetInt64("optional_int64")
+		m.XOptionalInt64 = &OptionalFieldInProto3_OptionalInt64{}
+		m.XOptionalInt64.(*OptionalFieldInProto3_OptionalInt64).OptionalInt64 = v.GetInt64("optional_int64")
 	}
 	if v.Exists("optionalUint32") {
-		m.OptionalUint32 = v.GetUint64("optionalUint32")
+		m.XOptionalUint32 = &OptionalFieldInProto3_OptionalUint32{}
+		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = v.GetUint64("optionalUint32")
 	} else if v.Exists("optional_uint32") {
-		m.OptionalUint32 = v.GetUint64("optional_uint32")
+		m.XOptionalUint32 = &OptionalFieldInProto3_OptionalUint32{}
+		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = v.GetUint64("optional_uint32")
 	}
 	if v.Exists("optionalUint64") {
-		m.OptionalUint64 = v.GetUint64("optionalUint64")
+		m.XOptionalUint64 = &OptionalFieldInProto3_OptionalUint64{}
+		m.XOptionalUint64.(*OptionalFieldInProto3_OptionalUint64).OptionalUint64 = v.GetUint64("optionalUint64")
 	} else if v.Exists("optional_uint64") {
-		m.OptionalUint64 = v.GetUint64("optional_uint64")
+		m.XOptionalUint64 = &OptionalFieldInProto3_OptionalUint64{}
+		m.XOptionalUint64.(*OptionalFieldInProto3_OptionalUint64).OptionalUint64 = v.GetUint64("optional_uint64")
 	}
 	if v.Exists("optionalSint32") {
+		m.XOptionalSint32 = &OptionalFieldInProto3_OptionalSint32{}
 		// Unsupported type sint32
 	} else if v.Exists("optional_sint32") {
+		m.XOptionalSint32 = &OptionalFieldInProto3_OptionalSint32{}
 		// Unsupported type sint32
 	}
 	if v.Exists("optionalSint64") {
+		m.XOptionalSint64 = &OptionalFieldInProto3_OptionalSint64{}
 		// Unsupported type sint64
 	} else if v.Exists("optional_sint64") {
+		m.XOptionalSint64 = &OptionalFieldInProto3_OptionalSint64{}
 		// Unsupported type sint64
 	}
 	if v.Exists("optionalFixed32") {
+		m.XOptionalFixed32 = &OptionalFieldInProto3_OptionalFixed32{}
 		// Unsupported type fixed32
 	} else if v.Exists("optional_fixed32") {
+		m.XOptionalFixed32 = &OptionalFieldInProto3_OptionalFixed32{}
 		// Unsupported type fixed32
 	}
 	if v.Exists("optionalFixed64") {
+		m.XOptionalFixed64 = &OptionalFieldInProto3_OptionalFixed64{}
 		// Unsupported type fixed64
 	} else if v.Exists("optional_fixed64") {
+		m.XOptionalFixed64 = &OptionalFieldInProto3_OptionalFixed64{}
 		// Unsupported type fixed64
 	}
 	if v.Exists("optionalSfixed32") {
+		m.XOptionalSfixed32 = &OptionalFieldInProto3_OptionalSfixed32{}
 		// Unsupported type sfixed32
 	} else if v.Exists("optional_sfixed32") {
+		m.XOptionalSfixed32 = &OptionalFieldInProto3_OptionalSfixed32{}
 		// Unsupported type sfixed32
 	}
 	if v.Exists("optionalSfixed64") {
+		m.XOptionalSfixed64 = &OptionalFieldInProto3_OptionalSfixed64{}
 		// Unsupported type sfixed64
 	} else if v.Exists("optional_sfixed64") {
+		m.XOptionalSfixed64 = &OptionalFieldInProto3_OptionalSfixed64{}
 		// Unsupported type sfixed64
 	}
 	if v.Exists("optionalFloat") {
-		m.OptionalFloat = float32(v.GetFloat64("optionalFloat"))
+		m.XOptionalFloat = &OptionalFieldInProto3_OptionalFloat{}
+		m.XOptionalFloat.(*OptionalFieldInProto3_OptionalFloat).OptionalFloat = float32(v.GetFloat64("optionalFloat"))
 	} else if v.Exists("optional_float") {
-		m.OptionalFloat = float32(v.GetFloat64("optional_float"))
+		m.XOptionalFloat = &OptionalFieldInProto3_OptionalFloat{}
+		m.XOptionalFloat.(*OptionalFieldInProto3_OptionalFloat).OptionalFloat = float32(v.GetFloat64("optional_float"))
 	}
 	if v.Exists("optionalDouble") {
-		m.OptionalDouble = v.GetFloat64("optionalDouble")
+		m.XOptionalDouble = &OptionalFieldInProto3_OptionalDouble{}
+		m.XOptionalDouble.(*OptionalFieldInProto3_OptionalDouble).OptionalDouble = v.GetFloat64("optionalDouble")
 	} else if v.Exists("optional_double") {
-		m.OptionalDouble = v.GetFloat64("optional_double")
+		m.XOptionalDouble = &OptionalFieldInProto3_OptionalDouble{}
+		m.XOptionalDouble.(*OptionalFieldInProto3_OptionalDouble).OptionalDouble = v.GetFloat64("optional_double")
 	}
 	if v.Exists("optionalBool") {
-		m.OptionalBool = v.GetBool("optionalBool")
+		m.XOptionalBool = &OptionalFieldInProto3_OptionalBool{}
+		m.XOptionalBool.(*OptionalFieldInProto3_OptionalBool).OptionalBool = v.GetBool("optionalBool")
 	} else if v.Exists("optional_bool") {
-		m.OptionalBool = v.GetBool("optional_bool")
+		m.XOptionalBool = &OptionalFieldInProto3_OptionalBool{}
+		m.XOptionalBool.(*OptionalFieldInProto3_OptionalBool).OptionalBool = v.GetBool("optional_bool")
 	}
 	if v.Exists("optionalString") {
-		m.OptionalString = string(v.GetStringBytes("optionalString"))
+		m.XOptionalString = &OptionalFieldInProto3_OptionalString{}
+		m.XOptionalString.(*OptionalFieldInProto3_OptionalString).OptionalString = string(v.GetStringBytes("optionalString"))
 	} else if v.Exists("optional_string") {
-		m.OptionalString = string(v.GetStringBytes("optional_string"))
+		m.XOptionalString = &OptionalFieldInProto3_OptionalString{}
+		m.XOptionalString.(*OptionalFieldInProto3_OptionalString).OptionalString = string(v.GetStringBytes("optional_string"))
 	}
 	if v.Exists("optionalBytes") {
+		m.XOptionalBytes = &OptionalFieldInProto3_OptionalBytes{}
 		jsonBytes := v.GetStringBytes("optionalBytes")
 		var err error
-		m.OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
+		m.XOptionalBytes.(*OptionalFieldInProto3_OptionalBytes).OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
 		if err != nil {
 			return err
 		}
 	} else if v.Exists("optional_bytes") {
+		m.XOptionalBytes = &OptionalFieldInProto3_OptionalBytes{}
 		jsonBytes := v.GetStringBytes("optional_bytes")
 		var err error
-		m.OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
+		m.XOptionalBytes.(*OptionalFieldInProto3_OptionalBytes).OptionalBytes, err = base64.StdEncoding.DecodeString(string(jsonBytes))
 		if err != nil {
 			return err
 		}
 	}
 	if v.Exists("optionalEnum") {
-		m.OptionalEnum = SimpleEnum(v.GetInt("optionalEnum"))
+		m.XOptionalEnum = &OptionalFieldInProto3_OptionalEnum{}
+		m.XOptionalEnum.(*OptionalFieldInProto3_OptionalEnum).OptionalEnum = SimpleEnum(v.GetInt("optionalEnum"))
 	} else if v.Exists("optional_enum") {
-		m.OptionalEnum = SimpleEnum(v.GetInt("optional_enum"))
+		m.XOptionalEnum = &OptionalFieldInProto3_OptionalEnum{}
+		m.XOptionalEnum.(*OptionalFieldInProto3_OptionalEnum).OptionalEnum = SimpleEnum(v.GetInt("optional_enum"))
 	}
 	return nil
 }

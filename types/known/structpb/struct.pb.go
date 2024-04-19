@@ -7,6 +7,7 @@ package structpb
 import (
 	base64 "encoding/base64"
 	binary "encoding/binary"
+	"fmt"
 	io "io"
 	math "math"
 	strconv "strconv"
@@ -833,35 +834,30 @@ func (m *Struct) UnmarshalJSONValue(v *fastjson.Value) error {
 
 func (m *Value) MarshalJSON() ([]byte, error) {
 	container := v2.New()
-	if m.NullValue != nil {
-		container.Set(m.NullValue.String(), "nullValue")
-	}
-	if m.NumberValue != nil {
-		container.Set(m.NumberValue, "numberValue")
-	}
-	if m.StringValue != nil {
-		container.Set(m.StringValue, "stringValue")
-	}
-	if m.BoolValue != nil {
-		container.Set(m.BoolValue, "boolValue")
-	}
-	if m.StructValue != nil {
-		if m.StructValue != nil {
-			jsonData, err := m.StructValue.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "structValue")
+	switch x := m.Kind.(type) {
+	case *Value_NullValue:
+		container.Set(x.NullValue.String(), "nullValue")
+	case *Value_NumberValue:
+		container.Set(x.NumberValue, "numberValue")
+	case *Value_StringValue:
+		container.Set(x.StringValue, "stringValue")
+	case *Value_BoolValue:
+		container.Set(x.BoolValue, "boolValue")
+	case *Value_StructValue:
+		jsonData, err := x.StructValue.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
-	}
-	if m.ListValue != nil {
-		if m.ListValue != nil {
-			jsonData, err := m.ListValue.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "listValue")
+		container.Set(jsonData, "structValue")
+	case *Value_ListValue:
+		jsonData, err := x.ListValue.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
+		container.Set(jsonData, "listValue")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
 	return container.MarshalJSON()
 }
@@ -880,66 +876,78 @@ func (m *Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		return nil
 	}
 	if v.Exists("nullValue") {
-		m.NullValue = NullValue(v.GetInt("nullValue"))
+		m.Kind = &Value_NullValue{}
+		m.Kind.(*Value_NullValue).NullValue = NullValue(v.GetInt("nullValue"))
 	} else if v.Exists("null_value") {
-		m.NullValue = NullValue(v.GetInt("null_value"))
+		m.Kind = &Value_NullValue{}
+		m.Kind.(*Value_NullValue).NullValue = NullValue(v.GetInt("null_value"))
 	}
 	if v.Exists("numberValue") {
-		m.NumberValue = v.GetFloat64("numberValue")
+		m.Kind = &Value_NumberValue{}
+		m.Kind.(*Value_NumberValue).NumberValue = v.GetFloat64("numberValue")
 	} else if v.Exists("number_value") {
-		m.NumberValue = v.GetFloat64("number_value")
+		m.Kind = &Value_NumberValue{}
+		m.Kind.(*Value_NumberValue).NumberValue = v.GetFloat64("number_value")
 	}
 	if v.Exists("stringValue") {
-		m.StringValue = string(v.GetStringBytes("stringValue"))
+		m.Kind = &Value_StringValue{}
+		m.Kind.(*Value_StringValue).StringValue = string(v.GetStringBytes("stringValue"))
 	} else if v.Exists("string_value") {
-		m.StringValue = string(v.GetStringBytes("string_value"))
+		m.Kind = &Value_StringValue{}
+		m.Kind.(*Value_StringValue).StringValue = string(v.GetStringBytes("string_value"))
 	}
 	if v.Exists("boolValue") {
-		m.BoolValue = v.GetBool("boolValue")
+		m.Kind = &Value_BoolValue{}
+		m.Kind.(*Value_BoolValue).BoolValue = v.GetBool("boolValue")
 	} else if v.Exists("bool_value") {
-		m.BoolValue = v.GetBool("bool_value")
+		m.Kind = &Value_BoolValue{}
+		m.Kind.(*Value_BoolValue).BoolValue = v.GetBool("bool_value")
 	}
 	if v.Exists("structValue") {
+		m.Kind = &Value_StructValue{}
 		jsonValue := v.Get("structValue")
 		if jsonValue == nil {
-			m.StructValue = nil
+			m.Kind.(*Value_StructValue).StructValue = nil
 		} else {
-			m.StructValue = &Struct{}
-			err := m.StructValue.UnmarshalJSONValue(jsonValue)
+			m.Kind.(*Value_StructValue).StructValue = &Struct{}
+			err := m.Kind.(*Value_StructValue).StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("struct_value") {
+		m.Kind = &Value_StructValue{}
 		jsonValue := v.Get("struct_value")
 		if jsonValue == nil {
-			m.StructValue = nil
+			m.Kind.(*Value_StructValue).StructValue = nil
 		} else {
-			m.StructValue = &Struct{}
-			err := m.StructValue.UnmarshalJSONValue(jsonValue)
+			m.Kind.(*Value_StructValue).StructValue = &Struct{}
+			err := m.Kind.(*Value_StructValue).StructValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("listValue") {
+		m.Kind = &Value_ListValue{}
 		jsonValue := v.Get("listValue")
 		if jsonValue == nil {
-			m.ListValue = nil
+			m.Kind.(*Value_ListValue).ListValue = nil
 		} else {
-			m.ListValue = &ListValue{}
-			err := m.ListValue.UnmarshalJSONValue(jsonValue)
+			m.Kind.(*Value_ListValue).ListValue = &ListValue{}
+			err := m.Kind.(*Value_ListValue).ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	} else if v.Exists("list_value") {
+		m.Kind = &Value_ListValue{}
 		jsonValue := v.Get("list_value")
 		if jsonValue == nil {
-			m.ListValue = nil
+			m.Kind.(*Value_ListValue).ListValue = nil
 		} else {
-			m.ListValue = &ListValue{}
-			err := m.ListValue.UnmarshalJSONValue(jsonValue)
+			m.Kind.(*Value_ListValue).ListValue = &ListValue{}
+			err := m.Kind.(*Value_ListValue).ListValue.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
@@ -980,7 +988,7 @@ func (m *ListValue) UnmarshalJSONValue(v *fastjson.Value) error {
 	if v.Exists("values") {
 		jsonArray := v.GetArray("values")
 		if jsonArray != nil {
-			m.Values = make([][]*Value, len(jsonArray))
+			m.Values = make([]*Value, len(jsonArray))
 			for i, jsonValue := range jsonArray {
 				m.Values[i] = &Value{}
 				err := m.Values[i].UnmarshalJSONValue(jsonValue)

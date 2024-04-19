@@ -5,6 +5,7 @@
 package unsafe
 
 import (
+	"fmt"
 	io "io"
 	unsafe "unsafe"
 
@@ -780,50 +781,40 @@ func (this *UnsafeTest_Sub5_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 
 func (m *UnsafeTest) MarshalJSON() ([]byte, error) {
 	container := v2.New()
-	if m.Sub1 != nil {
-		if m.Sub1 != nil {
-			jsonData, err := m.Sub1.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "sub1")
+	switch x := m.Sub.(type) {
+	case *UnsafeTest_Sub1_:
+		jsonData, err := x.Sub1.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
-	}
-	if m.Sub2 != nil {
-		if m.Sub2 != nil {
-			jsonData, err := m.Sub2.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "sub2")
+		container.Set(jsonData, "sub1")
+	case *UnsafeTest_Sub2_:
+		jsonData, err := x.Sub2.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
-	}
-	if m.Sub3 != nil {
-		if m.Sub3 != nil {
-			jsonData, err := m.Sub3.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "sub3")
+		container.Set(jsonData, "sub2")
+	case *UnsafeTest_Sub3_:
+		jsonData, err := x.Sub3.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
-	}
-	if m.Sub4 != nil {
-		if m.Sub4 != nil {
-			jsonData, err := m.Sub4.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "sub4")
+		container.Set(jsonData, "sub3")
+	case *UnsafeTest_Sub4_:
+		jsonData, err := x.Sub4.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
-	}
-	if m.Sub5 != nil {
-		if m.Sub5 != nil {
-			jsonData, err := m.Sub5.MarshalJSON()
-			if err != nil {
-				return nil, err
-			}
-			container.Set(jsonData, "sub5")
+		container.Set(jsonData, "sub4")
+	case *UnsafeTest_Sub5_:
+		jsonData, err := x.Sub5.MarshalJSON()
+		if err != nil {
+			return nil, err
 		}
+		container.Set(jsonData, "sub5")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
 	}
 	return container.MarshalJSON()
 }
@@ -842,60 +833,65 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 		return nil
 	}
 	if v.Exists("sub1") {
+		m.Sub = &UnsafeTest_Sub1_{}
 		jsonValue := v.Get("sub1")
 		if jsonValue == nil {
-			m.Sub1 = nil
+			m.Sub.(*UnsafeTest_Sub1_).Sub1 = nil
 		} else {
-			m.Sub1 = &UnsafeTest_Sub1{}
-			err := m.Sub1.UnmarshalJSONValue(jsonValue)
+			m.Sub.(*UnsafeTest_Sub1_).Sub1 = &UnsafeTest_Sub1{}
+			err := m.Sub.(*UnsafeTest_Sub1_).Sub1.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub2") {
+		m.Sub = &UnsafeTest_Sub2_{}
 		jsonValue := v.Get("sub2")
 		if jsonValue == nil {
-			m.Sub2 = nil
+			m.Sub.(*UnsafeTest_Sub2_).Sub2 = nil
 		} else {
-			m.Sub2 = &UnsafeTest_Sub2{}
-			err := m.Sub2.UnmarshalJSONValue(jsonValue)
+			m.Sub.(*UnsafeTest_Sub2_).Sub2 = &UnsafeTest_Sub2{}
+			err := m.Sub.(*UnsafeTest_Sub2_).Sub2.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub3") {
+		m.Sub = &UnsafeTest_Sub3_{}
 		jsonValue := v.Get("sub3")
 		if jsonValue == nil {
-			m.Sub3 = nil
+			m.Sub.(*UnsafeTest_Sub3_).Sub3 = nil
 		} else {
-			m.Sub3 = &UnsafeTest_Sub3{}
-			err := m.Sub3.UnmarshalJSONValue(jsonValue)
+			m.Sub.(*UnsafeTest_Sub3_).Sub3 = &UnsafeTest_Sub3{}
+			err := m.Sub.(*UnsafeTest_Sub3_).Sub3.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub4") {
+		m.Sub = &UnsafeTest_Sub4_{}
 		jsonValue := v.Get("sub4")
 		if jsonValue == nil {
-			m.Sub4 = nil
+			m.Sub.(*UnsafeTest_Sub4_).Sub4 = nil
 		} else {
-			m.Sub4 = &UnsafeTest_Sub4{}
-			err := m.Sub4.UnmarshalJSONValue(jsonValue)
+			m.Sub.(*UnsafeTest_Sub4_).Sub4 = &UnsafeTest_Sub4{}
+			err := m.Sub.(*UnsafeTest_Sub4_).Sub4.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if v.Exists("sub5") {
+		m.Sub = &UnsafeTest_Sub5_{}
 		jsonValue := v.Get("sub5")
 		if jsonValue == nil {
-			m.Sub5 = nil
+			m.Sub.(*UnsafeTest_Sub5_).Sub5 = nil
 		} else {
-			m.Sub5 = &UnsafeTest_Sub5{}
-			err := m.Sub5.UnmarshalJSONValue(jsonValue)
+			m.Sub.(*UnsafeTest_Sub5_).Sub5 = &UnsafeTest_Sub5{}
+			err := m.Sub.(*UnsafeTest_Sub5_).Sub5.UnmarshalJSONValue(jsonValue)
 			if err != nil {
 				return err
 			}
