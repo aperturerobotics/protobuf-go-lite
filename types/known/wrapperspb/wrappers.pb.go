@@ -785,7 +785,7 @@ func (m *UInt32Value) UnmarshalJSONValue(v *fastjson.Value) error {
 		return nil
 	}
 	if v.Exists("value") {
-		m.Value = v.GetUint64("value")
+		m.Value = uint32(v.GetUint64("value"))
 	}
 	return nil
 }

@@ -332,8 +332,10 @@ func (p *jsonMarshal) unmarshalSingularField(field *protogen.Field, accessor, js
 		p.P(accessor, ` = int32(v.GetInt("`, jsonName, `"))`)
 	case protoreflect.Int64Kind:
 		p.P(accessor, ` = v.GetInt64("`, jsonName, `")`)
-	case protoreflect.Uint32Kind, protoreflect.Uint64Kind:
+	case protoreflect.Uint64Kind:
 		p.P(accessor, ` = v.GetUint64("`, jsonName, `")`)
+	case protoreflect.Uint32Kind:
+		p.P(accessor, ` = uint32(v.GetUint64("`, jsonName, `"))`)
 	case protoreflect.FloatKind:
 		p.P(accessor, ` = float32(v.GetFloat64("`, jsonName, `"))`)
 	case protoreflect.DoubleKind:
@@ -373,8 +375,10 @@ func (p *jsonMarshal) unmarshalRepeatedFieldValue(field *protogen.Field, accesso
 		p.P(accessor, ` = int32(`, jsonValue, `.GetInt())`)
 	case protoreflect.Int64Kind:
 		p.P(accessor, ` = `, jsonValue, `.GetInt64()`)
-	case protoreflect.Uint32Kind, protoreflect.Uint64Kind:
+	case protoreflect.Uint64Kind:
 		p.P(accessor, ` = `, jsonValue, `.GetUint64()`)
+	case protoreflect.Uint32Kind:
+		p.P(accessor, ` = uint32(`, jsonValue, `.GetUint64())`)
 	case protoreflect.FloatKind:
 		p.P(accessor, ` = float32(`, jsonValue, `.GetFloat64())`)
 	case protoreflect.DoubleKind:

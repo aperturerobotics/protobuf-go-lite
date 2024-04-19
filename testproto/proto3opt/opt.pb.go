@@ -484,10 +484,10 @@ func (m *OptionalFieldInProto3) UnmarshalJSONValue(v *fastjson.Value) error {
 	}
 	if v.Exists("optionalUint32") {
 		m.XOptionalUint32 = &OptionalFieldInProto3_OptionalUint32{}
-		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = v.GetUint64("optionalUint32")
+		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = uint32(v.GetUint64("optionalUint32"))
 	} else if v.Exists("optional_uint32") {
 		m.XOptionalUint32 = &OptionalFieldInProto3_OptionalUint32{}
-		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = v.GetUint64("optional_uint32")
+		m.XOptionalUint32.(*OptionalFieldInProto3_OptionalUint32).OptionalUint32 = uint32(v.GetUint64("optional_uint32"))
 	}
 	if v.Exists("optionalUint64") {
 		m.XOptionalUint64 = &OptionalFieldInProto3_OptionalUint64{}
