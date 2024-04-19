@@ -7,7 +7,7 @@ package emptypb
 import (
 	io "io"
 
-	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	errors "github.com/pkg/errors"
 )
 
@@ -174,7 +174,7 @@ func (m *Empty) UnmarshalVT(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -197,12 +197,12 @@ func (m *Empty) UnmarshalVT(dAtA []byte) error {
 		switch fieldNum {
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
@@ -225,7 +225,7 @@ func (m *Empty) UnmarshalVTUnsafe(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -248,12 +248,12 @@ func (m *Empty) UnmarshalVTUnsafe(dAtA []byte) error {
 		switch fieldNum {
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF

@@ -11,7 +11,7 @@ import (
 	strconv "strconv"
 	unsafe "unsafe"
 
-	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	errors "github.com/pkg/errors"
 )
 
@@ -365,7 +365,7 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 		copy(dAtA[i:], m.unknownFields)
 	}
 	if m.OptionalEnum != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
 		i--
 		dAtA[i] = 0x1
 		i--
@@ -374,14 +374,14 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 	if m.OptionalBytes != nil {
 		i -= len(m.OptionalBytes)
 		copy(dAtA[i:], m.OptionalBytes)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.OptionalString != nil {
 		i -= len(*m.OptionalString)
 		copy(dAtA[i:], *m.OptionalString)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
 		i--
 		dAtA[i] = 0x72
 	}
@@ -432,32 +432,32 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 		dAtA[i] = 0x3d
 	}
 	if m.OptionalSint64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
 		i--
 		dAtA[i] = 0x30
 	}
 	if m.OptionalSint32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
 		i--
 		dAtA[i] = 0x28
 	}
 	if m.OptionalUint64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalUint64))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalUint64))
 		i--
 		dAtA[i] = 0x20
 	}
 	if m.OptionalUint32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalUint32))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalUint32))
 		i--
 		dAtA[i] = 0x18
 	}
 	if m.OptionalInt64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalInt64))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalInt64))
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.OptionalInt32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalInt32))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalInt32))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -495,7 +495,7 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 		copy(dAtA[i:], m.unknownFields)
 	}
 	if m.OptionalEnum != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
 		i--
 		dAtA[i] = 0x1
 		i--
@@ -504,14 +504,14 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 	if m.OptionalBytes != nil {
 		i -= len(m.OptionalBytes)
 		copy(dAtA[i:], m.OptionalBytes)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.OptionalString != nil {
 		i -= len(*m.OptionalString)
 		copy(dAtA[i:], *m.OptionalString)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
 		i--
 		dAtA[i] = 0x72
 	}
@@ -562,32 +562,32 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 		dAtA[i] = 0x3d
 	}
 	if m.OptionalSint64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
 		i--
 		dAtA[i] = 0x30
 	}
 	if m.OptionalSint32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
 		i--
 		dAtA[i] = 0x28
 	}
 	if m.OptionalUint64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalUint64))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalUint64))
 		i--
 		dAtA[i] = 0x20
 	}
 	if m.OptionalUint32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalUint32))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalUint32))
 		i--
 		dAtA[i] = 0x18
 	}
 	if m.OptionalInt64 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalInt64))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalInt64))
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.OptionalInt32 != nil {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(*m.OptionalInt32))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalInt32))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -601,22 +601,22 @@ func (m *OptionalFieldInProto3) SizeVT() (n int) {
 	var l int
 	_ = l
 	if m.OptionalInt32 != nil {
-		n += 1 + protohelpers.SizeOfVarint(uint64(*m.OptionalInt32))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalInt32))
 	}
 	if m.OptionalInt64 != nil {
-		n += 1 + protohelpers.SizeOfVarint(uint64(*m.OptionalInt64))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalInt64))
 	}
 	if m.OptionalUint32 != nil {
-		n += 1 + protohelpers.SizeOfVarint(uint64(*m.OptionalUint32))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalUint32))
 	}
 	if m.OptionalUint64 != nil {
-		n += 1 + protohelpers.SizeOfVarint(uint64(*m.OptionalUint64))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalUint64))
 	}
 	if m.OptionalSint32 != nil {
-		n += 1 + protohelpers.SizeOfZigzag(uint64(*m.OptionalSint32))
+		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalSint32))
 	}
 	if m.OptionalSint64 != nil {
-		n += 1 + protohelpers.SizeOfZigzag(uint64(*m.OptionalSint64))
+		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalSint64))
 	}
 	if m.OptionalFixed32 != nil {
 		n += 5
@@ -641,14 +641,14 @@ func (m *OptionalFieldInProto3) SizeVT() (n int) {
 	}
 	if m.OptionalString != nil {
 		l = len(*m.OptionalString)
-		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
+		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
 	}
 	if m.OptionalBytes != nil {
 		l = len(m.OptionalBytes)
-		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
+		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
 	}
 	if m.OptionalEnum != nil {
-		n += 2 + protohelpers.SizeOfVarint(uint64(*m.OptionalEnum))
+		n += 2 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalEnum))
 	}
 	n += len(m.unknownFields)
 	return n
@@ -662,7 +662,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -690,7 +690,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -710,7 +710,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -730,7 +730,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -750,7 +750,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -770,7 +770,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -791,7 +791,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -881,7 +881,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -902,7 +902,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -916,11 +916,11 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -935,7 +935,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -948,11 +948,11 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 				}
 			}
 			if byteLen < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -969,7 +969,7 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			var v SimpleEnum
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -984,12 +984,12 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			m.OptionalEnum = &v
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
@@ -1012,7 +1012,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -1040,7 +1040,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1060,7 +1060,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1080,7 +1080,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v uint32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1100,7 +1100,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1120,7 +1120,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1141,7 +1141,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1231,7 +1231,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1252,7 +1252,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1266,11 +1266,11 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -1289,7 +1289,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1302,11 +1302,11 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 			}
 			if byteLen < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
@@ -1320,7 +1320,7 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			var v SimpleEnum
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -1335,12 +1335,12 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.OptionalEnum = &v
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF

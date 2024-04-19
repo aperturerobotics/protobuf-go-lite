@@ -525,7 +525,7 @@ func (p *marshal) field(oneof bool, numGen *counter, field *protogen.Field) {
 	// See https://github.com/planetscale/vtprotobuf/issues/61
 	if oneof && field.Desc.Kind() == protoreflect.MessageKind && !field.Desc.IsMap() && !field.Desc.IsList() {
 		p.P("} else {")
-		p.P("i = protohelpers.EncodeVarint(dAtA, i, 0)")
+		p.P("i = ", p.Helper("EncodeVarint"), "(dAtA, i, 0)")
 		p.encodeKey(fieldNumber, wireType)
 		p.P("}")
 	} else if repeated || nullable {

@@ -8,7 +8,7 @@ import (
 	io "io"
 	time "time"
 
-	protohelpers "github.com/aperturerobotics/protobuf-go-lite/protohelpers"
+	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	errors "github.com/pkg/errors"
 )
 
@@ -302,12 +302,12 @@ func (m *Timestamp) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.unknownFields)
 	}
 	if m.Nanos != 0 {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.Nanos))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Nanos))
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.Seconds != 0 {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.Seconds))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Seconds))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -345,12 +345,12 @@ func (m *Timestamp) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.unknownFields)
 	}
 	if m.Nanos != 0 {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.Nanos))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Nanos))
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.Seconds != 0 {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.Seconds))
+		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Seconds))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -364,10 +364,10 @@ func (m *Timestamp) SizeVT() (n int) {
 	var l int
 	_ = l
 	if m.Seconds != 0 {
-		n += 1 + protohelpers.SizeOfVarint(uint64(m.Seconds))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.Seconds))
 	}
 	if m.Nanos != 0 {
-		n += 1 + protohelpers.SizeOfVarint(uint64(m.Nanos))
+		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.Nanos))
 	}
 	n += len(m.unknownFields)
 	return n
@@ -381,7 +381,7 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -409,7 +409,7 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -428,7 +428,7 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -442,12 +442,12 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 			}
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
@@ -470,7 +470,7 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
 			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
+				return protobuf_go_lite.ErrIntOverflow
 			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
@@ -498,7 +498,7 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -517,7 +517,7 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
+					return protobuf_go_lite.ErrIntOverflow
 				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
@@ -531,12 +531,12 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 			}
 		default:
 			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
 			if err != nil {
 				return err
 			}
 			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
+				return protobuf_go_lite.ErrInvalidLength
 			}
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF

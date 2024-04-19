@@ -89,7 +89,7 @@ func (p *GeneratedFile) IsLocalField(field *protogen.Field) bool {
 	return p.LocalPackages[pkg]
 }
 
-const vtHelpersPackage = protogen.GoImportPath("github.com/aperturerobotics/protobuf-go-lite/protohelpers")
+const vtHelpersPackage = protogen.GoImportPath("github.com/aperturerobotics/protobuf-go-lite")
 
 var helpers = map[string]protogen.GoIdent{
 	"EncodeVarint":            {GoName: "EncodeVarint", GoImportPath: vtHelpersPackage},
