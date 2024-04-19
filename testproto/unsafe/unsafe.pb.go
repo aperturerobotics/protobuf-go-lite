@@ -5,6 +5,7 @@
 package unsafe
 
 import (
+	base64 "encoding/base64"
 	"fmt"
 	io "io"
 	unsafe "unsafe"
@@ -783,35 +784,45 @@ func (m *UnsafeTest) MarshalJSON() ([]byte, error) {
 	container := v2.New()
 	switch x := m.Sub.(type) {
 	case *UnsafeTest_Sub1_:
-		jsonData, err := x.Sub1.MarshalJSON()
-		if err != nil {
-			return nil, err
+		if x.Sub1 != nil {
+			jsonData, err := x.Sub1.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub1")
 		}
-		container.Set(jsonData, "sub1")
 	case *UnsafeTest_Sub2_:
-		jsonData, err := x.Sub2.MarshalJSON()
-		if err != nil {
-			return nil, err
+		if x.Sub2 != nil {
+			jsonData, err := x.Sub2.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub2")
 		}
-		container.Set(jsonData, "sub2")
 	case *UnsafeTest_Sub3_:
-		jsonData, err := x.Sub3.MarshalJSON()
-		if err != nil {
-			return nil, err
+		if x.Sub3 != nil {
+			jsonData, err := x.Sub3.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub3")
 		}
-		container.Set(jsonData, "sub3")
 	case *UnsafeTest_Sub4_:
-		jsonData, err := x.Sub4.MarshalJSON()
-		if err != nil {
-			return nil, err
+		if x.Sub4 != nil {
+			jsonData, err := x.Sub4.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub4")
 		}
-		container.Set(jsonData, "sub4")
 	case *UnsafeTest_Sub5_:
-		jsonData, err := x.Sub5.MarshalJSON()
-		if err != nil {
-			return nil, err
+		if x.Sub5 != nil {
+			jsonData, err := x.Sub5.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			container.Set(jsonData, "sub5")
 		}
-		container.Set(jsonData, "sub5")
 	case nil:
 	default:
 		return nil, fmt.Errorf("unexpected type %T in oneof", x)
@@ -834,66 +845,285 @@ func (m *UnsafeTest) UnmarshalJSONValue(v *fastjson.Value) error {
 	}
 	if v.Exists("sub1") {
 		m.Sub = &UnsafeTest_Sub1_{}
-		jsonValue := v.Get("sub1")
-		if jsonValue == nil {
-			m.Sub.(*UnsafeTest_Sub1_).Sub1 = nil
-		} else {
-			m.Sub.(*UnsafeTest_Sub1_).Sub1 = &UnsafeTest_Sub1{}
-			err := m.Sub.(*UnsafeTest_Sub1_).Sub1.UnmarshalJSONValue(jsonValue)
-			if err != nil {
-				return err
-			}
+		m.Sub.(*UnsafeTest_Sub1_).Sub1 = &UnsafeTest_Sub1{}
+		err := m.Sub.(*UnsafeTest_Sub1_).Sub1.UnmarshalJSONValue(v.Get("sub1"))
+		if err != nil {
+			return err
 		}
 	}
 	if v.Exists("sub2") {
 		m.Sub = &UnsafeTest_Sub2_{}
-		jsonValue := v.Get("sub2")
-		if jsonValue == nil {
-			m.Sub.(*UnsafeTest_Sub2_).Sub2 = nil
-		} else {
-			m.Sub.(*UnsafeTest_Sub2_).Sub2 = &UnsafeTest_Sub2{}
-			err := m.Sub.(*UnsafeTest_Sub2_).Sub2.UnmarshalJSONValue(jsonValue)
-			if err != nil {
-				return err
-			}
+		m.Sub.(*UnsafeTest_Sub2_).Sub2 = &UnsafeTest_Sub2{}
+		err := m.Sub.(*UnsafeTest_Sub2_).Sub2.UnmarshalJSONValue(v.Get("sub2"))
+		if err != nil {
+			return err
 		}
 	}
 	if v.Exists("sub3") {
 		m.Sub = &UnsafeTest_Sub3_{}
-		jsonValue := v.Get("sub3")
-		if jsonValue == nil {
-			m.Sub.(*UnsafeTest_Sub3_).Sub3 = nil
-		} else {
-			m.Sub.(*UnsafeTest_Sub3_).Sub3 = &UnsafeTest_Sub3{}
-			err := m.Sub.(*UnsafeTest_Sub3_).Sub3.UnmarshalJSONValue(jsonValue)
-			if err != nil {
-				return err
-			}
+		m.Sub.(*UnsafeTest_Sub3_).Sub3 = &UnsafeTest_Sub3{}
+		err := m.Sub.(*UnsafeTest_Sub3_).Sub3.UnmarshalJSONValue(v.Get("sub3"))
+		if err != nil {
+			return err
 		}
 	}
 	if v.Exists("sub4") {
 		m.Sub = &UnsafeTest_Sub4_{}
-		jsonValue := v.Get("sub4")
-		if jsonValue == nil {
-			m.Sub.(*UnsafeTest_Sub4_).Sub4 = nil
-		} else {
-			m.Sub.(*UnsafeTest_Sub4_).Sub4 = &UnsafeTest_Sub4{}
-			err := m.Sub.(*UnsafeTest_Sub4_).Sub4.UnmarshalJSONValue(jsonValue)
-			if err != nil {
-				return err
-			}
+		m.Sub.(*UnsafeTest_Sub4_).Sub4 = &UnsafeTest_Sub4{}
+		err := m.Sub.(*UnsafeTest_Sub4_).Sub4.UnmarshalJSONValue(v.Get("sub4"))
+		if err != nil {
+			return err
 		}
 	}
 	if v.Exists("sub5") {
 		m.Sub = &UnsafeTest_Sub5_{}
-		jsonValue := v.Get("sub5")
-		if jsonValue == nil {
-			m.Sub.(*UnsafeTest_Sub5_).Sub5 = nil
-		} else {
-			m.Sub.(*UnsafeTest_Sub5_).Sub5 = &UnsafeTest_Sub5{}
-			err := m.Sub.(*UnsafeTest_Sub5_).Sub5.UnmarshalJSONValue(jsonValue)
+		m.Sub.(*UnsafeTest_Sub5_).Sub5 = &UnsafeTest_Sub5{}
+		err := m.Sub.(*UnsafeTest_Sub5_).Sub5.UnmarshalJSONValue(v.Get("sub5"))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (m *UnsafeTest_Sub1) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if m.S != "" {
+		container.Set(m.S, "s")
+	}
+	if len(m.B) > 0 {
+		container.Set(base64.StdEncoding.EncodeToString(m.B), "b")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest_Sub1) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest_Sub1) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
+	if v.Exists("s") {
+		m.S = string(v.GetStringBytes("s"))
+	}
+	if v.Exists("b") {
+		jsonBytes := v.GetStringBytes("b")
+		var err error
+		m.B, err = base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (m *UnsafeTest_Sub2) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.S) > 0 {
+		jsonFields := make([]interface{}, len(m.S))
+		for i, val := range m.S {
+			jsonFields[i] = val
+		}
+		container.Set(jsonFields, "s")
+	}
+	if len(m.B) > 0 {
+		jsonFields := make([]interface{}, len(m.B))
+		for i, val := range m.B {
+			jsonFields[i] = base64.StdEncoding.EncodeToString(val)
+		}
+		container.Set(jsonFields, "b")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest_Sub2) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest_Sub2) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
+	if v.Exists("s") {
+		jsonArray := v.GetArray("s")
+		if jsonArray != nil {
+			m.S = make([]string, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				m.S[i] = string(jsonValue.GetStringBytes())
+			}
+		}
+	}
+	if v.Exists("b") {
+		jsonArray := v.GetArray("b")
+		if jsonArray != nil {
+			m.B = make([][]byte, len(jsonArray))
+			for i, jsonValue := range jsonArray {
+				jsonBytes := jsonValue.GetStringBytes()
+				var err error
+				m.B[i], err = base64.StdEncoding.DecodeString(string(jsonBytes))
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (m *UnsafeTest_Sub3) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.Foo) > 0 {
+		jsonFields := make(map[string]interface{}, len(m.Foo))
+		for i, val := range m.Foo {
+			jsonData, err := val.MarshalJSON()
 			if err != nil {
-				return err
+				return nil, err
+			}
+			jsonFields[i] = jsonData
+		}
+		container.Set(jsonFields, "foo")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest_Sub3) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest_Sub3) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
+	if v.Exists("foo") {
+		m.Foo = make(map[string][]byte)
+		jsonObject := v.GetObject("foo")
+		if jsonObject != nil {
+			var verr error
+			jsonObject.Visit(func(key []byte, v *fastjson.Value) {
+				if verr != nil {
+					return
+				}
+				mapKey := string(key)
+				mapValue := []byte{}
+				jsonBytes := v.GetStringBytes()
+				mapValue, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+				if err != nil {
+					return err
+				}
+				m.Foo[mapKey] = mapValue
+			})
+			if verr != nil {
+				return verr
+			}
+		}
+	}
+	return nil
+}
+
+func (m *UnsafeTest_Sub4) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	switch x := m.Foo.(type) {
+	case *UnsafeTest_Sub4_S:
+		container.Set(x.S, "s")
+	case *UnsafeTest_Sub4_B:
+		container.Set(base64.StdEncoding.EncodeToString(x.B), "b")
+	case nil:
+	default:
+		return nil, fmt.Errorf("unexpected type %T in oneof", x)
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest_Sub4) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest_Sub4) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
+	if v.Exists("s") {
+		m.Foo = &UnsafeTest_Sub4_S{}
+		m.Foo.(*UnsafeTest_Sub4_S).S = string(v.Get("s").GetStringBytes())
+	}
+	if v.Exists("b") {
+		m.Foo = &UnsafeTest_Sub4_B{}
+		jsonBytes := v.Get("b").GetStringBytes()
+		m.Foo.(*UnsafeTest_Sub4_B).B, err := base64.StdEncoding.DecodeString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (m *UnsafeTest_Sub5) MarshalJSON() ([]byte, error) {
+	container := v2.New()
+	if len(m.Foo) > 0 {
+		jsonFields := make(map[string]interface{}, len(m.Foo))
+		for i, val := range m.Foo {
+			jsonData, err := val.MarshalJSON()
+			if err != nil {
+				return nil, err
+			}
+			jsonFields[i] = jsonData
+		}
+		container.Set(jsonFields, "foo")
+	}
+	return container.MarshalJSON()
+}
+
+func (m *UnsafeTest_Sub5) UnmarshalJSON(data []byte) error {
+	var p fastjson.Parser
+	v, err := p.ParseBytes(data)
+	if err != nil {
+		return err
+	}
+	return m.UnmarshalJSONValue(v)
+}
+
+func (m *UnsafeTest_Sub5) UnmarshalJSONValue(v *fastjson.Value) error {
+	if v == nil {
+		return nil
+	}
+	if v.Exists("foo") {
+		m.Foo = make(map[string]string)
+		jsonObject := v.GetObject("foo")
+		if jsonObject != nil {
+			var verr error
+			jsonObject.Visit(func(key []byte, v *fastjson.Value) {
+				if verr != nil {
+					return
+				}
+				mapKey := string(key)
+				mapValue := string{}
+				mapValue = string(v.GetStringBytes())
+				m.Foo[mapKey] = mapValue
+			})
+			if verr != nil {
+				return verr
 			}
 		}
 	}

@@ -43,7 +43,6 @@ func (p *jsonMarshal) GenerateFile(file *protogen.File) bool {
 	}
 	return true
 }
-
 func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 	if message.Desc.IsMapEntry() {
 		return
@@ -52,37 +51,27 @@ func (p *jsonMarshal) generateJSONMethods(message *protogen.Message) {
 	p.generateMarshalJSON(message, ccTypeName)
 	p.generateUnmarshalJSON(ccTypeName)
 	p.generateUnmarshalJSONValue(message, ccTypeName)
+	for _, nested := range message.Messages {
+		p.generateJSONMethods(nested)
+	}
 }
 
 func (p *jsonMarshal) generateMarshalJSON(message *protogen.Message, ccTypeName string) {
 	p.P(`func (m *`, ccTypeName, `) MarshalJSON() ([]byte, error) {`)
 	p.P(`container := `, gabsPackage.Ident("New"), `()`)
-
 	// Handle oneof fields
 	for _, oneof := range message.Oneofs {
 		p.P(`switch x := m.`, oneof.GoName, `.(type) {`)
 		for _, field := range oneof.Fields {
 			jsonName := strs.JSONCamelCase(string(field.Desc.Name()))
 			p.P(`case *`, p.QualifiedGoIdent(field.GoIdent), `:`)
-			switch field.Desc.Kind() {
-			case protoreflect.EnumKind:
-				p.P(`container.Set(x.`, field.GoName, `.String(), "`, jsonName, `")`)
-			case protoreflect.MessageKind, protoreflect.GroupKind:
-				p.P(`jsonData, err := x.`, field.GoName, `.MarshalJSON()`)
-				p.P(`if err != nil {`)
-				p.P(`return nil, err`)
-				p.P(`}`)
-				p.P(`container.Set(jsonData, "`, jsonName, `")`)
-			default:
-				p.P(`container.Set(x.`, field.GoName, `, "`, jsonName, `")`)
-			}
+			p.marshalFieldValue(field, `x.`+field.GoName, jsonName)
 		}
 		p.P(`case nil:`)
 		p.P(`default:`)
 		p.P(`return nil, fmt.Errorf("unexpected type %T in oneof", x)`)
 		p.P(`}`)
 	}
-
 	for _, field := range message.Fields {
 		if field.Oneof != nil {
 			continue // Skip oneof fields, they are handled separately
@@ -99,22 +88,9 @@ func (p *jsonMarshal) generateMarshalJSON(message *protogen.Message, ccTypeName 
 	p.P()
 }
 
-func (p *jsonMarshal) generateUnmarshalJSON(ccTypeName string) {
-	p.P(`func (m *`, ccTypeName, `) UnmarshalJSON(data []byte) error {`)
-	p.P(`var p `, fastjsonPackage.Ident("Parser"))
-	p.P(`v, err := p.ParseBytes(data)`)
-	p.P(`if err != nil {`)
-	p.P(`return err`)
-	p.P(`}`)
-	p.P(`return m.UnmarshalJSONValue(v)`)
-	p.P(`}`)
-	p.P()
-}
-
 func (p *jsonMarshal) generateUnmarshalJSONValue(message *protogen.Message, ccTypeName string) {
 	p.P(`func (m *`, ccTypeName, `) UnmarshalJSONValue(v *`, fastjsonPackage.Ident("Value"), `) error {`)
 	p.P("if v == nil { return nil }")
-
 	// Handle oneof fields
 	for _, oneof := range message.Oneofs {
 		for _, field := range oneof.Fields {
@@ -122,16 +98,15 @@ func (p *jsonMarshal) generateUnmarshalJSONValue(message *protogen.Message, ccTy
 			jsonName := strs.JSONCamelCase(protoName)
 			p.P(`if v.Exists("`, jsonName, `") {`)
 			p.P(`m.`, oneof.GoName, ` = &`, p.QualifiedGoIdent(field.GoIdent), `{}`)
-			p.unmarshalField(field, `m.`+oneof.GoName+`.(*`+p.QualifiedGoIdent(field.GoIdent)+`).`+field.GoName, jsonName)
+			p.unmarshalFieldValue(field, `m.`+oneof.GoName+`.(*`+p.QualifiedGoIdent(field.GoIdent)+`).`+field.GoName, `v.Get("`+jsonName+`")`)
 			if protoName != jsonName {
 				p.P(`} else if v.Exists("`, protoName, `") {`)
 				p.P(`m.`, oneof.GoName, ` = &`, p.QualifiedGoIdent(field.GoIdent), `{}`)
-				p.unmarshalField(field, `m.`+oneof.GoName+`.(*`+p.QualifiedGoIdent(field.GoIdent)+`).`+field.GoName, protoName)
+				p.unmarshalFieldValue(field, `m.`+oneof.GoName+`.(*`+p.QualifiedGoIdent(field.GoIdent)+`).`+field.GoName, `v.Get("`+protoName+`")`)
 			}
 			p.P(`}`)
 		}
 	}
-
 	for _, field := range message.Fields {
 		if field.Oneof != nil {
 			continue // Skip oneof fields, they are handled separately
@@ -160,6 +135,18 @@ func (p *jsonMarshal) generateUnmarshalJSONValue(message *protogen.Message, ccTy
 	p.P()
 }
 
+func (p *jsonMarshal) generateUnmarshalJSON(ccTypeName string) {
+	p.P(`func (m *`, ccTypeName, `) UnmarshalJSON(data []byte) error {`)
+	p.P(`var p `, fastjsonPackage.Ident("Parser"))
+	p.P(`v, err := p.ParseBytes(data)`)
+	p.P(`if err != nil {`)
+	p.P(`return err`)
+	p.P(`}`)
+	p.P(`return m.UnmarshalJSONValue(v)`)
+	p.P(`}`)
+	p.P()
+}
+
 func (p *jsonMarshal) unmarshalMapField(field *protogen.Field, accessor, jsonName string) {
 	keyType, _ := p.FieldGoType(field.Message.Fields[0])
 	valType, _ := p.FieldGoType(field.Message.Fields[1])
@@ -171,17 +158,15 @@ func (p *jsonMarshal) unmarshalMapField(field *protogen.Field, accessor, jsonNam
 	p.P(`if verr != nil {`)
 	p.P(`return`)
 	p.P(`}`)
-	p.P(`mapValue := &`, p.QualifiedGoIdent(field.Message.Fields[1].Message.GoIdent), `{}`)
-	p.P(`if err := mapValue.UnmarshalJSONValue(v); err != nil {`)
-	p.P(`verr = err`)
-	p.P(`return`)
-	p.P(`}`)
 	switch field.Message.Fields[0].Desc.Kind() {
 	case protoreflect.StringKind:
-		p.P(accessor, `[string(key)] = mapValue`)
+		p.P(`mapKey := string(key)`)
 	default:
-		p.P(accessor, `[`, keyType, `(`, fastjsonPackage.Ident("ParseBytes"), `(key).GetInt())] = mapValue`)
+		p.P(`mapKey := `, keyType, `(`, fastjsonPackage.Ident("ParseBytes"), `(key).GetInt())`)
 	}
+	p.P(`mapValue := `, valType, `{}`)
+	p.unmarshalFieldValue(field.Message.Fields[1], `mapValue`, `v`)
+	p.P(accessor, `[mapKey] = mapValue`)
 	p.P(`})`)
 	p.P(`if verr != nil {`)
 	p.P(`return verr`)
@@ -270,7 +255,9 @@ func (p *jsonMarshal) marshalNonNullableField(field *protogen.Field, fieldName, 
 
 func (p *jsonMarshal) marshalRepeatedFieldValue(field *protogen.Field, accessor, jsonFields, index string) {
 	switch field.Desc.Kind() {
-	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind, protoreflect.StringKind, protoreflect.BytesKind, protoreflect.EnumKind:
+	case protoreflect.BytesKind:
+		p.P(jsonFields, `[`, index, `] = `, base64Encoding, `.EncodeToString(`, accessor, `)`)
+	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind, protoreflect.StringKind, protoreflect.EnumKind:
 		p.P(jsonFields, `[`, index, `] = `, accessor)
 	case protoreflect.MessageKind, protoreflect.GroupKind:
 		p.P(`jsonData, err := `, accessor, `.MarshalJSON()`)
@@ -389,7 +376,8 @@ func (p *jsonMarshal) unmarshalRepeatedFieldValue(field *protogen.Field, accesso
 		p.P(accessor, ` = string(`, jsonValue, `.GetStringBytes())`)
 	case protoreflect.BytesKind:
 		p.P(`jsonBytes := `, jsonValue, `.GetStringBytes()`)
-		p.P(accessor, `, err := `, base64Encoding, ` .DecodeString(string(jsonBytes))`)
+		p.P(`var err error`)
+		p.P(accessor, `, err = `, base64Encoding, `.DecodeString(string(jsonBytes))`)
 		p.P(`if err != nil {`)
 		p.P(`return err`)
 		p.P(`}`)
