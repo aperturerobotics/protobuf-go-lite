@@ -18,7 +18,7 @@ Static code generation without reflection is more efficient at runtime and
 results in smaller code binaries. It also provides better support for [tinygo]
 which has limited reflection support.
 
-[tinygo**: https://github.com/tinygo-org/tinygo
+[tinygo]: https://github.com/tinygo-org/tinygo
 
 protobuf-go-lite does not support fieldmasks and extensions.
 
