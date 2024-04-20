@@ -10,6 +10,7 @@ import (
 	time "time"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -261,6 +262,33 @@ func (this *Duration) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+
+// MarshalProtoJSON marshals the Duration message to JSON.
+func (x *Duration) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Seconds != 0 || s.HasField("seconds") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("seconds")
+		s.WriteInt64(x.Seconds)
+	}
+	if x.Nanos != 0 || s.HasField("nanos") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("nanos")
+		s.WriteInt32(x.Nanos)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Duration to JSON.
+func (x *Duration) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
 func (m *Duration) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

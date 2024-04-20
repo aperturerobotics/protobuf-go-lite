@@ -9,6 +9,7 @@ import (
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -244,6 +245,58 @@ func (x *UnsafeTest_Sub5) GetFoo() map[string]string {
 		return x.Foo
 	}
 	return nil
+}
+
+type UnsafeTest_Sub3_FooEntry struct {
+	unknownFields []byte
+	Key           string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *UnsafeTest_Sub3_FooEntry) Reset() {
+	*x = UnsafeTest_Sub3_FooEntry{}
+}
+
+func (*UnsafeTest_Sub3_FooEntry) ProtoMessage() {}
+
+func (x *UnsafeTest_Sub3_FooEntry) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *UnsafeTest_Sub3_FooEntry) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+type UnsafeTest_Sub5_FooEntry struct {
+	unknownFields []byte
+	Key           string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *UnsafeTest_Sub5_FooEntry) Reset() {
+	*x = UnsafeTest_Sub5_FooEntry{}
+}
+
+func (*UnsafeTest_Sub5_FooEntry) ProtoMessage() {}
+
+func (x *UnsafeTest_Sub5_FooEntry) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *UnsafeTest_Sub5_FooEntry) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
 }
 
 func (m *UnsafeTest_Sub1) CloneVT() *UnsafeTest_Sub1 {
@@ -774,6 +827,234 @@ func (this *UnsafeTest_Sub5_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 		}
 	}
 	return true
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub1 message to JSON.
+func (x *UnsafeTest_Sub1) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.S != "" || s.HasField("s") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("s")
+		s.WriteString(x.S)
+	}
+	if len(x.B) > 0 || s.HasField("b") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("b")
+		s.WriteBytes(x.B)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub1 to JSON.
+func (x *UnsafeTest_Sub1) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub2 message to JSON.
+func (x *UnsafeTest_Sub2) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.S) > 0 || s.HasField("s") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("s")
+		s.WriteStringArray(x.S)
+	}
+	if len(x.B) > 0 || s.HasField("b") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("b")
+		s.WriteBytesArray(x.B)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub2 to JSON.
+func (x *UnsafeTest_Sub2) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub3_FooEntry message to JSON.
+func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Key != "" || s.HasField("key") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("key")
+		s.WriteString(x.Key)
+	}
+	if len(x.Value) > 0 || s.HasField("value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value")
+		s.WriteBytes(x.Value)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub3_FooEntry to JSON.
+func (x *UnsafeTest_Sub3_FooEntry) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub3 message to JSON.
+func (x *UnsafeTest_Sub3) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Foo != nil || s.HasField("foo") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("foo")
+		s.WriteObjectStart()
+		var wroteElement bool
+		for k, v := range x.Foo {
+			s.WriteMoreIf(&wroteElement)
+			s.WriteObjectStringField(k)
+			s.WriteBytes(v)
+		}
+		s.WriteObjectEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub3 to JSON.
+func (x *UnsafeTest_Sub3) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub4 message to JSON.
+func (x *UnsafeTest_Sub4) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Foo != nil {
+		switch ov := x.Foo.(type) {
+		case *UnsafeTest_Sub4_S:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("s")
+			s.WriteString(ov.S)
+		case *UnsafeTest_Sub4_B:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("b")
+			s.WriteBytes(ov.B)
+		}
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub4 to JSON.
+func (x *UnsafeTest_Sub4) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub5_FooEntry message to JSON.
+func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Key != "" || s.HasField("key") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("key")
+		s.WriteString(x.Key)
+	}
+	if x.Value != "" || s.HasField("value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value")
+		s.WriteString(x.Value)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub5_FooEntry to JSON.
+func (x *UnsafeTest_Sub5_FooEntry) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest_Sub5 message to JSON.
+func (x *UnsafeTest_Sub5) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Foo != nil || s.HasField("foo") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("foo")
+		s.WriteObjectStart()
+		var wroteElement bool
+		for k, v := range x.Foo {
+			s.WriteMoreIf(&wroteElement)
+			s.WriteObjectStringField(k)
+			s.WriteString(v)
+		}
+		s.WriteObjectEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest_Sub5 to JSON.
+func (x *UnsafeTest_Sub5) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// MarshalProtoJSON marshals the UnsafeTest message to JSON.
+func (x *UnsafeTest) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Sub != nil {
+		switch ov := x.Sub.(type) {
+		case *UnsafeTest_Sub1_:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("sub1")
+			ov.Sub1.MarshalProtoJSON(s.WithField("sub1"))
+		case *UnsafeTest_Sub2_:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("sub2")
+			ov.Sub2.MarshalProtoJSON(s.WithField("sub2"))
+		case *UnsafeTest_Sub3_:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("sub3")
+			ov.Sub3.MarshalProtoJSON(s.WithField("sub3"))
+		case *UnsafeTest_Sub4_:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("sub4")
+			ov.Sub4.MarshalProtoJSON(s.WithField("sub4"))
+		case *UnsafeTest_Sub5_:
+			s.WriteMoreIf(&wroteField)
+			s.WriteObjectField("sub5")
+			ov.Sub5.MarshalProtoJSON(s.WithField("sub5"))
+		}
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UnsafeTest to JSON.
+func (x *UnsafeTest) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
 func (m *UnsafeTest_Sub1) MarshalVT() (dAtA []byte, err error) {

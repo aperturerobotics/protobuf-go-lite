@@ -220,9 +220,11 @@ func genEnum(g *protogen.GeneratedFile, e *enumInfo) {
 }
 
 func genMessage(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
-	if m.Desc.IsMapEntry() {
-		return
-	}
+	/*
+		if m.Desc.IsMapEntry() {
+			return
+		}
+	*/
 
 	// Message type declaration.
 	g.Annotate(m.GoIdent.GoName, m.Location)

@@ -8,6 +8,7 @@ import (
 	io "io"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	anypb "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb"
 	durationpb "github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 	emptypb "github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb"
@@ -295,6 +296,108 @@ func (this *MessageWithWKT) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+
+// MarshalProtoJSON marshals the MessageWithWKT message to JSON.
+func (x *MessageWithWKT) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Any != nil || s.HasField("any") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("any")
+		x.Any.MarshalProtoJSON(s.WithField("any"))
+	}
+	if x.Duration != nil || s.HasField("duration") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("duration")
+		x.Duration.MarshalProtoJSON(s.WithField("duration"))
+	}
+	if x.Empty != nil || s.HasField("empty") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("empty")
+		x.Empty.MarshalProtoJSON(s.WithField("empty"))
+	}
+	if x.Timestamp != nil || s.HasField("timestamp") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("timestamp")
+		x.Timestamp.MarshalProtoJSON(s.WithField("timestamp"))
+	}
+	if x.DoubleValue != nil || s.HasField("double_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("double_value")
+		x.DoubleValue.MarshalProtoJSON(s.WithField("double_value"))
+	}
+	if x.FloatValue != nil || s.HasField("float_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("float_value")
+		x.FloatValue.MarshalProtoJSON(s.WithField("float_value"))
+	}
+	if x.Int64Value != nil || s.HasField("int64_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("int64_value")
+		x.Int64Value.MarshalProtoJSON(s.WithField("int64_value"))
+	}
+	if x.Uint64Value != nil || s.HasField("uint64_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uint64_value")
+		x.Uint64Value.MarshalProtoJSON(s.WithField("uint64_value"))
+	}
+	if x.Int32Value != nil || s.HasField("int32_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("int32_value")
+		x.Int32Value.MarshalProtoJSON(s.WithField("int32_value"))
+	}
+	if x.Uint32Value != nil || s.HasField("uint32_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uint32_value")
+		x.Uint32Value.MarshalProtoJSON(s.WithField("uint32_value"))
+	}
+	if x.BoolValue != nil || s.HasField("bool_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("bool_value")
+		x.BoolValue.MarshalProtoJSON(s.WithField("bool_value"))
+	}
+	if x.StringValue != nil || s.HasField("string_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("string_value")
+		x.StringValue.MarshalProtoJSON(s.WithField("string_value"))
+	}
+	if x.BytesValue != nil || s.HasField("bytes_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("bytes_value")
+		x.BytesValue.MarshalProtoJSON(s.WithField("bytes_value"))
+	}
+	if x.StructValue != nil || s.HasField("struct_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("struct_value")
+		x.StructValue.MarshalProtoJSON(s.WithField("struct_value"))
+	}
+	if x.ValueValue != nil || s.HasField("value_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value_value")
+		x.ValueValue.MarshalProtoJSON(s.WithField("value_value"))
+	}
+	if x.ListvalueValue != nil || s.HasField("listvalue_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("listvalue_value")
+		x.ListvalueValue.MarshalProtoJSON(s.WithField("listvalue_value"))
+	}
+	if x.NullValue != 0 || s.HasField("null_value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("null_value")
+		x.NullValue.MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageWithWKT to JSON.
+func (x *MessageWithWKT) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
 func (m *MessageWithWKT) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

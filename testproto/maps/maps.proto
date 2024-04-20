@@ -1,0 +1,9 @@
+syntax = "proto3";
+package testproto.maps;
+
+import "google/protobuf/timestamp.proto";
+
+message MsgWithMaps {
+  map<string, google.protobuf.Timestamp> stringKeys = 1;
+  map<uint32, google.protobuf.Timestamp> intKeys = 2;
+}

@@ -19,11 +19,12 @@ func TestWellKnownTypes(t *testing.T) {
 	anyVal, err := anypb.New(dur, "cool.apps/test-value")
 	require.NoError(t, err)
 
+	ts := timestamppb.New(time.Date(2024, time.January, 10, 4, 20, 00, 00, time.UTC))
 	m := &MessageWithWKT{
 		Any:         anyVal,
 		Duration:    dur,
 		Empty:       &emptypb.Empty{},
-		Timestamp:   timestamppb.Now(),
+		Timestamp:   ts,
 		DoubleValue: wrapperspb.Double(123456789.123456789),
 		FloatValue:  wrapperspb.Float(123456789.123456789),
 		Int64Value:  wrapperspb.Int64(123456789),
@@ -47,6 +48,17 @@ func TestWellKnownTypes(t *testing.T) {
 
 	require.NoError(t, vtProtoMsg.UnmarshalVT(vtProtoBytes))
 
-	// TODO prptoc-gen-prototxt
+	// TODO prototxt
 	// assert.Equal(t, golangMsg.String(), vtProtoMsg.String())
+
+	// TODO protoc json
+	jdata, err := m.MarshalJSON()
+	if err != nil {
+		require.NoError(t, err)
+	}
+	t.Log(string(jdata))
+
+	// Ensure output is consistent
+	var expected = `{"any":{"type_url":"cool.apps/test-value","value":"CMJw"},"duration":{"seconds":"14402"},"empty":{},"timestamp":{"seconds":"1704860400"},"double_value":{"value":123456789.12345679},"float_value":{"value":123456790},"int64_value":{"value":"123456789"},"uint64_value":{"value":"123456789"},"int32_value":{"value":123456789},"uint32_value":{"value":123456789},"bool_value":{"value":true},"string_value":{"value":"String marshalling and unmarshalling test"},"bytes_value":{"value":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}}`
+	require.Equal(t, expected, string(jdata))
 }

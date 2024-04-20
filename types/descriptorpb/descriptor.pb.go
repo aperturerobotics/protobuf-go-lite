@@ -5701,6 +5701,9 @@ func (this *GeneratedCodeInfo) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+
+// NOTE: protobuf-go-lite json only supports proto3: proto2 is not supported.
+
 func (m *FileDescriptorSet) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

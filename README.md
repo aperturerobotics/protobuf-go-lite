@@ -8,16 +8,21 @@
 **protobuf-go-lite** is a stripped-down version of the [protobuf-go] code
 generator modified to work without reflection and merged with [vtprotobuf] to
 provide modular features with static code generation for marshal/unmarshal,
-size, clone, and equal.
+size, clone, and equal. It bundles a fork of [protoc-gen-go-json] for JSON.
 
 [protobuf-go]: https://github.com/protocolbuffers/protobuf-go
 [vtprotobuf]: https://github.com/planetscale/vtprotobuf
+[protoc-gen-go-json]: https://github.com/TheThingsIndustries/protoc-gen-go-json
 
 Static code generation without reflection is more efficient at runtime and
 results in smaller code binaries. It also provides better support for [tinygo]
 which has limited reflection support.
 
-[tinygo]: https://github.com/tinygo-org/tinygo
+[tinygo**: https://github.com/tinygo-org/tinygo
+
+protobuf-go-lite does not support fieldmasks and extensions.
+
+### Ecosystem
 
 Lightweight Protobuf 3 RPCs are implemented in [StaRPC] for Go and TypeScript.
 
@@ -119,6 +124,14 @@ The following additional features from vtprotobuf can be enabled:
     - `func (p *YourProto) CloneVT() *YourProto`: this function behaves similarly to calling `proto.Clone(p)` on the message, except the cloning is performed by unrolled codegen without using reflection. If the receiver `p` is `nil` a typed `nil` is returned.
 
     - `func (p *YourProto) CloneMessageVT() any`: this function behaves like the above `p.CloneVT()`, but provides a uniform signature in order to be accessible via type assertions even if the type is not known at compile time. This allows implementing a generic `func CloneMessageVT() any` without reflection. If the receiver `p` is `nil`, a typed `nil` pointer of the message type will be returned inside a `any` interface.
+
+- `json`: generates the following helper methods
+
+    - `func (p *YourProto) UnmarshalJSON(data []byte) error` behaves similarly to calling `protojson.Unmarshal(data, p)` on the message, except the unmarshalling is performed by unrolled codegen without using reflection and allocating as little memory as possible (with json-iterator/go). If the receiver `p` is **not** fully zeroed-out, the unmarshal call will actually behave like `proto.Merge(data, p)`. To ensure proper `Unmarshal` semantics, ensure you've called `proto.Reset` on your message before calling `UnmarshalJSON`, or that your message has been newly allocated.
+
+    - `func (p *YourProto) UnmarshalJSONValue(val *fastjson.Value) error` unmarshals a `*fastjson.Value`.
+
+    - `func (p *YourProto) MarshalJSON() ([]byte, error)` behaves similarly to calling `protojson.Marshal(p)` on the message, except the marshalling is performed by unrolled codegen without using reflection and allocating as little memory as possible (with json-iterator/go).
 
 ## License
 

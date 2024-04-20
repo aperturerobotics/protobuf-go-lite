@@ -12,6 +12,7 @@ import (
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -334,6 +335,24 @@ func (this *OptionalFieldInProto3) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+
+// MarshalProtoJSON marshals the SimpleEnum to JSON.
+func (x SimpleEnum) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnumString(int32(x), SimpleEnum_name)
+}
+
+// MarshalText marshals the SimpleEnum to text.
+func (x SimpleEnum) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), SimpleEnum_name)), nil
+}
+
+// MarshalJSON marshals the SimpleEnum to JSON.
+func (x SimpleEnum) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// NOTE: protobuf-go-lite json only supports proto3 and not proto3opt (optional fields).
+
 func (m *OptionalFieldInProto3) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

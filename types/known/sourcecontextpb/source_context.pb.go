@@ -9,6 +9,7 @@ import (
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -100,6 +101,28 @@ func (this *SourceContext) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
+
+// MarshalProtoJSON marshals the SourceContext message to JSON.
+func (x *SourceContext) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.FileName != "" || s.HasField("file_name") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("file_name")
+		s.WriteString(x.FileName)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the SourceContext to JSON.
+func (x *SourceContext) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
 func (m *SourceContext) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
