@@ -7,7 +7,6 @@ package json
 import (
 	"fmt"
 	"slices"
-	"strings"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -50,44 +49,6 @@ func fieldGoName(field *protogen.Field) interface{} {
 	return fieldGoName
 }
 
-func ifThenElse(condition bool, ifTrue, ifFalse string) string {
-	if condition {
-		return ifTrue
-	}
-	return ifFalse
-}
-
-// goTypeForField returns the name of the Go type that corresponds to the type of a given field.
-func (g *jsonGenerator) goTypeForField(field *protogen.Field) interface{} {
-	switch field.Desc.Kind() {
-	case protoreflect.BoolKind:
-		return "bool"
-	case protoreflect.EnumKind:
-		return field.Enum.GoIdent
-	case protoreflect.Int32Kind, protoreflect.Sint32Kind, protoreflect.Sfixed32Kind:
-		return "int32"
-	case protoreflect.Uint32Kind, protoreflect.Fixed32Kind:
-		return "uint32"
-	case protoreflect.Int64Kind, protoreflect.Sint64Kind, protoreflect.Sfixed64Kind:
-		return "int64"
-	case protoreflect.Uint64Kind, protoreflect.Fixed64Kind:
-		return "uint64"
-	case protoreflect.FloatKind:
-		return "float32"
-	case protoreflect.DoubleKind:
-		return "float64"
-	case protoreflect.StringKind:
-		return "string"
-	case protoreflect.BytesKind:
-		return "[]byte"
-	case protoreflect.MessageKind:
-		return field.Message.GoIdent
-	default:
-		g.gen.Error(fmt.Errorf("unsupported field kind %q", field.Desc.Kind()))
-		return ""
-	}
-}
-
 // libNameForField returns the name used in the protojson func that corresponds to the type of a given field.
 func (g *jsonGenerator) libNameForField(field *protogen.Field) string {
 	switch field.Desc.Kind() {
@@ -113,15 +74,4 @@ func (g *jsonGenerator) libNameForField(field *protogen.Field) string {
 		g.gen.Error(fmt.Errorf("unsupported field kind %q", field.Desc.Kind()))
 		return ""
 	}
-}
-
-// parseGoIdent parses a custom type and returns a GoIdent for it.
-// If it's unable to parse the custom type, it returns nil.
-func parseGoIdent(customtype string) *protogen.GoIdent {
-	if customtype == "" {
-		return nil
-	}
-	i := strings.LastIndex(customtype, ".")
-	ident := protogen.GoImportPath(customtype[:i]).Ident(customtype[i+1:])
-	return &ident
 }

@@ -11,10 +11,6 @@ import (
 )
 
 const (
-	bytesPackage   = protogen.GoImportPath("bytes")
-	fmtPackage     = protogen.GoImportPath("fmt")
-	strconvPackage = protogen.GoImportPath("strconv")
-
 	jsonPluginPackage = protogen.GoImportPath("github.com/aperturerobotics/protobuf-go-lite/json")
 )
 
