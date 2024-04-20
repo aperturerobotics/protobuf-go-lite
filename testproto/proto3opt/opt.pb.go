@@ -351,6 +351,31 @@ func (x SimpleEnum) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the SimpleEnum from JSON.
+func (x *SimpleEnum) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(SimpleEnum_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read SimpleEnum enum: %v", err)
+		return
+	}
+	*x = SimpleEnum(v)
+}
+
+// UnmarshalText unmarshals the SimpleEnum from text.
+func (x *SimpleEnum) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), SimpleEnum_value)
+	if err != nil {
+		return err
+	}
+	*x = SimpleEnum(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the SimpleEnum from JSON.
+func (x *SimpleEnum) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // NOTE: protobuf-go-lite json only supports proto3 and not proto3opt (optional fields).
 
 func (m *OptionalFieldInProto3) MarshalVT() (dAtA []byte, err error) {

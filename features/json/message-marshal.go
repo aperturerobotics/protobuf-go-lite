@@ -126,7 +126,7 @@ nextField:
 				g.P(`element.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
 				// Otherwise delegate to the library.
 				// g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
-				// g.P(pluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), "element)")
+				// g.P(jsonPluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), "element)")
 
 				g.P("}") // end for _, element := range x.{fieldGoName} {
 				g.P("s.WriteArrayEnd()")
@@ -202,7 +202,7 @@ nextField:
 			g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
 			// Otherwise delegate to the library.
 			//	g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
-			// g.P(pluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), messageOrOneofIdent, ".", fieldGoName, ")")
+			// g.P(jsonPluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), messageOrOneofIdent, ".", fieldGoName, ")")
 		}
 
 		// If we're not in a oneof, end the "if not zero".

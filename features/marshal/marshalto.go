@@ -23,6 +23,7 @@ func init() {
 	generator.RegisterFeature("marshal", func(gen *generator.GeneratedFile) generator.FeatureGenerator {
 		return &marshal{GeneratedFile: gen, Stable: false, strict: false}
 	})
+
 	generator.RegisterFeature("marshal_strict", func(gen *generator.GeneratedFile) generator.FeatureGenerator {
 		return &marshal{GeneratedFile: gen, Stable: false, strict: true}
 	})

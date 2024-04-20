@@ -83,6 +83,7 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 			--proto_path $$(pwd)/vendor \
 			--print_structure \
 			--only_specified_files \
+			$$2 \
 			$$(\
 				git \
 					ls-files "$$1" |\
@@ -90,9 +91,9 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 					"$$(pwd)/vendor/$${PROJECT}/%s "); \
 	}; \
 	for d in ./types/known/*; do \
-		protogen "$${d}/*.proto"; \
+		protogen "$${d}/*.proto" "--go-lite_opt=features=marshal+marshal_strict+unmarshal+unmarshal_unsafe+size+equal+clone"; \
 	done; \
-	protogen "./types/descriptorpb/*.proto"; \
-	protogen "./testproto/*.proto"; \
+	protogen "./types/descriptorpb/*.proto" ""; \
+	protogen "./testproto/*.proto" ""; \
 	rm $$(pwd)/vendor/$${PROJECT} || true
 	$(GOIMPORTS) -w ./

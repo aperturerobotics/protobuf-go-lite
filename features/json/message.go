@@ -31,6 +31,9 @@ func (g *jsonGenerator) genMessage(message *protogen.Message) {
 	if !anyOptional {
 		g.genMessageMarshaler(message)
 		g.genStdMessageMarshaler(message)
+
+		g.genMessageUnmarshaler(message)
+		g.genStdMessageUnmarshaler(message)
 	} else {
 		// We do not support marshaling this field, skip the entire message.
 		g.P("// NOTE: protobuf-go-lite json only supports proto3 and not proto3opt (optional fields).")

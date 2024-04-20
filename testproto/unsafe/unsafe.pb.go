@@ -855,6 +855,30 @@ func (x *UnsafeTest_Sub1) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub1 message from JSON.
+func (x *UnsafeTest_Sub1) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "s":
+			s.AddField("s")
+			x.S = s.ReadString()
+		case "b":
+			s.AddField("b")
+			x.B = s.ReadBytes()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub1 from JSON.
+func (x *UnsafeTest_Sub1) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the UnsafeTest_Sub2 message to JSON.
 func (x *UnsafeTest_Sub2) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -881,6 +905,38 @@ func (x *UnsafeTest_Sub2) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub2 message from JSON.
+func (x *UnsafeTest_Sub2) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "s":
+			s.AddField("s")
+			if s.ReadNil() {
+				x.S = nil
+				return
+			}
+			x.S = s.ReadStringArray()
+		case "b":
+			s.AddField("b")
+			if s.ReadNil() {
+				x.B = nil
+				return
+			}
+			x.B = s.ReadBytesArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub2 from JSON.
+func (x *UnsafeTest_Sub2) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the UnsafeTest_Sub3_FooEntry message to JSON.
 func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -905,6 +961,30 @@ func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the UnsafeTest_Sub3_FooEntry to JSON.
 func (x *UnsafeTest_Sub3_FooEntry) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub3_FooEntry message from JSON.
+func (x *UnsafeTest_Sub3_FooEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "key":
+			s.AddField("key")
+			x.Key = s.ReadString()
+		case "value":
+			s.AddField("value")
+			x.Value = s.ReadBytes()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub3_FooEntry from JSON.
+func (x *UnsafeTest_Sub3_FooEntry) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the UnsafeTest_Sub3 message to JSON.
@@ -935,6 +1015,34 @@ func (x *UnsafeTest_Sub3) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub3 message from JSON.
+func (x *UnsafeTest_Sub3) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "foo":
+			s.AddField("foo")
+			if s.ReadNil() {
+				x.Foo = nil
+				return
+			}
+			x.Foo = make(map[string][]byte)
+			s.ReadStringMap(func(key string) {
+				x.Foo[key] = s.ReadBytes()
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub3 from JSON.
+func (x *UnsafeTest_Sub3) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the UnsafeTest_Sub4 message to JSON.
 func (x *UnsafeTest_Sub4) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -963,6 +1071,34 @@ func (x *UnsafeTest_Sub4) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub4 message from JSON.
+func (x *UnsafeTest_Sub4) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "s":
+			s.AddField("s")
+			ov := &UnsafeTest_Sub4_S{}
+			x.Foo = ov
+			ov.S = s.ReadString()
+		case "b":
+			s.AddField("b")
+			ov := &UnsafeTest_Sub4_B{}
+			x.Foo = ov
+			ov.B = s.ReadBytes()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub4 from JSON.
+func (x *UnsafeTest_Sub4) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the UnsafeTest_Sub5_FooEntry message to JSON.
 func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -987,6 +1123,30 @@ func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the UnsafeTest_Sub5_FooEntry to JSON.
 func (x *UnsafeTest_Sub5_FooEntry) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub5_FooEntry message from JSON.
+func (x *UnsafeTest_Sub5_FooEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "key":
+			s.AddField("key")
+			x.Key = s.ReadString()
+		case "value":
+			s.AddField("value")
+			x.Value = s.ReadString()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub5_FooEntry from JSON.
+func (x *UnsafeTest_Sub5_FooEntry) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the UnsafeTest_Sub5 message to JSON.
@@ -1015,6 +1175,34 @@ func (x *UnsafeTest_Sub5) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the UnsafeTest_Sub5 to JSON.
 func (x *UnsafeTest_Sub5) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UnsafeTest_Sub5 message from JSON.
+func (x *UnsafeTest_Sub5) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "foo":
+			s.AddField("foo")
+			if s.ReadNil() {
+				x.Foo = nil
+				return
+			}
+			x.Foo = make(map[string]string)
+			s.ReadStringMap(func(key string) {
+				x.Foo[key] = s.ReadString()
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest_Sub5 from JSON.
+func (x *UnsafeTest_Sub5) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the UnsafeTest message to JSON.
@@ -1055,6 +1243,69 @@ func (x *UnsafeTest) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the UnsafeTest to JSON.
 func (x *UnsafeTest) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UnsafeTest message from JSON.
+func (x *UnsafeTest) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "sub1":
+			ov := &UnsafeTest_Sub1_{}
+			x.Sub = ov
+			if s.ReadNil() {
+				ov.Sub1 = nil
+				return
+			}
+			ov.Sub1 = &UnsafeTest_Sub1{}
+			ov.Sub1.UnmarshalProtoJSON(s.WithField("sub1", true))
+		case "sub2":
+			ov := &UnsafeTest_Sub2_{}
+			x.Sub = ov
+			if s.ReadNil() {
+				ov.Sub2 = nil
+				return
+			}
+			ov.Sub2 = &UnsafeTest_Sub2{}
+			ov.Sub2.UnmarshalProtoJSON(s.WithField("sub2", true))
+		case "sub3":
+			ov := &UnsafeTest_Sub3_{}
+			x.Sub = ov
+			if s.ReadNil() {
+				ov.Sub3 = nil
+				return
+			}
+			ov.Sub3 = &UnsafeTest_Sub3{}
+			ov.Sub3.UnmarshalProtoJSON(s.WithField("sub3", true))
+		case "sub4":
+			ov := &UnsafeTest_Sub4_{}
+			x.Sub = ov
+			if s.ReadNil() {
+				ov.Sub4 = nil
+				return
+			}
+			ov.Sub4 = &UnsafeTest_Sub4{}
+			ov.Sub4.UnmarshalProtoJSON(s.WithField("sub4", true))
+		case "sub5":
+			ov := &UnsafeTest_Sub5_{}
+			x.Sub = ov
+			if s.ReadNil() {
+				ov.Sub5 = nil
+				return
+			}
+			ov.Sub5 = &UnsafeTest_Sub5{}
+			ov.Sub5.UnmarshalProtoJSON(s.WithField("sub5", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UnsafeTest from JSON.
+func (x *UnsafeTest) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 func (m *UnsafeTest_Sub1) MarshalVT() (dAtA []byte, err error) {

@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -38,6 +39,9 @@ func (e *marshalError) Unwrap() error {
 // MarshalerConfig is the configuration for the Marshaler.
 type MarshalerConfig struct {
 	EnumsAsInts bool
+
+	// AnyTypeResolver is the resolver function for the any well-known type.
+	AnyTypeResolver anypb_resolver.AnyTypeResolver
 }
 
 // DefaultMarshalerConfig is the default configuration for the Marshaler.
@@ -77,6 +81,14 @@ func NewMarshalState(config MarshalerConfig) *MarshalState {
 // Config returns a copy of the marshaler configuration.
 func (s *MarshalState) Config() MarshalerConfig {
 	return *s.config
+}
+
+// AnyTypeResolver returns the any type resolver.
+func (s *MarshalState) AnyTypeResolver() anypb_resolver.AnyTypeResolver {
+	if s.config.AnyTypeResolver != nil {
+		return s.config.AnyTypeResolver
+	}
+	return anypb_resolver.NewErrAnyTypeResolver(anypb_resolver.ErrNoAnyTypeResolver)
 }
 
 // Sub returns a sub-marshaler with a new buffer, but with the same configuration, error and path info.

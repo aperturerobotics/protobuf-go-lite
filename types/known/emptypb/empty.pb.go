@@ -8,7 +8,6 @@ import (
 	io "io"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
-	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -91,22 +90,6 @@ func (this *Empty) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
-
-// MarshalProtoJSON marshals the Empty message to JSON.
-func (x *Empty) MarshalProtoJSON(s *json.MarshalState) {
-	if x == nil {
-		s.WriteNil()
-		return
-	}
-	s.WriteObjectStart()
-	s.WriteObjectEnd()
-}
-
-// MarshalJSON marshals the Empty to JSON.
-func (x *Empty) MarshalJSON() ([]byte, error) {
-	return json.DefaultMarshalerConfig.Marshal(x)
-}
-
 func (m *Empty) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

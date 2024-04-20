@@ -6,7 +6,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	"github.com/aperturerobotics/protobuf-go-lite/json"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/anypb"
+	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
@@ -16,6 +19,12 @@ import (
 func TestWellKnownTypes(t *testing.T) {
 	dur := durationpb.New(4*time.Hour + 2*time.Second)
 
+	anyTypeResolver := anypb_resolver.NewFuncAnyTypeResolver(func(url string) (func() protobuf_go_lite.Message, error) {
+		if url == "cool.apps/test-value" {
+			return func() protobuf_go_lite.Message { return &durationpb.Duration{} }, nil
+		}
+		return nil, nil
+	})
 	anyVal, err := anypb.New(dur, "cool.apps/test-value")
 	require.NoError(t, err)
 
@@ -52,13 +61,24 @@ func TestWellKnownTypes(t *testing.T) {
 	// assert.Equal(t, golangMsg.String(), vtProtoMsg.String())
 
 	// TODO protoc json
-	jdata, err := m.MarshalJSON()
+	mc := json.MarshalerConfig{
+		AnyTypeResolver: anyTypeResolver,
+	}
+	jdata, err := mc.Marshal(m)
 	if err != nil {
 		require.NoError(t, err)
 	}
 	t.Log(string(jdata))
 
 	// Ensure output is consistent
-	var expected = `{"any":{"type_url":"cool.apps/test-value","value":"CMJw"},"duration":{"seconds":"14402"},"empty":{},"timestamp":{"seconds":"1704860400"},"double_value":{"value":123456789.12345679},"float_value":{"value":123456790},"int64_value":{"value":"123456789"},"uint64_value":{"value":"123456789"},"int32_value":{"value":123456789},"uint32_value":{"value":123456789},"bool_value":{"value":true},"string_value":{"value":"String marshalling and unmarshalling test"},"bytes_value":{"value":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}}`
+	var expected = `{"any":{"@type":"cool.apps/test-value","value":"14402s"},"duration":"14402s","empty":{},"timestamp":"2024-01-10T04:20:00Z","double_value":123456789.12345679,"float_value":123456792,"int64_value":"123456789","uint64_value":"123456789","int32_value":"123456789","uint32_value":"123456789","bool_value":true,"string_value":"String marshalling and unmarshalling test","bytes_value":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}`
 	require.Equal(t, expected, string(jdata))
+
+	jparsed := &MessageWithWKT{}
+	umc := json.UnmarshalerConfig{
+		AnyTypeResolver: anyTypeResolver,
+	}
+	err = umc.Unmarshal(jdata, jparsed)
+	require.NoError(t, err)
+	require.True(t, jparsed.EqualVT(m))
 }

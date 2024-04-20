@@ -205,6 +205,34 @@ func (x *MsgWithMaps_StringKeysEntry) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the MsgWithMaps_StringKeysEntry message from JSON.
+func (x *MsgWithMaps_StringKeysEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "key":
+			s.AddField("key")
+			x.Key = s.ReadString()
+		case "value":
+			if s.ReadNil() {
+				x.Value = nil
+				return
+			}
+			x.Value = &timestamppb.Timestamp{}
+			x.Value.UnmarshalProtoJSON(s.WithField("value", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MsgWithMaps_StringKeysEntry from JSON.
+func (x *MsgWithMaps_StringKeysEntry) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MsgWithMaps_IntKeysEntry message to JSON.
 func (x *MsgWithMaps_IntKeysEntry) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -229,6 +257,34 @@ func (x *MsgWithMaps_IntKeysEntry) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the MsgWithMaps_IntKeysEntry to JSON.
 func (x *MsgWithMaps_IntKeysEntry) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MsgWithMaps_IntKeysEntry message from JSON.
+func (x *MsgWithMaps_IntKeysEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "key":
+			s.AddField("key")
+			x.Key = s.ReadUint32()
+		case "value":
+			if s.ReadNil() {
+				x.Value = nil
+				return
+			}
+			x.Value = &timestamppb.Timestamp{}
+			x.Value.UnmarshalProtoJSON(s.WithField("value", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MsgWithMaps_IntKeysEntry from JSON.
+func (x *MsgWithMaps_IntKeysEntry) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 // MarshalProtoJSON marshals the MsgWithMaps message to JSON.
@@ -269,6 +325,48 @@ func (x *MsgWithMaps) MarshalProtoJSON(s *json.MarshalState) {
 // MarshalJSON marshals the MsgWithMaps to JSON.
 func (x *MsgWithMaps) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MsgWithMaps message from JSON.
+func (x *MsgWithMaps) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "stringKeys":
+			s.AddField("stringKeys")
+			if s.ReadNil() {
+				x.StringKeys = nil
+				return
+			}
+			x.StringKeys = make(map[string]*timestamppb.Timestamp)
+			s.ReadStringMap(func(key string) {
+				var v timestamppb.Timestamp
+				v.UnmarshalProtoJSON(s)
+				x.StringKeys[key] = &v
+			})
+		case "intKeys":
+			s.AddField("intKeys")
+			if s.ReadNil() {
+				x.IntKeys = nil
+				return
+			}
+			x.IntKeys = make(map[uint32]*timestamppb.Timestamp)
+			s.ReadUint32Map(func(key uint32) {
+				var v timestamppb.Timestamp
+				v.UnmarshalProtoJSON(s)
+				x.IntKeys[key] = &v
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MsgWithMaps from JSON.
+func (x *MsgWithMaps) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
 func (m *MsgWithMaps) MarshalVT() (dAtA []byte, err error) {

@@ -2,6 +2,11 @@ package anypb
 
 import (
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	"github.com/aperturerobotics/protobuf-go-lite/json"
+	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
+	"github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
+	"github.com/aperturerobotics/protobuf-go-lite/types/known/structpb"
+	"github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
 	"github.com/pkg/errors"
 )
 
@@ -11,17 +16,10 @@ import (
 // if no error is encountered.
 //
 // The [Types] type implements this interface.
-type MessageTypeResolver interface {
-	// FindMessageByURL looks up a message by a URL identifier.
-	// See documentation on google.protobuf.Any.type_url for the URL format.
-	//
-	// Returns the constructor for the message.
-	// This returns (nil, ErrNotFound) if not found.
-	FindMessageByURL(url string) (func() protobuf_go_lite.Message, error)
-}
+type MessageTypeResolver = anypb_resolver.AnyTypeResolver
 
 // ErrNotFound is returned if the message type was not found.
-var ErrNotFound = errors.New("proto type not found")
+var ErrNotFound = errors.New("message type not found in Any")
 
 // New marshals src into a new Any instance.
 func New(src protobuf_go_lite.Message, typeURL string) (*Any, error) {
@@ -118,4 +116,128 @@ func (x *Any) UnmarshalTo(m protobuf_go_lite.Message, typeURL string) error {
 // It reports an error if the underlying message type could not be resolved.
 func (x *Any) UnmarshalNew(typeURL string, resolver MessageTypeResolver) (protobuf_go_lite.Message, error) {
 	return UnmarshalNew(x, typeURL, resolver)
+}
+
+// MarshalJSON marshals the Any to JSON.
+func (x *Any) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalJSON unmarshals the Any from JSON.
+func (x *Any) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals an Any WKT.
+// UnmarshalProtoJSON unmarshals an Any WKT.
+func (x *Any) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+
+	// Read the raw object and create a sub-unmarshaler for it.
+	data := s.ReadRawMessage()
+	if s.Err() != nil {
+		return
+	}
+	sub := s.Sub(data)
+
+	// Read the first field in the object. This should be @type.
+	if key := sub.ReadObjectField(); key != "@type" {
+		s.SetErrorf("first field in Any is not @type, but %q", key)
+		return
+	}
+	typeURL := sub.ReadString()
+	if err := sub.Err(); err != nil {
+		return
+	}
+
+	// Find the message type by the type URL.
+	t, err := s.AnyTypeResolver().FindMessageByURL(typeURL)
+	if err != nil {
+		s.SetError(err)
+		return
+	}
+
+	// Allocate a new message of that type.
+	msg := t()
+	if msg == nil {
+		s.SetError(ErrNotFound)
+		return
+	}
+
+	var unmarshaler json.Unmarshaler
+	switch msgt := msg.(type) {
+	default:
+		s.SetError(ErrNotFound)
+		return
+	case *durationpb.Duration,
+		*structpb.Struct,
+		*structpb.Value,
+		*structpb.ListValue,
+		*timestamppb.Timestamp:
+		if field := sub.ReadObjectField(); field != "value" {
+			s.SetErrorf("unexpected %q field in Any", field)
+			return
+		}
+		unmarshaler = msgt.(json.Unmarshaler)
+	case json.Unmarshaler:
+		// Create another sub-unmarshaler for the raw data and unmarshal the message.
+		sub = s.Sub(data)
+	}
+
+	unmarshaler.UnmarshalProtoJSON(sub)
+	if err := sub.Err(); err != nil {
+		return
+	}
+
+	if field := sub.ReadObjectField(); field != "" {
+		s.SetErrorf("unexpected %q field in Any", field)
+		return
+	}
+
+	// Wrap the unmarshaled message in an Any and return that.
+	n, err := New(msg, typeURL)
+	if err != nil {
+		sub.SetError(err)
+		return
+	} else {
+		*x = *n
+	}
+}
+
+// MarshalProtoJSON marshals an Any WKT.
+func (x *Any) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+
+	s.WriteObjectStart()
+	s.WriteObjectField("@type")
+	s.WriteString(x.GetTypeUrl())
+
+	mt, err := s.AnyTypeResolver().FindMessageByURL(x.GetTypeUrl())
+	if err != nil {
+		s.SetError(err)
+		return
+	}
+
+	msg := mt()
+	if err := x.UnmarshalTo(msg, x.GetTypeUrl()); err != nil {
+		s.SetError(err)
+		return
+	}
+
+	s.WriteMore()
+	s.WriteObjectField("value")
+
+	switch m := msg.(type) {
+	case json.Marshaler:
+		m.MarshalProtoJSON(s)
+	default:
+		s.SetError(errors.New("message in Any does not implement json.Marshaler"))
+	}
+
+	s.WriteObjectEnd()
 }

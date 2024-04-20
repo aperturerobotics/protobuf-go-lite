@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -36,7 +37,10 @@ func (e *unmarshalError) Unwrap() error {
 }
 
 // UnmarshalerConfig is the configuration for the Unmarshaler.
-type UnmarshalerConfig struct{}
+type UnmarshalerConfig struct {
+	// AnyTypeResolver is the resolver function for the any well-known type.
+	AnyTypeResolver anypb_resolver.AnyTypeResolver
+}
 
 // DefaultUnmarshalerConfig is the default configuration for the Unmarshaler.
 var DefaultUnmarshalerConfig = UnmarshalerConfig{}
@@ -73,6 +77,14 @@ func NewUnmarshalState(data []byte, config UnmarshalerConfig) *UnmarshalState {
 // Config returns a copy of the unmarshaler configuration.
 func (s *UnmarshalState) Config() UnmarshalerConfig {
 	return *s.config
+}
+
+// AnyTypeResolver returns the any type resolver.
+func (s *UnmarshalState) AnyTypeResolver() anypb_resolver.AnyTypeResolver {
+	if s.config.AnyTypeResolver != nil {
+		return s.config.AnyTypeResolver
+	}
+	return anypb_resolver.NewErrAnyTypeResolver(anypb_resolver.ErrNoAnyTypeResolver)
 }
 
 // Sub returns a subunmarshaler with a new buffer, but with the same configuration, error and path info.
@@ -809,6 +821,7 @@ func (s *UnmarshalState) ReadDuration() *time.Duration {
 	if s.ReadNil() {
 		return nil
 	}
+	// handle if we are reading an object with a "value" field
 	d, err := time.ParseDuration(s.inner.ReadString())
 	if err != nil {
 		s.SetErrorf("invalid duration: %w", err)

@@ -9,7 +9,6 @@ import (
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
-	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	errors "github.com/pkg/errors"
 )
 
@@ -227,33 +226,6 @@ func (this *Any) EqualMessageVT(thatMsg any) bool {
 	}
 	return this.EqualVT(that)
 }
-
-// MarshalProtoJSON marshals the Any message to JSON.
-func (x *Any) MarshalProtoJSON(s *json.MarshalState) {
-	if x == nil {
-		s.WriteNil()
-		return
-	}
-	s.WriteObjectStart()
-	var wroteField bool
-	if x.TypeUrl != "" || s.HasField("type_url") {
-		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("type_url")
-		s.WriteString(x.TypeUrl)
-	}
-	if len(x.Value) > 0 || s.HasField("value") {
-		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("value")
-		s.WriteBytes(x.Value)
-	}
-	s.WriteObjectEnd()
-}
-
-// MarshalJSON marshals the Any to JSON.
-func (x *Any) MarshalJSON() ([]byte, error) {
-	return json.DefaultMarshalerConfig.Marshal(x)
-}
-
 func (m *Any) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil

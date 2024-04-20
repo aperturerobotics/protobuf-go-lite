@@ -398,6 +398,139 @@ func (x *MessageWithWKT) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
 }
 
+// UnmarshalProtoJSON unmarshals the MessageWithWKT message from JSON.
+func (x *MessageWithWKT) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.ReadAny() // ignore unknown field
+		case "any":
+			if s.ReadNil() {
+				x.Any = nil
+				return
+			}
+			x.Any = &anypb.Any{}
+			x.Any.UnmarshalProtoJSON(s.WithField("any", true))
+		case "duration":
+			if s.ReadNil() {
+				x.Duration = nil
+				return
+			}
+			x.Duration = &durationpb.Duration{}
+			x.Duration.UnmarshalProtoJSON(s.WithField("duration", true))
+		case "empty":
+			if s.ReadNil() {
+				x.Empty = nil
+				return
+			}
+			x.Empty = &emptypb.Empty{}
+			x.Empty.UnmarshalProtoJSON(s.WithField("empty", true))
+		case "timestamp":
+			if s.ReadNil() {
+				x.Timestamp = nil
+				return
+			}
+			x.Timestamp = &timestamppb.Timestamp{}
+			x.Timestamp.UnmarshalProtoJSON(s.WithField("timestamp", true))
+		case "double_value", "doubleValue":
+			if s.ReadNil() {
+				x.DoubleValue = nil
+				return
+			}
+			x.DoubleValue = &wrapperspb.DoubleValue{}
+			x.DoubleValue.UnmarshalProtoJSON(s.WithField("double_value", true))
+		case "float_value", "floatValue":
+			if s.ReadNil() {
+				x.FloatValue = nil
+				return
+			}
+			x.FloatValue = &wrapperspb.FloatValue{}
+			x.FloatValue.UnmarshalProtoJSON(s.WithField("float_value", true))
+		case "int64_value", "int64Value":
+			if s.ReadNil() {
+				x.Int64Value = nil
+				return
+			}
+			x.Int64Value = &wrapperspb.Int64Value{}
+			x.Int64Value.UnmarshalProtoJSON(s.WithField("int64_value", true))
+		case "uint64_value", "uint64Value":
+			if s.ReadNil() {
+				x.Uint64Value = nil
+				return
+			}
+			x.Uint64Value = &wrapperspb.UInt64Value{}
+			x.Uint64Value.UnmarshalProtoJSON(s.WithField("uint64_value", true))
+		case "int32_value", "int32Value":
+			if s.ReadNil() {
+				x.Int32Value = nil
+				return
+			}
+			x.Int32Value = &wrapperspb.Int32Value{}
+			x.Int32Value.UnmarshalProtoJSON(s.WithField("int32_value", true))
+		case "uint32_value", "uint32Value":
+			if s.ReadNil() {
+				x.Uint32Value = nil
+				return
+			}
+			x.Uint32Value = &wrapperspb.UInt32Value{}
+			x.Uint32Value.UnmarshalProtoJSON(s.WithField("uint32_value", true))
+		case "bool_value", "boolValue":
+			if s.ReadNil() {
+				x.BoolValue = nil
+				return
+			}
+			x.BoolValue = &wrapperspb.BoolValue{}
+			x.BoolValue.UnmarshalProtoJSON(s.WithField("bool_value", true))
+		case "string_value", "stringValue":
+			if s.ReadNil() {
+				x.StringValue = nil
+				return
+			}
+			x.StringValue = &wrapperspb.StringValue{}
+			x.StringValue.UnmarshalProtoJSON(s.WithField("string_value", true))
+		case "bytes_value", "bytesValue":
+			if s.ReadNil() {
+				x.BytesValue = nil
+				return
+			}
+			x.BytesValue = &wrapperspb.BytesValue{}
+			x.BytesValue.UnmarshalProtoJSON(s.WithField("bytes_value", true))
+		case "struct_value", "structValue":
+			if s.ReadNil() {
+				x.StructValue = nil
+				return
+			}
+			x.StructValue = &structpb.Struct{}
+			x.StructValue.UnmarshalProtoJSON(s.WithField("struct_value", true))
+		case "value_value", "valueValue":
+			if s.ReadNil() {
+				x.ValueValue = &structpb.Value{Kind: &structpb.Value_NullValue{}}
+				return
+			}
+			x.ValueValue = &structpb.Value{}
+			x.ValueValue.UnmarshalProtoJSON(s.WithField("value_value", true))
+		case "listvalue_value", "listvalueValue":
+			if s.ReadNil() {
+				x.ListvalueValue = nil
+				return
+			}
+			x.ListvalueValue = &structpb.ListValue{}
+			x.ListvalueValue.UnmarshalProtoJSON(s.WithField("listvalue_value", true))
+		case "null_value", "nullValue":
+			s.AddField("null_value")
+			x.NullValue.UnmarshalProtoJSON(s)
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MessageWithWKT from JSON.
+func (x *MessageWithWKT) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 func (m *MessageWithWKT) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
