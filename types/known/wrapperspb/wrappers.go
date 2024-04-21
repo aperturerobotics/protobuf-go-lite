@@ -1,6 +1,7 @@
 package wrapperspb
 
 import (
+	"math"
 	"strconv"
 
 	"github.com/aperturerobotics/protobuf-go-lite/json"
@@ -149,7 +150,12 @@ func (x *Int32Value) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	if s.ReadNil() {
 		return
 	}
-	*x = Int32Value{Value: int32(s.ReadInt64())}
+	v := s.ReadInt64()
+	if v < math.MinInt32 || v > math.MaxInt32 {
+		s.SetErrorf("value out of range for int32: %v", v)
+		return
+	}
+	*x = Int32Value{Value: int32(v)}
 }
 
 // MarshalProtoJSON marshals a Int32Value to JSON.
@@ -181,7 +187,12 @@ func (x *UInt32Value) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	if s.ReadNil() {
 		return
 	}
-	*x = UInt32Value{Value: uint32(s.ReadUint64())}
+	v := s.ReadUint64()
+	if v > math.MaxUint32 {
+		s.SetErrorf("value out of range for uint32: %v", v)
+		return
+	}
+	*x = UInt32Value{Value: uint32(v)}
 }
 
 // MarshalProtoJSON marshals a UInt32Value to JSON.
