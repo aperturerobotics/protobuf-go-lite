@@ -149,6 +149,11 @@ func Now() *Timestamp {
 	return New(time.Now())
 }
 
+// AsRFC3339 returns the timestamp formatted as an RFC3339 string.
+func (x *Timestamp) AsRFC3339() string {
+	return x.AsTime().Format(time.RFC3339Nano)
+}
+
 // New constructs a new Timestamp from the provided time.Time.
 func New(t time.Time) *Timestamp {
 	return &Timestamp{Seconds: int64(t.Unix()), Nanos: int32(t.Nanosecond())}

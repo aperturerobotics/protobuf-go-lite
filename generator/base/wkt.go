@@ -175,12 +175,18 @@ func GenPackageKnownComment(f *protogen.File) protogen.Comments {
 	}
 }
 
-func genMessageKnownFunctions(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo) {
+func genMessageKnownFunctions(g *protogen.GeneratedFile, m *messageInfo) {
 	switch m.Desc.FullName() {
 	case genid.Timestamp_message_fullname:
 		g.P("// Now constructs a new Timestamp from the current time.")
 		g.P("func Now() *Timestamp {")
 		g.P("	return New(", timePackage.Ident("Now"), "())")
+		g.P("}")
+		g.P()
+
+		g.P("// AsRFC3339 returns the timestamp formatted as an RFC3339 string.")
+		g.P("func (x *Timestamp) AsRFC3339() string {")
+		g.P("	return x.AsTime().Format(", timePackage.Ident("RFC3339Nano"), ")")
 		g.P("}")
 		g.P()
 
