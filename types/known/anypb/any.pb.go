@@ -200,7 +200,7 @@ func (m *Any) CloneVT() *Any {
 	return r
 }
 
-func (m *Any) CloneMessageVT() any {
+func (m *Any) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

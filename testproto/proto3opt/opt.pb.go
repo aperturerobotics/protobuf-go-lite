@@ -267,7 +267,7 @@ func (m *OptionalFieldInProto3) CloneVT() *OptionalFieldInProto3 {
 	return r
 }
 
-func (m *OptionalFieldInProto3) CloneMessageVT() any {
+func (m *OptionalFieldInProto3) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

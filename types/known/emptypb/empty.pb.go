@@ -70,7 +70,7 @@ func (m *Empty) CloneVT() *Empty {
 	return r
 }
 
-func (m *Empty) CloneMessageVT() any {
+func (m *Empty) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

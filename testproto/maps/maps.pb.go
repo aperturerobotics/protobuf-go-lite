@@ -118,7 +118,7 @@ func (m *MsgWithMaps) CloneVT() *MsgWithMaps {
 	return r
 }
 
-func (m *MsgWithMaps) CloneMessageVT() any {
+func (m *MsgWithMaps) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

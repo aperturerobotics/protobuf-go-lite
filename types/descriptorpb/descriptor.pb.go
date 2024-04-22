@@ -3034,7 +3034,7 @@ func (m *FileDescriptorSet) CloneVT() *FileDescriptorSet {
 	return r
 }
 
-func (m *FileDescriptorSet) CloneMessageVT() any {
+func (m *FileDescriptorSet) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3111,7 +3111,7 @@ func (m *FileDescriptorProto) CloneVT() *FileDescriptorProto {
 	return r
 }
 
-func (m *FileDescriptorProto) CloneMessageVT() any {
+func (m *FileDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3136,7 +3136,7 @@ func (m *DescriptorProto_ExtensionRange) CloneVT() *DescriptorProto_ExtensionRan
 	return r
 }
 
-func (m *DescriptorProto_ExtensionRange) CloneMessageVT() any {
+func (m *DescriptorProto_ExtensionRange) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3160,7 +3160,7 @@ func (m *DescriptorProto_ReservedRange) CloneVT() *DescriptorProto_ReservedRange
 	return r
 }
 
-func (m *DescriptorProto_ReservedRange) CloneMessageVT() any {
+func (m *DescriptorProto_ReservedRange) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3235,7 +3235,7 @@ func (m *DescriptorProto) CloneVT() *DescriptorProto {
 	return r
 }
 
-func (m *DescriptorProto) CloneMessageVT() any {
+func (m *DescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3271,7 +3271,7 @@ func (m *ExtensionRangeOptions_Declaration) CloneVT() *ExtensionRangeOptions_Dec
 	return r
 }
 
-func (m *ExtensionRangeOptions_Declaration) CloneMessageVT() any {
+func (m *ExtensionRangeOptions_Declaration) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3306,7 +3306,7 @@ func (m *ExtensionRangeOptions) CloneVT() *ExtensionRangeOptions {
 	return r
 }
 
-func (m *ExtensionRangeOptions) CloneMessageVT() any {
+func (m *ExtensionRangeOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3363,7 +3363,7 @@ func (m *FieldDescriptorProto) CloneVT() *FieldDescriptorProto {
 	return r
 }
 
-func (m *FieldDescriptorProto) CloneMessageVT() any {
+func (m *FieldDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3384,7 +3384,7 @@ func (m *OneofDescriptorProto) CloneVT() *OneofDescriptorProto {
 	return r
 }
 
-func (m *OneofDescriptorProto) CloneMessageVT() any {
+func (m *OneofDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3408,7 +3408,7 @@ func (m *EnumDescriptorProto_EnumReservedRange) CloneVT() *EnumDescriptorProto_E
 	return r
 }
 
-func (m *EnumDescriptorProto_EnumReservedRange) CloneMessageVT() any {
+func (m *EnumDescriptorProto_EnumReservedRange) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3448,7 +3448,7 @@ func (m *EnumDescriptorProto) CloneVT() *EnumDescriptorProto {
 	return r
 }
 
-func (m *EnumDescriptorProto) CloneMessageVT() any {
+func (m *EnumDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3473,7 +3473,7 @@ func (m *EnumValueDescriptorProto) CloneVT() *EnumValueDescriptorProto {
 	return r
 }
 
-func (m *EnumValueDescriptorProto) CloneMessageVT() any {
+func (m *EnumValueDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3501,7 +3501,7 @@ func (m *ServiceDescriptorProto) CloneVT() *ServiceDescriptorProto {
 	return r
 }
 
-func (m *ServiceDescriptorProto) CloneMessageVT() any {
+func (m *ServiceDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3538,7 +3538,7 @@ func (m *MethodDescriptorProto) CloneVT() *MethodDescriptorProto {
 	return r
 }
 
-func (m *MethodDescriptorProto) CloneMessageVT() any {
+func (m *MethodDescriptorProto) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3638,7 +3638,7 @@ func (m *FileOptions) CloneVT() *FileOptions {
 	return r
 }
 
-func (m *FileOptions) CloneMessageVT() any {
+func (m *FileOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3682,7 +3682,7 @@ func (m *MessageOptions) CloneVT() *MessageOptions {
 	return r
 }
 
-func (m *MessageOptions) CloneMessageVT() any {
+func (m *MessageOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3706,7 +3706,7 @@ func (m *FieldOptions_EditionDefault) CloneVT() *FieldOptions_EditionDefault {
 	return r
 }
 
-func (m *FieldOptions_EditionDefault) CloneMessageVT() any {
+func (m *FieldOptions_EditionDefault) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3778,7 +3778,7 @@ func (m *FieldOptions) CloneVT() *FieldOptions {
 	return r
 }
 
-func (m *FieldOptions) CloneMessageVT() any {
+func (m *FieldOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3802,7 +3802,7 @@ func (m *OneofOptions) CloneVT() *OneofOptions {
 	return r
 }
 
-func (m *OneofOptions) CloneMessageVT() any {
+func (m *OneofOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3838,7 +3838,7 @@ func (m *EnumOptions) CloneVT() *EnumOptions {
 	return r
 }
 
-func (m *EnumOptions) CloneMessageVT() any {
+func (m *EnumOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3870,7 +3870,7 @@ func (m *EnumValueOptions) CloneVT() *EnumValueOptions {
 	return r
 }
 
-func (m *EnumValueOptions) CloneMessageVT() any {
+func (m *EnumValueOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3898,7 +3898,7 @@ func (m *ServiceOptions) CloneVT() *ServiceOptions {
 	return r
 }
 
-func (m *ServiceOptions) CloneMessageVT() any {
+func (m *ServiceOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3930,7 +3930,7 @@ func (m *MethodOptions) CloneVT() *MethodOptions {
 	return r
 }
 
-func (m *MethodOptions) CloneMessageVT() any {
+func (m *MethodOptions) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -3954,7 +3954,7 @@ func (m *UninterpretedOption_NamePart) CloneVT() *UninterpretedOption_NamePart {
 	return r
 }
 
-func (m *UninterpretedOption_NamePart) CloneMessageVT() any {
+func (m *UninterpretedOption_NamePart) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4002,7 +4002,7 @@ func (m *UninterpretedOption) CloneVT() *UninterpretedOption {
 	return r
 }
 
-func (m *UninterpretedOption) CloneMessageVT() any {
+func (m *UninterpretedOption) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4042,7 +4042,7 @@ func (m *FeatureSet) CloneVT() *FeatureSet {
 	return r
 }
 
-func (m *FeatureSet) CloneMessageVT() any {
+func (m *FeatureSet) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4063,7 +4063,7 @@ func (m *FeatureSetDefaults_FeatureSetEditionDefault) CloneVT() *FeatureSetDefau
 	return r
 }
 
-func (m *FeatureSetDefaults_FeatureSetEditionDefault) CloneMessageVT() any {
+func (m *FeatureSetDefaults_FeatureSetEditionDefault) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4094,7 +4094,7 @@ func (m *FeatureSetDefaults) CloneVT() *FeatureSetDefaults {
 	return r
 }
 
-func (m *FeatureSetDefaults) CloneMessageVT() any {
+func (m *FeatureSetDefaults) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4133,7 +4133,7 @@ func (m *SourceCodeInfo_Location) CloneVT() *SourceCodeInfo_Location {
 	return r
 }
 
-func (m *SourceCodeInfo_Location) CloneMessageVT() any {
+func (m *SourceCodeInfo_Location) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4156,7 +4156,7 @@ func (m *SourceCodeInfo) CloneVT() *SourceCodeInfo {
 	return r
 }
 
-func (m *SourceCodeInfo) CloneMessageVT() any {
+func (m *SourceCodeInfo) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4193,7 +4193,7 @@ func (m *GeneratedCodeInfo_Annotation) CloneVT() *GeneratedCodeInfo_Annotation {
 	return r
 }
 
-func (m *GeneratedCodeInfo_Annotation) CloneMessageVT() any {
+func (m *GeneratedCodeInfo_Annotation) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -4216,7 +4216,7 @@ func (m *GeneratedCodeInfo) CloneVT() *GeneratedCodeInfo {
 	return r
 }
 
-func (m *GeneratedCodeInfo) CloneMessageVT() any {
+func (m *GeneratedCodeInfo) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

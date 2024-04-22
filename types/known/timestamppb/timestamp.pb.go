@@ -250,7 +250,7 @@ func (m *Timestamp) CloneVT() *Timestamp {
 	return r
 }
 
-func (m *Timestamp) CloneMessageVT() any {
+func (m *Timestamp) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

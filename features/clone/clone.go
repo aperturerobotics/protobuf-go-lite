@@ -138,7 +138,7 @@ func (p *clone) generateCloneMethodsForMessage(proto3 bool, message *protogen.Me
 	p.P(`}`)
 	p.P()
 
-	p.P(`func (m *`, ccTypeName, `) `, cloneMessageName, `() any {`)
+	p.P(`func (m *`, ccTypeName, `) `, cloneMessageName, `() `, p.QualifiedGoIdent(protogen.ProtobufGoLitePackage.Ident("CloneMessage")), ` {`)
 	p.P(`return m.`, cloneName, `()`)
 	p.P(`}`)
 	p.P()

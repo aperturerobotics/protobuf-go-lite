@@ -225,7 +225,7 @@ func (m *MessageWithWKT) CloneVT() *MessageWithWKT {
 	return r
 }
 
-func (m *MessageWithWKT) CloneMessageVT() any {
+func (m *MessageWithWKT) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

@@ -834,7 +834,7 @@ func (m *DoubleMessage) CloneVT() *DoubleMessage {
 	return r
 }
 
-func (m *DoubleMessage) CloneMessageVT() any {
+func (m *DoubleMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -868,7 +868,7 @@ func (m *FloatMessage) CloneVT() *FloatMessage {
 	return r
 }
 
-func (m *FloatMessage) CloneMessageVT() any {
+func (m *FloatMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -902,7 +902,7 @@ func (m *Int32Message) CloneVT() *Int32Message {
 	return r
 }
 
-func (m *Int32Message) CloneMessageVT() any {
+func (m *Int32Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -936,7 +936,7 @@ func (m *Int64Message) CloneVT() *Int64Message {
 	return r
 }
 
-func (m *Int64Message) CloneMessageVT() any {
+func (m *Int64Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -970,7 +970,7 @@ func (m *Uint32Message) CloneVT() *Uint32Message {
 	return r
 }
 
-func (m *Uint32Message) CloneMessageVT() any {
+func (m *Uint32Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1004,7 +1004,7 @@ func (m *Uint64Message) CloneVT() *Uint64Message {
 	return r
 }
 
-func (m *Uint64Message) CloneMessageVT() any {
+func (m *Uint64Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1038,7 +1038,7 @@ func (m *Sint32Message) CloneVT() *Sint32Message {
 	return r
 }
 
-func (m *Sint32Message) CloneMessageVT() any {
+func (m *Sint32Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1072,7 +1072,7 @@ func (m *Sint64Message) CloneVT() *Sint64Message {
 	return r
 }
 
-func (m *Sint64Message) CloneMessageVT() any {
+func (m *Sint64Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1106,7 +1106,7 @@ func (m *Fixed32Message) CloneVT() *Fixed32Message {
 	return r
 }
 
-func (m *Fixed32Message) CloneMessageVT() any {
+func (m *Fixed32Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1140,7 +1140,7 @@ func (m *Fixed64Message) CloneVT() *Fixed64Message {
 	return r
 }
 
-func (m *Fixed64Message) CloneMessageVT() any {
+func (m *Fixed64Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1174,7 +1174,7 @@ func (m *Sfixed32Message) CloneVT() *Sfixed32Message {
 	return r
 }
 
-func (m *Sfixed32Message) CloneMessageVT() any {
+func (m *Sfixed32Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1208,7 +1208,7 @@ func (m *Sfixed64Message) CloneVT() *Sfixed64Message {
 	return r
 }
 
-func (m *Sfixed64Message) CloneMessageVT() any {
+func (m *Sfixed64Message) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1242,7 +1242,7 @@ func (m *BoolMessage) CloneVT() *BoolMessage {
 	return r
 }
 
-func (m *BoolMessage) CloneMessageVT() any {
+func (m *BoolMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1271,7 +1271,7 @@ func (m *StringMessage) CloneVT() *StringMessage {
 	return r
 }
 
-func (m *StringMessage) CloneMessageVT() any {
+func (m *StringMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1306,7 +1306,7 @@ func (m *BytesMessage) CloneVT() *BytesMessage {
 	return r
 }
 
-func (m *BytesMessage) CloneMessageVT() any {
+func (m *BytesMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -1340,7 +1340,7 @@ func (m *EnumMessage) CloneVT() *EnumMessage {
 	return r
 }
 
-func (m *EnumMessage) CloneMessageVT() any {
+func (m *EnumMessage) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

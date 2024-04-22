@@ -584,7 +584,7 @@ func (m *Type) CloneVT() *Type {
 	return r
 }
 
-func (m *Type) CloneMessageVT() any {
+func (m *Type) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -616,7 +616,7 @@ func (m *Field) CloneVT() *Field {
 	return r
 }
 
-func (m *Field) CloneMessageVT() any {
+func (m *Field) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -650,7 +650,7 @@ func (m *Enum) CloneVT() *Enum {
 	return r
 }
 
-func (m *Enum) CloneMessageVT() any {
+func (m *Enum) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -675,7 +675,7 @@ func (m *EnumValue) CloneVT() *EnumValue {
 	return r
 }
 
-func (m *EnumValue) CloneMessageVT() any {
+func (m *EnumValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -693,7 +693,7 @@ func (m *Option) CloneVT() *Option {
 	return r
 }
 
-func (m *Option) CloneMessageVT() any {
+func (m *Option) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

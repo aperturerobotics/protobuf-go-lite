@@ -317,7 +317,7 @@ func (m *UnsafeTest_Sub1) CloneVT() *UnsafeTest_Sub1 {
 	return r
 }
 
-func (m *UnsafeTest_Sub1) CloneMessageVT() any {
+func (m *UnsafeTest_Sub1) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -347,7 +347,7 @@ func (m *UnsafeTest_Sub2) CloneVT() *UnsafeTest_Sub2 {
 	return r
 }
 
-func (m *UnsafeTest_Sub2) CloneMessageVT() any {
+func (m *UnsafeTest_Sub2) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -372,7 +372,7 @@ func (m *UnsafeTest_Sub3) CloneVT() *UnsafeTest_Sub3 {
 	return r
 }
 
-func (m *UnsafeTest_Sub3) CloneMessageVT() any {
+func (m *UnsafeTest_Sub3) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -391,7 +391,7 @@ func (m *UnsafeTest_Sub4) CloneVT() *UnsafeTest_Sub4 {
 	return r
 }
 
-func (m *UnsafeTest_Sub4) CloneMessageVT() any {
+func (m *UnsafeTest_Sub4) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -436,7 +436,7 @@ func (m *UnsafeTest_Sub5) CloneVT() *UnsafeTest_Sub5 {
 	return r
 }
 
-func (m *UnsafeTest_Sub5) CloneMessageVT() any {
+func (m *UnsafeTest_Sub5) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -455,7 +455,7 @@ func (m *UnsafeTest) CloneVT() *UnsafeTest {
 	return r
 }
 
-func (m *UnsafeTest) CloneMessageVT() any {
+func (m *UnsafeTest) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

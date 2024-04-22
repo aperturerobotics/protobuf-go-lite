@@ -235,7 +235,7 @@ func (m *Duration) CloneVT() *Duration {
 	return r
 }
 
-func (m *Duration) CloneMessageVT() any {
+func (m *Duration) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

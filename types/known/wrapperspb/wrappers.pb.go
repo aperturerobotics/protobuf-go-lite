@@ -310,7 +310,7 @@ func (m *DoubleValue) CloneVT() *DoubleValue {
 	return r
 }
 
-func (m *DoubleValue) CloneMessageVT() any {
+func (m *DoubleValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -327,7 +327,7 @@ func (m *FloatValue) CloneVT() *FloatValue {
 	return r
 }
 
-func (m *FloatValue) CloneMessageVT() any {
+func (m *FloatValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -344,7 +344,7 @@ func (m *Int64Value) CloneVT() *Int64Value {
 	return r
 }
 
-func (m *Int64Value) CloneMessageVT() any {
+func (m *Int64Value) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -361,7 +361,7 @@ func (m *UInt64Value) CloneVT() *UInt64Value {
 	return r
 }
 
-func (m *UInt64Value) CloneMessageVT() any {
+func (m *UInt64Value) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -378,7 +378,7 @@ func (m *Int32Value) CloneVT() *Int32Value {
 	return r
 }
 
-func (m *Int32Value) CloneMessageVT() any {
+func (m *Int32Value) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -395,7 +395,7 @@ func (m *UInt32Value) CloneVT() *UInt32Value {
 	return r
 }
 
-func (m *UInt32Value) CloneMessageVT() any {
+func (m *UInt32Value) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -412,7 +412,7 @@ func (m *BoolValue) CloneVT() *BoolValue {
 	return r
 }
 
-func (m *BoolValue) CloneMessageVT() any {
+func (m *BoolValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -429,7 +429,7 @@ func (m *StringValue) CloneVT() *StringValue {
 	return r
 }
 
-func (m *StringValue) CloneMessageVT() any {
+func (m *StringValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -450,7 +450,7 @@ func (m *BytesValue) CloneVT() *BytesValue {
 	return r
 }
 
-func (m *BytesValue) CloneMessageVT() any {
+func (m *BytesValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

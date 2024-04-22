@@ -77,7 +77,7 @@ func (m *SourceContext) CloneVT() *SourceContext {
 	return r
 }
 
-func (m *SourceContext) CloneMessageVT() any {
+func (m *SourceContext) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

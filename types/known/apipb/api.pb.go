@@ -364,7 +364,7 @@ func (m *Api) CloneVT() *Api {
 	return r
 }
 
-func (m *Api) CloneMessageVT() any {
+func (m *Api) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -393,7 +393,7 @@ func (m *Method) CloneVT() *Method {
 	return r
 }
 
-func (m *Method) CloneMessageVT() any {
+func (m *Method) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -411,7 +411,7 @@ func (m *Mixin) CloneVT() *Mixin {
 	return r
 }
 
-func (m *Mixin) CloneMessageVT() any {
+func (m *Mixin) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

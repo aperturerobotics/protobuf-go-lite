@@ -26,9 +26,19 @@ type Message interface {
 	Reset()
 }
 
+// CloneMessage is a message with a CloneMessage function.
+type CloneMessage interface {
+	// Message extends the base message type.
+	Message
+	// CloneMessageVT clones the object.
+	CloneMessageVT() CloneMessage
+}
+
 // CloneVT is a message with a CloneVT function (VTProtobuf).
 type CloneVT[T comparable] interface {
 	comparable
+	// CloneMessage is the non-generic clone interface.
+	CloneMessage
 	// CloneVT clones the object.
 	CloneVT() T
 }

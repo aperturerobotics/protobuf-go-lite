@@ -489,7 +489,7 @@ func (m *Struct) CloneVT() *Struct {
 	return r
 }
 
-func (m *Struct) CloneMessageVT() any {
+func (m *Struct) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -508,7 +508,7 @@ func (m *Value) CloneVT() *Value {
 	return r
 }
 
-func (m *Value) CloneMessageVT() any {
+func (m *Value) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
@@ -585,7 +585,7 @@ func (m *ListValue) CloneVT() *ListValue {
 	return r
 }
 
-func (m *ListValue) CloneMessageVT() any {
+func (m *ListValue) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 

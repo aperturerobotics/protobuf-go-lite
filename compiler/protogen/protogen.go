@@ -46,6 +46,8 @@ var typesPackage = "github.com/aperturerobotics/protobuf-go-lite/types/"
 
 var trimTypesPrefix = "google.golang.org/protobuf/types/"
 
+var ProtobufGoLitePackage = GoImportPath("github.com/aperturerobotics/protobuf-go-lite")
+
 func fixTypesPrefix(impPath GoImportPath) GoImportPath {
 	if strings.HasPrefix(string(impPath), trimTypesPrefix) {
 		impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))

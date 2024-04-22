@@ -82,7 +82,7 @@ func (m *MessageDisableJson) CloneVT() *MessageDisableJson {
 	return r
 }
 
-func (m *MessageDisableJson) CloneMessageVT() any {
+func (m *MessageDisableJson) CloneMessageVT() protobuf_go_lite.CloneMessage {
 	return m.CloneVT()
 }
 
