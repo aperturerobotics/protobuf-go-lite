@@ -54,22 +54,22 @@ func (x SimpleEnum) String() string {
 
 type OptionalFieldInProto3 struct {
 	unknownFields    []byte
-	OptionalInt32    *int32      `protobuf:"varint,1,opt,name=optional_int32,json=optionalInt32,proto3,oneof" json:"optional_int32,omitempty"`
-	OptionalInt64    *int64      `protobuf:"varint,2,opt,name=optional_int64,json=optionalInt64,proto3,oneof" json:"optional_int64,omitempty"`
-	OptionalUint32   *uint32     `protobuf:"varint,3,opt,name=optional_uint32,json=optionalUint32,proto3,oneof" json:"optional_uint32,omitempty"`
-	OptionalUint64   *uint64     `protobuf:"varint,4,opt,name=optional_uint64,json=optionalUint64,proto3,oneof" json:"optional_uint64,omitempty"`
-	OptionalSint32   *int32      `protobuf:"zigzag32,5,opt,name=optional_sint32,json=optionalSint32,proto3,oneof" json:"optional_sint32,omitempty"`
-	OptionalSint64   *int64      `protobuf:"zigzag64,6,opt,name=optional_sint64,json=optionalSint64,proto3,oneof" json:"optional_sint64,omitempty"`
-	OptionalFixed32  *uint32     `protobuf:"fixed32,7,opt,name=optional_fixed32,json=optionalFixed32,proto3,oneof" json:"optional_fixed32,omitempty"`
-	OptionalFixed64  *uint64     `protobuf:"fixed64,8,opt,name=optional_fixed64,json=optionalFixed64,proto3,oneof" json:"optional_fixed64,omitempty"`
-	OptionalSfixed32 *int32      `protobuf:"fixed32,9,opt,name=optional_sfixed32,json=optionalSfixed32,proto3,oneof" json:"optional_sfixed32,omitempty"`
-	OptionalSfixed64 *int64      `protobuf:"fixed64,10,opt,name=optional_sfixed64,json=optionalSfixed64,proto3,oneof" json:"optional_sfixed64,omitempty"`
-	OptionalFloat    *float32    `protobuf:"fixed32,11,opt,name=optional_float,json=optionalFloat,proto3,oneof" json:"optional_float,omitempty"`
-	OptionalDouble   *float64    `protobuf:"fixed64,12,opt,name=optional_double,json=optionalDouble,proto3,oneof" json:"optional_double,omitempty"`
-	OptionalBool     *bool       `protobuf:"varint,13,opt,name=optional_bool,json=optionalBool,proto3,oneof" json:"optional_bool,omitempty"`
-	OptionalString   *string     `protobuf:"bytes,14,opt,name=optional_string,json=optionalString,proto3,oneof" json:"optional_string,omitempty"`
-	OptionalBytes    []byte      `protobuf:"bytes,15,opt,name=optional_bytes,json=optionalBytes,proto3,oneof" json:"optional_bytes,omitempty"`
-	OptionalEnum     *SimpleEnum `protobuf:"varint,16,opt,name=optional_enum,json=optionalEnum,proto3,oneof" json:"optional_enum,omitempty"`
+	OptionalInt32    *int32      `protobuf:"varint,1,opt,name=optional_int32,json=optionalInt32,proto3,oneof" json:"optionalInt32,omitempty"`
+	OptionalInt64    *int64      `protobuf:"varint,2,opt,name=optional_int64,json=optionalInt64,proto3,oneof" json:"optionalInt64,omitempty"`
+	OptionalUint32   *uint32     `protobuf:"varint,3,opt,name=optional_uint32,json=optionalUint32,proto3,oneof" json:"optionalUint32,omitempty"`
+	OptionalUint64   *uint64     `protobuf:"varint,4,opt,name=optional_uint64,json=optionalUint64,proto3,oneof" json:"optionalUint64,omitempty"`
+	OptionalSint32   *int32      `protobuf:"zigzag32,5,opt,name=optional_sint32,json=optionalSint32,proto3,oneof" json:"optionalSint32,omitempty"`
+	OptionalSint64   *int64      `protobuf:"zigzag64,6,opt,name=optional_sint64,json=optionalSint64,proto3,oneof" json:"optionalSint64,omitempty"`
+	OptionalFixed32  *uint32     `protobuf:"fixed32,7,opt,name=optional_fixed32,json=optionalFixed32,proto3,oneof" json:"optionalFixed32,omitempty"`
+	OptionalFixed64  *uint64     `protobuf:"fixed64,8,opt,name=optional_fixed64,json=optionalFixed64,proto3,oneof" json:"optionalFixed64,omitempty"`
+	OptionalSfixed32 *int32      `protobuf:"fixed32,9,opt,name=optional_sfixed32,json=optionalSfixed32,proto3,oneof" json:"optionalSfixed32,omitempty"`
+	OptionalSfixed64 *int64      `protobuf:"fixed64,10,opt,name=optional_sfixed64,json=optionalSfixed64,proto3,oneof" json:"optionalSfixed64,omitempty"`
+	OptionalFloat    *float32    `protobuf:"fixed32,11,opt,name=optional_float,json=optionalFloat,proto3,oneof" json:"optionalFloat,omitempty"`
+	OptionalDouble   *float64    `protobuf:"fixed64,12,opt,name=optional_double,json=optionalDouble,proto3,oneof" json:"optionalDouble,omitempty"`
+	OptionalBool     *bool       `protobuf:"varint,13,opt,name=optional_bool,json=optionalBool,proto3,oneof" json:"optionalBool,omitempty"`
+	OptionalString   *string     `protobuf:"bytes,14,opt,name=optional_string,json=optionalString,proto3,oneof" json:"optionalString,omitempty"`
+	OptionalBytes    []byte      `protobuf:"bytes,15,opt,name=optional_bytes,json=optionalBytes,proto3,oneof" json:"optionalBytes,omitempty"`
+	OptionalEnum     *SimpleEnum `protobuf:"varint,16,opt,name=optional_enum,json=optionalEnum,proto3,oneof" json:"optionalEnum,omitempty"`
 }
 
 func (x *OptionalFieldInProto3) Reset() {

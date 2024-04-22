@@ -34,8 +34,9 @@ func (g *jsonGenerator) genMessageMarshaler(message *protogen.Message) {
 nextField:
 	for _, field := range message.Fields {
 		var (
-			fieldGoName interface{} = fieldGoName(field)
-			nullable                = fieldIsNullable(field)
+			fieldGoName   interface{} = fieldGoName(field)
+			nullable                  = fieldIsNullable(field)
+			fieldJsonName             = field.Desc.JSONName()
 		)
 
 		if field.Desc.IsMap() {
@@ -45,13 +46,13 @@ nextField:
 			value := field.Message.Fields[1]
 
 			// We emit the field if the map is not nil
-			g.P("if x.", fieldGoName, ` != nil || s.HasField("`, field.Desc.Name(), `") {`)
+			g.P("if x.", fieldGoName, ` != nil || s.HasField("`, fieldJsonName, `") {`)
 
 			// Write a comma if this isn't the first field.
 			g.P("s.WriteMoreIf(&wroteField)")
 
 			// Write the field name and a colon.
-			g.P(`s.WriteObjectField("`, field.Desc.Name(), `")`)
+			g.P(`s.WriteObjectField("`, fieldJsonName, `")`)
 
 			g.P("s.WriteObjectStart()")
 
@@ -73,7 +74,7 @@ nextField:
 			case protoreflect.EnumKind:
 				g.P("v.MarshalProtoJSON(s)")
 			case protoreflect.MessageKind:
-				g.P(`v.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+				g.P(`v.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 			}
 
 			g.P("}") // end for k, v := range x.{fieldGoName} {
@@ -85,13 +86,13 @@ nextField:
 
 		if field.Desc.IsList() {
 			// We emit the field if the list is not empty or if it's specified in the field mask.
-			g.P("if len(x.", fieldGoName, `) > 0 || s.HasField("`, field.Desc.Name(), `") {`)
+			g.P("if len(x.", fieldGoName, `) > 0 || s.HasField("`, fieldJsonName, `") {`)
 
 			// Write a comma if this isn't the first field.
 			g.P("s.WriteMoreIf(&wroteField)")
 
 			// Write the field name and a colon.
-			g.P(`s.WriteObjectField("`, field.Desc.Name(), `")`)
+			g.P(`s.WriteObjectField("`, fieldJsonName, `")`)
 
 			switch field.Desc.Kind() {
 			default:
@@ -123,7 +124,7 @@ nextField:
 				g.P("s.WriteMoreIf(&wroteElement)")
 
 				// If the list element is of type message, and the message has a marshaler, use that.
-				g.P(`element.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+				g.P(`element.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 				// Otherwise delegate to the library.
 				// g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
 				// g.P(jsonPluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), "element)")
@@ -156,25 +157,25 @@ nextField:
 			// If we're not in a oneof, start "if not zero value".
 			if nullable {
 				// If this field is nullable, we emit it if it's not nil or if it's specified in the field mask.
-				g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != nil || s.HasField("`, field.Desc.Name(), `") {`)
+				g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != nil || s.HasField("`, fieldJsonName, `") {`)
 			} else {
 				// If this field is not nullable, we emit it if it's not the zero value or if it's specified in the field mask.
 				switch field.Desc.Kind() {
 				case protoreflect.BoolKind:
-					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` || s.HasField("`, field.Desc.Name(), `") {`)
+					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.EnumKind:
-					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != 0 || s.HasField("`, field.Desc.Name(), `") {`)
+					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != 0 || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.Int32Kind, protoreflect.Sint32Kind, protoreflect.Sfixed32Kind,
 					protoreflect.Uint32Kind, protoreflect.Fixed32Kind,
 					protoreflect.Int64Kind, protoreflect.Sint64Kind, protoreflect.Sfixed64Kind,
 					protoreflect.Uint64Kind, protoreflect.Fixed64Kind,
 					protoreflect.FloatKind,
 					protoreflect.DoubleKind:
-					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != 0 || s.HasField("`, field.Desc.Name(), `") {`)
+					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != 0 || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.StringKind:
-					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != "" || s.HasField("`, field.Desc.Name(), `") {`)
+					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != "" || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.BytesKind:
-					g.P("if len(", messageOrOneofIdent, ".", fieldGoName, `) > 0 || s.HasField("`, field.Desc.Name(), `") {`)
+					g.P("if len(", messageOrOneofIdent, ".", fieldGoName, `) > 0 || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.MessageKind:
 					// For not-nullable messages we have a dummy check.
 					g.P("if true { ")
@@ -186,7 +187,7 @@ nextField:
 		g.P("s.WriteMoreIf(&wroteField)")
 
 		// Write the field name and a colon.
-		g.P(`s.WriteObjectField("`, field.Desc.Name(), `")`)
+		g.P(`s.WriteObjectField("`, fieldJsonName, `")`)
 
 		switch field.Desc.Kind() {
 		default:
@@ -199,7 +200,7 @@ nextField:
 			// g.P("s.WriteEnum(int32(", messageOrOneofIdent, ".", fieldGoName, "), ", field.Enum.GoIdent, "_name)")
 		case protoreflect.MessageKind:
 			// If the field is of type message, and the message has a marshaler, use that.
-			g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, field.Desc.Name(), `"))`)
+			g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 			// Otherwise delegate to the library.
 			//	g.P("// NOTE: ", field.Message.GoIdent.GoName, " does not seem to implement MarshalProtoJSON.")
 			// g.P(jsonPluginPackage.Ident("MarshalMessage"), "(s, ", ifThenElse(nullable, "", "&"), messageOrOneofIdent, ".", fieldGoName, ")")

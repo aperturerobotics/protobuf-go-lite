@@ -56,10 +56,10 @@ func (x EnumMessage_Num) String() string {
 
 type DoubleMessage struct {
 	unknownFields []byte
-	RequiredField *float64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *float64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []float64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []float64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *float64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *float64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []float64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []float64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for DoubleMessage fields.
@@ -104,10 +104,10 @@ func (x *DoubleMessage) GetPackedField() []float64 {
 
 type FloatMessage struct {
 	unknownFields []byte
-	RequiredField *float32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *float32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []float32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []float32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *float32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *float32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []float32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []float32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for FloatMessage fields.
@@ -152,10 +152,10 @@ func (x *FloatMessage) GetPackedField() []float32 {
 
 type Int32Message struct {
 	unknownFields []byte
-	RequiredField *int32  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int32  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int32 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int32 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int32  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int32  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int32 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int32 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Int32Message fields.
@@ -200,10 +200,10 @@ func (x *Int32Message) GetPackedField() []int32 {
 
 type Int64Message struct {
 	unknownFields []byte
-	RequiredField *int64  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int64  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int64 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int64 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int64  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int64  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int64 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int64 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Int64Message fields.
@@ -248,10 +248,10 @@ func (x *Int64Message) GetPackedField() []int64 {
 
 type Uint32Message struct {
 	unknownFields []byte
-	RequiredField *uint32  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *uint32  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []uint32 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []uint32 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *uint32  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *uint32  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []uint32 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []uint32 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Uint32Message fields.
@@ -296,10 +296,10 @@ func (x *Uint32Message) GetPackedField() []uint32 {
 
 type Uint64Message struct {
 	unknownFields []byte
-	RequiredField *uint64  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *uint64  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []uint64 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []uint64 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *uint64  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *uint64  `protobuf:"varint,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []uint64 `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []uint64 `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Uint64Message fields.
@@ -344,10 +344,10 @@ func (x *Uint64Message) GetPackedField() []uint64 {
 
 type Sint32Message struct {
 	unknownFields []byte
-	RequiredField *int32  `protobuf:"zigzag32,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int32  `protobuf:"zigzag32,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int32 `protobuf:"zigzag32,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int32 `protobuf:"zigzag32,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int32  `protobuf:"zigzag32,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int32  `protobuf:"zigzag32,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int32 `protobuf:"zigzag32,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int32 `protobuf:"zigzag32,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Sint32Message fields.
@@ -392,10 +392,10 @@ func (x *Sint32Message) GetPackedField() []int32 {
 
 type Sint64Message struct {
 	unknownFields []byte
-	RequiredField *int64  `protobuf:"zigzag64,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int64  `protobuf:"zigzag64,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int64 `protobuf:"zigzag64,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int64 `protobuf:"zigzag64,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int64  `protobuf:"zigzag64,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int64  `protobuf:"zigzag64,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int64 `protobuf:"zigzag64,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int64 `protobuf:"zigzag64,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Sint64Message fields.
@@ -440,10 +440,10 @@ func (x *Sint64Message) GetPackedField() []int64 {
 
 type Fixed32Message struct {
 	unknownFields []byte
-	RequiredField *uint32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *uint32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []uint32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []uint32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *uint32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *uint32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []uint32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []uint32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Fixed32Message fields.
@@ -488,10 +488,10 @@ func (x *Fixed32Message) GetPackedField() []uint32 {
 
 type Fixed64Message struct {
 	unknownFields []byte
-	RequiredField *uint64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *uint64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []uint64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []uint64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *uint64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *uint64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []uint64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []uint64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Fixed64Message fields.
@@ -536,10 +536,10 @@ func (x *Fixed64Message) GetPackedField() []uint64 {
 
 type Sfixed32Message struct {
 	unknownFields []byte
-	RequiredField *int32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int32  `protobuf:"fixed32,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int32  `protobuf:"fixed32,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int32 `protobuf:"fixed32,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int32 `protobuf:"fixed32,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Sfixed32Message fields.
@@ -584,10 +584,10 @@ func (x *Sfixed32Message) GetPackedField() []int32 {
 
 type Sfixed64Message struct {
 	unknownFields []byte
-	RequiredField *int64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *int64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optional_field,omitempty"`
-	RepeatedField []int64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []int64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *int64  `protobuf:"fixed64,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *int64  `protobuf:"fixed64,2,opt,name=optional_field,json=optionalField,def=2" json:"optionalField,omitempty"`
+	RepeatedField []int64 `protobuf:"fixed64,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []int64 `protobuf:"fixed64,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for Sfixed64Message fields.
@@ -632,10 +632,10 @@ func (x *Sfixed64Message) GetPackedField() []int64 {
 
 type BoolMessage struct {
 	unknownFields []byte
-	RequiredField *bool  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"required_field,omitempty"`
-	OptionalField *bool  `protobuf:"varint,2,opt,name=optional_field,json=optionalField" json:"optional_field,omitempty"`
-	RepeatedField []bool `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []bool `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *bool  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=1" json:"requiredField,omitempty"`
+	OptionalField *bool  `protobuf:"varint,2,opt,name=optional_field,json=optionalField" json:"optionalField,omitempty"`
+	RepeatedField []bool `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []bool `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for BoolMessage fields.
@@ -679,9 +679,9 @@ func (x *BoolMessage) GetPackedField() []bool {
 
 type StringMessage struct {
 	unknownFields []byte
-	RequiredField *string  `protobuf:"bytes,1,req,name=required_field,json=requiredField,def=req" json:"required_field,omitempty"`
-	OptionalField *string  `protobuf:"bytes,2,opt,name=optional_field,json=optionalField,def=opt" json:"optional_field,omitempty"`
-	RepeatedField []string `protobuf:"bytes,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
+	RequiredField *string  `protobuf:"bytes,1,req,name=required_field,json=requiredField,def=req" json:"requiredField,omitempty"`
+	OptionalField *string  `protobuf:"bytes,2,opt,name=optional_field,json=optionalField,def=opt" json:"optionalField,omitempty"`
+	RepeatedField []string `protobuf:"bytes,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
 }
 
 // Default values for StringMessage fields.
@@ -719,9 +719,9 @@ func (x *StringMessage) GetRepeatedField() []string {
 
 type BytesMessage struct {
 	unknownFields []byte
-	RequiredField []byte   `protobuf:"bytes,1,req,name=required_field,json=requiredField,def=req" json:"required_field,omitempty"`
-	OptionalField []byte   `protobuf:"bytes,2,opt,name=optional_field,json=optionalField,def=opt" json:"optional_field,omitempty"`
-	RepeatedField [][]byte `protobuf:"bytes,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
+	RequiredField []byte   `protobuf:"bytes,1,req,name=required_field,json=requiredField,def=req" json:"requiredField,omitempty"`
+	OptionalField []byte   `protobuf:"bytes,2,opt,name=optional_field,json=optionalField,def=opt" json:"optionalField,omitempty"`
+	RepeatedField [][]byte `protobuf:"bytes,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
 }
 
 // Default values for BytesMessage fields.
@@ -759,10 +759,10 @@ func (x *BytesMessage) GetRepeatedField() [][]byte {
 
 type EnumMessage struct {
 	unknownFields []byte
-	RequiredField *EnumMessage_Num  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=7" json:"required_field,omitempty"`
-	OptionalField *EnumMessage_Num  `protobuf:"varint,2,opt,name=optional_field,json=optionalField" json:"optional_field,omitempty"`
-	RepeatedField []EnumMessage_Num `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeated_field,omitempty"`
-	PackedField   []EnumMessage_Num `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packed_field,omitempty"`
+	RequiredField *EnumMessage_Num  `protobuf:"varint,1,req,name=required_field,json=requiredField,def=7" json:"requiredField,omitempty"`
+	OptionalField *EnumMessage_Num  `protobuf:"varint,2,opt,name=optional_field,json=optionalField" json:"optionalField,omitempty"`
+	RepeatedField []EnumMessage_Num `protobuf:"varint,3,rep,name=repeated_field,json=repeatedField" json:"repeatedField,omitempty"`
+	PackedField   []EnumMessage_Num `protobuf:"varint,4,rep,packed,name=packed_field,json=packedField" json:"packedField,omitempty"`
 }
 
 // Default values for EnumMessage fields.

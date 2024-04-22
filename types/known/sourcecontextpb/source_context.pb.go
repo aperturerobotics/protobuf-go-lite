@@ -48,7 +48,7 @@ type SourceContext struct {
 	unknownFields []byte
 	// The path-qualified name of the .proto file that contained the associated
 	// protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-	FileName string `protobuf:"bytes,1,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	FileName string `protobuf:"bytes,1,opt,name=file_name,json=fileName,proto3" json:"fileName,omitempty"`
 }
 
 func (x *SourceContext) Reset() {

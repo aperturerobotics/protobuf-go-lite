@@ -245,7 +245,7 @@ type Type struct {
 	// The protocol buffer options.
 	Options []*Option `protobuf:"bytes,4,rep,name=options,proto3" json:"options,omitempty"`
 	// The source context.
-	SourceContext *sourcecontextpb.SourceContext `protobuf:"bytes,5,opt,name=source_context,json=sourceContext,proto3" json:"source_context,omitempty"`
+	SourceContext *sourcecontextpb.SourceContext `protobuf:"bytes,5,opt,name=source_context,json=sourceContext,proto3" json:"sourceContext,omitempty"`
 	// The source syntax.
 	Syntax Syntax `protobuf:"varint,6,opt,name=syntax,proto3" json:"syntax,omitempty"`
 	// The source edition string, only valid when syntax is SYNTAX_EDITIONS.
@@ -320,18 +320,18 @@ type Field struct {
 	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	// The field type URL, without the scheme, for message or enumeration
 	// types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
-	TypeUrl string `protobuf:"bytes,6,opt,name=type_url,json=typeUrl,proto3" json:"type_url,omitempty"`
+	TypeUrl string `protobuf:"bytes,6,opt,name=type_url,json=typeUrl,proto3" json:"typeUrl,omitempty"`
 	// The index of the field type in `Type.oneofs`, for message or enumeration
 	// types. The first type has index 1; zero means the type is not in the list.
-	OneofIndex int32 `protobuf:"varint,7,opt,name=oneof_index,json=oneofIndex,proto3" json:"oneof_index,omitempty"`
+	OneofIndex int32 `protobuf:"varint,7,opt,name=oneof_index,json=oneofIndex,proto3" json:"oneofIndex,omitempty"`
 	// Whether to use alternative packed wire representation.
 	Packed bool `protobuf:"varint,8,opt,name=packed,proto3" json:"packed,omitempty"`
 	// The protocol buffer options.
 	Options []*Option `protobuf:"bytes,9,rep,name=options,proto3" json:"options,omitempty"`
 	// The field JSON name.
-	JsonName string `protobuf:"bytes,10,opt,name=json_name,json=jsonName,proto3" json:"json_name,omitempty"`
+	JsonName string `protobuf:"bytes,10,opt,name=json_name,json=jsonName,proto3" json:"jsonName,omitempty"`
 	// The string value of the default value of this field. Proto2 syntax only.
-	DefaultValue string `protobuf:"bytes,11,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	DefaultValue string `protobuf:"bytes,11,opt,name=default_value,json=defaultValue,proto3" json:"defaultValue,omitempty"`
 }
 
 func (x *Field) Reset() {
@@ -420,7 +420,7 @@ type Enum struct {
 	// Protocol buffer options.
 	Options []*Option `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
 	// The source context.
-	SourceContext *sourcecontextpb.SourceContext `protobuf:"bytes,4,opt,name=source_context,json=sourceContext,proto3" json:"source_context,omitempty"`
+	SourceContext *sourcecontextpb.SourceContext `protobuf:"bytes,4,opt,name=source_context,json=sourceContext,proto3" json:"sourceContext,omitempty"`
 	// The source syntax.
 	Syntax Syntax `protobuf:"varint,5,opt,name=syntax,proto3" json:"syntax,omitempty"`
 	// The source edition string, only valid when syntax is SYNTAX_EDITIONS.

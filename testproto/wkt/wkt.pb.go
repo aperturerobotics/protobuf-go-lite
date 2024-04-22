@@ -24,19 +24,19 @@ type MessageWithWKT struct {
 	Duration       *durationpb.Duration    `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`
 	Empty          *emptypb.Empty          `protobuf:"bytes,3,opt,name=empty,proto3" json:"empty,omitempty"`
 	Timestamp      *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	DoubleValue    *wrapperspb.DoubleValue `protobuf:"bytes,6,opt,name=double_value,json=doubleValue,proto3" json:"double_value,omitempty"`
-	FloatValue     *wrapperspb.FloatValue  `protobuf:"bytes,7,opt,name=float_value,json=floatValue,proto3" json:"float_value,omitempty"`
-	Int64Value     *wrapperspb.Int64Value  `protobuf:"bytes,8,opt,name=int64_value,json=int64Value,proto3" json:"int64_value,omitempty"`
-	Uint64Value    *wrapperspb.UInt64Value `protobuf:"bytes,9,opt,name=uint64_value,json=uint64Value,proto3" json:"uint64_value,omitempty"`
-	Int32Value     *wrapperspb.Int32Value  `protobuf:"bytes,10,opt,name=int32_value,json=int32Value,proto3" json:"int32_value,omitempty"`
-	Uint32Value    *wrapperspb.UInt32Value `protobuf:"bytes,11,opt,name=uint32_value,json=uint32Value,proto3" json:"uint32_value,omitempty"`
-	BoolValue      *wrapperspb.BoolValue   `protobuf:"bytes,12,opt,name=bool_value,json=boolValue,proto3" json:"bool_value,omitempty"`
-	StringValue    *wrapperspb.StringValue `protobuf:"bytes,13,opt,name=string_value,json=stringValue,proto3" json:"string_value,omitempty"`
-	BytesValue     *wrapperspb.BytesValue  `protobuf:"bytes,14,opt,name=bytes_value,json=bytesValue,proto3" json:"bytes_value,omitempty"`
-	StructValue    *structpb.Struct        `protobuf:"bytes,15,opt,name=struct_value,json=structValue,proto3" json:"struct_value,omitempty"`
-	ValueValue     *structpb.Value         `protobuf:"bytes,16,opt,name=value_value,json=valueValue,proto3" json:"value_value,omitempty"`
-	ListvalueValue *structpb.ListValue     `protobuf:"bytes,17,opt,name=listvalue_value,json=listvalueValue,proto3" json:"listvalue_value,omitempty"`
-	NullValue      structpb.NullValue      `protobuf:"varint,18,opt,name=null_value,json=nullValue,proto3" json:"null_value,omitempty"`
+	DoubleValue    *wrapperspb.DoubleValue `protobuf:"bytes,6,opt,name=double_value,json=doubleValue,proto3" json:"doubleValue,omitempty"`
+	FloatValue     *wrapperspb.FloatValue  `protobuf:"bytes,7,opt,name=float_value,json=floatValue,proto3" json:"floatValue,omitempty"`
+	Int64Value     *wrapperspb.Int64Value  `protobuf:"bytes,8,opt,name=int64_value,json=int64Value,proto3" json:"int64Value,omitempty"`
+	Uint64Value    *wrapperspb.UInt64Value `protobuf:"bytes,9,opt,name=uint64_value,json=uint64Value,proto3" json:"uint64Value,omitempty"`
+	Int32Value     *wrapperspb.Int32Value  `protobuf:"bytes,10,opt,name=int32_value,json=int32Value,proto3" json:"int32Value,omitempty"`
+	Uint32Value    *wrapperspb.UInt32Value `protobuf:"bytes,11,opt,name=uint32_value,json=uint32Value,proto3" json:"uint32Value,omitempty"`
+	BoolValue      *wrapperspb.BoolValue   `protobuf:"bytes,12,opt,name=bool_value,json=boolValue,proto3" json:"boolValue,omitempty"`
+	StringValue    *wrapperspb.StringValue `protobuf:"bytes,13,opt,name=string_value,json=stringValue,proto3" json:"stringValue,omitempty"`
+	BytesValue     *wrapperspb.BytesValue  `protobuf:"bytes,14,opt,name=bytes_value,json=bytesValue,proto3" json:"bytesValue,omitempty"`
+	StructValue    *structpb.Struct        `protobuf:"bytes,15,opt,name=struct_value,json=structValue,proto3" json:"structValue,omitempty"`
+	ValueValue     *structpb.Value         `protobuf:"bytes,16,opt,name=value_value,json=valueValue,proto3" json:"valueValue,omitempty"`
+	ListvalueValue *structpb.ListValue     `protobuf:"bytes,17,opt,name=listvalue_value,json=listvalueValue,proto3" json:"listvalueValue,omitempty"`
+	NullValue      structpb.NullValue      `protobuf:"varint,18,opt,name=null_value,json=nullValue,proto3" json:"nullValue,omitempty"`
 }
 
 func (x *MessageWithWKT) Reset() {
@@ -325,69 +325,69 @@ func (x *MessageWithWKT) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("timestamp")
 		x.Timestamp.MarshalProtoJSON(s.WithField("timestamp"))
 	}
-	if x.DoubleValue != nil || s.HasField("double_value") {
+	if x.DoubleValue != nil || s.HasField("doubleValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("double_value")
-		x.DoubleValue.MarshalProtoJSON(s.WithField("double_value"))
+		s.WriteObjectField("doubleValue")
+		x.DoubleValue.MarshalProtoJSON(s.WithField("doubleValue"))
 	}
-	if x.FloatValue != nil || s.HasField("float_value") {
+	if x.FloatValue != nil || s.HasField("floatValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("float_value")
-		x.FloatValue.MarshalProtoJSON(s.WithField("float_value"))
+		s.WriteObjectField("floatValue")
+		x.FloatValue.MarshalProtoJSON(s.WithField("floatValue"))
 	}
-	if x.Int64Value != nil || s.HasField("int64_value") {
+	if x.Int64Value != nil || s.HasField("int64Value") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("int64_value")
-		x.Int64Value.MarshalProtoJSON(s.WithField("int64_value"))
+		s.WriteObjectField("int64Value")
+		x.Int64Value.MarshalProtoJSON(s.WithField("int64Value"))
 	}
-	if x.Uint64Value != nil || s.HasField("uint64_value") {
+	if x.Uint64Value != nil || s.HasField("uint64Value") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("uint64_value")
-		x.Uint64Value.MarshalProtoJSON(s.WithField("uint64_value"))
+		s.WriteObjectField("uint64Value")
+		x.Uint64Value.MarshalProtoJSON(s.WithField("uint64Value"))
 	}
-	if x.Int32Value != nil || s.HasField("int32_value") {
+	if x.Int32Value != nil || s.HasField("int32Value") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("int32_value")
-		x.Int32Value.MarshalProtoJSON(s.WithField("int32_value"))
+		s.WriteObjectField("int32Value")
+		x.Int32Value.MarshalProtoJSON(s.WithField("int32Value"))
 	}
-	if x.Uint32Value != nil || s.HasField("uint32_value") {
+	if x.Uint32Value != nil || s.HasField("uint32Value") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("uint32_value")
-		x.Uint32Value.MarshalProtoJSON(s.WithField("uint32_value"))
+		s.WriteObjectField("uint32Value")
+		x.Uint32Value.MarshalProtoJSON(s.WithField("uint32Value"))
 	}
-	if x.BoolValue != nil || s.HasField("bool_value") {
+	if x.BoolValue != nil || s.HasField("boolValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("bool_value")
-		x.BoolValue.MarshalProtoJSON(s.WithField("bool_value"))
+		s.WriteObjectField("boolValue")
+		x.BoolValue.MarshalProtoJSON(s.WithField("boolValue"))
 	}
-	if x.StringValue != nil || s.HasField("string_value") {
+	if x.StringValue != nil || s.HasField("stringValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("string_value")
-		x.StringValue.MarshalProtoJSON(s.WithField("string_value"))
+		s.WriteObjectField("stringValue")
+		x.StringValue.MarshalProtoJSON(s.WithField("stringValue"))
 	}
-	if x.BytesValue != nil || s.HasField("bytes_value") {
+	if x.BytesValue != nil || s.HasField("bytesValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("bytes_value")
-		x.BytesValue.MarshalProtoJSON(s.WithField("bytes_value"))
+		s.WriteObjectField("bytesValue")
+		x.BytesValue.MarshalProtoJSON(s.WithField("bytesValue"))
 	}
-	if x.StructValue != nil || s.HasField("struct_value") {
+	if x.StructValue != nil || s.HasField("structValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("struct_value")
-		x.StructValue.MarshalProtoJSON(s.WithField("struct_value"))
+		s.WriteObjectField("structValue")
+		x.StructValue.MarshalProtoJSON(s.WithField("structValue"))
 	}
-	if x.ValueValue != nil || s.HasField("value_value") {
+	if x.ValueValue != nil || s.HasField("valueValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("value_value")
-		x.ValueValue.MarshalProtoJSON(s.WithField("value_value"))
+		s.WriteObjectField("valueValue")
+		x.ValueValue.MarshalProtoJSON(s.WithField("valueValue"))
 	}
-	if x.ListvalueValue != nil || s.HasField("listvalue_value") {
+	if x.ListvalueValue != nil || s.HasField("listvalueValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("listvalue_value")
-		x.ListvalueValue.MarshalProtoJSON(s.WithField("listvalue_value"))
+		s.WriteObjectField("listvalueValue")
+		x.ListvalueValue.MarshalProtoJSON(s.WithField("listvalueValue"))
 	}
-	if x.NullValue != 0 || s.HasField("null_value") {
+	if x.NullValue != 0 || s.HasField("nullValue") {
 		s.WriteMoreIf(&wroteField)
-		s.WriteObjectField("null_value")
+		s.WriteObjectField("nullValue")
 		x.NullValue.MarshalProtoJSON(s)
 	}
 	s.WriteObjectEnd()

@@ -549,7 +549,7 @@ func fieldDefaultValue(g *protogen.GeneratedFile, f *fileInfo, m *messageInfo, f
 }
 
 func fieldJSONTagValue(field *protogen.Field) string {
-	return string(field.Desc.Name()) + ",omitempty"
+	return string(field.Desc.JSONName()) + ",omitempty"
 }
 
 // genMessageOneofWrapperTypes generates the oneof wrapper types and
