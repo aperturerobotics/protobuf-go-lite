@@ -391,7 +391,12 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 	}
 	switch any := s.inner.ReadAny(); any.ValueType() {
 	case jsoniter.NumberValue:
-		return any.ToUint32()
+		val := any.ToUint32()
+		if err := any.LastError(); err != nil {
+			s.SetErrorf("invalid value for uint32: %w", err)
+			return 0
+		}
+		return val
 	case jsoniter.StringValue:
 		f, err := strconv.ParseUint(any.ToString(), 10, 32)
 		if err != nil {
@@ -432,7 +437,12 @@ func (s *UnmarshalState) ReadUint64() uint64 {
 	}
 	switch any := s.inner.ReadAny(); any.ValueType() {
 	case jsoniter.NumberValue:
-		return any.ToUint64()
+		val := any.ToUint64()
+		if err := any.LastError(); err != nil {
+			s.SetErrorf("invalid value for uint64: %w", err)
+			return 0
+		}
+		return val
 	case jsoniter.StringValue:
 		f, err := strconv.ParseUint(any.ToString(), 10, 64)
 		if err != nil {
