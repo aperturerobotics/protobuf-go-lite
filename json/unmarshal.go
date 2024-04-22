@@ -393,7 +393,9 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 	case jsoniter.NumberValue:
 		val := any.ToUint32()
 		if err := any.LastError(); err != nil {
-			s.SetErrorf("invalid value for uint32: %w", err)
+			// Don't log the full error here since it will print the unexpected character.
+			// This could print control characters on the cli and cause issues!
+			s.SetErrorf("invalid value for uint32")
 			return 0
 		}
 		return val
@@ -439,7 +441,9 @@ func (s *UnmarshalState) ReadUint64() uint64 {
 	case jsoniter.NumberValue:
 		val := any.ToUint64()
 		if err := any.LastError(); err != nil {
-			s.SetErrorf("invalid value for uint64: %w", err)
+			// Don't log the full error here since it will print the unexpected character.
+			// This could print control characters on the cli and cause issues!
+			s.SetErrorf("invalid value for uint64")
 			return 0
 		}
 		return val

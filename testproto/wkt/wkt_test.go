@@ -71,7 +71,7 @@ func TestWellKnownTypes(t *testing.T) {
 	t.Log(string(jdata))
 
 	// Ensure output is consistent
-	var expected = `{"any":{"@type":"cool.apps/test-value","value":"14402s"},"duration":"14402s","empty":{},"timestamp":"2024-01-10T04:20:00Z","double_value":123456789.12345679,"float_value":123456792,"int64_value":"123456789","uint64_value":"123456789","int32_value":"123456789","uint32_value":"123456789","bool_value":true,"string_value":"String marshalling and unmarshalling test","bytes_value":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}`
+	var expected = `{"any":{"@type":"cool.apps/test-value","value":"14402s"},"duration":"14402s","empty":{},"timestamp":"2024-01-10T04:20:00Z","doubleValue":123456789.12345679,"floatValue":123456792,"int64Value":"123456789","uint64Value":"123456789","int32Value":"123456789","uint32Value":"123456789","boolValue":true,"stringValue":"String marshalling and unmarshalling test","bytesValue":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}`
 	require.Equal(t, expected, string(jdata))
 
 	jparsed := &MessageWithWKT{}
