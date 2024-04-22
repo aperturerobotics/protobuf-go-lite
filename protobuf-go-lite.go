@@ -26,6 +26,13 @@ type Message interface {
 	Reset()
 }
 
+// CloneVT is a message with a CloneVT function (VTProtobuf).
+type CloneVT[T comparable] interface {
+	comparable
+	// CloneVT clones the object.
+	CloneVT() T
+}
+
 // EqualVT is a message with a EqualVT function (VTProtobuf).
 type EqualVT[T comparable] interface {
 	comparable
