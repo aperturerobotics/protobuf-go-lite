@@ -17,6 +17,11 @@ func (x *Duration) UnmarshalJSON(b []byte) error {
 	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
+// MarshalProtoText formats the Duration to a proto text string.
+func (d *Duration) MarshalProtoText() string {
+	return d.String()
+}
+
 // String formats the duration to a string.
 func (d *Duration) String() string {
 	var out strings.Builder

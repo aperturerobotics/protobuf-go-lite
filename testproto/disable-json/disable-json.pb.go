@@ -6,6 +6,8 @@ package disable_json
 
 import (
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -348,6 +350,27 @@ func (m *MessageDisableJson_World) SizeVT() (n int) {
 	l = len(m.World)
 	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
 	return n
+}
+func (x *MessageDisableJson) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("MessageDisableJson { ")
+	switch body := x.Body.(type) {
+	case *MessageDisableJson_Hello:
+		if body.Hello {
+			sb.WriteString(" hello: ")
+			sb.WriteString(strconv.FormatBool(body.Hello))
+		}
+	case *MessageDisableJson_World:
+		if body.World != "" {
+			sb.WriteString(" world: ")
+			sb.WriteString(strconv.Quote(body.World))
+		}
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MessageDisableJson) String() string {
+	return x.MarshalProtoText()
 }
 func (m *MessageDisableJson) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)

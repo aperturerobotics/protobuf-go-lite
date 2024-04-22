@@ -1,6 +1,7 @@
 package wkt
 
 import (
+	"os"
 	"testing"
 	"time"
 
@@ -82,4 +83,7 @@ func TestWellKnownTypes(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, jparsed.EqualVT(m))
 	require.True(t, jparsed.EqualMessageVT(m))
+
+	str := m.String()
+	os.Stderr.WriteString(str + "\n")
 }

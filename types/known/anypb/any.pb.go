@@ -5,7 +5,10 @@
 package anypb
 
 import (
+	base64 "encoding/base64"
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -338,6 +341,25 @@ func (m *Any) SizeVT() (n int) {
 	return n
 }
 
+func (x *Any) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Any { ")
+	if x.TypeUrl != "" {
+		sb.WriteString(" type_url: ")
+		sb.WriteString(strconv.Quote(x.TypeUrl))
+	}
+	if len(x.Value) > 0 {
+		sb.WriteString(" value: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
+		sb.WriteString("\"")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Any) String() string {
+	return x.MarshalProtoText()
+}
 func (m *Any) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

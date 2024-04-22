@@ -1,6 +1,7 @@
 package wrapperspb
 
 import (
+	"encoding/base64"
 	"math"
 	"strconv"
 
@@ -39,6 +40,11 @@ func (x *DoubleValue) String() string {
 	return strconv.FormatFloat(x.Value, 'g', -1, 64)
 }
 
+// MarshalProtoText formats the DoubleValue to a proto text string.
+func (x *DoubleValue) MarshalProtoText() string {
+	return x.String()
+}
+
 // MarshalJSON marshals the FloatValue to JSON.
 func (x *FloatValue) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
@@ -69,6 +75,11 @@ func (x *FloatValue) MarshalProtoJSON(s *json.MarshalState) {
 // String formats the FloatValue to a string.
 func (x *FloatValue) String() string {
 	return strconv.FormatFloat(float64(x.Value), 'g', -1, 32)
+}
+
+// MarshalProtoText formats the FloatValue to a proto text string.
+func (x *FloatValue) MarshalProtoText() string {
+	return x.String()
 }
 
 // MarshalJSON marshals the Int64Value to JSON.
@@ -103,6 +114,11 @@ func (x *Int64Value) String() string {
 	return strconv.FormatInt(x.Value, 10)
 }
 
+// MarshalProtoText formats the Int64Value to a proto text string.
+func (x *Int64Value) MarshalProtoText() string {
+	return x.String()
+}
+
 // MarshalJSON marshals the UInt64Value to JSON.
 func (x *UInt64Value) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
@@ -133,6 +149,11 @@ func (x *UInt64Value) MarshalProtoJSON(s *json.MarshalState) {
 // String formats the UInt64Value to a string.
 func (x *UInt64Value) String() string {
 	return strconv.FormatUint(x.Value, 10)
+}
+
+// MarshalProtoText formats the UInt64Value to a proto text string.
+func (x *UInt64Value) MarshalProtoText() string {
+	return x.String()
 }
 
 // MarshalJSON marshals the Int32Value to JSON.
@@ -172,6 +193,11 @@ func (x *Int32Value) String() string {
 	return strconv.Itoa(int(x.Value))
 }
 
+// MarshalProtoText formats the Int32Value to a proto text string.
+func (x *Int32Value) MarshalProtoText() string {
+	return x.String()
+}
+
 // MarshalJSON marshals the UInt32Value to JSON.
 func (x *UInt32Value) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
@@ -209,6 +235,11 @@ func (x *UInt32Value) String() string {
 	return strconv.FormatUint(uint64(x.Value), 10)
 }
 
+// MarshalProtoText formats the UInt32Value to a proto text string.
+func (x *UInt32Value) MarshalProtoText() string {
+	return x.String()
+}
+
 // MarshalJSON marshals the BoolValue to JSON.
 func (x *BoolValue) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
@@ -239,6 +270,11 @@ func (x *BoolValue) MarshalProtoJSON(s *json.MarshalState) {
 // String formats the BoolValue to a string.
 func (x *BoolValue) String() string {
 	return strconv.FormatBool(x.Value)
+}
+
+// MarshalProtoText formats the BoolValue to a proto text string.
+func (x *BoolValue) MarshalProtoText() string {
+	return x.String()
 }
 
 // MarshalJSON marshals the StringValue to JSON.
@@ -273,6 +309,11 @@ func (x *StringValue) String() string {
 	return x.Value
 }
 
+// MarshalProtoText formats the StringValue to a proto text string.
+func (x *StringValue) MarshalProtoText() string {
+	return strconv.Quote(x.String())
+}
+
 // MarshalJSON marshals the BytesValue to JSON.
 func (x *BytesValue) MarshalJSON() ([]byte, error) {
 	return json.DefaultMarshalerConfig.Marshal(x)
@@ -302,5 +343,10 @@ func (x *BytesValue) MarshalProtoJSON(s *json.MarshalState) {
 
 // String formats the BytesValue to a string.
 func (x *BytesValue) String() string {
-	return string(x.Value)
+	return base64.StdEncoding.EncodeToString(x.GetValue())
+}
+
+// MarshalProtoText formats the BytesValue to a proto text string.
+func (x *BytesValue) MarshalProtoText() string {
+	return strconv.Quote(x.String())
 }

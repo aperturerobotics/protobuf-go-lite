@@ -6,6 +6,7 @@ package emptypb
 
 import (
 	io "io"
+	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	errors "github.com/pkg/errors"
@@ -166,6 +167,15 @@ func (m *Empty) SizeVT() (n int) {
 	return n
 }
 
+func (x *Empty) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Empty { ")
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Empty) String() string {
+	return x.MarshalProtoText()
+}
 func (m *Empty) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

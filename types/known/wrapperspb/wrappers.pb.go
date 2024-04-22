@@ -57,6 +57,8 @@ import (
 // Wrapper message for `double`.
 //
 // The JSON representation for `DoubleValue` is JSON number.
+//
+// protobuf-go-lite:disable-text
 type DoubleValue struct {
 	unknownFields []byte
 	// The double value.
@@ -84,6 +86,8 @@ func (x *DoubleValue) GetValue() float64 {
 // Wrapper message for `float`.
 //
 // The JSON representation for `FloatValue` is JSON number.
+//
+// protobuf-go-lite:disable-text
 type FloatValue struct {
 	unknownFields []byte
 	// The float value.
@@ -111,6 +115,8 @@ func (x *FloatValue) GetValue() float32 {
 // Wrapper message for `int64`.
 //
 // The JSON representation for `Int64Value` is JSON string.
+//
+// protobuf-go-lite:disable-text
 type Int64Value struct {
 	unknownFields []byte
 	// The int64 value.
@@ -138,6 +144,8 @@ func (x *Int64Value) GetValue() int64 {
 // Wrapper message for `uint64`.
 //
 // The JSON representation for `UInt64Value` is JSON string.
+//
+// protobuf-go-lite:disable-text
 type UInt64Value struct {
 	unknownFields []byte
 	// The uint64 value.
@@ -165,6 +173,8 @@ func (x *UInt64Value) GetValue() uint64 {
 // Wrapper message for `int32`.
 //
 // The JSON representation for `Int32Value` is JSON number.
+//
+// protobuf-go-lite:disable-text
 type Int32Value struct {
 	unknownFields []byte
 	// The int32 value.
@@ -192,6 +202,8 @@ func (x *Int32Value) GetValue() int32 {
 // Wrapper message for `uint32`.
 //
 // The JSON representation for `UInt32Value` is JSON number.
+//
+// protobuf-go-lite:disable-text
 type UInt32Value struct {
 	unknownFields []byte
 	// The uint32 value.
@@ -219,6 +231,8 @@ func (x *UInt32Value) GetValue() uint32 {
 // Wrapper message for `bool`.
 //
 // The JSON representation for `BoolValue` is JSON `true` and `false`.
+//
+// protobuf-go-lite:disable-text
 type BoolValue struct {
 	unknownFields []byte
 	// The bool value.
@@ -246,6 +260,8 @@ func (x *BoolValue) GetValue() bool {
 // Wrapper message for `string`.
 //
 // The JSON representation for `StringValue` is JSON string.
+//
+// protobuf-go-lite:disable-text
 type StringValue struct {
 	unknownFields []byte
 	// The string value.
@@ -273,6 +289,8 @@ func (x *StringValue) GetValue() string {
 // Wrapper message for `bytes`.
 //
 // The JSON representation for `BytesValue` is JSON string.
+//
+// protobuf-go-lite:disable-text
 type BytesValue struct {
 	unknownFields []byte
 	// The bytes value.

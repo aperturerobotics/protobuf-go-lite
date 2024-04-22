@@ -93,6 +93,7 @@ option go_package = "github.com/aperturerobotics/protobuf-go-lite/types/known/du
 // be expressed in JSON format as "3.000000001s", and 3 seconds and 1
 // microsecond should be expressed in JSON format as "3.000001s".
 //
+//protobuf-go-lite:disable-text
 message Duration {
   // Signed seconds of the span of time. Must be from -315,576,000,000
   // to +315,576,000,000 inclusive. Note: these bounds are computed from:

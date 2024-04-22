@@ -5,7 +5,10 @@
 package unsafe
 
 import (
+	base64 "encoding/base64"
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -2389,6 +2392,191 @@ func (m *UnsafeTest_Sub5_) SizeVT() (n int) {
 		n += 2
 	}
 	return n
+}
+func (x *UnsafeTest_Sub1) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sub1 { ")
+	if x.S != "" {
+		sb.WriteString(" s: ")
+		sb.WriteString(strconv.Quote(x.S))
+	}
+	if len(x.B) > 0 {
+		sb.WriteString(" b: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.B))
+		sb.WriteString("\"")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub1) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub2) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sub2 { ")
+	if len(x.S) > 0 {
+		sb.WriteString(" s: [")
+		for i, v := range x.S {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.B) > 0 {
+		sb.WriteString(" b: [")
+		for i, v := range x.B {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString("\"")
+			sb.WriteString(base64.StdEncoding.EncodeToString(v))
+			sb.WriteString("\"")
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub2) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FooEntry { ")
+	if x.Key != "" {
+		sb.WriteString(" key: ")
+		sb.WriteString(strconv.Quote(x.Key))
+	}
+	if len(x.Value) > 0 {
+		sb.WriteString(" value: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
+		sb.WriteString("\"")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub3_FooEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub3) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sub3 { ")
+	if len(x.Foo) > 0 {
+		sb.WriteString(" foo: {")
+		for k, v := range x.Foo {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.Quote(k))
+			sb.WriteString(": ")
+			sb.WriteString("\"")
+			sb.WriteString(base64.StdEncoding.EncodeToString(v))
+			sb.WriteString("\"")
+		}
+		sb.WriteString(" }")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub3) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub4) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sub4 { ")
+	switch body := x.Foo.(type) {
+	case *UnsafeTest_Sub4_S:
+		if body.S != "" {
+			sb.WriteString(" s: ")
+			sb.WriteString(strconv.Quote(body.S))
+		}
+	case *UnsafeTest_Sub4_B:
+		if len(body.B) > 0 {
+			sb.WriteString(" b: ")
+			sb.WriteString("\"")
+			sb.WriteString(base64.StdEncoding.EncodeToString(body.B))
+			sb.WriteString("\"")
+		}
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub4) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FooEntry { ")
+	if x.Key != "" {
+		sb.WriteString(" key: ")
+		sb.WriteString(strconv.Quote(x.Key))
+	}
+	if x.Value != "" {
+		sb.WriteString(" value: ")
+		sb.WriteString(strconv.Quote(x.Value))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub5_FooEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest_Sub5) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sub5 { ")
+	if len(x.Foo) > 0 {
+		sb.WriteString(" foo: {")
+		for k, v := range x.Foo {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.Quote(k))
+			sb.WriteString(": ")
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString(" }")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest_Sub5) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UnsafeTest) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("UnsafeTest { ")
+	switch body := x.Sub.(type) {
+	case *UnsafeTest_Sub1_:
+		if body.Sub1 != nil {
+			sb.WriteString(" sub1: ")
+			sb.WriteString(body.Sub1.MarshalProtoText())
+		}
+	case *UnsafeTest_Sub2_:
+		if body.Sub2 != nil {
+			sb.WriteString(" sub2: ")
+			sb.WriteString(body.Sub2.MarshalProtoText())
+		}
+	case *UnsafeTest_Sub3_:
+		if body.Sub3 != nil {
+			sb.WriteString(" sub3: ")
+			sb.WriteString(body.Sub3.MarshalProtoText())
+		}
+	case *UnsafeTest_Sub4_:
+		if body.Sub4 != nil {
+			sb.WriteString(" sub4: ")
+			sb.WriteString(body.Sub4.MarshalProtoText())
+		}
+	case *UnsafeTest_Sub5_:
+		if body.Sub5 != nil {
+			sb.WriteString(" sub5: ")
+			sb.WriteString(body.Sub5.MarshalProtoText())
+		}
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UnsafeTest) String() string {
+	return x.MarshalProtoText()
 }
 func (m *UnsafeTest_Sub1) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)

@@ -7,6 +7,7 @@ package typepb
 import (
 	io "io"
 	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -1901,6 +1902,214 @@ func (m *Option) SizeVT() (n int) {
 	return n
 }
 
+func (x Syntax) MarshalProtoText() string {
+	return x.String()
+}
+func (x *Type) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Type { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if len(x.Fields) > 0 {
+		sb.WriteString(" fields: [")
+		for i, v := range x.Fields {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Oneofs) > 0 {
+		sb.WriteString(" oneofs: [")
+		for i, v := range x.Oneofs {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.SourceContext != nil {
+		sb.WriteString(" source_context: ")
+		sb.WriteString(x.SourceContext.MarshalProtoText())
+	}
+	if x.Syntax != 0 {
+		sb.WriteString(" syntax: ")
+		sb.WriteString(Syntax(x.Syntax).String())
+	}
+	if x.Edition != "" {
+		sb.WriteString(" edition: ")
+		sb.WriteString(strconv.Quote(x.Edition))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Type) String() string {
+	return x.MarshalProtoText()
+}
+func (x Field_Kind) MarshalProtoText() string {
+	return x.String()
+}
+func (x Field_Cardinality) MarshalProtoText() string {
+	return x.String()
+}
+func (x *Field) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Field { ")
+	if x.Kind != 0 {
+		sb.WriteString(" kind: ")
+		sb.WriteString(Field_Kind(x.Kind).String())
+	}
+	if x.Cardinality != 0 {
+		sb.WriteString(" cardinality: ")
+		sb.WriteString(Field_Cardinality(x.Cardinality).String())
+	}
+	if x.Number != 0 {
+		sb.WriteString(" number: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Number), 10))
+	}
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if x.TypeUrl != "" {
+		sb.WriteString(" type_url: ")
+		sb.WriteString(strconv.Quote(x.TypeUrl))
+	}
+	if x.OneofIndex != 0 {
+		sb.WriteString(" oneof_index: ")
+		sb.WriteString(strconv.FormatInt(int64(x.OneofIndex), 10))
+	}
+	if x.Packed {
+		sb.WriteString(" packed: ")
+		sb.WriteString(strconv.FormatBool(x.Packed))
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.JsonName != "" {
+		sb.WriteString(" json_name: ")
+		sb.WriteString(strconv.Quote(x.JsonName))
+	}
+	if x.DefaultValue != "" {
+		sb.WriteString(" default_value: ")
+		sb.WriteString(strconv.Quote(x.DefaultValue))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Field) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Enum) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Enum { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if len(x.Enumvalue) > 0 {
+		sb.WriteString(" enumvalue: [")
+		for i, v := range x.Enumvalue {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.SourceContext != nil {
+		sb.WriteString(" source_context: ")
+		sb.WriteString(x.SourceContext.MarshalProtoText())
+	}
+	if x.Syntax != 0 {
+		sb.WriteString(" syntax: ")
+		sb.WriteString(Syntax(x.Syntax).String())
+	}
+	if x.Edition != "" {
+		sb.WriteString(" edition: ")
+		sb.WriteString(strconv.Quote(x.Edition))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Enum) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumValue) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumValue { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if x.Number != 0 {
+		sb.WriteString(" number: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Number), 10))
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumValue) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Option) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Option { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if x.Value != nil {
+		sb.WriteString(" value: ")
+		sb.WriteString(x.Value.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Option) String() string {
+	return x.MarshalProtoText()
+}
 func (m *Type) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

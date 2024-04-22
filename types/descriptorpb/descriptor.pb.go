@@ -5,10 +5,12 @@
 package descriptorpb
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	io "io"
 	math "math"
 	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -11809,6 +11811,1239 @@ func (m *GeneratedCodeInfo) SizeVT() (n int) {
 	return n
 }
 
+func (x Edition) MarshalProtoText() string {
+	return x.String()
+}
+func (x *FileDescriptorSet) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FileDescriptorSet { ")
+	if len(x.File) > 0 {
+		sb.WriteString(" file: [")
+		for i, v := range x.File {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FileDescriptorSet) String() string {
+	return x.MarshalProtoText()
+}
+func (x *FileDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FileDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if x.Package != nil {
+		sb.WriteString(" package: ")
+		sb.WriteString(strconv.Quote(*x.Package))
+	}
+	if len(x.Dependency) > 0 {
+		sb.WriteString(" dependency: [")
+		for i, v := range x.Dependency {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.MessageType) > 0 {
+		sb.WriteString(" message_type: [")
+		for i, v := range x.MessageType {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.EnumType) > 0 {
+		sb.WriteString(" enum_type: [")
+		for i, v := range x.EnumType {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Service) > 0 {
+		sb.WriteString(" service: [")
+		for i, v := range x.Service {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Extension) > 0 {
+		sb.WriteString(" extension: [")
+		for i, v := range x.Extension {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	if x.SourceCodeInfo != nil {
+		sb.WriteString(" source_code_info: ")
+		sb.WriteString(x.SourceCodeInfo.MarshalProtoText())
+	}
+	if len(x.PublicDependency) > 0 {
+		sb.WriteString(" public_dependency: [")
+		for i, v := range x.PublicDependency {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.WeakDependency) > 0 {
+		sb.WriteString(" weak_dependency: [")
+		for i, v := range x.WeakDependency {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if x.Syntax != nil {
+		sb.WriteString(" syntax: ")
+		sb.WriteString(strconv.Quote(*x.Syntax))
+	}
+	if x.Edition != nil {
+		sb.WriteString(" edition: ")
+		sb.WriteString(x.Edition.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FileDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *DescriptorProto_ExtensionRange) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ExtensionRange { ")
+	if x.Start != nil {
+		sb.WriteString(" start: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+	}
+	if x.End != nil {
+		sb.WriteString(" end: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *DescriptorProto_ExtensionRange) String() string {
+	return x.MarshalProtoText()
+}
+func (x *DescriptorProto_ReservedRange) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ReservedRange { ")
+	if x.Start != nil {
+		sb.WriteString(" start: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+	}
+	if x.End != nil {
+		sb.WriteString(" end: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *DescriptorProto_ReservedRange) String() string {
+	return x.MarshalProtoText()
+}
+func (x *DescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("DescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if len(x.Field) > 0 {
+		sb.WriteString(" field: [")
+		for i, v := range x.Field {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.NestedType) > 0 {
+		sb.WriteString(" nested_type: [")
+		for i, v := range x.NestedType {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.EnumType) > 0 {
+		sb.WriteString(" enum_type: [")
+		for i, v := range x.EnumType {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.ExtensionRange) > 0 {
+		sb.WriteString(" extension_range: [")
+		for i, v := range x.ExtensionRange {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Extension) > 0 {
+		sb.WriteString(" extension: [")
+		for i, v := range x.Extension {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	if len(x.OneofDecl) > 0 {
+		sb.WriteString(" oneof_decl: [")
+		for i, v := range x.OneofDecl {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.ReservedRange) > 0 {
+		sb.WriteString(" reserved_range: [")
+		for i, v := range x.ReservedRange {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.ReservedName) > 0 {
+		sb.WriteString(" reserved_name: [")
+		for i, v := range x.ReservedName {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *DescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x ExtensionRangeOptions_VerificationState) MarshalProtoText() string {
+	return x.String()
+}
+func (x *ExtensionRangeOptions_Declaration) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Declaration { ")
+	if x.Number != nil {
+		sb.WriteString(" number: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+	}
+	if x.FullName != nil {
+		sb.WriteString(" full_name: ")
+		sb.WriteString(strconv.Quote(*x.FullName))
+	}
+	if x.Type != nil {
+		sb.WriteString(" type: ")
+		sb.WriteString(strconv.Quote(*x.Type))
+	}
+	if x.Reserved != nil {
+		sb.WriteString(" reserved: ")
+		sb.WriteString(strconv.FormatBool(*x.Reserved))
+	}
+	if x.Repeated != nil {
+		sb.WriteString(" repeated: ")
+		sb.WriteString(strconv.FormatBool(*x.Repeated))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *ExtensionRangeOptions_Declaration) String() string {
+	return x.MarshalProtoText()
+}
+func (x *ExtensionRangeOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ExtensionRangeOptions { ")
+	if len(x.Declaration) > 0 {
+		sb.WriteString(" declaration: [")
+		for i, v := range x.Declaration {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Verification != nil {
+		sb.WriteString(" verification: ")
+		sb.WriteString(x.Verification.String())
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *ExtensionRangeOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x FieldDescriptorProto_Type) MarshalProtoText() string {
+	return x.String()
+}
+func (x FieldDescriptorProto_Label) MarshalProtoText() string {
+	return x.String()
+}
+func (x *FieldDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FieldDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if x.Extendee != nil {
+		sb.WriteString(" extendee: ")
+		sb.WriteString(strconv.Quote(*x.Extendee))
+	}
+	if x.Number != nil {
+		sb.WriteString(" number: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+	}
+	if x.Label != nil {
+		sb.WriteString(" label: ")
+		sb.WriteString(x.Label.String())
+	}
+	if x.Type != nil {
+		sb.WriteString(" type: ")
+		sb.WriteString(x.Type.String())
+	}
+	if x.TypeName != nil {
+		sb.WriteString(" type_name: ")
+		sb.WriteString(strconv.Quote(*x.TypeName))
+	}
+	if x.DefaultValue != nil {
+		sb.WriteString(" default_value: ")
+		sb.WriteString(strconv.Quote(*x.DefaultValue))
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	if x.OneofIndex != nil {
+		sb.WriteString(" oneof_index: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OneofIndex), 10))
+	}
+	if x.JsonName != nil {
+		sb.WriteString(" json_name: ")
+		sb.WriteString(strconv.Quote(*x.JsonName))
+	}
+	if x.Proto3Optional != nil {
+		sb.WriteString(" proto3_optional: ")
+		sb.WriteString(strconv.FormatBool(*x.Proto3Optional))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FieldDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *OneofDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("OneofDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *OneofDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumDescriptorProto_EnumReservedRange) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumReservedRange { ")
+	if x.Start != nil {
+		sb.WriteString(" start: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+	}
+	if x.End != nil {
+		sb.WriteString(" end: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumDescriptorProto_EnumReservedRange) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if len(x.Value) > 0 {
+		sb.WriteString(" value: [")
+		for i, v := range x.Value {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	if len(x.ReservedRange) > 0 {
+		sb.WriteString(" reserved_range: [")
+		for i, v := range x.ReservedRange {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.ReservedName) > 0 {
+		sb.WriteString(" reserved_name: [")
+		for i, v := range x.ReservedName {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumValueDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumValueDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if x.Number != nil {
+		sb.WriteString(" number: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumValueDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *ServiceDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ServiceDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if len(x.Method) > 0 {
+		sb.WriteString(" method: [")
+		for i, v := range x.Method {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *ServiceDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x *MethodDescriptorProto) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("MethodDescriptorProto { ")
+	if x.Name != nil {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(*x.Name))
+	}
+	if x.InputType != nil {
+		sb.WriteString(" input_type: ")
+		sb.WriteString(strconv.Quote(*x.InputType))
+	}
+	if x.OutputType != nil {
+		sb.WriteString(" output_type: ")
+		sb.WriteString(strconv.Quote(*x.OutputType))
+	}
+	if x.Options != nil {
+		sb.WriteString(" options: ")
+		sb.WriteString(x.Options.MarshalProtoText())
+	}
+	if x.ClientStreaming != nil {
+		sb.WriteString(" client_streaming: ")
+		sb.WriteString(strconv.FormatBool(*x.ClientStreaming))
+	}
+	if x.ServerStreaming != nil {
+		sb.WriteString(" server_streaming: ")
+		sb.WriteString(strconv.FormatBool(*x.ServerStreaming))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MethodDescriptorProto) String() string {
+	return x.MarshalProtoText()
+}
+func (x FileOptions_OptimizeMode) MarshalProtoText() string {
+	return x.String()
+}
+func (x *FileOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FileOptions { ")
+	if x.JavaPackage != nil {
+		sb.WriteString(" java_package: ")
+		sb.WriteString(strconv.Quote(*x.JavaPackage))
+	}
+	if x.JavaOuterClassname != nil {
+		sb.WriteString(" java_outer_classname: ")
+		sb.WriteString(strconv.Quote(*x.JavaOuterClassname))
+	}
+	if x.OptimizeFor != nil {
+		sb.WriteString(" optimize_for: ")
+		sb.WriteString(x.OptimizeFor.String())
+	}
+	if x.JavaMultipleFiles != nil {
+		sb.WriteString(" java_multiple_files: ")
+		sb.WriteString(strconv.FormatBool(*x.JavaMultipleFiles))
+	}
+	if x.GoPackage != nil {
+		sb.WriteString(" go_package: ")
+		sb.WriteString(strconv.Quote(*x.GoPackage))
+	}
+	if x.CcGenericServices != nil {
+		sb.WriteString(" cc_generic_services: ")
+		sb.WriteString(strconv.FormatBool(*x.CcGenericServices))
+	}
+	if x.JavaGenericServices != nil {
+		sb.WriteString(" java_generic_services: ")
+		sb.WriteString(strconv.FormatBool(*x.JavaGenericServices))
+	}
+	if x.PyGenericServices != nil {
+		sb.WriteString(" py_generic_services: ")
+		sb.WriteString(strconv.FormatBool(*x.PyGenericServices))
+	}
+	if x.JavaGenerateEqualsAndHash != nil {
+		sb.WriteString(" java_generate_equals_and_hash: ")
+		sb.WriteString(strconv.FormatBool(*x.JavaGenerateEqualsAndHash))
+	}
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.JavaStringCheckUtf8 != nil {
+		sb.WriteString(" java_string_check_utf8: ")
+		sb.WriteString(strconv.FormatBool(*x.JavaStringCheckUtf8))
+	}
+	if x.CcEnableArenas != nil {
+		sb.WriteString(" cc_enable_arenas: ")
+		sb.WriteString(strconv.FormatBool(*x.CcEnableArenas))
+	}
+	if x.ObjcClassPrefix != nil {
+		sb.WriteString(" objc_class_prefix: ")
+		sb.WriteString(strconv.Quote(*x.ObjcClassPrefix))
+	}
+	if x.CsharpNamespace != nil {
+		sb.WriteString(" csharp_namespace: ")
+		sb.WriteString(strconv.Quote(*x.CsharpNamespace))
+	}
+	if x.SwiftPrefix != nil {
+		sb.WriteString(" swift_prefix: ")
+		sb.WriteString(strconv.Quote(*x.SwiftPrefix))
+	}
+	if x.PhpClassPrefix != nil {
+		sb.WriteString(" php_class_prefix: ")
+		sb.WriteString(strconv.Quote(*x.PhpClassPrefix))
+	}
+	if x.PhpNamespace != nil {
+		sb.WriteString(" php_namespace: ")
+		sb.WriteString(strconv.Quote(*x.PhpNamespace))
+	}
+	if x.PhpMetadataNamespace != nil {
+		sb.WriteString(" php_metadata_namespace: ")
+		sb.WriteString(strconv.Quote(*x.PhpMetadataNamespace))
+	}
+	if x.RubyPackage != nil {
+		sb.WriteString(" ruby_package: ")
+		sb.WriteString(strconv.Quote(*x.RubyPackage))
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FileOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *MessageOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("MessageOptions { ")
+	if x.MessageSetWireFormat != nil {
+		sb.WriteString(" message_set_wire_format: ")
+		sb.WriteString(strconv.FormatBool(*x.MessageSetWireFormat))
+	}
+	if x.NoStandardDescriptorAccessor != nil {
+		sb.WriteString(" no_standard_descriptor_accessor: ")
+		sb.WriteString(strconv.FormatBool(*x.NoStandardDescriptorAccessor))
+	}
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.MapEntry != nil {
+		sb.WriteString(" map_entry: ")
+		sb.WriteString(strconv.FormatBool(*x.MapEntry))
+	}
+	if x.DeprecatedLegacyJsonFieldConflicts != nil {
+		sb.WriteString(" deprecated_legacy_json_field_conflicts: ")
+		sb.WriteString(strconv.FormatBool(*x.DeprecatedLegacyJsonFieldConflicts))
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MessageOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x FieldOptions_CType) MarshalProtoText() string {
+	return x.String()
+}
+func (x FieldOptions_JSType) MarshalProtoText() string {
+	return x.String()
+}
+func (x FieldOptions_OptionRetention) MarshalProtoText() string {
+	return x.String()
+}
+func (x FieldOptions_OptionTargetType) MarshalProtoText() string {
+	return x.String()
+}
+func (x *FieldOptions_EditionDefault) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EditionDefault { ")
+	if x.Value != nil {
+		sb.WriteString(" value: ")
+		sb.WriteString(strconv.Quote(*x.Value))
+	}
+	if x.Edition != nil {
+		sb.WriteString(" edition: ")
+		sb.WriteString(x.Edition.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FieldOptions_EditionDefault) String() string {
+	return x.MarshalProtoText()
+}
+func (x *FieldOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FieldOptions { ")
+	if x.Ctype != nil {
+		sb.WriteString(" ctype: ")
+		sb.WriteString(x.Ctype.String())
+	}
+	if x.Packed != nil {
+		sb.WriteString(" packed: ")
+		sb.WriteString(strconv.FormatBool(*x.Packed))
+	}
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.Lazy != nil {
+		sb.WriteString(" lazy: ")
+		sb.WriteString(strconv.FormatBool(*x.Lazy))
+	}
+	if x.Jstype != nil {
+		sb.WriteString(" jstype: ")
+		sb.WriteString(x.Jstype.String())
+	}
+	if x.Weak != nil {
+		sb.WriteString(" weak: ")
+		sb.WriteString(strconv.FormatBool(*x.Weak))
+	}
+	if x.UnverifiedLazy != nil {
+		sb.WriteString(" unverified_lazy: ")
+		sb.WriteString(strconv.FormatBool(*x.UnverifiedLazy))
+	}
+	if x.DebugRedact != nil {
+		sb.WriteString(" debug_redact: ")
+		sb.WriteString(strconv.FormatBool(*x.DebugRedact))
+	}
+	if x.Retention != nil {
+		sb.WriteString(" retention: ")
+		sb.WriteString(x.Retention.String())
+	}
+	if len(x.Targets) > 0 {
+		sb.WriteString(" targets: [")
+		for i, v := range x.Targets {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(FieldOptions_OptionTargetType(v).String())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.EditionDefaults) > 0 {
+		sb.WriteString(" edition_defaults: [")
+		for i, v := range x.EditionDefaults {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FieldOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *OneofOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("OneofOptions { ")
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *OneofOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumOptions { ")
+	if x.AllowAlias != nil {
+		sb.WriteString(" allow_alias: ")
+		sb.WriteString(strconv.FormatBool(*x.AllowAlias))
+	}
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.DeprecatedLegacyJsonFieldConflicts != nil {
+		sb.WriteString(" deprecated_legacy_json_field_conflicts: ")
+		sb.WriteString(strconv.FormatBool(*x.DeprecatedLegacyJsonFieldConflicts))
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *EnumValueOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumValueOptions { ")
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if x.DebugRedact != nil {
+		sb.WriteString(" debug_redact: ")
+		sb.WriteString(strconv.FormatBool(*x.DebugRedact))
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumValueOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *ServiceOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ServiceOptions { ")
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *ServiceOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x MethodOptions_IdempotencyLevel) MarshalProtoText() string {
+	return x.String()
+}
+func (x *MethodOptions) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("MethodOptions { ")
+	if x.Deprecated != nil {
+		sb.WriteString(" deprecated: ")
+		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+	}
+	if x.IdempotencyLevel != nil {
+		sb.WriteString(" idempotency_level: ")
+		sb.WriteString(x.IdempotencyLevel.String())
+	}
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if len(x.UninterpretedOption) > 0 {
+		sb.WriteString(" uninterpreted_option: [")
+		for i, v := range x.UninterpretedOption {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MethodOptions) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UninterpretedOption_NamePart) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("NamePart { ")
+	if x.NamePart != nil {
+		sb.WriteString(" name_part: ")
+		sb.WriteString(strconv.Quote(*x.NamePart))
+	}
+	if x.IsExtension != nil {
+		sb.WriteString(" is_extension: ")
+		sb.WriteString(strconv.FormatBool(*x.IsExtension))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UninterpretedOption_NamePart) String() string {
+	return x.MarshalProtoText()
+}
+func (x *UninterpretedOption) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("UninterpretedOption { ")
+	if len(x.Name) > 0 {
+		sb.WriteString(" name: [")
+		for i, v := range x.Name {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.IdentifierValue != nil {
+		sb.WriteString(" identifier_value: ")
+		sb.WriteString(strconv.Quote(*x.IdentifierValue))
+	}
+	if x.PositiveIntValue != nil {
+		sb.WriteString(" positive_int_value: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.PositiveIntValue), 10))
+	}
+	if x.NegativeIntValue != nil {
+		sb.WriteString(" negative_int_value: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.NegativeIntValue), 10))
+	}
+	if x.DoubleValue != nil {
+		sb.WriteString(" double_value: ")
+		sb.WriteString(strconv.FormatFloat(*x.DoubleValue, 'g', -1, 64))
+	}
+	if len(x.StringValue) > 0 {
+		sb.WriteString(" string_value: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.StringValue))
+		sb.WriteString("\"")
+	}
+	if x.AggregateValue != nil {
+		sb.WriteString(" aggregate_value: ")
+		sb.WriteString(strconv.Quote(*x.AggregateValue))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *UninterpretedOption) String() string {
+	return x.MarshalProtoText()
+}
+func (x FeatureSet_FieldPresence) MarshalProtoText() string {
+	return x.String()
+}
+func (x FeatureSet_EnumType) MarshalProtoText() string {
+	return x.String()
+}
+func (x FeatureSet_RepeatedFieldEncoding) MarshalProtoText() string {
+	return x.String()
+}
+func (x FeatureSet_Utf8Validation) MarshalProtoText() string {
+	return x.String()
+}
+func (x FeatureSet_MessageEncoding) MarshalProtoText() string {
+	return x.String()
+}
+func (x FeatureSet_JsonFormat) MarshalProtoText() string {
+	return x.String()
+}
+func (x *FeatureSet) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FeatureSet { ")
+	if x.FieldPresence != nil {
+		sb.WriteString(" field_presence: ")
+		sb.WriteString(x.FieldPresence.String())
+	}
+	if x.EnumType != nil {
+		sb.WriteString(" enum_type: ")
+		sb.WriteString(x.EnumType.String())
+	}
+	if x.RepeatedFieldEncoding != nil {
+		sb.WriteString(" repeated_field_encoding: ")
+		sb.WriteString(x.RepeatedFieldEncoding.String())
+	}
+	if x.Utf8Validation != nil {
+		sb.WriteString(" utf8_validation: ")
+		sb.WriteString(x.Utf8Validation.String())
+	}
+	if x.MessageEncoding != nil {
+		sb.WriteString(" message_encoding: ")
+		sb.WriteString(x.MessageEncoding.String())
+	}
+	if x.JsonFormat != nil {
+		sb.WriteString(" json_format: ")
+		sb.WriteString(x.JsonFormat.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FeatureSet) String() string {
+	return x.MarshalProtoText()
+}
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FeatureSetEditionDefault { ")
+	if x.Features != nil {
+		sb.WriteString(" features: ")
+		sb.WriteString(x.Features.MarshalProtoText())
+	}
+	if x.Edition != nil {
+		sb.WriteString(" edition: ")
+		sb.WriteString(x.Edition.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) String() string {
+	return x.MarshalProtoText()
+}
+func (x *FeatureSetDefaults) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FeatureSetDefaults { ")
+	if len(x.Defaults) > 0 {
+		sb.WriteString(" defaults: [")
+		for i, v := range x.Defaults {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.MinimumEdition != nil {
+		sb.WriteString(" minimum_edition: ")
+		sb.WriteString(x.MinimumEdition.String())
+	}
+	if x.MaximumEdition != nil {
+		sb.WriteString(" maximum_edition: ")
+		sb.WriteString(x.MaximumEdition.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FeatureSetDefaults) String() string {
+	return x.MarshalProtoText()
+}
+func (x *SourceCodeInfo_Location) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Location { ")
+	if len(x.Path) > 0 {
+		sb.WriteString(" path: [")
+		for i, v := range x.Path {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Span) > 0 {
+		sb.WriteString(" span: [")
+		for i, v := range x.Span {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if x.LeadingComments != nil {
+		sb.WriteString(" leading_comments: ")
+		sb.WriteString(strconv.Quote(*x.LeadingComments))
+	}
+	if x.TrailingComments != nil {
+		sb.WriteString(" trailing_comments: ")
+		sb.WriteString(strconv.Quote(*x.TrailingComments))
+	}
+	if len(x.LeadingDetachedComments) > 0 {
+		sb.WriteString(" leading_detached_comments: [")
+		for i, v := range x.LeadingDetachedComments {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *SourceCodeInfo_Location) String() string {
+	return x.MarshalProtoText()
+}
+func (x *SourceCodeInfo) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("SourceCodeInfo { ")
+	if len(x.Location) > 0 {
+		sb.WriteString(" location: [")
+		for i, v := range x.Location {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *SourceCodeInfo) String() string {
+	return x.MarshalProtoText()
+}
+func (x GeneratedCodeInfo_Annotation_Semantic) MarshalProtoText() string {
+	return x.String()
+}
+func (x *GeneratedCodeInfo_Annotation) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Annotation { ")
+	if len(x.Path) > 0 {
+		sb.WriteString(" path: [")
+		for i, v := range x.Path {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if x.SourceFile != nil {
+		sb.WriteString(" source_file: ")
+		sb.WriteString(strconv.Quote(*x.SourceFile))
+	}
+	if x.Begin != nil {
+		sb.WriteString(" begin: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.Begin), 10))
+	}
+	if x.End != nil {
+		sb.WriteString(" end: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+	}
+	if x.Semantic != nil {
+		sb.WriteString(" semantic: ")
+		sb.WriteString(x.Semantic.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *GeneratedCodeInfo_Annotation) String() string {
+	return x.MarshalProtoText()
+}
+func (x *GeneratedCodeInfo) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("GeneratedCodeInfo { ")
+	if len(x.Annotation) > 0 {
+		sb.WriteString(" annotation: [")
+		for i, v := range x.Annotation {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *GeneratedCodeInfo) String() string {
+	return x.MarshalProtoText()
+}
 func (m *FileDescriptorSet) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

@@ -131,6 +131,8 @@ import (
 // the Joda Time's [`ISODateTimeFormat.dateTime()`](
 // http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
 // ) to obtain a formatter capable of generating timestamps in this format.
+//
+// protobuf-go-lite:disable-text
 type Timestamp struct {
 	unknownFields []byte
 	// Represents seconds of UTC time since Unix epoch

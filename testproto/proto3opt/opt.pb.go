@@ -5,10 +5,12 @@
 package proto3opt
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	io "io"
 	math "math"
 	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -698,6 +700,84 @@ func (m *OptionalFieldInProto3) SizeVT() (n int) {
 	return n
 }
 
+func (x SimpleEnum) MarshalProtoText() string {
+	return x.String()
+}
+func (x *OptionalFieldInProto3) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("OptionalFieldInProto3 { ")
+	if x.OptionalInt32 != nil {
+		sb.WriteString(" optional_int32: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalInt32), 10))
+	}
+	if x.OptionalInt64 != nil {
+		sb.WriteString(" optional_int64: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalInt64), 10))
+	}
+	if x.OptionalUint32 != nil {
+		sb.WriteString(" optional_uint32: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalUint32), 10))
+	}
+	if x.OptionalUint64 != nil {
+		sb.WriteString(" optional_uint64: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalUint64), 10))
+	}
+	if x.OptionalSint32 != nil {
+		sb.WriteString(" optional_sint32: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSint32), 10))
+	}
+	if x.OptionalSint64 != nil {
+		sb.WriteString(" optional_sint64: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSint64), 10))
+	}
+	if x.OptionalFixed32 != nil {
+		sb.WriteString(" optional_fixed32: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalFixed32), 10))
+	}
+	if x.OptionalFixed64 != nil {
+		sb.WriteString(" optional_fixed64: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalFixed64), 10))
+	}
+	if x.OptionalSfixed32 != nil {
+		sb.WriteString(" optional_sfixed32: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSfixed32), 10))
+	}
+	if x.OptionalSfixed64 != nil {
+		sb.WriteString(" optional_sfixed64: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSfixed64), 10))
+	}
+	if x.OptionalFloat != nil {
+		sb.WriteString(" optional_float: ")
+		sb.WriteString(strconv.FormatFloat(float64(*x.OptionalFloat), 'g', -1, 32))
+	}
+	if x.OptionalDouble != nil {
+		sb.WriteString(" optional_double: ")
+		sb.WriteString(strconv.FormatFloat(*x.OptionalDouble, 'g', -1, 64))
+	}
+	if x.OptionalBool != nil {
+		sb.WriteString(" optional_bool: ")
+		sb.WriteString(strconv.FormatBool(*x.OptionalBool))
+	}
+	if x.OptionalString != nil {
+		sb.WriteString(" optional_string: ")
+		sb.WriteString(strconv.Quote(*x.OptionalString))
+	}
+	if len(x.OptionalBytes) > 0 {
+		sb.WriteString(" optional_bytes: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.OptionalBytes))
+		sb.WriteString("\"")
+	}
+	if x.OptionalEnum != nil {
+		sb.WriteString(" optional_enum: ")
+		sb.WriteString(x.OptionalEnum.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *OptionalFieldInProto3) String() string {
+	return x.MarshalProtoText()
+}
 func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

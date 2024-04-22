@@ -6,6 +6,8 @@ package sourcecontextpb
 
 import (
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -194,6 +196,19 @@ func (m *SourceContext) SizeVT() (n int) {
 	return n
 }
 
+func (x *SourceContext) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("SourceContext { ")
+	if x.FileName != "" {
+		sb.WriteString(" file_name: ")
+		sb.WriteString(strconv.Quote(x.FileName))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *SourceContext) String() string {
+	return x.MarshalProtoText()
+}
 func (m *SourceContext) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

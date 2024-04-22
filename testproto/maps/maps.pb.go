@@ -6,6 +6,8 @@ package testproto_maps
 
 import (
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -555,6 +557,69 @@ func (m *MsgWithMaps) SizeVT() (n int) {
 	return n
 }
 
+func (x *MsgWithMaps_StringKeysEntry) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("StringKeysEntry { ")
+	if x.Key != "" {
+		sb.WriteString(" key: ")
+		sb.WriteString(strconv.Quote(x.Key))
+	}
+	if x.Value != nil {
+		sb.WriteString(" value: ")
+		sb.WriteString(x.Value.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MsgWithMaps_StringKeysEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *MsgWithMaps_IntKeysEntry) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("IntKeysEntry { ")
+	if x.Key != 0 {
+		sb.WriteString(" key: ")
+		sb.WriteString(strconv.FormatUint(uint64(x.Key), 10))
+	}
+	if x.Value != nil {
+		sb.WriteString(" value: ")
+		sb.WriteString(x.Value.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MsgWithMaps_IntKeysEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *MsgWithMaps) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("MsgWithMaps { ")
+	if len(x.StringKeys) > 0 {
+		sb.WriteString(" stringKeys: {")
+		for k, v := range x.StringKeys {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.Quote(k))
+			sb.WriteString(": ")
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString(" }")
+	}
+	if len(x.IntKeys) > 0 {
+		sb.WriteString(" intKeys: {")
+		for k, v := range x.IntKeys {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.FormatUint(uint64(k), 10))
+			sb.WriteString(": ")
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString(" }")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *MsgWithMaps) String() string {
+	return x.MarshalProtoText()
+}
 func (m *MsgWithMaps) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

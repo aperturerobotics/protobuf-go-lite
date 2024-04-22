@@ -6,6 +6,8 @@ package apipb
 
 import (
 	io "io"
+	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -1137,6 +1139,121 @@ func (m *Mixin) SizeVT() (n int) {
 	return n
 }
 
+func (x *Api) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Api { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if len(x.Methods) > 0 {
+		sb.WriteString(" methods: [")
+		for i, v := range x.Methods {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Version != "" {
+		sb.WriteString(" version: ")
+		sb.WriteString(strconv.Quote(x.Version))
+	}
+	if x.SourceContext != nil {
+		sb.WriteString(" source_context: ")
+		sb.WriteString(x.SourceContext.MarshalProtoText())
+	}
+	if len(x.Mixins) > 0 {
+		sb.WriteString(" mixins: [")
+		for i, v := range x.Mixins {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Syntax != 0 {
+		sb.WriteString(" syntax: ")
+		sb.WriteString(typepb.Syntax(x.Syntax).String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Api) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Method) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Method { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if x.RequestTypeUrl != "" {
+		sb.WriteString(" request_type_url: ")
+		sb.WriteString(strconv.Quote(x.RequestTypeUrl))
+	}
+	if x.RequestStreaming {
+		sb.WriteString(" request_streaming: ")
+		sb.WriteString(strconv.FormatBool(x.RequestStreaming))
+	}
+	if x.ResponseTypeUrl != "" {
+		sb.WriteString(" response_type_url: ")
+		sb.WriteString(strconv.Quote(x.ResponseTypeUrl))
+	}
+	if x.ResponseStreaming {
+		sb.WriteString(" response_streaming: ")
+		sb.WriteString(strconv.FormatBool(x.ResponseStreaming))
+	}
+	if len(x.Options) > 0 {
+		sb.WriteString(" options: [")
+		for i, v := range x.Options {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	if x.Syntax != 0 {
+		sb.WriteString(" syntax: ")
+		sb.WriteString(typepb.Syntax(x.Syntax).String())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Method) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Mixin) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Mixin { ")
+	if x.Name != "" {
+		sb.WriteString(" name: ")
+		sb.WriteString(strconv.Quote(x.Name))
+	}
+	if x.Root != "" {
+		sb.WriteString(" root: ")
+		sb.WriteString(strconv.Quote(x.Root))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Mixin) String() string {
+	return x.MarshalProtoText()
+}
 func (m *Api) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0

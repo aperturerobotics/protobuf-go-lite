@@ -5,10 +5,12 @@
 package proto2
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	io "io"
 	math "math"
 	strconv "strconv"
+	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -4557,6 +4559,587 @@ func (m *EnumMessage) SizeVT() (n int) {
 	return n
 }
 
+func (x *DoubleMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("DoubleMessage { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatFloat(*x.RequiredField, 'g', -1, 64))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatFloat(*x.OptionalField, 'g', -1, 64))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *DoubleMessage) String() string {
+	return x.MarshalProtoText()
+}
+func (x *FloatMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FloatMessage { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatFloat(float64(*x.RequiredField), 'g', -1, 32))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatFloat(float64(*x.OptionalField), 'g', -1, 32))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *FloatMessage) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Int32Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Int32Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Int32Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Int64Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Int64Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Int64Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Uint32Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Uint32Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Uint32Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Uint64Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Uint64Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Uint64Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Sint32Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sint32Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Sint32Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Sint64Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sint64Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Sint64Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Fixed32Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Fixed32Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Fixed32Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Fixed64Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Fixed64Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Fixed64Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Sfixed32Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sfixed32Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Sfixed32Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Sfixed64Message) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Sfixed64Message { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Sfixed64Message) String() string {
+	return x.MarshalProtoText()
+}
+func (x *BoolMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("BoolMessage { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.FormatBool(*x.RequiredField))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.FormatBool(*x.OptionalField))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatBool(v))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatBool(v))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *BoolMessage) String() string {
+	return x.MarshalProtoText()
+}
+func (x *StringMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("StringMessage { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(strconv.Quote(*x.RequiredField))
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(strconv.Quote(*x.OptionalField))
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.Quote(v))
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *StringMessage) String() string {
+	return x.MarshalProtoText()
+}
+func (x *BytesMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("BytesMessage { ")
+	if len(x.RequiredField) > 0 {
+		sb.WriteString(" required_field: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.RequiredField))
+		sb.WriteString("\"")
+	}
+	if len(x.OptionalField) > 0 {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.OptionalField))
+		sb.WriteString("\"")
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString("\"")
+			sb.WriteString(base64.StdEncoding.EncodeToString(v))
+			sb.WriteString("\"")
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *BytesMessage) String() string {
+	return x.MarshalProtoText()
+}
+func (x EnumMessage_Num) MarshalProtoText() string {
+	return x.String()
+}
+func (x *EnumMessage) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("EnumMessage { ")
+	if x.RequiredField != nil {
+		sb.WriteString(" required_field: ")
+		sb.WriteString(x.RequiredField.String())
+	}
+	if x.OptionalField != nil {
+		sb.WriteString(" optional_field: ")
+		sb.WriteString(x.OptionalField.String())
+	}
+	if len(x.RepeatedField) > 0 {
+		sb.WriteString(" repeated_field: [")
+		for i, v := range x.RepeatedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(EnumMessage_Num(v).String())
+		}
+		sb.WriteString("]")
+	}
+	if len(x.PackedField) > 0 {
+		sb.WriteString(" packed_field: [")
+		for i, v := range x.PackedField {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(EnumMessage_Num(v).String())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *EnumMessage) String() string {
+	return x.MarshalProtoText()
+}
 func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)

@@ -83,3 +83,8 @@ func (t *Timestamp) String() string {
 	}
 	return out.String()
 }
+
+// MarshalProtoText formats the Timestamp to a proto text string.
+func (t *Timestamp) MarshalProtoText() string {
+	return t.String()
+}

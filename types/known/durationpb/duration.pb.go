@@ -101,6 +101,8 @@ import (
 // encoded in JSON format as "3s", while 3 seconds and 1 nanosecond should
 // be expressed in JSON format as "3.000000001s", and 3 seconds and 1
 // microsecond should be expressed in JSON format as "3.000001s".
+//
+// protobuf-go-lite:disable-text
 type Duration struct {
 	unknownFields []byte
 	// Signed seconds of the span of time. Must be from -315,576,000,000

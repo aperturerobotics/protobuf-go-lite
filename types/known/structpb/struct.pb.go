@@ -10,6 +10,7 @@ import (
 	io "io"
 	math "math"
 	strconv "strconv"
+	strings "strings"
 	utf8 "unicode/utf8"
 	unsafe "unsafe"
 
@@ -1440,6 +1441,105 @@ func (m *ListValue) SizeVT() (n int) {
 	return n
 }
 
+func (x NullValue) MarshalProtoText() string {
+	return x.String()
+}
+func (x *Struct_FieldsEntry) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("FieldsEntry { ")
+	if x.Key != "" {
+		sb.WriteString(" key: ")
+		sb.WriteString(strconv.Quote(x.Key))
+	}
+	if x.Value != nil {
+		sb.WriteString(" value: ")
+		sb.WriteString(x.Value.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Struct_FieldsEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Struct) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Struct { ")
+	if len(x.Fields) > 0 {
+		sb.WriteString(" fields: {")
+		for k, v := range x.Fields {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.Quote(k))
+			sb.WriteString(": ")
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString(" }")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Struct) String() string {
+	return x.MarshalProtoText()
+}
+func (x *Value) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("Value { ")
+	switch body := x.Kind.(type) {
+	case *Value_NullValue:
+		if body.NullValue != 0 {
+			sb.WriteString(" null_value: ")
+			sb.WriteString(NullValue(body.NullValue).String())
+		}
+	case *Value_NumberValue:
+		if body.NumberValue != 0 {
+			sb.WriteString(" number_value: ")
+			sb.WriteString(strconv.FormatFloat(body.NumberValue, 'g', -1, 64))
+		}
+	case *Value_StringValue:
+		if body.StringValue != "" {
+			sb.WriteString(" string_value: ")
+			sb.WriteString(strconv.Quote(body.StringValue))
+		}
+	case *Value_BoolValue:
+		if body.BoolValue {
+			sb.WriteString(" bool_value: ")
+			sb.WriteString(strconv.FormatBool(body.BoolValue))
+		}
+	case *Value_StructValue:
+		if body.StructValue != nil {
+			sb.WriteString(" struct_value: ")
+			sb.WriteString(body.StructValue.MarshalProtoText())
+		}
+	case *Value_ListValue:
+		if body.ListValue != nil {
+			sb.WriteString(" list_value: ")
+			sb.WriteString(body.ListValue.MarshalProtoText())
+		}
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *Value) String() string {
+	return x.MarshalProtoText()
+}
+func (x *ListValue) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("ListValue { ")
+	if len(x.Values) > 0 {
+		sb.WriteString(" values: [")
+		for i, v := range x.Values {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(v.MarshalProtoText())
+		}
+		sb.WriteString("]")
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+func (x *ListValue) String() string {
+	return x.MarshalProtoText()
+}
 func (m *Struct) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
