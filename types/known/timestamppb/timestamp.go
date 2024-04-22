@@ -17,9 +17,14 @@ func ToTimestamp(t time.Time) *Timestamp {
 	return New(t)
 }
 
+// GetEmpty checks if the timestamp is empty.
+func (x *Timestamp) GetEmpty() bool {
+	return x.SizeVT() == 0
+}
+
 // Validate is an alias to CheckValid.
 func (x *Timestamp) Validate(allowEmpty bool) error {
-	isEmpty := x.SizeVT() == 0
+	isEmpty := x.GetEmpty()
 	if isEmpty {
 		if allowEmpty {
 			return nil
