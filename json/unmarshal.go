@@ -79,6 +79,11 @@ func (s *UnmarshalState) Config() UnmarshalerConfig {
 	return *s.config
 }
 
+// WhatIsNext gets ValueType of relatively next json element
+func (s *UnmarshalState) WhatIsNext() jsoniter.ValueType {
+	return s.inner.WhatIsNext()
+}
+
 // AnyTypeResolver returns the any type resolver.
 func (s *UnmarshalState) AnyTypeResolver() anypb_resolver.AnyTypeResolver {
 	if s.config.AnyTypeResolver != nil {
