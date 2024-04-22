@@ -81,4 +81,5 @@ func TestWellKnownTypes(t *testing.T) {
 	err = umc.Unmarshal(jdata, jparsed)
 	require.NoError(t, err)
 	require.True(t, jparsed.EqualVT(m))
+	require.True(t, jparsed.EqualMessageVT(m))
 }

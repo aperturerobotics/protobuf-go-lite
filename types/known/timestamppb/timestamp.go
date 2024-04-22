@@ -1,11 +1,28 @@
 package timestamppb
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 
 	"github.com/aperturerobotics/protobuf-go-lite/json"
 )
+
+// ErrEmptyTimestamp is returned from Validate if the timestamp was empty.
+var ErrEmptyTimestamp = errors.New("empty timestamp")
+
+// Validate is an alias to CheckValid.
+func (x *Timestamp) Validate(allowEmpty bool) error {
+	isEmpty := x.SizeVT() == 0
+	if isEmpty {
+		if allowEmpty {
+			return nil
+		}
+		return ErrEmptyTimestamp
+	}
+
+	return x.CheckValid()
+}
 
 // MarshalJSON marshals the Timestamp to JSON.
 func (x *Timestamp) MarshalJSON() ([]byte, error) {
