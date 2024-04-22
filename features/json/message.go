@@ -23,6 +23,11 @@ func (g *jsonGenerator) genMessage(message *protogen.Message) {
 		g.genMessage(message)
 	}
 
+	// skip early if the disable comment is present
+	if hasDisableJsonComment(message.Comments.Leading) {
+		return
+	}
+
 	// Check if the message has any optional fields and skip generation if so.
 	anyOptional := slices.ContainsFunc(message.Fields, func(f *protogen.Field) bool {
 		return f.Desc.HasOptionalKeyword()

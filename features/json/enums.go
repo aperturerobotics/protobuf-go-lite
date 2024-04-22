@@ -9,9 +9,11 @@ import (
 )
 
 func (g *jsonGenerator) genEnum(enum *protogen.Enum) {
-	g.genEnumMarshaler(enum)
-	g.genStdEnumMarshaler(enum)
+	if !hasDisableJsonComment(enum.Comments.Leading) {
+		g.genEnumMarshaler(enum)
+		g.genStdEnumMarshaler(enum)
 
-	g.genEnumUnmarshaler(enum)
-	g.genStdEnumUnmarshaler(enum)
+		g.genEnumUnmarshaler(enum)
+		g.genStdEnumUnmarshaler(enum)
+	}
 }

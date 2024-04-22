@@ -5,6 +5,8 @@
 package json
 
 import (
+	"strings"
+
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -13,6 +15,19 @@ import (
 const (
 	jsonPluginPackage = protogen.GoImportPath("github.com/aperturerobotics/protobuf-go-lite/json")
 )
+
+var disableJsonComment = "protobuf-go-lite:disable-json"
+
+// hasDisableJsonComment checks if a comments section has the disable json comment.
+func hasDisableJsonComment(comments protogen.Comments) bool {
+	for _, line := range strings.Split(strings.TrimSuffix(string(comments), "\n"), "\n") {
+		line = strings.TrimSpace(line)
+		if line == disableJsonComment {
+			return true
+		}
+	}
+	return false
+}
 
 type jsonGenerator struct {
 	gen  *protogen.Plugin

@@ -133,6 +133,8 @@ The following additional features from vtprotobuf can be enabled:
 
     - `func (p *YourProto) MarshalJSON() ([]byte, error)` behaves similarly to calling `protojson.Marshal(p)` on the message, except the marshalling is performed by unrolled codegen without using reflection and allocating as little memory as possible (with json-iterator/go).
 
+    - Adding a `//protobuf-go-lite:disable-json` comment before a message or enum will disable the json marshaler / unmarshaler.
+
 ## License
 
 BSD-3
