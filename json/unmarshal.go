@@ -824,12 +824,24 @@ func (s *UnmarshalState) ReadTime() *time.Time {
 	if s.ReadNil() {
 		return nil
 	}
-	t, err := time.Parse("2006-01-02T15:04:05.999999999Z", s.inner.ReadString())
-	if err != nil {
-		s.SetErrorf("invalid time: %w", err)
-		return nil
+	nextTok := s.WhatIsNext()
+	switch nextTok {
+	case jsoniter.StringValue:
+		t, err := time.Parse("2006-01-02T15:04:05.999999999Z", s.inner.ReadString())
+		if err != nil {
+			s.SetErrorf("invalid time: %w", err)
+			return nil
+		}
+		return &t
+	case jsoniter.NumberValue:
+		timeMs := s.inner.ReadInt64()
+		t := time.UnixMilli(timeMs)
+		return &t
+	default:
+		s.SetErrorf("invalid value type for duration: %s", valueTypeString(nextTok))
+		t := time.Time{}
+		return &t
 	}
-	return &t
 }
 
 // ReadDuration reads a duration.
