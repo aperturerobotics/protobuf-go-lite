@@ -18,8 +18,11 @@ var (
 
 // Message is the base vtprotobuf message marshal/unmarshal interface.
 type Message interface {
+	// MarshalVT marshals the message with vtprotobuf.
 	MarshalVT() ([]byte, error)
-	UnmarshalVT([]byte) error
+	// UnmarshalVT unmarshals the message object with vtprotobuf.
+	UnmarshalVT(data []byte) error
+	// Reset resets the message.
 	Reset()
 }
 
