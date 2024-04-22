@@ -4,12 +4,18 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	time "time"
 
 	"github.com/aperturerobotics/protobuf-go-lite/json"
 )
 
 // ErrEmptyTimestamp is returned from Validate if the timestamp was empty.
 var ErrEmptyTimestamp = errors.New("empty timestamp")
+
+// ToTimestamp constructs a new Timestamp from the provided time.Time.
+func ToTimestamp(t time.Time) *Timestamp {
+	return New(t)
+}
 
 // Validate is an alias to CheckValid.
 func (x *Timestamp) Validate(allowEmpty bool) error {
