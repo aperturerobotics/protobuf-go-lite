@@ -74,6 +74,87 @@ func EncodeVarint(dAtA []byte, offset int, v uint64) int {
 	return base
 }
 
+// AppendVarint appends v to b as a varint-encoded uint64.
+func AppendVarint(b []byte, v uint64) []byte {
+	switch {
+	case v < 1<<7:
+		b = append(b, byte(v))
+	case v < 1<<14:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte(v>>7))
+	case v < 1<<21:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte(v>>14))
+	case v < 1<<28:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte(v>>21))
+	case v < 1<<35:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte(v>>28))
+	case v < 1<<42:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte((v>>28)&0x7f|0x80),
+			byte(v>>35))
+	case v < 1<<49:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte((v>>28)&0x7f|0x80),
+			byte((v>>35)&0x7f|0x80),
+			byte(v>>42))
+	case v < 1<<56:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte((v>>28)&0x7f|0x80),
+			byte((v>>35)&0x7f|0x80),
+			byte((v>>42)&0x7f|0x80),
+			byte(v>>49))
+	case v < 1<<63:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte((v>>28)&0x7f|0x80),
+			byte((v>>35)&0x7f|0x80),
+			byte((v>>42)&0x7f|0x80),
+			byte((v>>49)&0x7f|0x80),
+			byte(v>>56))
+	default:
+		b = append(b,
+			byte((v>>0)&0x7f|0x80),
+			byte((v>>7)&0x7f|0x80),
+			byte((v>>14)&0x7f|0x80),
+			byte((v>>21)&0x7f|0x80),
+			byte((v>>28)&0x7f|0x80),
+			byte((v>>35)&0x7f|0x80),
+			byte((v>>42)&0x7f|0x80),
+			byte((v>>49)&0x7f|0x80),
+			byte((v>>56)&0x7f|0x80),
+			1)
+	}
+	return b
+}
+
 // SizeOfVarint returns the size of the varint-encoded value.
 func SizeOfVarint(x uint64) (n int) {
 	return (bits.Len64(x|1) + 6) / 7
