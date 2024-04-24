@@ -1,9 +1,11 @@
 # protobuf-go-lite
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/aperturerobotics/protobuf-go-lite.svg)](https://pkg.go.dev/github.com/aperturerobotics/protobuf-go-lite)
-[![Build Status](https://travis-ci.org/protocolbuffers/protobuf-go.svg?branch=master)](https://travis-ci.org/protocolbuffers/protobuf-go)
+[![GoDoc Widget]][GoDoc] [![Go Report Card Widget]][Go Report Card]
 
-## Introduction
+[GoDoc]: https://godoc.org/github.com/aperturerobotics/protobuf-go-lite
+[GoDoc Widget]: https://godoc.org/github.com/aperturerobotics/protobuf-go-lite?status.svg
+[Go Report Card Widget]: https://goreportcard.com/badge/github.com/aperturerobotics/protobuf-go-lite
+[Go Report Card]: https://goreportcard.com/report/github.com/aperturerobotics/protobuf-go-lite
 
 **protobuf-go-lite** is a stripped-down version of the [protobuf-go] code
 generator modified to work without reflection and merged with [vtprotobuf] to
