@@ -4,6 +4,7 @@
 package json
 
 import (
+	"bytes"
 	"encoding/base64"
 	"fmt"
 	"math"
@@ -12,7 +13,6 @@ import (
 	"time"
 
 	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
-	jsoniter "github.com/json-iterator/go"
 )
 
 // Marshaler is the interface implemented by types that are supported by this plugin.
@@ -51,14 +51,18 @@ var DefaultMarshalerConfig = MarshalerConfig{
 
 // Marshal marshals a message.
 func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
-	s := NewMarshalState(c)
+	var buf bytes.Buffer
+	s := NewMarshalState(c, NewJsonStream(&buf))
 	m.MarshalProtoJSON(s)
-	return s.Bytes()
+	if err := s.Err(); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }
 
 // MarshalState is the internal state of the Marshaler.
 type MarshalState struct {
-	inner  *jsoniter.Stream
+	inner  *JsonStream
 	config *MarshalerConfig
 
 	err   *marshalError
@@ -67,9 +71,9 @@ type MarshalState struct {
 }
 
 // NewMarshalState creates a new MarshalState.
-func NewMarshalState(config MarshalerConfig) *MarshalState {
+func NewMarshalState(config MarshalerConfig, stream *JsonStream) *MarshalState {
 	return &MarshalState{
-		inner:  jsoniter.NewStream(jsoniterConfig, nil, 1024),
+		inner:  stream,
 		config: &config,
 
 		err:   &marshalError{},
@@ -92,9 +96,9 @@ func (s *MarshalState) AnyTypeResolver() anypb_resolver.AnyTypeResolver {
 }
 
 // Sub returns a sub-marshaler with a new buffer, but with the same configuration, error and path info.
-func (s *MarshalState) Sub() *MarshalState {
+func (s *MarshalState) Sub(js *JsonStream) *MarshalState {
 	return &MarshalState{
-		inner:  jsoniter.NewStream(jsoniterConfig, nil, 1024),
+		inner:  js,
 		config: s.config,
 
 		err:   s.err,
@@ -108,8 +112,8 @@ func (s *MarshalState) Err() error {
 	if s.err.Err != nil {
 		return s.err
 	}
-	if s.inner.Error != nil {
-		return s.inner.Error
+	if err := s.inner.Error(); err != nil {
+		return err
 	}
 	return nil
 }
@@ -127,14 +131,6 @@ func (s *MarshalState) SetError(err error) {
 // SetErrorf calls SetError with a formatted error.
 func (s *MarshalState) SetErrorf(format string, a ...interface{}) {
 	s.SetError(fmt.Errorf(format, a...))
-}
-
-// Bytes returns the buffer of the marshaler.
-func (s *MarshalState) Bytes() ([]byte, error) {
-	if err := s.Err(); err != nil {
-		return nil, err
-	}
-	return s.inner.Buffer(), nil
 }
 
 // WithFieldMask returns a MarshalState for the given field mask.

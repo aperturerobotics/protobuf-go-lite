@@ -4,6 +4,7 @@
 package json
 
 import (
+	"bytes"
 	"math"
 	"testing"
 	"time"
@@ -19,12 +20,14 @@ var (
 func testMarshal(t *testing.T, f func(s *MarshalState), expected string) {
 	t.Helper()
 
-	s := NewMarshalState(DefaultMarshalerConfig)
+	var buf bytes.Buffer
+	s := NewMarshalState(DefaultMarshalerConfig, NewJsonStream(&buf))
 	f(s)
-	data, err := s.Bytes()
+	err := s.Err()
 	if err != nil {
 		t.Error(err)
 	}
+	data := buf.Bytes()
 	if diff := cmp.Diff(expected, string(data)); diff != "" {
 		t.Errorf("diff: %s", diff)
 	}
