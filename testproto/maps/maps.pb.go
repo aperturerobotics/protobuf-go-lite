@@ -5,6 +5,7 @@
 package testproto_maps
 
 import (
+	fmt "fmt"
 	io "io"
 	strconv "strconv"
 	strings "strings"
@@ -13,7 +14,6 @@ import (
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	timestamppb "github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
-	errors "github.com/pkg/errors"
 )
 
 type MsgWithMaps struct {
@@ -643,15 +643,15 @@ func (m *MsgWithMaps) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: MsgWithMaps: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgWithMaps: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: MsgWithMaps: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgWithMaps: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field StringKeys", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field StringKeys", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -780,7 +780,7 @@ func (m *MsgWithMaps) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field IntKeys", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IntKeys", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -938,15 +938,15 @@ func (m *MsgWithMaps) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: MsgWithMaps: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgWithMaps: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: MsgWithMaps: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgWithMaps: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field StringKeys", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field StringKeys", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1079,7 +1079,7 @@ func (m *MsgWithMaps) UnmarshalVTUnsafe(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field IntKeys", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IntKeys", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {

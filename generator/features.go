@@ -5,10 +5,10 @@
 package generator
 
 import (
+	"fmt"
 	"sort"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
-	"github.com/pkg/errors"
 )
 
 var defaultFeatures = make(map[string]Feature)
@@ -23,7 +23,7 @@ func findFeatures(featureNames []string) ([]Feature, error) {
 
 		feat, ok := defaultFeatures[name]
 		if !ok {
-			return nil, errors.Errorf("unknown feature: %q", name)
+			return nil, fmt.Errorf("unknown feature: %q", name)
 		}
 		required[name] = feat
 	}

@@ -33,7 +33,8 @@ const (
 	syncPackage    = protogen.GoImportPath("sync")
 	timePackage    = protogen.GoImportPath("time")
 	utf8Package    = protogen.GoImportPath("unicode/utf8")
-	errorsPackage  = protogen.GoImportPath("github.com/pkg/errors")
+	errorsPackage  = protogen.GoImportPath("errors")
+	fmtPackage     = protogen.GoImportPath("fmt")
 )
 
 // GenerateFile generates the contents of a .pb.go file.

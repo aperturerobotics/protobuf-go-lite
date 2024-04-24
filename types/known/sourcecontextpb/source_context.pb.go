@@ -5,13 +5,13 @@
 package sourcecontextpb
 
 import (
+	fmt "fmt"
 	io "io"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
-	errors "github.com/pkg/errors"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -232,15 +232,15 @@ func (m *SourceContext) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: SourceContext: wiretype end group for non-group")
+			return fmt.Errorf("proto: SourceContext: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: SourceContext: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: SourceContext: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field FileName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field FileName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -315,15 +315,15 @@ func (m *SourceContext) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: SourceContext: wiretype end group for non-group")
+			return fmt.Errorf("proto: SourceContext: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: SourceContext: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: SourceContext: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field FileName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field FileName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {

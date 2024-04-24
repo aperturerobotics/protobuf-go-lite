@@ -5,12 +5,13 @@
 package durationpb
 
 import (
+	errors "errors"
+	fmt "fmt"
 	io "io"
 	math "math"
 	time "time"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
-	errors "github.com/pkg/errors"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -162,13 +163,13 @@ func (x *Duration) CheckValid() error {
 	case invalidNil:
 		return errors.New("invalid nil Duration")
 	case invalidUnderflow:
-		return errors.Errorf("duration (%v) exceeds -10000 years", x)
+		return fmt.Errorf("duration (%v) exceeds -10000 years", x)
 	case invalidOverflow:
-		return errors.Errorf("duration (%v) exceeds +10000 years", x)
+		return fmt.Errorf("duration (%v) exceeds +10000 years", x)
 	case invalidNanosRange:
-		return errors.Errorf("duration (%v) has out-of-range nanos", x)
+		return fmt.Errorf("duration (%v) has out-of-range nanos", x)
 	case invalidNanosSign:
-		return errors.Errorf("duration (%v) has seconds and nanos with different signs", x)
+		return fmt.Errorf("duration (%v) has seconds and nanos with different signs", x)
 	default:
 		return nil
 	}
@@ -388,15 +389,15 @@ func (m *Duration) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: Duration: wiretype end group for non-group")
+			return fmt.Errorf("proto: Duration: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: Duration: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Duration: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
@@ -415,7 +416,7 @@ func (m *Duration) UnmarshalVT(dAtA []byte) error {
 			}
 		case 2:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {
@@ -477,15 +478,15 @@ func (m *Duration) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: Duration: wiretype end group for non-group")
+			return fmt.Errorf("proto: Duration: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: Duration: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Duration: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
 			for shift := uint(0); ; shift += 7 {
@@ -504,7 +505,7 @@ func (m *Duration) UnmarshalVTUnsafe(dAtA []byte) error {
 			}
 		case 2:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
 			for shift := uint(0); ; shift += 7 {

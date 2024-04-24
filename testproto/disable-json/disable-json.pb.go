@@ -5,13 +5,13 @@
 package disable_json
 
 import (
+	fmt "fmt"
 	io "io"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
-	errors "github.com/pkg/errors"
 )
 
 // protobuf-go-lite:disable-json
@@ -395,15 +395,15 @@ func (m *MessageDisableJson) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: MessageDisableJson: wiretype end group for non-group")
+			return fmt.Errorf("proto: MessageDisableJson: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: MessageDisableJson: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MessageDisableJson: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Hello", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Hello", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -424,7 +424,7 @@ func (m *MessageDisableJson) UnmarshalVT(dAtA []byte) error {
 			m.Body = &MessageDisableJson_Hello{Hello: b}
 		case 2:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field World", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field World", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -499,15 +499,15 @@ func (m *MessageDisableJson) UnmarshalVTUnsafe(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return errors.Errorf("proto: MessageDisableJson: wiretype end group for non-group")
+			return fmt.Errorf("proto: MessageDisableJson: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return errors.Errorf("proto: MessageDisableJson: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MessageDisableJson: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return errors.Errorf("proto: wrong wireType = %d for field Hello", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Hello", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -528,7 +528,7 @@ func (m *MessageDisableJson) UnmarshalVTUnsafe(dAtA []byte) error {
 			m.Body = &MessageDisableJson_Hello{Hello: b}
 		case 2:
 			if wireType != 2 {
-				return errors.Errorf("proto: wrong wireType = %d for field World", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field World", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {

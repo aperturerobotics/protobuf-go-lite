@@ -1,10 +1,10 @@
 package protobuf_go_lite
 
 import (
+	"errors"
+	"fmt"
 	"io"
 	"math/bits"
-
-	"github.com/pkg/errors"
 )
 
 var (
@@ -354,7 +354,7 @@ func Skip(dAtA []byte) (n int, err error) {
 		case 5:
 			iNdEx += 4
 		default:
-			return 0, errors.Errorf("proto: illegal wireType %d", wireType)
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
 		if iNdEx < 0 {
 			return 0, ErrInvalidLength

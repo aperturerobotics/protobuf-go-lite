@@ -29,7 +29,6 @@ import (
 
 	"github.com/aperturerobotics/protobuf-go-lite/internal/genid"
 	"github.com/aperturerobotics/protobuf-go-lite/internal/strs"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/encoding/prototext"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
@@ -77,7 +76,7 @@ func (opts Options) Run(f func(*Plugin) error) {
 
 func run(opts Options, f func(*Plugin) error) error {
 	if len(os.Args) > 1 {
-		return errors.Errorf("unknown argument %q (this program should be run by protoc, not directly)", os.Args[1])
+		return fmt.Errorf("unknown argument %q (this program should be run by protoc, not directly)", os.Args[1])
 	}
 	in, err := io.ReadAll(os.Stdin)
 	if err != nil {
@@ -204,7 +203,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 			case "source_relative":
 				gen.pathType = pathTypeSourceRelative
 			default:
-				return nil, errors.Errorf(`unknown path type %q: want "import" or "source_relative"`, value)
+				return nil, fmt.Errorf(`unknown path type %q: want "import" or "source_relative"`, value)
 			}
 		case "annotate_code":
 			switch value {
@@ -212,7 +211,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 				gen.annotateCode = true
 			case "false":
 			default:
-				return nil, errors.Errorf(`bad value for parameter %q: want "true" or "false"`, param)
+				return nil, fmt.Errorf(`bad value for parameter %q: want "true" or "false"`, param)
 			}
 		default:
 			if param[0] == 'M' {
@@ -237,7 +236,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 	// prefix from generated files. This only makes sense if generated
 	// filenames are based on the import path.
 	if gen.module != "" && gen.pathType == pathTypeSourceRelative {
-		return nil, errors.Errorf("cannot use module= with paths=source_relative")
+		return nil, fmt.Errorf("cannot use module= with paths=source_relative")
 	}
 
 	// Figure out the import path and package name for each file.
@@ -282,7 +281,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		switch {
 		case importPaths[filename] == "":
 			// The import path must be specified one way or another.
-			return nil, errors.Errorf(
+			return nil, fmt.Errorf(
 				"unable to determine Go import path for %q\n\n"+
 					"Please specify either:\n"+
 					"\t• a \"go_package\" option in the .proto source file, or\n"+
@@ -312,7 +311,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 	for _, fdesc := range gen.Request.ProtoFile {
 		filename := fdesc.GetName()
 		if gen.FilesByPath[filename] != nil {
-			return nil, errors.Errorf("duplicate file name: %q", filename)
+			return nil, fmt.Errorf("duplicate file name: %q", filename)
 		}
 		f, err := newFile(gen, fdesc, packageNames[filename], importPaths[filename])
 		if err != nil {
@@ -327,7 +326,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 	for _, filename := range gen.Request.FileToGenerate {
 		f, ok := gen.FilesByPath[filename]
 		if !ok {
-			return nil, errors.Errorf("no descriptor for generated file: %v", filename)
+			return nil, fmt.Errorf("no descriptor for generated file: %v", filename)
 		}
 		f.Generate = true
 	}
@@ -439,10 +438,10 @@ type File struct {
 func newFile(gen *Plugin, p *descriptorpb.FileDescriptorProto, packageName GoPackageName, importPath GoImportPath) (*File, error) {
 	desc, err := protodesc.NewFile(p, gen.fileReg)
 	if err != nil {
-		return nil, errors.Errorf("invalid FileDescriptorProto %q: %v", p.GetName(), err)
+		return nil, fmt.Errorf("invalid FileDescriptorProto %q: %v", p.GetName(), err)
 	}
 	if err := gen.fileReg.RegisterFile(desc); err != nil {
-		return nil, errors.Errorf("cannot register descriptor %q: %v", p.GetName(), err)
+		return nil, fmt.Errorf("cannot register descriptor %q: %v", p.GetName(), err)
 	}
 	f := &File{
 		Desc:          desc,
@@ -786,14 +785,14 @@ func (field *Field) resolveDependencies(gen *Plugin) error {
 		name := field.Desc.Enum().FullName()
 		enum, ok := gen.enumsByName[name]
 		if !ok {
-			return errors.Errorf("field %v: no descriptor for enum %v", desc.FullName(), name)
+			return fmt.Errorf("field %v: no descriptor for enum %v", desc.FullName(), name)
 		}
 		field.Enum = enum
 	case protoreflect.MessageKind, protoreflect.GroupKind:
 		name := desc.Message().FullName()
 		message, ok := gen.messagesByName[name]
 		if !ok {
-			return errors.Errorf("field %v: no descriptor for type %v", desc.FullName(), name)
+			return fmt.Errorf("field %v: no descriptor for type %v", desc.FullName(), name)
 		}
 		field.Message = message
 	}
@@ -801,7 +800,7 @@ func (field *Field) resolveDependencies(gen *Plugin) error {
 		name := desc.ContainingMessage().FullName()
 		message, ok := gen.messagesByName[name]
 		if !ok {
-			return errors.Errorf("field %v: no descriptor for type %v", desc.FullName(), name)
+			return fmt.Errorf("field %v: no descriptor for type %v", desc.FullName(), name)
 		}
 		field.Extendee = message
 	}
@@ -907,14 +906,14 @@ func (method *Method) resolveDependencies(gen *Plugin) error {
 	inName := desc.Input().FullName()
 	in, ok := gen.messagesByName[inName]
 	if !ok {
-		return errors.Errorf("method %v: no descriptor for type %v", desc.FullName(), inName)
+		return fmt.Errorf("method %v: no descriptor for type %v", desc.FullName(), inName)
 	}
 	method.Input = in
 
 	outName := desc.Output().FullName()
 	out, ok := gen.messagesByName[outName]
 	if !ok {
-		return errors.Errorf("method %v: no descriptor for type %v", desc.FullName(), outName)
+		return fmt.Errorf("method %v: no descriptor for type %v", desc.FullName(), outName)
 	}
 	method.Output = out
 
@@ -1070,7 +1069,7 @@ func (g *GeneratedFile) Content() ([]byte, error) {
 		for line := 1; s.Scan(); line++ {
 			fmt.Fprintf(&src, "%5d\t%s\n", line, s.Bytes())
 		}
-		return nil, errors.Errorf("%v: unparsable Go source: %v\n%v", g.filename, err, src.String())
+		return nil, fmt.Errorf("%v: unparsable Go source: %v\n%v", g.filename, err, src.String())
 	}
 
 	// Collect a sorted list of all imports.
@@ -1139,7 +1138,7 @@ func (g *GeneratedFile) Content() ([]byte, error) {
 
 	var out bytes.Buffer
 	if err = (&printer.Config{Mode: printer.TabIndent | printer.UseSpaces, Tabwidth: 8}).Fprint(&out, fset, file); err != nil {
-		return nil, errors.Errorf("%v: can not reformat Go source: %v", g.filename, err)
+		return nil, fmt.Errorf("%v: can not reformat Go source: %v", g.filename, err)
 	}
 	return out.Bytes(), nil
 }
@@ -1208,7 +1207,7 @@ func (g *GeneratedFile) generatedCodeInfo(content []byte) (*descriptorpb.Generat
 	}
 	for a := range g.annotations {
 		if !seenAnnotations[a] {
-			return nil, errors.Errorf("%v: no symbol matching annotation %q", g.filename, a)
+			return nil, fmt.Errorf("%v: no symbol matching annotation %q", g.filename, a)
 		}
 	}
 

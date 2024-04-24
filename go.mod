@@ -6,7 +6,6 @@ require (
 	github.com/aperturerobotics/json-iterator-lite v1.0.0
 	github.com/golang/protobuf v1.5.4
 	github.com/google/go-cmp v0.6.0
-	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
 	google.golang.org/protobuf v1.33.0
 )

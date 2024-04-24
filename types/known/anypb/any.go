@@ -1,13 +1,15 @@
 package anypb
 
 import (
+	"errors"
+	fmt "fmt"
+
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	"github.com/aperturerobotics/protobuf-go-lite/json"
 	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/durationpb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/structpb"
 	"github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
-	"github.com/pkg/errors"
 )
 
 // MessageTypeResolver is an interface for looking up messages.
@@ -61,7 +63,7 @@ func UnmarshalTo(src *Any, dst protobuf_go_lite.Message, typeURL string) error {
 	if !src.MessageIs(typeURL) {
 		got := typeURL
 		want := src.GetTypeUrl()
-		return errors.Errorf("mismatched message type: got %q, want %q", got, want)
+		return fmt.Errorf("mismatched message type: got %q, want %q", got, want)
 	}
 	return dst.UnmarshalVT(src.GetValue())
 }
@@ -85,7 +87,7 @@ func UnmarshalNew(src *Any, typeURL string, resolver MessageTypeResolver) (dst p
 		if err == ErrNotFound {
 			return nil, err
 		}
-		return nil, errors.Wrapf(err, "could not resolve %q", src.GetTypeUrl())
+		return nil, fmt.Errorf("could not resolve %q: %w", src.GetTypeUrl(), err)
 	}
 	dst = mt()
 	if dst == nil {
