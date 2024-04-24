@@ -136,7 +136,7 @@ func (x *Any) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	}
 
 	// Read the raw object and create a sub-unmarshaler for it.
-	data := s.ReadRawMessage()
+	data := s.SkipAndReturnBytes()
 	if s.Err() != nil {
 		return
 	}

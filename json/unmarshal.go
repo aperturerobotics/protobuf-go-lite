@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
+	jsoniter "github.com/aperturerobotics/json-iterator-lite"
 	anypb_resolver "github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/resolver"
-	jsoniter "github.com/json-iterator/go"
 )
 
 // Unmarshaler is the interface implemented by types that are supported by this plugin.
@@ -65,7 +65,7 @@ type UnmarshalState struct {
 // NewUnmarshalState creates a new UnmarshalState.
 func NewUnmarshalState(data []byte, config UnmarshalerConfig) *UnmarshalState {
 	return &UnmarshalState{
-		inner:  jsoniter.ParseBytes(jsoniterConfig, data),
+		inner:  jsoniter.ParseBytes(data),
 		config: &config,
 
 		err:   &unmarshalError{},
@@ -95,7 +95,7 @@ func (s *UnmarshalState) AnyTypeResolver() anypb_resolver.AnyTypeResolver {
 // Sub returns a subunmarshaler with a new buffer, but with the same configuration, error and path info.
 func (s *UnmarshalState) Sub(data []byte) *UnmarshalState {
 	return &UnmarshalState{
-		inner:  jsoniter.ParseBytes(jsoniterConfig, data),
+		inner:  jsoniter.ParseBytes(data),
 		config: s.config,
 
 		err:   s.err,
@@ -161,18 +161,19 @@ func (s *UnmarshalState) ReadFloat32() float32 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		return any.ToFloat32()
+		return s.inner.ReadFloat32()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseFloat(any.ToString(), 32)
+		f, err := strconv.ParseFloat(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for float32: %w", err)
 			return 0
 		}
 		return float32(f)
 	default:
-		s.SetErrorf("invalid value type for float32: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for float32: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -202,18 +203,19 @@ func (s *UnmarshalState) ReadFloat64() float64 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		return any.ToFloat64()
+		return s.inner.ReadFloat64()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseFloat(any.ToString(), 64)
+		f, err := strconv.ParseFloat(s.inner.ReadString(), 64)
 		if err != nil {
 			s.SetErrorf("invalid value for float64: %w", err)
 			return 0
 		}
 		return float64(f)
 	default:
-		s.SetErrorf("invalid value type for float64: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for float64: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -275,18 +277,19 @@ func (s *UnmarshalState) ReadInt32() int32 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		return any.ToInt32()
+		return s.inner.ReadInt32()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseInt(any.ToString(), 10, 32)
+		f, err := strconv.ParseInt(s.inner.ReadString(), 10, 32)
 		if err != nil {
 			s.SetErrorf("invalid value for int32: %w", err)
 			return 0
 		}
 		return int32(f)
 	default:
-		s.SetErrorf("invalid value type for int32: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for int32: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -316,18 +319,19 @@ func (s *UnmarshalState) ReadInt64() int64 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		return any.ToInt64()
+		return s.inner.ReadInt64()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseInt(any.ToString(), 10, 64)
+		f, err := strconv.ParseInt(s.inner.ReadString(), 10, 64)
 		if err != nil {
 			s.SetErrorf("invalid value for int64: %w", err)
 			return 0
 		}
 		return f
 	default:
-		s.SetErrorf("invalid value type for int64: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for int64: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -389,25 +393,19 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		val := any.ToUint32()
-		if err := any.LastError(); err != nil {
-			// Don't log the full error here since it will print the unexpected character.
-			// This could print control characters on the cli and cause issues!
-			s.SetErrorf("invalid value for uint32")
-			return 0
-		}
-		return val
+		return s.inner.ReadUint32()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseUint(any.ToString(), 10, 32)
+		f, err := strconv.ParseUint(s.inner.ReadString(), 10, 32)
 		if err != nil {
 			s.SetErrorf("invalid value for uint32: %w", err)
 			return 0
 		}
 		return uint32(f)
 	default:
-		s.SetErrorf("invalid value type for uint32: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for uint32: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -437,25 +435,19 @@ func (s *UnmarshalState) ReadUint64() uint64 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		val := any.ToUint64()
-		if err := any.LastError(); err != nil {
-			// Don't log the full error here since it will print the unexpected character.
-			// This could print control characters on the cli and cause issues!
-			s.SetErrorf("invalid value for uint64")
-			return 0
-		}
-		return val
+		return s.inner.ReadUint64()
 	case jsoniter.StringValue:
-		f, err := strconv.ParseUint(any.ToString(), 10, 64)
+		f, err := strconv.ParseUint(s.inner.ReadString(), 10, 64)
 		if err != nil {
 			s.SetErrorf("invalid value for uint64: %w", err)
 			return 0
 		}
 		return f
 	default:
-		s.SetErrorf("invalid value type for uint64: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for uint64: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -799,11 +791,12 @@ func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 	if s.Err() != nil {
 		return 0
 	}
-	switch any := s.inner.ReadAny(); any.ValueType() {
+	nextTok := s.inner.WhatIsNext()
+	switch nextTok {
 	case jsoniter.NumberValue:
-		return any.ToInt32()
+		return s.inner.ReadInt32()
 	case jsoniter.StringValue:
-		v := any.ToString()
+		v := s.inner.ReadString()
 		x, err := ParseEnumString(v, valueMaps...)
 		if err != nil {
 			s.SetErrorf("unknown value for enum: %q", v)
@@ -811,7 +804,7 @@ func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 		}
 		return x
 	default:
-		s.SetErrorf("invalid value type for enum: %s", valueTypeString(any.ValueType()))
+		s.SetErrorf("invalid value type for enum: %s", valueTypeString(nextTok))
 		return 0
 	}
 }
@@ -892,15 +885,17 @@ func (s *UnmarshalState) ReadFieldMask() FieldMask {
 	return nil
 }
 
-// ReadRawMessage reads a raw JSON message.
-func (s *UnmarshalState) ReadRawMessage() jsoniter.RawMessage {
-	var msg jsoniter.RawMessage
-	s.inner.ReadVal(&msg)
-	if s.Err() != nil {
-		return nil
-	}
-	return msg
+// Skip skips the next value.
+func (s *UnmarshalState) Skip() {
+	s.inner.Skip()
 }
 
-// ReadAny reads any type and ignores it.
-func (s *UnmarshalState) ReadAny() { s.inner.ReadAny() }
+// SkipAndReturnBytes skips the next value and returns the bytes.
+func (s *UnmarshalState) SkipAndReturnBytes() []byte {
+	return s.inner.SkipAndReturnBytes()
+}
+
+// SkipAndReturnBytes skips the next value and appends the bytes.
+func (s *UnmarshalState) SkipAndAppendBytes(p []byte) []byte {
+	return s.inner.SkipAndAppendBytes(p)
+}

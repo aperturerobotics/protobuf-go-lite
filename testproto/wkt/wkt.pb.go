@@ -407,7 +407,7 @@ func (x *MessageWithWKT) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "any":
 			if s.ReadNil() {
 				x.Any = nil

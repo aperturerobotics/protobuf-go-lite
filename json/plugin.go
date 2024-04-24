@@ -3,12 +3,7 @@
 
 package json
 
-import jsoniter "github.com/json-iterator/go"
-
-var jsoniterConfig = jsoniter.Config{
-	EscapeHTML:             true,
-	ValidateJsonRawMessage: true,
-}.Froze()
+import jsoniter "github.com/aperturerobotics/json-iterator-lite"
 
 func valueTypeString(v jsoniter.ValueType) string {
 	switch v {

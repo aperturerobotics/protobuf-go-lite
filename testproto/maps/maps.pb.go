@@ -215,7 +215,7 @@ func (x *MsgWithMaps_StringKeysEntry) UnmarshalProtoJSON(s *json.UnmarshalState)
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "key":
 			s.AddField("key")
 			x.Key = s.ReadString()
@@ -269,7 +269,7 @@ func (x *MsgWithMaps_IntKeysEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "key":
 			s.AddField("key")
 			x.Key = s.ReadUint32()
@@ -337,7 +337,7 @@ func (x *MsgWithMaps) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "stringKeys":
 			s.AddField("stringKeys")
 			if s.ReadNil() {

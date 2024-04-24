@@ -30,7 +30,7 @@ func (g *jsonGenerator) genMessageUnmarshaler(message *protogen.Message) {
 	g.P("s.ReadObject(func(key string) {")
 	g.P("switch key {")
 	g.P("default:")
-	g.P("s.ReadAny() // ignore unknown field")
+	g.P("s.Skip() // ignore unknown field")
 
 nextField:
 	for _, field := range message.Fields {

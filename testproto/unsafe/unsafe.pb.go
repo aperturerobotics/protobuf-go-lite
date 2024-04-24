@@ -866,7 +866,7 @@ func (x *UnsafeTest_Sub1) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "s":
 			s.AddField("s")
 			x.S = s.ReadString()
@@ -916,7 +916,7 @@ func (x *UnsafeTest_Sub2) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "s":
 			s.AddField("s")
 			if s.ReadNil() {
@@ -974,7 +974,7 @@ func (x *UnsafeTest_Sub3_FooEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "key":
 			s.AddField("key")
 			x.Key = s.ReadString()
@@ -1026,7 +1026,7 @@ func (x *UnsafeTest_Sub3) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "foo":
 			s.AddField("foo")
 			if s.ReadNil() {
@@ -1082,7 +1082,7 @@ func (x *UnsafeTest_Sub4) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "s":
 			s.AddField("s")
 			ov := &UnsafeTest_Sub4_S{}
@@ -1136,7 +1136,7 @@ func (x *UnsafeTest_Sub5_FooEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "key":
 			s.AddField("key")
 			x.Key = s.ReadString()
@@ -1188,7 +1188,7 @@ func (x *UnsafeTest_Sub5) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "foo":
 			s.AddField("foo")
 			if s.ReadNil() {
@@ -1256,7 +1256,7 @@ func (x *UnsafeTest) UnmarshalProtoJSON(s *json.UnmarshalState) {
 	s.ReadObject(func(key string) {
 		switch key {
 		default:
-			s.ReadAny() // ignore unknown field
+			s.Skip() // ignore unknown field
 		case "sub1":
 			ov := &UnsafeTest_Sub1_{}
 			x.Sub = ov
