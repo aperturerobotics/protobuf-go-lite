@@ -8,7 +8,6 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
-	github.com/valyala/fastjson v1.6.4
 	google.golang.org/protobuf v1.33.0
 )
 
