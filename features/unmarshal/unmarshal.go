@@ -16,10 +16,7 @@ import (
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
 )
 
-var (
-	errorsPackage = protogen.GoImportPath("errors")
-	fmtPackage    = protogen.GoImportPath("fmt")
-)
+var fmtPackage = protogen.GoImportPath("fmt")
 
 func init() {
 	generator.RegisterFeature("unmarshal", func(gen *generator.GeneratedFile) generator.FeatureGenerator {

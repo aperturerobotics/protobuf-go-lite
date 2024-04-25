@@ -17,10 +17,7 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-var (
-	errorsPackage = protogen.GoImportPath("errors")
-	fmtPackage    = protogen.GoImportPath("fmt")
-)
+var fmtPackage = protogen.GoImportPath("fmt")
 
 func init() {
 	generator.RegisterFeature("marshal", func(gen *generator.GeneratedFile) generator.FeatureGenerator {
