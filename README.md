@@ -72,9 +72,7 @@ Summary of the packages provided by this module:
     go install github.com/aperturerobotics/protobuf-go-lite/cmd/protoc-gen-go-lite@latest
     ```
 
-2. Ensure your project is already using the ProtoBuf v2 API (i.e. `google.golang.org/protobuf`). The `vtprotobuf` compiler is not compatible with APIv1 generated code.
-
-3. Update your `protoc` generator to use the new plug-in.
+2. Update your `protoc` generator to use the new plug-in.
 
     ```
     for name in $(PROTO_SRC_NAMES); do \
@@ -87,6 +85,8 @@ Summary of the packages provided by this module:
     ```
 
 `protobuf-go-lite` replaces `protoc-gen-go` and `protoc-gen-go-vtprotobuf` and should not be used with those generators.
+
+Check out the [template](https://github.com/aperturerobotics/template) for a quick start!
 
 ## Available features
 
