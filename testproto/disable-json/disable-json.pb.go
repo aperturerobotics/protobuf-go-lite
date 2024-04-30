@@ -74,8 +74,8 @@ func (m *MessageDisableJson) CloneVT() *MessageDisableJson {
 	r := new(MessageDisableJson)
 	if m.Body != nil {
 		r.Body = m.Body.(interface {
-			CloneVT() isMessageDisableJson_Body
-		}).CloneVT()
+			CloneOneofVT() isMessageDisableJson_Body
+		}).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = make([]byte, len(m.unknownFields))
@@ -97,6 +97,10 @@ func (m *MessageDisableJson_Hello) CloneVT() *MessageDisableJson_Hello {
 	return r
 }
 
+func (m *MessageDisableJson_Hello) CloneOneofVT() isMessageDisableJson_Body {
+	return m.CloneVT()
+}
+
 func (m *MessageDisableJson_World) CloneVT() *MessageDisableJson_World {
 	if m == nil {
 		return (*MessageDisableJson_World)(nil)
@@ -104,6 +108,10 @@ func (m *MessageDisableJson_World) CloneVT() *MessageDisableJson_World {
 	r := new(MessageDisableJson_World)
 	r.World = m.World
 	return r
+}
+
+func (m *MessageDisableJson_World) CloneOneofVT() isMessageDisableJson_Body {
+	return m.CloneVT()
 }
 
 func (this *MessageDisableJson) EqualVT(that *MessageDisableJson) bool {

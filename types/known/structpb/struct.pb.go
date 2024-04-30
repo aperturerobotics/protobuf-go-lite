@@ -501,7 +501,7 @@ func (m *Value) CloneVT() *Value {
 	}
 	r := new(Value)
 	if m.Kind != nil {
-		r.Kind = m.Kind.(interface{ CloneVT() isValue_Kind }).CloneVT()
+		r.Kind = m.Kind.(interface{ CloneOneofVT() isValue_Kind }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = make([]byte, len(m.unknownFields))
@@ -523,6 +523,10 @@ func (m *Value_NullValue) CloneVT() *Value_NullValue {
 	return r
 }
 
+func (m *Value_NullValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
+}
+
 func (m *Value_NumberValue) CloneVT() *Value_NumberValue {
 	if m == nil {
 		return (*Value_NumberValue)(nil)
@@ -530,6 +534,10 @@ func (m *Value_NumberValue) CloneVT() *Value_NumberValue {
 	r := new(Value_NumberValue)
 	r.NumberValue = m.NumberValue
 	return r
+}
+
+func (m *Value_NumberValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
 }
 
 func (m *Value_StringValue) CloneVT() *Value_StringValue {
@@ -541,6 +549,10 @@ func (m *Value_StringValue) CloneVT() *Value_StringValue {
 	return r
 }
 
+func (m *Value_StringValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
+}
+
 func (m *Value_BoolValue) CloneVT() *Value_BoolValue {
 	if m == nil {
 		return (*Value_BoolValue)(nil)
@@ -548,6 +560,10 @@ func (m *Value_BoolValue) CloneVT() *Value_BoolValue {
 	r := new(Value_BoolValue)
 	r.BoolValue = m.BoolValue
 	return r
+}
+
+func (m *Value_BoolValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
 }
 
 func (m *Value_StructValue) CloneVT() *Value_StructValue {
@@ -559,6 +575,10 @@ func (m *Value_StructValue) CloneVT() *Value_StructValue {
 	return r
 }
 
+func (m *Value_StructValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
+}
+
 func (m *Value_ListValue) CloneVT() *Value_ListValue {
 	if m == nil {
 		return (*Value_ListValue)(nil)
@@ -566,6 +586,10 @@ func (m *Value_ListValue) CloneVT() *Value_ListValue {
 	r := new(Value_ListValue)
 	r.ListValue = m.ListValue.CloneVT()
 	return r
+}
+
+func (m *Value_ListValue) CloneOneofVT() isValue_Kind {
+	return m.CloneVT()
 }
 
 func (m *ListValue) CloneVT() *ListValue {

@@ -15,6 +15,7 @@ import (
 const (
 	cloneName        = "CloneVT"
 	cloneMessageName = "CloneMessageVT"
+	cloneOneofName   = "CloneOneofVT"
 )
 
 func init() {
@@ -51,12 +52,12 @@ func (p *clone) cloneOneofField(lhsBase, rhsBase string, oneof *protogen.Oneof) 
 	lhs := lhsBase + "." + fieldname
 	rhs := rhsBase + "." + fieldname
 	p.P(`if `, rhs, ` != nil {`)
-	p.P(lhs, ` = `, rhs, `.(interface{ `, cloneName, `() `, ccInterfaceName, ` }).`, cloneName, `()`)
+	p.P(lhs, ` = `, rhs, `.(interface{ `, cloneOneofName, `() `, ccInterfaceName, ` }).`, cloneOneofName, `()`)
 	p.P(`}`)
 }
 
 // cloneFieldSingular generates the code for cloning a singular, non-oneof field.
-func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind, message *protogen.Message) {
+func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind) {
 	switch {
 	case kind == protoreflect.MessageKind, kind == protoreflect.GroupKind:
 		// switch {
@@ -100,7 +101,6 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 	rhs = "rhs"
 
 	fieldKind := field.Desc.Kind()
-	msg := field.Message // possibly nil
 
 	if field.Desc.Cardinality() == protoreflect.Repeated { // maps and slices
 		goType, _ := p.FieldGoType(field)
@@ -115,10 +115,9 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 				// an entry.
 				valueField := field.Message.Fields[1]
 				fieldKind = valueField.Desc.Kind()
-				msg = valueField.Message
 			}
 			p.P(`for k, v := range `, rhs, ` {`)
-			p.cloneFieldSingular("tmpContainer[k]", "v", fieldKind, msg)
+			p.cloneFieldSingular("tmpContainer[k]", "v", fieldKind)
 			p.P(`}`)
 		}
 		p.P(lhs, ` = tmpContainer`)
@@ -126,7 +125,7 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 		p.P(`tmpVal := *`, rhs)
 		p.P(lhs, ` = &tmpVal`)
 	} else {
-		p.cloneFieldSingular(lhs, rhs, fieldKind, msg)
+		p.cloneFieldSingular(lhs, rhs, fieldKind)
 	}
 	p.P(`}`)
 }
@@ -237,7 +236,8 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 
 // generateCloneMethodsForOneof generates the clone method for the oneof wrapper type of a
 // field in a oneof.
-func (p *clone) generateCloneMethodsForOneof(message *protogen.Message, field *protogen.Field) {
+func (p *clone) generateCloneMethodsForOneof(field *protogen.Field) {
+	// Generate CloneVT() *TheType
 	ccTypeName := field.GoIdent.GoName
 	p.P(`func (m *`, ccTypeName, `) `, cloneName, `() *`, ccTypeName, ` {`)
 
@@ -248,6 +248,13 @@ func (p *clone) generateCloneMethodsForOneof(message *protogen.Message, field *p
 	p.bodyForOneOf(ccTypeName, &fieldInOneof)
 	p.P(`}`)
 	p.P()
+
+	// Generate CloneOneofVT() isFooBar_Body
+	ccInterfaceName := "is" + field.Oneof.GoIdent.GoName
+	p.P(`func (m *`, ccTypeName, `) `, cloneOneofName, `() `, ccInterfaceName, ` {`)
+	p.P(`return m.`, cloneName, `()`)
+	p.P(`}`)
+	p.P()
 }
 
 func (p *clone) processMessageOneofs(message *protogen.Message) {
@@ -255,7 +262,7 @@ func (p *clone) processMessageOneofs(message *protogen.Message) {
 		if field.Oneof == nil || field.Oneof.Desc.IsSynthetic() {
 			continue
 		}
-		p.generateCloneMethodsForOneof(message, field)
+		p.generateCloneMethodsForOneof(field)
 	}
 }
 

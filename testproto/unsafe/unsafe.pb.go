@@ -385,7 +385,7 @@ func (m *UnsafeTest_Sub4) CloneVT() *UnsafeTest_Sub4 {
 	}
 	r := new(UnsafeTest_Sub4)
 	if m.Foo != nil {
-		r.Foo = m.Foo.(interface{ CloneVT() isUnsafeTest_Sub4_Foo }).CloneVT()
+		r.Foo = m.Foo.(interface{ CloneOneofVT() isUnsafeTest_Sub4_Foo }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = make([]byte, len(m.unknownFields))
@@ -407,6 +407,10 @@ func (m *UnsafeTest_Sub4_S) CloneVT() *UnsafeTest_Sub4_S {
 	return r
 }
 
+func (m *UnsafeTest_Sub4_S) CloneOneofVT() isUnsafeTest_Sub4_Foo {
+	return m.CloneVT()
+}
+
 func (m *UnsafeTest_Sub4_B) CloneVT() *UnsafeTest_Sub4_B {
 	if m == nil {
 		return (*UnsafeTest_Sub4_B)(nil)
@@ -418,6 +422,10 @@ func (m *UnsafeTest_Sub4_B) CloneVT() *UnsafeTest_Sub4_B {
 		r.B = tmpBytes
 	}
 	return r
+}
+
+func (m *UnsafeTest_Sub4_B) CloneOneofVT() isUnsafeTest_Sub4_Foo {
+	return m.CloneVT()
 }
 
 func (m *UnsafeTest_Sub5) CloneVT() *UnsafeTest_Sub5 {
@@ -449,7 +457,7 @@ func (m *UnsafeTest) CloneVT() *UnsafeTest {
 	}
 	r := new(UnsafeTest)
 	if m.Sub != nil {
-		r.Sub = m.Sub.(interface{ CloneVT() isUnsafeTest_Sub }).CloneVT()
+		r.Sub = m.Sub.(interface{ CloneOneofVT() isUnsafeTest_Sub }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = make([]byte, len(m.unknownFields))
@@ -471,6 +479,10 @@ func (m *UnsafeTest_Sub1_) CloneVT() *UnsafeTest_Sub1_ {
 	return r
 }
 
+func (m *UnsafeTest_Sub1_) CloneOneofVT() isUnsafeTest_Sub {
+	return m.CloneVT()
+}
+
 func (m *UnsafeTest_Sub2_) CloneVT() *UnsafeTest_Sub2_ {
 	if m == nil {
 		return (*UnsafeTest_Sub2_)(nil)
@@ -478,6 +490,10 @@ func (m *UnsafeTest_Sub2_) CloneVT() *UnsafeTest_Sub2_ {
 	r := new(UnsafeTest_Sub2_)
 	r.Sub2 = m.Sub2.CloneVT()
 	return r
+}
+
+func (m *UnsafeTest_Sub2_) CloneOneofVT() isUnsafeTest_Sub {
+	return m.CloneVT()
 }
 
 func (m *UnsafeTest_Sub3_) CloneVT() *UnsafeTest_Sub3_ {
@@ -489,6 +505,10 @@ func (m *UnsafeTest_Sub3_) CloneVT() *UnsafeTest_Sub3_ {
 	return r
 }
 
+func (m *UnsafeTest_Sub3_) CloneOneofVT() isUnsafeTest_Sub {
+	return m.CloneVT()
+}
+
 func (m *UnsafeTest_Sub4_) CloneVT() *UnsafeTest_Sub4_ {
 	if m == nil {
 		return (*UnsafeTest_Sub4_)(nil)
@@ -498,6 +518,10 @@ func (m *UnsafeTest_Sub4_) CloneVT() *UnsafeTest_Sub4_ {
 	return r
 }
 
+func (m *UnsafeTest_Sub4_) CloneOneofVT() isUnsafeTest_Sub {
+	return m.CloneVT()
+}
+
 func (m *UnsafeTest_Sub5_) CloneVT() *UnsafeTest_Sub5_ {
 	if m == nil {
 		return (*UnsafeTest_Sub5_)(nil)
@@ -505,6 +529,10 @@ func (m *UnsafeTest_Sub5_) CloneVT() *UnsafeTest_Sub5_ {
 	r := new(UnsafeTest_Sub5_)
 	r.Sub5 = m.Sub5.CloneVT()
 	return r
+}
+
+func (m *UnsafeTest_Sub5_) CloneOneofVT() isUnsafeTest_Sub {
+	return m.CloneVT()
 }
 
 func (this *UnsafeTest_Sub1) EqualVT(that *UnsafeTest_Sub1) bool {
