@@ -1,0 +1,46 @@
+syntax = "proto3";
+package basic;
+
+// protobuf-go-lite:disable-text
+message BasicMsg {
+  int32 int32_field = 1;
+  int64 int64_field = 2;
+  uint32 uint32_field = 3; 
+  uint64 uint64_field = 4;
+  sint32 sint32_field = 5; 
+  sint64 sint64_field = 6;
+  fixed32 fixed32_field = 7;
+  fixed64 fixed64_field = 8;
+  sfixed32 sfixed32_field = 9;
+  sfixed64 sfixed64_field = 10;
+  float float_field = 11;
+  double double_field = 12;
+  bool bool_field = 13;
+  string string_field = 14;
+  bytes bytes_field = 15;
+  
+  repeated int32 repeated_int32_field = 16;
+  map<string, int32> map_string_int32_field = 17;
+
+  // protobuf-go-lite:disable-text
+  enum MyEnum {
+    UNKNOWN = 0;
+    FIRST = 1;
+    SECOND = 2; 
+  }
+
+  // protobuf-go-lite:disable-text
+  oneof my_oneof {
+    string oneof_string = 18;
+    int32 oneof_int32 = 19;
+  }
+
+  // protobuf-go-lite:disable-text
+  message NestedMsg {
+    int32 nested_int32 = 1;
+    string nested_string = 2;
+  }
+
+  MyEnum enum_field = 20;
+  NestedMsg nested_message = 21;
+}
