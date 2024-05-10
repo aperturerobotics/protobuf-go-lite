@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"math/bits"
+	"slices"
 )
 
 var (
@@ -43,6 +44,18 @@ type CloneVT[T comparable] interface {
 	CloneVT() T
 }
 
+// CloneVTSlice clones a slice of CloneVT messages.
+func CloneVTSlice[S ~[]E, E CloneVT[E]](s S) S {
+	out := make([]E, len(s))
+	var empty E
+	for i := range s {
+		if s[i] != empty {
+			out[i] = s[i].CloneVT()
+		}
+	}
+	return out
+}
+
 // EqualVT is a message with a EqualVT function (VTProtobuf).
 type EqualVT[T comparable] interface {
 	comparable
@@ -50,17 +63,17 @@ type EqualVT[T comparable] interface {
 	EqualVT(other T) bool
 }
 
-// CompareEqualVT returns a compare function to compare two VTProtobuf messages.
-func CompareEqualVT[T EqualVT[T]]() func(t1, t2 T) bool {
-	return func(t1, t2 T) bool {
-		return IsEqualVT(t1, t2)
-	}
-}
-
 // CompareComparable returns a compare function to compare two comparable types.
 func CompareComparable[T comparable]() func(t1, t2 T) bool {
 	return func(t1, t2 T) bool {
 		return t1 == t2
+	}
+}
+
+// CompareEqualVT returns a compare function to compare two VTProtobuf messages.
+func CompareEqualVT[T EqualVT[T]]() func(t1, t2 T) bool {
+	return func(t1, t2 T) bool {
+		return IsEqualVT(t1, t2)
 	}
 }
 
@@ -75,6 +88,11 @@ func IsEqualVT[T EqualVT[T]](t1, t2 T) bool {
 		return true
 	}
 	return t1.EqualVT(t2)
+}
+
+// IsEqualVTSlice checks if two slices of EqualVT messages are equal.
+func IsEqualVTSlice[S ~[]E, E EqualVT[E]](s1, s2 S) bool {
+	return slices.EqualFunc(s1, s2, CompareEqualVT[E]())
 }
 
 // EncodeVarint encodes a uint64 into a varint-encoded byte slice and returns the offset of the encoded value.
