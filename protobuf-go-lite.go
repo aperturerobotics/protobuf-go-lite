@@ -19,6 +19,10 @@ var (
 
 // Message is the base vtprotobuf message marshal/unmarshal interface.
 type Message interface {
+	// SizeVT returns the size of the message when marshaled.
+	SizeVT() int
+	// MarshalToSizedBufferVT marshals to a buffer that already is SizeVT bytes long.
+	MarshalToSizedBufferVT(dAtA []byte) (int, error)
 	// MarshalVT marshals the message with vtprotobuf.
 	MarshalVT() ([]byte, error)
 	// UnmarshalVT unmarshals the message object with vtprotobuf.
