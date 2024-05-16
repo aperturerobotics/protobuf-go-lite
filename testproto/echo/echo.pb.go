@@ -13,6 +13,7 @@ import (
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
+	_ "github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb"
 	timestamppb "github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb"
 )
 

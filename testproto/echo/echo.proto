@@ -2,6 +2,7 @@ syntax = "proto3";
 package echo;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // Echoer service returns the given message.
 service Echoer {
@@ -13,6 +14,8 @@ service Echoer {
   rpc EchoClientStream(stream EchoMsg) returns (EchoMsg);
   // EchoBidiStream is an example of a two-way stream.
   rpc EchoBidiStream(stream EchoMsg) returns (stream EchoMsg);
+  // DoNothing does nothing.
+  rpc DoNothing(.google.protobuf.Empty) returns (.google.protobuf.Empty);
 }
 
 // ExampleEnum is an example enumeration.
