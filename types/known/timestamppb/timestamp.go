@@ -17,6 +17,13 @@ func ToTimestamp(t time.Time) *Timestamp {
 	return New(t)
 }
 
+// FromUnixMilli constructs a new Timestamp from the provided unix milliseconds value.
+//
+// Example: time.Now().UnixMilli()
+func FromUnixMilli(timestampUnixMilli int64) *Timestamp {
+	return New(time.UnixMilli(timestampUnixMilli))
+}
+
 // GetEmpty checks if the timestamp is empty.
 func (x *Timestamp) GetEmpty() bool {
 	return x.SizeVT() == 0
