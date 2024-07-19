@@ -178,3 +178,35 @@ func TestMarshaler(t *testing.T) {
 	testMarshal(t, func(s *MarshalState) { s.WriteDuration(testDuration.Truncate(100000000)) }, `"3723.100s"`)
 	testMarshal(t, func(s *MarshalState) { s.WriteDuration(testDuration.Truncate(1000000000)) }, `"3723s"`)
 }
+
+type testMarshaler struct {
+	value int
+}
+
+func (m *testMarshaler) MarshalProtoJSON(s *MarshalState) {
+	s.WriteObjectStart()
+	s.WriteObjectField("value")
+	s.WriteInt32(int32(m.value))
+	s.WriteObjectEnd()
+}
+
+func TestMarshalSlice(t *testing.T) {
+	testSlice := []Marshaler{
+		&testMarshaler{value: 1},
+		&testMarshaler{value: 2},
+		&testMarshaler{value: 3},
+	}
+
+	expected := `[{"value":1},{"value":2},{"value":3}]`
+
+	config := DefaultMarshalerConfig
+
+	result, err := config.MarshalSlice(testSlice)
+	if err != nil {
+		t.Errorf("MarshalSlice returned an error: %v", err)
+	}
+
+	if string(result) != expected {
+		t.Errorf("MarshalSlice result does not match expected.\nGot:      %s\nExpected: %s", string(result), expected)
+	}
+}

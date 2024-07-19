@@ -60,6 +60,24 @@ func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+// MarshalSlice marshals a slice of Marshalers into a JSON array.
+func (c MarshalerConfig) MarshalSlice(ms []Marshaler) ([]byte, error) {
+	var buf bytes.Buffer
+	s := NewMarshalState(c, NewJsonStream(&buf))
+	s.WriteArrayStart()
+	for i, m := range ms {
+		if i > 0 {
+			s.WriteMore()
+		}
+		m.MarshalProtoJSON(s)
+	}
+	s.WriteArrayEnd()
+	if err := s.Err(); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+
 // MarshalState is the internal state of the Marshaler.
 type MarshalState struct {
 	inner  *JsonStream
