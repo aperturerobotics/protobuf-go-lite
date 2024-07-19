@@ -50,7 +50,7 @@ var DefaultMarshalerConfig = MarshalerConfig{
 }
 
 // Marshal marshals a message.
-func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
+func Marshal(c MarshalerConfig, m Marshaler) ([]byte, error) {
 	var buf bytes.Buffer
 	s := NewMarshalState(c, NewJsonStream(&buf))
 	m.MarshalProtoJSON(s)
@@ -60,8 +60,13 @@ func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// MarshalSlice marshals a slice of Marshalers into a JSON array.
-func (c MarshalerConfig) MarshalSlice(ms []Marshaler) ([]byte, error) {
+// Marshal marshals a message.
+func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
+	return Marshal(c, m)
+}
+
+// MarshalSlice marshals a slice of any type that implements Marshaler into a JSON array.
+func MarshalSlice[S ~[]E, E Marshaler](c MarshalerConfig, ms S) ([]byte, error) {
 	var buf bytes.Buffer
 	s := NewMarshalState(c, NewJsonStream(&buf))
 	s.WriteArrayStart()

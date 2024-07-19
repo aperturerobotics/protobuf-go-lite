@@ -191,7 +191,7 @@ func (m *testMarshaler) MarshalProtoJSON(s *MarshalState) {
 }
 
 func TestMarshalSlice(t *testing.T) {
-	testSlice := []Marshaler{
+	testSlice := []*testMarshaler{
 		&testMarshaler{value: 1},
 		&testMarshaler{value: 2},
 		&testMarshaler{value: 3},
@@ -200,8 +200,7 @@ func TestMarshalSlice(t *testing.T) {
 	expected := `[{"value":1},{"value":2},{"value":3}]`
 
 	config := DefaultMarshalerConfig
-
-	result, err := config.MarshalSlice(testSlice)
+	result, err := MarshalSlice(config, testSlice)
 	if err != nil {
 		t.Errorf("MarshalSlice returned an error: %v", err)
 	}
