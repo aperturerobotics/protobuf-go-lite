@@ -1907,13 +1907,19 @@ func (x Syntax) MarshalProtoText() string {
 }
 func (x *Type) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Type { ")
+	sb.WriteString("Type {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if len(x.Fields) > 0 {
-		sb.WriteString(" fields: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("fields: [")
 		for i, v := range x.Fields {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1923,7 +1929,10 @@ func (x *Type) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if len(x.Oneofs) > 0 {
-		sb.WriteString(" oneofs: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("oneofs: [")
 		for i, v := range x.Oneofs {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1933,7 +1942,10 @@ func (x *Type) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1943,20 +1955,32 @@ func (x *Type) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.SourceContext != nil {
-		sb.WriteString(" source_context: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("source_context: ")
 		sb.WriteString(x.SourceContext.MarshalProtoText())
 	}
 	if x.Syntax != 0 {
-		sb.WriteString(" syntax: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("syntax: ")
+		sb.WriteString("\"")
 		sb.WriteString(Syntax(x.Syntax).String())
+		sb.WriteString("\"")
 	}
 	if x.Edition != "" {
-		sb.WriteString(" edition: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("edition: ")
 		sb.WriteString(strconv.Quote(x.Edition))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Type) String() string {
 	return x.MarshalProtoText()
 }
@@ -1968,37 +1992,65 @@ func (x Field_Cardinality) MarshalProtoText() string {
 }
 func (x *Field) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Field { ")
+	sb.WriteString("Field {")
 	if x.Kind != 0 {
-		sb.WriteString(" kind: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("kind: ")
+		sb.WriteString("\"")
 		sb.WriteString(Field_Kind(x.Kind).String())
+		sb.WriteString("\"")
 	}
 	if x.Cardinality != 0 {
-		sb.WriteString(" cardinality: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("cardinality: ")
+		sb.WriteString("\"")
 		sb.WriteString(Field_Cardinality(x.Cardinality).String())
+		sb.WriteString("\"")
 	}
 	if x.Number != 0 {
-		sb.WriteString(" number: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("number: ")
 		sb.WriteString(strconv.FormatInt(int64(x.Number), 10))
 	}
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if x.TypeUrl != "" {
-		sb.WriteString(" type_url: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("type_url: ")
 		sb.WriteString(strconv.Quote(x.TypeUrl))
 	}
 	if x.OneofIndex != 0 {
-		sb.WriteString(" oneof_index: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("oneof_index: ")
 		sb.WriteString(strconv.FormatInt(int64(x.OneofIndex), 10))
 	}
-	if x.Packed {
-		sb.WriteString(" packed: ")
+	if x.Packed != false {
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("packed: ")
 		sb.WriteString(strconv.FormatBool(x.Packed))
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2008,28 +2060,41 @@ func (x *Field) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.JsonName != "" {
-		sb.WriteString(" json_name: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("json_name: ")
 		sb.WriteString(strconv.Quote(x.JsonName))
 	}
 	if x.DefaultValue != "" {
-		sb.WriteString(" default_value: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("default_value: ")
 		sb.WriteString(strconv.Quote(x.DefaultValue))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Field) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Enum) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Enum { ")
+	sb.WriteString("Enum {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if len(x.Enumvalue) > 0 {
-		sb.WriteString(" enumvalue: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("enumvalue: [")
 		for i, v := range x.Enumvalue {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2039,7 +2104,10 @@ func (x *Enum) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2049,36 +2117,57 @@ func (x *Enum) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.SourceContext != nil {
-		sb.WriteString(" source_context: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("source_context: ")
 		sb.WriteString(x.SourceContext.MarshalProtoText())
 	}
 	if x.Syntax != 0 {
-		sb.WriteString(" syntax: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("syntax: ")
+		sb.WriteString("\"")
 		sb.WriteString(Syntax(x.Syntax).String())
+		sb.WriteString("\"")
 	}
 	if x.Edition != "" {
-		sb.WriteString(" edition: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("edition: ")
 		sb.WriteString(strconv.Quote(x.Edition))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Enum) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumValue) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("EnumValue { ")
+	sb.WriteString("EnumValue {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 11 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if x.Number != 0 {
-		sb.WriteString(" number: ")
+		if sb.Len() > 11 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("number: ")
 		sb.WriteString(strconv.FormatInt(int64(x.Number), 10))
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 11 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2090,23 +2179,31 @@ func (x *EnumValue) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *EnumValue) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Option) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Option { ")
+	sb.WriteString("Option {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if x.Value != nil {
-		sb.WriteString(" value: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString(x.Value.MarshalProtoText())
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Option) String() string {
 	return x.MarshalProtoText()
 }

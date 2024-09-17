@@ -5,6 +5,7 @@
 package basic
 
 import (
+	base64 "encoding/base64"
 	binary "encoding/binary"
 	fmt "fmt"
 	io "io"
@@ -17,7 +18,6 @@ import (
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
 )
 
-// protobuf-go-lite:disable-text
 type BasicMsg_MyEnum int32
 
 const (
@@ -54,7 +54,6 @@ func (x BasicMsg_MyEnum) String() string {
 	return strconv.Itoa(int(x))
 }
 
-// protobuf-go-lite:disable-text
 type BasicMsg struct {
 	unknownFields       []byte
 	Int32Field          int32            `protobuf:"varint,1,opt,name=int32_field,json=int32Field,proto3" json:"int32Field,omitempty"`
@@ -74,8 +73,6 @@ type BasicMsg struct {
 	BytesField          []byte           `protobuf:"bytes,15,opt,name=bytes_field,json=bytesField,proto3" json:"bytesField,omitempty"`
 	RepeatedInt32Field  []int32          `protobuf:"varint,16,rep,packed,name=repeated_int32_field,json=repeatedInt32Field,proto3" json:"repeatedInt32Field,omitempty"`
 	MapStringInt32Field map[string]int32 `protobuf:"bytes,17,rep,name=map_string_int32_field,json=mapStringInt32Field,proto3" json:"mapStringInt32Field,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	// protobuf-go-lite:disable-text
-	//
 	// Types that are assignable to MyOneof:
 	//
 	//	*BasicMsg_OneofString
@@ -287,7 +284,6 @@ func (x *BasicMsg_MapStringInt32FieldEntry) GetValue() int32 {
 	return 0
 }
 
-// protobuf-go-lite:disable-text
 type BasicMsg_NestedMsg struct {
 	unknownFields []byte
 	NestedInt32   int32  `protobuf:"varint,1,opt,name=nested_int32,json=nestedInt32,proto3" json:"nestedInt32,omitempty"`
@@ -1593,21 +1589,232 @@ func (m *BasicMsg_OneofInt32) SizeVT() (n int) {
 	n += 2 + protobuf_go_lite.SizeOfVarint(uint64(m.OneofInt32))
 	return n
 }
+func (x BasicMsg_MyEnum) MarshalProtoText() string {
+	return x.String()
+}
 func (x *BasicMsg_MapStringInt32FieldEntry) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("MapStringInt32FieldEntry { ")
+	sb.WriteString("MapStringInt32FieldEntry {")
 	if x.Key != "" {
-		sb.WriteString(" key: ")
+		if sb.Len() > 26 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("key: ")
 		sb.WriteString(strconv.Quote(x.Key))
 	}
 	if x.Value != 0 {
-		sb.WriteString(" value: ")
+		if sb.Len() > 26 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString(strconv.FormatInt(int64(x.Value), 10))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *BasicMsg_MapStringInt32FieldEntry) String() string {
+	return x.MarshalProtoText()
+}
+func (x *BasicMsg_NestedMsg) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("NestedMsg {")
+	if x.NestedInt32 != 0 {
+		if sb.Len() > 11 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("nested_int32: ")
+		sb.WriteString(strconv.FormatInt(int64(x.NestedInt32), 10))
+	}
+	if x.NestedString != "" {
+		if sb.Len() > 11 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("nested_string: ")
+		sb.WriteString(strconv.Quote(x.NestedString))
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+
+func (x *BasicMsg_NestedMsg) String() string {
+	return x.MarshalProtoText()
+}
+func (x *BasicMsg) MarshalProtoText() string {
+	var sb strings.Builder
+	sb.WriteString("BasicMsg {")
+	if x.Int32Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("int32_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Int32Field), 10))
+	}
+	if x.Int64Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("int64_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Int64Field), 10))
+	}
+	if x.Uint32Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("uint32_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(x.Uint32Field), 10))
+	}
+	if x.Uint64Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("uint64_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(x.Uint64Field), 10))
+	}
+	if x.Sint32Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sint32_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Sint32Field), 10))
+	}
+	if x.Sint64Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sint64_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Sint64Field), 10))
+	}
+	if x.Fixed32Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("fixed32_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(x.Fixed32Field), 10))
+	}
+	if x.Fixed64Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("fixed64_field: ")
+		sb.WriteString(strconv.FormatUint(uint64(x.Fixed64Field), 10))
+	}
+	if x.Sfixed32Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sfixed32_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Sfixed32Field), 10))
+	}
+	if x.Sfixed64Field != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sfixed64_field: ")
+		sb.WriteString(strconv.FormatInt(int64(x.Sfixed64Field), 10))
+	}
+	if x.FloatField != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("float_field: ")
+		sb.WriteString(strconv.FormatFloat(float64(x.FloatField), 'g', -1, 32))
+	}
+	if x.DoubleField != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("double_field: ")
+		sb.WriteString(strconv.FormatFloat(x.DoubleField, 'g', -1, 64))
+	}
+	if x.BoolField != false {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("bool_field: ")
+		sb.WriteString(strconv.FormatBool(x.BoolField))
+	}
+	if x.StringField != "" {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("string_field: ")
+		sb.WriteString(strconv.Quote(x.StringField))
+	}
+	if x.BytesField != nil {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("bytes_field: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(x.BytesField))
+		sb.WriteString("\"")
+	}
+	if len(x.RepeatedInt32Field) > 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("repeated_int32_field: [")
+		for i, v := range x.RepeatedInt32Field {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString("]")
+	}
+	if len(x.MapStringInt32Field) > 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("map_string_int32_field: {")
+		for k, v := range x.MapStringInt32Field {
+			sb.WriteString(" ")
+			sb.WriteString(strconv.Quote(k))
+			sb.WriteString(": ")
+			sb.WriteString(strconv.FormatInt(int64(v), 10))
+		}
+		sb.WriteString(" }")
+	}
+	switch body := x.MyOneof.(type) {
+	case *BasicMsg_OneofString:
+		if body.OneofString != "" {
+			if sb.Len() > 10 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("oneof_string: ")
+			sb.WriteString(strconv.Quote(body.OneofString))
+		}
+	case *BasicMsg_OneofInt32:
+		if body.OneofInt32 != 0 {
+			if sb.Len() > 10 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("oneof_int32: ")
+			sb.WriteString(strconv.FormatInt(int64(body.OneofInt32), 10))
+		}
+	}
+	if x.EnumField != 0 {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("enum_field: ")
+		sb.WriteString("\"")
+		sb.WriteString(BasicMsg_MyEnum(x.EnumField).String())
+		sb.WriteString("\"")
+	}
+	if x.NestedMessage != nil {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("nested_message: ")
+		sb.WriteString(x.NestedMessage.MarshalProtoText())
+	}
+	sb.WriteString("}")
+	return sb.String()
+}
+
+func (x *BasicMsg) String() string {
 	return x.MarshalProtoText()
 }
 func (m *BasicMsg_NestedMsg) UnmarshalVT(dAtA []byte) error {

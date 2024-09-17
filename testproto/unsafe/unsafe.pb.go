@@ -2423,13 +2423,19 @@ func (m *UnsafeTest_Sub5_) SizeVT() (n int) {
 }
 func (x *UnsafeTest_Sub1) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Sub1 { ")
+	sb.WriteString("Sub1 {")
 	if x.S != "" {
-		sb.WriteString(" s: ")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("s: ")
 		sb.WriteString(strconv.Quote(x.S))
 	}
-	if len(x.B) > 0 {
-		sb.WriteString(" b: ")
+	if x.B != nil {
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("b: ")
 		sb.WriteString("\"")
 		sb.WriteString(base64.StdEncoding.EncodeToString(x.B))
 		sb.WriteString("\"")
@@ -2437,14 +2443,18 @@ func (x *UnsafeTest_Sub1) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub1) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub2) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Sub2 { ")
+	sb.WriteString("Sub2 {")
 	if len(x.S) > 0 {
-		sb.WriteString(" s: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("s: [")
 		for i, v := range x.S {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2454,7 +2464,10 @@ func (x *UnsafeTest_Sub2) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if len(x.B) > 0 {
-		sb.WriteString(" b: [")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("b: [")
 		for i, v := range x.B {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -2468,18 +2481,25 @@ func (x *UnsafeTest_Sub2) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub2) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("FooEntry { ")
+	sb.WriteString("FooEntry {")
 	if x.Key != "" {
-		sb.WriteString(" key: ")
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("key: ")
 		sb.WriteString(strconv.Quote(x.Key))
 	}
-	if len(x.Value) > 0 {
-		sb.WriteString(" value: ")
+	if x.Value != nil {
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString("\"")
 		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
 		sb.WriteString("\"")
@@ -2487,14 +2507,18 @@ func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub3_FooEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub3) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Sub3 { ")
+	sb.WriteString("Sub3 {")
 	if len(x.Foo) > 0 {
-		sb.WriteString(" foo: {")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("foo: {")
 		for k, v := range x.Foo {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
@@ -2508,21 +2532,28 @@ func (x *UnsafeTest_Sub3) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub3) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub4) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Sub4 { ")
+	sb.WriteString("Sub4 {")
 	switch body := x.Foo.(type) {
 	case *UnsafeTest_Sub4_S:
 		if body.S != "" {
-			sb.WriteString(" s: ")
+			if sb.Len() > 6 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("s: ")
 			sb.WriteString(strconv.Quote(body.S))
 		}
 	case *UnsafeTest_Sub4_B:
-		if len(body.B) > 0 {
-			sb.WriteString(" b: ")
+		if body.B != nil {
+			if sb.Len() > 6 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("b: ")
 			sb.WriteString("\"")
 			sb.WriteString(base64.StdEncoding.EncodeToString(body.B))
 			sb.WriteString("\"")
@@ -2531,31 +2562,42 @@ func (x *UnsafeTest_Sub4) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub4) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("FooEntry { ")
+	sb.WriteString("FooEntry {")
 	if x.Key != "" {
-		sb.WriteString(" key: ")
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("key: ")
 		sb.WriteString(strconv.Quote(x.Key))
 	}
 	if x.Value != "" {
-		sb.WriteString(" value: ")
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString(strconv.Quote(x.Value))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub5_FooEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub5) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Sub5 { ")
+	sb.WriteString("Sub5 {")
 	if len(x.Foo) > 0 {
-		sb.WriteString(" foo: {")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("foo: {")
 		for k, v := range x.Foo {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
@@ -2567,42 +2609,59 @@ func (x *UnsafeTest_Sub5) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest_Sub5) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("UnsafeTest { ")
+	sb.WriteString("UnsafeTest {")
 	switch body := x.Sub.(type) {
 	case *UnsafeTest_Sub1_:
 		if body.Sub1 != nil {
-			sb.WriteString(" sub1: ")
+			if sb.Len() > 12 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("sub1: ")
 			sb.WriteString(body.Sub1.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub2_:
 		if body.Sub2 != nil {
-			sb.WriteString(" sub2: ")
+			if sb.Len() > 12 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("sub2: ")
 			sb.WriteString(body.Sub2.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub3_:
 		if body.Sub3 != nil {
-			sb.WriteString(" sub3: ")
+			if sb.Len() > 12 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("sub3: ")
 			sb.WriteString(body.Sub3.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub4_:
 		if body.Sub4 != nil {
-			sb.WriteString(" sub4: ")
+			if sb.Len() > 12 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("sub4: ")
 			sb.WriteString(body.Sub4.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub5_:
 		if body.Sub5 != nil {
-			sb.WriteString(" sub5: ")
+			if sb.Len() > 12 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("sub5: ")
 			sb.WriteString(body.Sub5.MarshalProtoText())
 		}
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *UnsafeTest) String() string {
 	return x.MarshalProtoText()
 }

@@ -1,7 +1,6 @@
 syntax = "proto3";
 package basic;
 
-// protobuf-go-lite:disable-text
 message BasicMsg {
   int32 int32_field = 1;
   int64 int64_field = 2;
@@ -18,24 +17,21 @@ message BasicMsg {
   bool bool_field = 13;
   string string_field = 14;
   bytes bytes_field = 15;
-  
+
   repeated int32 repeated_int32_field = 16;
   map<string, int32> map_string_int32_field = 17;
 
-  // protobuf-go-lite:disable-text
   enum MyEnum {
     UNKNOWN = 0;
     FIRST = 1;
     SECOND = 2; 
   }
 
-  // protobuf-go-lite:disable-text
   oneof my_oneof {
     string oneof_string = 18;
     int32 oneof_int32 = 19;
   }
 
-  // protobuf-go-lite:disable-text
   message NestedMsg {
     int32 nested_int32 = 1;
     string nested_string = 2;

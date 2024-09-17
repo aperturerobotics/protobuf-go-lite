@@ -361,22 +361,29 @@ func (m *MessageDisableJson_World) SizeVT() (n int) {
 }
 func (x *MessageDisableJson) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("MessageDisableJson { ")
+	sb.WriteString("MessageDisableJson {")
 	switch body := x.Body.(type) {
 	case *MessageDisableJson_Hello:
-		if body.Hello {
-			sb.WriteString(" hello: ")
+		if body.Hello != false {
+			if sb.Len() > 20 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("hello: ")
 			sb.WriteString(strconv.FormatBool(body.Hello))
 		}
 	case *MessageDisableJson_World:
 		if body.World != "" {
-			sb.WriteString(" world: ")
+			if sb.Len() > 20 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("world: ")
 			sb.WriteString(strconv.Quote(body.World))
 		}
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *MessageDisableJson) String() string {
 	return x.MarshalProtoText()
 }

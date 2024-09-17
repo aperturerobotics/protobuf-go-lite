@@ -198,14 +198,18 @@ func (m *SourceContext) SizeVT() (n int) {
 
 func (x *SourceContext) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("SourceContext { ")
+	sb.WriteString("SourceContext {")
 	if x.FileName != "" {
-		sb.WriteString(" file_name: ")
+		if sb.Len() > 15 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("file_name: ")
 		sb.WriteString(strconv.Quote(x.FileName))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *SourceContext) String() string {
 	return x.MarshalProtoText()
 }

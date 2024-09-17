@@ -169,10 +169,11 @@ func (m *Empty) SizeVT() (n int) {
 
 func (x *Empty) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Empty { ")
+	sb.WriteString("Empty {")
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Empty) String() string {
 	return x.MarshalProtoText()
 }

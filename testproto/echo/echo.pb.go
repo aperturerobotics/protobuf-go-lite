@@ -665,29 +665,46 @@ func (x ExampleEnum) MarshalProtoText() string {
 }
 func (x *EchoMsg) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("EchoMsg { ")
+	sb.WriteString("EchoMsg {")
 	if x.Body != "" {
-		sb.WriteString(" body: ")
+		if sb.Len() > 9 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("body: ")
 		sb.WriteString(strconv.Quote(x.Body))
 	}
 	if x.Ts != nil {
-		sb.WriteString(" ts: ")
+		if sb.Len() > 9 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("ts: ")
 		sb.WriteString(x.Ts.MarshalProtoText())
 	}
 	switch body := x.Demo.(type) {
 	case *EchoMsg_ExampleEnum:
 		if body.ExampleEnum != 0 {
-			sb.WriteString(" example_enum: ")
+			if sb.Len() > 9 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("example_enum: ")
+			sb.WriteString("\"")
 			sb.WriteString(ExampleEnum(body.ExampleEnum).String())
+			sb.WriteString("\"")
 		}
 	case *EchoMsg_ExampleString:
 		if body.ExampleString != "" {
-			sb.WriteString(" example_string: ")
+			if sb.Len() > 9 {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("example_string: ")
 			sb.WriteString(strconv.Quote(body.ExampleString))
 		}
 	}
 	if len(x.Timestamps) > 0 {
-		sb.WriteString(" timestamps: [")
+		if sb.Len() > 9 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("timestamps: [")
 		for i, v := range x.Timestamps {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -699,6 +716,7 @@ func (x *EchoMsg) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *EchoMsg) String() string {
 	return x.MarshalProtoText()
 }

@@ -559,43 +559,60 @@ func (m *MsgWithMaps) SizeVT() (n int) {
 
 func (x *MsgWithMaps_StringKeysEntry) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("StringKeysEntry { ")
+	sb.WriteString("StringKeysEntry {")
 	if x.Key != "" {
-		sb.WriteString(" key: ")
+		if sb.Len() > 17 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("key: ")
 		sb.WriteString(strconv.Quote(x.Key))
 	}
 	if x.Value != nil {
-		sb.WriteString(" value: ")
+		if sb.Len() > 17 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString(x.Value.MarshalProtoText())
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *MsgWithMaps_StringKeysEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MsgWithMaps_IntKeysEntry) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("IntKeysEntry { ")
+	sb.WriteString("IntKeysEntry {")
 	if x.Key != 0 {
-		sb.WriteString(" key: ")
+		if sb.Len() > 14 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("key: ")
 		sb.WriteString(strconv.FormatUint(uint64(x.Key), 10))
 	}
 	if x.Value != nil {
-		sb.WriteString(" value: ")
+		if sb.Len() > 14 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString(x.Value.MarshalProtoText())
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *MsgWithMaps_IntKeysEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MsgWithMaps) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("MsgWithMaps { ")
+	sb.WriteString("MsgWithMaps {")
 	if len(x.StringKeys) > 0 {
-		sb.WriteString(" stringKeys: {")
+		if sb.Len() > 13 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("stringKeys: {")
 		for k, v := range x.StringKeys {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
@@ -605,7 +622,10 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 		sb.WriteString(" }")
 	}
 	if len(x.IntKeys) > 0 {
-		sb.WriteString(" intKeys: {")
+		if sb.Len() > 13 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("intKeys: {")
 		for k, v := range x.IntKeys {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.FormatUint(uint64(k), 10))
@@ -617,6 +637,7 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *MsgWithMaps) String() string {
 	return x.MarshalProtoText()
 }

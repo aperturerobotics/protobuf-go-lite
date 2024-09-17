@@ -1141,13 +1141,19 @@ func (m *Mixin) SizeVT() (n int) {
 
 func (x *Api) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Api { ")
+	sb.WriteString("Api {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if len(x.Methods) > 0 {
-		sb.WriteString(" methods: [")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("methods: [")
 		for i, v := range x.Methods {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1157,7 +1163,10 @@ func (x *Api) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1167,15 +1176,24 @@ func (x *Api) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.Version != "" {
-		sb.WriteString(" version: ")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("version: ")
 		sb.WriteString(strconv.Quote(x.Version))
 	}
 	if x.SourceContext != nil {
-		sb.WriteString(" source_context: ")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("source_context: ")
 		sb.WriteString(x.SourceContext.MarshalProtoText())
 	}
 	if len(x.Mixins) > 0 {
-		sb.WriteString(" mixins: [")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("mixins: [")
 		for i, v := range x.Mixins {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1185,40 +1203,64 @@ func (x *Api) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.Syntax != 0 {
-		sb.WriteString(" syntax: ")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("syntax: ")
+		sb.WriteString("\"")
 		sb.WriteString(typepb.Syntax(x.Syntax).String())
+		sb.WriteString("\"")
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Api) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Method) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Method { ")
+	sb.WriteString("Method {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if x.RequestTypeUrl != "" {
-		sb.WriteString(" request_type_url: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("request_type_url: ")
 		sb.WriteString(strconv.Quote(x.RequestTypeUrl))
 	}
-	if x.RequestStreaming {
-		sb.WriteString(" request_streaming: ")
+	if x.RequestStreaming != false {
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("request_streaming: ")
 		sb.WriteString(strconv.FormatBool(x.RequestStreaming))
 	}
 	if x.ResponseTypeUrl != "" {
-		sb.WriteString(" response_type_url: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("response_type_url: ")
 		sb.WriteString(strconv.Quote(x.ResponseTypeUrl))
 	}
-	if x.ResponseStreaming {
-		sb.WriteString(" response_streaming: ")
+	if x.ResponseStreaming != false {
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("response_streaming: ")
 		sb.WriteString(strconv.FormatBool(x.ResponseStreaming))
 	}
 	if len(x.Options) > 0 {
-		sb.WriteString(" options: [")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("options: [")
 		for i, v := range x.Options {
 			if i > 0 {
 				sb.WriteString(", ")
@@ -1228,29 +1270,42 @@ func (x *Method) MarshalProtoText() string {
 		sb.WriteString("]")
 	}
 	if x.Syntax != 0 {
-		sb.WriteString(" syntax: ")
+		if sb.Len() > 8 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("syntax: ")
+		sb.WriteString("\"")
 		sb.WriteString(typepb.Syntax(x.Syntax).String())
+		sb.WriteString("\"")
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Method) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Mixin) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Mixin { ")
+	sb.WriteString("Mixin {")
 	if x.Name != "" {
-		sb.WriteString(" name: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("name: ")
 		sb.WriteString(strconv.Quote(x.Name))
 	}
 	if x.Root != "" {
-		sb.WriteString(" root: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("root: ")
 		sb.WriteString(strconv.Quote(x.Root))
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Mixin) String() string {
 	return x.MarshalProtoText()
 }

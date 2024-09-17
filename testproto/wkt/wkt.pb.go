@@ -1019,78 +1019,132 @@ func (m *MessageWithWKT) SizeVT() (n int) {
 
 func (x *MessageWithWKT) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("MessageWithWKT { ")
+	sb.WriteString("MessageWithWKT {")
 	if x.Any != nil {
-		sb.WriteString(" any: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("any: ")
 		sb.WriteString(x.Any.MarshalProtoText())
 	}
 	if x.Duration != nil {
-		sb.WriteString(" duration: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("duration: ")
 		sb.WriteString(x.Duration.MarshalProtoText())
 	}
 	if x.Empty != nil {
-		sb.WriteString(" empty: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("empty: ")
 		sb.WriteString(x.Empty.MarshalProtoText())
 	}
 	if x.Timestamp != nil {
-		sb.WriteString(" timestamp: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("timestamp: ")
 		sb.WriteString(x.Timestamp.MarshalProtoText())
 	}
 	if x.DoubleValue != nil {
-		sb.WriteString(" double_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("double_value: ")
 		sb.WriteString(x.DoubleValue.MarshalProtoText())
 	}
 	if x.FloatValue != nil {
-		sb.WriteString(" float_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("float_value: ")
 		sb.WriteString(x.FloatValue.MarshalProtoText())
 	}
 	if x.Int64Value != nil {
-		sb.WriteString(" int64_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("int64_value: ")
 		sb.WriteString(x.Int64Value.MarshalProtoText())
 	}
 	if x.Uint64Value != nil {
-		sb.WriteString(" uint64_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("uint64_value: ")
 		sb.WriteString(x.Uint64Value.MarshalProtoText())
 	}
 	if x.Int32Value != nil {
-		sb.WriteString(" int32_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("int32_value: ")
 		sb.WriteString(x.Int32Value.MarshalProtoText())
 	}
 	if x.Uint32Value != nil {
-		sb.WriteString(" uint32_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("uint32_value: ")
 		sb.WriteString(x.Uint32Value.MarshalProtoText())
 	}
 	if x.BoolValue != nil {
-		sb.WriteString(" bool_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("bool_value: ")
 		sb.WriteString(x.BoolValue.MarshalProtoText())
 	}
 	if x.StringValue != nil {
-		sb.WriteString(" string_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("string_value: ")
 		sb.WriteString(x.StringValue.MarshalProtoText())
 	}
 	if x.BytesValue != nil {
-		sb.WriteString(" bytes_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("bytes_value: ")
 		sb.WriteString(x.BytesValue.MarshalProtoText())
 	}
 	if x.StructValue != nil {
-		sb.WriteString(" struct_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("struct_value: ")
 		sb.WriteString(x.StructValue.MarshalProtoText())
 	}
 	if x.ValueValue != nil {
-		sb.WriteString(" value_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value_value: ")
 		sb.WriteString(x.ValueValue.MarshalProtoText())
 	}
 	if x.ListvalueValue != nil {
-		sb.WriteString(" listvalue_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("listvalue_value: ")
 		sb.WriteString(x.ListvalueValue.MarshalProtoText())
 	}
 	if x.NullValue != 0 {
-		sb.WriteString(" null_value: ")
+		if sb.Len() > 16 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("null_value: ")
+		sb.WriteString("\"")
 		sb.WriteString(structpb.NullValue(x.NullValue).String())
+		sb.WriteString("\"")
 	}
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *MessageWithWKT) String() string {
 	return x.MarshalProtoText()
 }

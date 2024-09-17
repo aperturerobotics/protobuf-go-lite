@@ -343,13 +343,19 @@ func (m *Any) SizeVT() (n int) {
 
 func (x *Any) MarshalProtoText() string {
 	var sb strings.Builder
-	sb.WriteString("Any { ")
+	sb.WriteString("Any {")
 	if x.TypeUrl != "" {
-		sb.WriteString(" type_url: ")
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("type_url: ")
 		sb.WriteString(strconv.Quote(x.TypeUrl))
 	}
-	if len(x.Value) > 0 {
-		sb.WriteString(" value: ")
+	if x.Value != nil {
+		if sb.Len() > 5 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("value: ")
 		sb.WriteString("\"")
 		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
 		sb.WriteString("\"")
@@ -357,6 +363,7 @@ func (x *Any) MarshalProtoText() string {
 	sb.WriteString("}")
 	return sb.String()
 }
+
 func (x *Any) String() string {
 	return x.MarshalProtoText()
 }

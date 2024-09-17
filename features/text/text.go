@@ -89,7 +89,11 @@ func (g *textGenerator) genMessage(message *protogen.Message) {
 	// Generate message text marshaling code
 	g.P("func (x *", message.GoIdent, ") MarshalProtoText() string {")
 	g.P("var sb ", g.QualifiedGoIdent(stringsPackage.Ident("Builder")))
-	g.P("sb.WriteString(\"", message.Desc.Name(), " { \")")
+	g.P("sb.WriteString(\"", message.Desc.Name(), " {\")")
+
+	// initialSbLen is the sb contents length before anything is written
+	initialSbLen := len(message.Desc.Name()) + 2 // +2 for " {"
+
 	handledOneOfs := make(map[string]struct{})
 	for _, field := range message.Fields {
 		if oneof := field.Oneof; oneof != nil && !field.Desc.HasOptionalKeyword() {
@@ -100,27 +104,35 @@ func (g *textGenerator) genMessage(message *protogen.Message) {
 			g.P("switch body := x.", oneof.GoName, ".(type) {")
 			for _, oneofField := range oneof.Fields {
 				g.P("case *", oneofField.GoIdent, ":")
-				g.genField(oneofField, "body."+oneofField.GoName)
+				g.genField(initialSbLen, oneofField, "body."+oneofField.GoName)
 			}
 			g.P("}")
 		} else {
 			accessor := "x." + field.GoName
-			g.genField(field, accessor)
+			g.genField(initialSbLen, field, accessor)
 		}
 	}
 	g.P("sb.WriteString(\"}\")")
 	g.P("return sb.String()")
 	g.P("}")
 
+	g.P()
+
 	g.P("func (x *", message.GoIdent, ") String() string {")
 	g.P("return x.MarshalProtoText()")
 	g.P("}")
 }
+func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, accessor string) {
+	maybeAddSpace := func() {
+		g.P("if sb.Len() > ", sbInitialLen, " {")
+		g.P("sb.WriteString(\" \")")
+		g.P("}")
+	}
 
-func (g *textGenerator) genField(field *protogen.Field, accessor string) {
 	if field.Desc.IsList() {
 		g.P("if len(", accessor, ") > 0 {")
-		g.P("sb.WriteString(\" ", field.Desc.Name(), ": [\")")
+		maybeAddSpace()
+		g.P("sb.WriteString(\"", field.Desc.Name(), ": [\")")
 		g.P("for i, v := range ", accessor, " {")
 		g.P("if i > 0 {")
 		g.P("sb.WriteString(\", \")")
@@ -136,7 +148,8 @@ func (g *textGenerator) genField(field *protogen.Field, accessor string) {
 	case protoreflect.MessageKind:
 		if field.Desc.IsMap() {
 			g.P("if len(", accessor, ") > 0 {")
-			g.P("sb.WriteString(\" ", field.Desc.Name(), ": {\")")
+			maybeAddSpace()
+			g.P("sb.WriteString(\"", field.Desc.Name(), ": {\")")
 			g.P("for k, v := range ", accessor, " {")
 			g.P("sb.WriteString(\" \")")
 			g.genFieldValue(field.Message.Fields[0], "k", false)
@@ -144,45 +157,49 @@ func (g *textGenerator) genField(field *protogen.Field, accessor string) {
 			g.genFieldValue(field.Message.Fields[1], "v", false)
 			g.P("}")
 			g.P("sb.WriteString(\" }\")")
+			g.P("}")
 		} else {
 			g.P("if ", accessor, " != nil {")
-			g.P("sb.WriteString(\" ", field.Desc.Name(), ": \")")
+			maybeAddSpace()
+			g.P("sb.WriteString(\"", field.Desc.Name(), ": \")")
 			g.P("sb.WriteString(", accessor, ".MarshalProtoText())")
+			g.P("}")
 		}
-	case protoreflect.StringKind:
+	case protoreflect.StringKind, protoreflect.BytesKind:
 		if field.Desc.HasOptionalKeyword() || g.file.Desc.Syntax() == protoreflect.Proto2 {
 			g.P("if ", accessor, " != nil {")
 		} else {
-			g.P("if ", accessor, " != \"\" {")
+			emptyCheck := "\"\""
+			if field.Desc.Kind() == protoreflect.BytesKind {
+				emptyCheck = "nil"
+			}
+			g.P("if ", accessor, " != ", emptyCheck, " {")
 		}
-		g.P("sb.WriteString(\" ", field.Desc.Name(), ": \")")
+		maybeAddSpace()
+		g.P("sb.WriteString(\"", field.Desc.Name(), ": \")")
 		g.genFieldValue(field, accessor, false)
-	case protoreflect.EnumKind, protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Sint32Kind, protoreflect.Sint64Kind,
-		protoreflect.Sfixed32Kind, protoreflect.Sfixed64Kind, protoreflect.Uint32Kind, protoreflect.Uint64Kind,
-		protoreflect.Fixed32Kind, protoreflect.Fixed64Kind, protoreflect.FloatKind, protoreflect.DoubleKind:
+		g.P("}")
+	case protoreflect.EnumKind, protoreflect.Int32Kind, protoreflect.Int64Kind,
+		protoreflect.Sint32Kind, protoreflect.Sint64Kind, protoreflect.Sfixed32Kind, protoreflect.Sfixed64Kind,
+		protoreflect.Uint32Kind, protoreflect.Uint64Kind, protoreflect.Fixed32Kind, protoreflect.Fixed64Kind,
+		protoreflect.FloatKind, protoreflect.DoubleKind, protoreflect.BoolKind:
+		zeroValue := "0"
+		if field.Desc.Kind() == protoreflect.BoolKind {
+			zeroValue = "false"
+		}
 		if field.Desc.HasOptionalKeyword() || g.file.Desc.Syntax() == protoreflect.Proto2 {
 			g.P("if ", accessor, " != nil {")
 		} else {
-			g.P("if ", accessor, " != 0 {")
+			g.P("if ", accessor, " != ", zeroValue, " {")
 		}
-		g.P("sb.WriteString(\" ", field.Desc.Name(), ": \")")
+		maybeAddSpace()
+		g.P("sb.WriteString(\"", field.Desc.Name(), ": \")")
 		g.genFieldValue(field, accessor, false)
-	case protoreflect.BytesKind:
-		g.P("if len(", accessor, ") > 0 {")
-		g.P("sb.WriteString(\" ", field.Desc.Name(), ": \")")
-		g.genFieldValue(field, accessor, false)
-	case protoreflect.BoolKind:
-		if field.Desc.HasOptionalKeyword() || g.file.Desc.Syntax() == protoreflect.Proto2 {
-			g.P("if ", accessor, " != nil {")
-		} else {
-			g.P("if ", accessor, " {")
-		}
-		g.P("sb.WriteString(\" ", field.Desc.Name(), ": \")")
-		g.genFieldValue(field, accessor, false)
+		g.P("}")
 	default:
+		// For unsupported field types, do nothing
 		return
 	}
-	g.P("}")
 }
 
 func (g *textGenerator) genFieldValue(field *protogen.Field, accessor string, isList bool) {
@@ -202,11 +219,16 @@ func (g *textGenerator) genFieldValue(field *protogen.Field, accessor string, is
 		g.P("sb.WriteString(\"\\\"\")")
 	case protoreflect.EnumKind:
 		if isPointer {
+			g.P("sb.WriteString(\"\\\"\")")
 			g.P("sb.WriteString(", accessor, ".String())")
+			g.P("sb.WriteString(\"\\\"\")")
 		} else {
+			g.P("sb.WriteString(\"\\\"\")")
 			g.P("sb.WriteString(", field.Enum.GoIdent, "(", accessor, ").String())")
+			g.P("sb.WriteString(\"\\\"\")")
 		}
-	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Sint32Kind, protoreflect.Sint64Kind, protoreflect.Sfixed32Kind, protoreflect.Sfixed64Kind:
+	case protoreflect.Int32Kind, protoreflect.Int64Kind, protoreflect.Sint32Kind, protoreflect.Sint64Kind,
+		protoreflect.Sfixed32Kind, protoreflect.Sfixed64Kind:
 		if isPointer {
 			g.P("sb.WriteString(", g.QualifiedGoIdent(strconvPackage.Ident("FormatInt")), "(int64(*", accessor, "), 10))")
 		} else {
