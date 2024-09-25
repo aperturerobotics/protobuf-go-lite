@@ -143,13 +143,13 @@ nextField:
 
 		// If this is the first field in a oneof, write the if statement that checks for nil
 		// and start the switch statement for the oneof type.
-		if field.Oneof != nil && field == field.Oneof.Fields[0] {
+		if field.Oneof != nil && field == field.Oneof.Fields[0] && !field.Oneof.Desc.IsSynthetic() {
 			// NOTE: we don't support field masks here (yet).
 			g.P("if x.", field.Oneof.GoName, " != nil {")
 			g.P("switch ov := x.", field.Oneof.GoName, ".(type) {")
 		}
 
-		if field.Oneof != nil {
+		if field.Oneof != nil && !field.Oneof.Desc.IsSynthetic() {
 			// If we're in a oneof, check if this is the field that's set in the oneof.
 			g.P("case *", field.GoIdent.GoName, ":")
 			messageOrOneofIdent = "ov"
@@ -192,6 +192,12 @@ nextField:
 		switch field.Desc.Kind() {
 		default:
 			// Scalar types can be written by the library.
+			if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
+				g.P("s.Write", g.libNameForField(field), "(*", messageOrOneofIdent, ".", fieldGoName, ")")
+			} else {
+				g.P("s.Write", g.libNameForField(field), "(", messageOrOneofIdent, ".", fieldGoName, ")")
+			}
+		case protoreflect.BytesKind:
 			g.P("s.Write", g.libNameForField(field), "(", messageOrOneofIdent, ".", fieldGoName, ")")
 		case protoreflect.EnumKind:
 			// If the field is of type enum, and the enum has a marshaler, use that.
@@ -207,12 +213,12 @@ nextField:
 		}
 
 		// If we're not in a oneof, end the "if not zero".
-		if field.Oneof == nil {
+		if field.Oneof == nil || field.Oneof.Desc.IsSynthetic() {
 			g.P("}") // end if x.{field.GoName} != zero value {
 		}
 
 		// If this is the last field in the oneof, close the switch and if statements.
-		if field.Oneof != nil && field == field.Oneof.Fields[len(field.Oneof.Fields)-1] {
+		if field.Oneof != nil && field == field.Oneof.Fields[len(field.Oneof.Fields)-1] && !field.Oneof.Desc.IsSynthetic() {
 			g.P("}") // end switch v := x.{field.Oneof.GoName}.(type) {
 			g.P("}") // end if x.{field.Oneof.GoName} != nil {
 		}

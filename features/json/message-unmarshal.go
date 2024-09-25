@@ -162,7 +162,7 @@ nextField:
 		messageOrOneofIdent := "x"
 
 		// If this field is in a oneof, allocate a new oneof value wrapper.
-		if field.Oneof != nil {
+		if field.Oneof != nil && !field.Oneof.Desc.IsSynthetic() {
 			g.P("ov := &", field.GoIdent.GoName, "{}")
 			g.P("x.", field.Oneof.GoName, " = ov")
 			messageOrOneofIdent = "ov"
@@ -190,6 +190,13 @@ nextField:
 		switch field.Desc.Kind() {
 		default:
 			// Scalar types can be read by the library.
+			if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
+				g.P("t := s.Read", g.libNameForField(field), "()")
+				g.P(messageOrOneofIdent, ".", fieldGoName, " = &t")
+			} else {
+				g.P(messageOrOneofIdent, ".", fieldGoName, " = s.Read", g.libNameForField(field), "()")
+			}
+		case protoreflect.BytesKind:
 			g.P(messageOrOneofIdent, ".", fieldGoName, " = s.Read", g.libNameForField(field), "()")
 		case protoreflect.EnumKind:
 			// If the field is of type enum, and the enum has an unmarshaler, call the unmarshaler.
