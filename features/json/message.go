@@ -6,7 +6,6 @@ package json
 
 import (
 	"fmt"
-	"slices"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -28,26 +27,17 @@ func (g *jsonGenerator) genMessage(message *protogen.Message) {
 		return
 	}
 
-	// Check if the message has any optional fields and skip generation if so.
-	anyOptional := slices.ContainsFunc(message.Fields, func(f *protogen.Field) bool {
-		return f.Desc.HasOptionalKeyword()
-	})
+	g.genMessageMarshaler(message)
+	g.genStdMessageMarshaler(message)
 
-	if !anyOptional {
-		g.genMessageMarshaler(message)
-		g.genStdMessageMarshaler(message)
-
-		g.genMessageUnmarshaler(message)
-		g.genStdMessageUnmarshaler(message)
-	} else {
-		// We do not support marshaling this field, skip the entire message.
-		g.P("// NOTE: protobuf-go-lite json only supports proto3 and not proto3opt (optional fields).")
-		g.P()
-	}
+	g.genMessageUnmarshaler(message)
+	g.genStdMessageUnmarshaler(message)
 }
 
 func fieldIsNullable(field *protogen.Field) bool {
-	// In the supported subset of syntax (proto3 and not proto3opt) we only use pointers for messages.
+	if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
+		return true
+	}
 	nullable := field.Desc.Kind() == protoreflect.MessageKind
 	return nullable
 }
