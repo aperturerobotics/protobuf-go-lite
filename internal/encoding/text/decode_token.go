@@ -10,8 +10,6 @@ import (
 	"math"
 	"strconv"
 	"strings"
-
-	"github.com/aperturerobotics/protobuf-go-lite/internal/flags"
 )
 
 // Kind represents a token kind expressible in the textproto format.
@@ -277,13 +275,6 @@ func (t Token) Int64() (int64, bool) {
 	if n, err := strconv.ParseInt(t.str, 0, 64); err == nil {
 		return n, true
 	}
-	// C++ accepts large positive hex numbers as negative values.
-	// This feature is here for proto1 backwards compatibility purposes.
-	if flags.ProtoLegacy && (t.numAttrs == numHex) {
-		if n, err := strconv.ParseUint(t.str, 0, 64); err == nil {
-			return int64(n), true //nolint:gosec
-		}
-	}
 	return 0, false
 }
 
@@ -294,13 +285,6 @@ func (t Token) Int32() (int32, bool) {
 	}
 	if n, err := strconv.ParseInt(t.str, 0, 32); err == nil {
 		return int32(n), true
-	}
-	// C++ accepts large positive hex numbers as negative values.
-	// This feature is here for proto1 backwards compatibility purposes.
-	if flags.ProtoLegacy && (t.numAttrs == numHex) {
-		if n, err := strconv.ParseUint(t.str, 0, 32); err == nil {
-			return int32(n), true //nolint:gosec
-		}
 	}
 	return 0, false
 }

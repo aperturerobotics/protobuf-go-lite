@@ -14,7 +14,6 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/aperturerobotics/protobuf-go-lite/internal/encoding/text"
-	"github.com/aperturerobotics/protobuf-go-lite/internal/flags"
 )
 
 var eofErr = text.ErrUnexpectedEOF.Error()
@@ -1106,18 +1105,12 @@ func TestDecoder(t *testing.T) {
 				{
 					K: text.Scalar,
 					T: func() ST {
-						if flags.ProtoLegacy {
-							return ST{ok: Int32{-1091584273}}
-						}
 						return ST{nok: Int32{}}
 					}(),
 				},
 				{
 					K: text.Scalar,
 					T: func() ST {
-						if flags.ProtoLegacy {
-							return ST{ok: Int64{-4688318750159552785}}
-						}
 						return ST{nok: Int64{}}
 					}(),
 				},
