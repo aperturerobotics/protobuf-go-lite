@@ -122,6 +122,7 @@ func (g *textGenerator) genMessage(message *protogen.Message) {
 	g.P("return x.MarshalProtoText()")
 	g.P("}")
 }
+
 func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, accessor string) {
 	maybeAddSpace := func() {
 		g.P("if sb.Len() > ", sbInitialLen, " {")

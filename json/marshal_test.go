@@ -192,9 +192,9 @@ func (m *testMarshaler) MarshalProtoJSON(s *MarshalState) {
 
 func TestMarshalSlice(t *testing.T) {
 	testSlice := []*testMarshaler{
-		&testMarshaler{value: 1},
-		&testMarshaler{value: 2},
-		&testMarshaler{value: 3},
+		{value: 1},
+		{value: 2},
+		{value: 3},
 	}
 
 	expected := `[{"value":1},{"value":2},{"value":3}]`

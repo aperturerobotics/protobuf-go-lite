@@ -29,7 +29,7 @@ func TestWellKnownTypes(t *testing.T) {
 	anyVal, err := anypb.New(dur, "cool.apps/test-value")
 	require.NoError(t, err)
 
-	ts := timestamppb.New(time.Date(2024, time.January, 10, 4, 20, 00, 00, time.UTC))
+	ts := timestamppb.New(time.Date(2024, time.January, 10, 4, 20, 0o0, 0o0, time.UTC))
 	m := &MessageWithWKT{
 		Any:         anyVal,
 		Duration:    dur,
@@ -51,10 +51,8 @@ func TestWellKnownTypes(t *testing.T) {
 
 	require.NotEmpty(t, vtProtoBytes)
 
-	var (
-		// golangMsg  = &MessageWithWKT{}
-		vtProtoMsg = &MessageWithWKT{}
-	)
+	// golangMsg  = &MessageWithWKT{}
+	vtProtoMsg := &MessageWithWKT{}
 
 	require.NoError(t, vtProtoMsg.UnmarshalVT(vtProtoBytes))
 
@@ -72,7 +70,7 @@ func TestWellKnownTypes(t *testing.T) {
 	t.Log(string(jdata))
 
 	// Ensure output is consistent
-	var expected = `{"any":{"@type":"cool.apps/test-value","value":"14402s"},"duration":"14402s","empty":{},"timestamp":"2024-01-10T04:20:00Z","doubleValue":123456789.12345679,"floatValue":123456792,"int64Value":"123456789","uint64Value":"123456789","int32Value":"123456789","uint32Value":"123456789","boolValue":true,"stringValue":"String marshalling and unmarshalling test","bytesValue":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}`
+	expected := `{"any":{"@type":"cool.apps/test-value","value":"14402s"},"duration":"14402s","empty":{},"timestamp":"2024-01-10T04:20:00Z","doubleValue":123456789.12345679,"floatValue":123456792,"int64Value":"123456789","uint64Value":"123456789","int32Value":"123456789","uint32Value":"123456789","boolValue":true,"stringValue":"String marshalling and unmarshalling test","bytesValue":"Qnl0ZXMgbWFyc2hhbGxpbmcgYW5kIHVubWFyc2hhbGxpbmcgdGVzdA=="}`
 	require.Equal(t, expected, string(jdata))
 
 	jparsed := &MessageWithWKT{}
