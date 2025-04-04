@@ -1163,8 +1163,8 @@ func (g *GeneratedFile) generatedCodeInfo(content []byte) (*descriptorpb.Generat
 			info.Annotation = append(info.Annotation, &descriptorpb.GeneratedCodeInfo_Annotation{
 				SourceFile: proto.String(a.Location.SourceFile),
 				Path:       a.Location.Path,
-				Begin:      proto.Int32(int32(fset.Position(ident.Pos()).Offset)),
-				End:        proto.Int32(int32(fset.Position(ident.End()).Offset)),
+				Begin:      proto.Int32(int32(fset.Position(ident.Pos()).Offset)), //nolint:gosec
+				End:        proto.Int32(int32(fset.Position(ident.End()).Offset)), //nolint:gosec
 				Semantic:   a.Semantic,
 			})
 		}
@@ -1290,7 +1290,7 @@ type Location struct {
 // appendPath add elements to a Location's path, returning a new Location.
 func (loc Location) appendPath(num protoreflect.FieldNumber, idx int) Location {
 	loc.Path = append(protoreflect.SourcePath(nil), loc.Path...) // make copy
-	loc.Path = append(loc.Path, int32(num), int32(idx))
+	loc.Path = append(loc.Path, int32(num), int32(idx))          //nolint:gosec
 	return loc
 }
 

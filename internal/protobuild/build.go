@@ -109,12 +109,12 @@ func fieldValue(fd protoreflect.FieldDescriptor, v interface{}) protoreflect.Val
 			if o < math.MinInt32 || math.MaxInt32 < o {
 				panic(fmt.Sprintf("%v: value %v out of range [%v, %v]", fd.FullName(), o, int32(math.MinInt32), int32(math.MaxInt32)))
 			}
-			v = int32(o)
+			v = int32(o) //nolint:gosec
 		case protoreflect.Uint32Kind, protoreflect.Fixed32Kind:
 			if o < 0 || math.MaxUint32 < 0 {
 				panic(fmt.Sprintf("%v: value %v out of range [%v, %v]", fd.FullName(), o, uint32(0), uint32(math.MaxUint32)))
 			}
-			v = uint32(o)
+			v = uint32(o) //nolint:gosec
 		case protoreflect.Int64Kind, protoreflect.Sint64Kind, protoreflect.Sfixed64Kind:
 			v = int64(o)
 		case protoreflect.Uint64Kind, protoreflect.Fixed64Kind:
@@ -127,7 +127,7 @@ func fieldValue(fd protoreflect.FieldDescriptor, v interface{}) protoreflect.Val
 		case protoreflect.DoubleKind:
 			v = float64(o)
 		case protoreflect.EnumKind:
-			v = protoreflect.EnumNumber(o)
+			v = protoreflect.EnumNumber(o) //nolint:gosec
 		default:
 			panic(fmt.Sprintf("%v: invalid value type int", fd.FullName()))
 		}

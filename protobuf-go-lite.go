@@ -113,7 +113,7 @@ func EncodeVarint(dAtA []byte, offset int, v uint64) int {
 	offset -= SizeOfVarint(v)
 	base := offset
 	for v >= 1<<7 {
-		dAtA[offset] = uint8(v&0x7f | 0x80)
+		dAtA[offset] = uint8(v&0x7f | 0x80) //nolint:gosec
 		v >>= 7
 		offset++
 	}
@@ -337,7 +337,7 @@ func Skip(dAtA []byte) (n int, err error) {
 				break
 			}
 		}
-		wireType := int(wire & 0x7)
+		wireType := int(wire & 0x7) //nolint:gosec
 		switch wireType {
 		case 0:
 			for shift := uint(0); ; shift += 7 {

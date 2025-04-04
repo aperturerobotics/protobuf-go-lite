@@ -16,7 +16,7 @@ var toSet, toClear [maxLimit]bool
 func init() {
 	var seed [32]byte
 
-	r := rand.New(rand.NewChaCha8(seed))
+	r := rand.New(rand.NewChaCha8(seed)) //nolint:gosec
 	for i := 0; i < maxLimit; i++ {
 		toSet[i] = r.Int32N(2) == 0
 		toClear[i] = r.Int32N(2) == 0
@@ -32,7 +32,7 @@ func TestInts(t *testing.T) {
 		t.Errorf("init: Len() = %d, want %d", ns.Len(), wantLen)
 	}
 	for i := 0; i < maxLimit; i++ {
-		if ns.Has(uint64(i)) {
+		if ns.Has(uint64(i)) { //nolint:gosec
 			t.Errorf("init: Has(%d) = true, want false", i)
 		}
 	}
@@ -40,7 +40,7 @@ func TestInts(t *testing.T) {
 	// Set some numbers.
 	for i, b := range toSet[:maxLimit] {
 		if b {
-			ns.Set(uint64(i))
+			ns.Set(uint64(i)) //nolint:gosec
 			wantLen++
 		}
 	}
@@ -50,7 +50,7 @@ func TestInts(t *testing.T) {
 		t.Errorf("after Set: Len() = %d, want %d", ns.Len(), wantLen)
 	}
 	for i := 0; i < maxLimit; i++ {
-		if got := ns.Has(uint64(i)); got != toSet[i] {
+		if got := ns.Has(uint64(i)); got != toSet[i] { //nolint:gosec
 			t.Errorf("after Set: Has(%d) = %v, want %v", i, got, !got)
 		}
 	}
@@ -58,7 +58,7 @@ func TestInts(t *testing.T) {
 	// Clear some numbers.
 	for i, b := range toClear[:maxLimit] {
 		if b {
-			ns.Clear(uint64(i))
+			ns.Clear(uint64(i)) //nolint:gosec
 			if toSet[i] {
 				wantLen--
 			}
@@ -70,7 +70,7 @@ func TestInts(t *testing.T) {
 		t.Errorf("after Clear: Len() = %d, want %d", ns.Len(), wantLen)
 	}
 	for i := 0; i < maxLimit; i++ {
-		if got := ns.Has(uint64(i)); got != toSet[i] && !toClear[i] {
+		if got := ns.Has(uint64(i)); got != toSet[i] && !toClear[i] { //nolint:gosec
 			t.Errorf("after Clear: Has(%d) = %v, want %v", i, got, !got)
 		}
 	}

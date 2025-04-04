@@ -281,7 +281,7 @@ func (t Token) Int64() (int64, bool) {
 	// This feature is here for proto1 backwards compatibility purposes.
 	if flags.ProtoLegacy && (t.numAttrs == numHex) {
 		if n, err := strconv.ParseUint(t.str, 0, 64); err == nil {
-			return int64(n), true
+			return int64(n), true //nolint:gosec
 		}
 	}
 	return 0, false
@@ -299,7 +299,7 @@ func (t Token) Int32() (int32, bool) {
 	// This feature is here for proto1 backwards compatibility purposes.
 	if flags.ProtoLegacy && (t.numAttrs == numHex) {
 		if n, err := strconv.ParseUint(t.str, 0, 32); err == nil {
-			return int32(n), true
+			return int32(n), true //nolint:gosec
 		}
 	}
 	return 0, false

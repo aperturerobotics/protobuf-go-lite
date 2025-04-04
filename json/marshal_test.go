@@ -186,7 +186,7 @@ type testMarshaler struct {
 func (m *testMarshaler) MarshalProtoJSON(s *MarshalState) {
 	s.WriteObjectStart()
 	s.WriteObjectField("value")
-	s.WriteInt32(int32(m.value))
+	s.WriteInt32(int32(m.value)) //nolint:gosec
 	s.WriteObjectEnd()
 }
 

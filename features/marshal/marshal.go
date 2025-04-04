@@ -69,11 +69,11 @@ func (p *marshal) encodeVarint(varName ...string) {
 }
 
 func (p *marshal) encodeKey(fieldNumber protoreflect.FieldNumber, wireType protowire.Type) {
-	x := uint32(fieldNumber)<<3 | uint32(wireType)
+	x := uint32(fieldNumber)<<3 | uint32(wireType) //nolint:gosec
 	i := 0
 	keybuf := make([]byte, 0)
 	for i = 0; x > 127; i++ {
-		keybuf = append(keybuf, 0x80|uint8(x&0x7F))
+		keybuf = append(keybuf, 0x80|uint8(x&0x7F)) //nolint:gosec
 		x >>= 7
 	}
 	keybuf = append(keybuf, uint8(x))

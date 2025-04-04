@@ -10,7 +10,7 @@ import (
 )
 
 func KeySize(fieldNumber protoreflect.FieldNumber, wireType protowire.Type) int {
-	x := uint32(fieldNumber)<<3 | uint32(wireType)
+	x := uint32(fieldNumber)<<3 | uint32(wireType) //nolint:gosec
 	size := 0
 	for size = 0; x > 127; size++ {
 		x >>= 7

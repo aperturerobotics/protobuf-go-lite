@@ -31,7 +31,7 @@ func Intn(n int) int {
 	if n <= 0 {
 		panic("must be positive")
 	}
-	return int(randSeed % uint64(n))
+	return int(randSeed % uint64(n)) //nolint:gosec
 }
 
 // randSeed is a best-effort at an approximate hash of the Go binary.
@@ -57,7 +57,7 @@ func binaryHash() uint64 {
 	if err != nil {
 		return 0
 	}
-	binary.LittleEndian.PutUint64(buf[:8], uint64(fi.Size()))
+	binary.LittleEndian.PutUint64(buf[:8], uint64(fi.Size())) //nolint:gosec
 	h.Write(buf[:8])
 	for i := int64(0); i < numSamples; i++ {
 		if _, err := f.ReadAt(buf[:], i*fi.Size()/numSamples); err != nil {
