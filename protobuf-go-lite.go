@@ -31,6 +31,14 @@ type Message interface {
 	Reset()
 }
 
+// JSONMessage is a message with MarshalJSON and UnmarshalJSON.
+type JSONMessage interface {
+	// MarshalJSON marshals the message to JSON.
+	MarshalJSON() ([]byte, error)
+	// UnmarshalJSON unmarshals the message from JSON.
+	UnmarshalJSON(data []byte) error
+}
+
 // CloneMessage is a message with a CloneMessage function.
 type CloneMessage interface {
 	// Message extends the base message type.
