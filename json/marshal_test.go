@@ -209,3 +209,24 @@ func TestMarshalSlice(t *testing.T) {
 		t.Errorf("MarshalSlice result does not match expected.\nGot:      %s\nExpected: %s", string(result), expected)
 	}
 }
+
+func TestMarshalMap(t *testing.T) {
+	testMap := map[string]*testMarshaler{
+		"c": {value: 3},
+		"a": {value: 1}, 
+		"b": {value: 2},
+	}
+
+	// Keys should be sorted alphabetically.
+	expected := `{"a":{"value":1},"b":{"value":2},"c":{"value":3}}`
+
+	config := DefaultMarshalerConfig
+	result, err := MarshalMap(config, testMap)
+	if err != nil {
+		t.Errorf("MarshalMap returned an error: %v", err)
+	}
+
+	if string(result) != expected {
+		t.Errorf("MarshalMap result does not match expected.\nGot:      %s\nExpected: %s", string(result), expected)
+	}
+}

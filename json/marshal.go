@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"math"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -63,6 +64,31 @@ func Marshal(c MarshalerConfig, m Marshaler) ([]byte, error) {
 // Marshal marshals a message.
 func (c MarshalerConfig) Marshal(m Marshaler) ([]byte, error) {
 	return Marshal(c, m)
+}
+
+// MarshalMap marshals a map[string]E where E implements Marshaler into a JSON object.
+// The keys of the map are sorted alphabetically before marshaling.
+func MarshalMap[M ~map[string]E, E Marshaler](c MarshalerConfig, mm M) ([]byte, error) {
+	var buf bytes.Buffer
+	s := NewMarshalState(c, NewJsonStream(&buf))
+	s.WriteObjectStart()
+	keys := make([]string, 0, len(mm))
+	for k := range mm {
+		keys = append(keys, k)
+	}
+	slices.Sort(keys)
+	for i, k := range keys {
+		if i > 0 {
+			s.WriteMore()
+		}
+		s.WriteObjectField(k)
+		mm[k].MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+	if err := s.Err(); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }
 
 // MarshalSlice marshals a slice of any type that implements Marshaler into a JSON array.
