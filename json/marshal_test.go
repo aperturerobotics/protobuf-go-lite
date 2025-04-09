@@ -213,7 +213,7 @@ func TestMarshalSlice(t *testing.T) {
 func TestMarshalMap(t *testing.T) {
 	testMap := map[string]*testMarshaler{
 		"c": {value: 3},
-		"a": {value: 1}, 
+		"a": {value: 1},
 		"b": {value: 2},
 	}
 
