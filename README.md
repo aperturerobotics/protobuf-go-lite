@@ -83,7 +83,7 @@ Summary of the packages provided by this module:
     ```
     for name in $(PROTO_SRC_NAMES); do \
         protoc \
-          --plugin protoc-gen-go-lite="${GOBIN}/protoc-gen-go-lite"
+          --plugin protoc-gen-go-lite="${GOBIN}/protoc-gen-go-lite" \
           --go-lite_out=.  \
           --go-lite_opt=features=marshal+unmarshal+size+equal+clone \
         proto/$${name}.proto; \
