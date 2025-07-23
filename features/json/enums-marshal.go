@@ -12,7 +12,7 @@ func (g *jsonGenerator) genEnumMarshaler(enum *protogen.Enum) {
 	g.P("// MarshalProtoJSON marshals the ", enum.GoIdent, " to JSON.")
 	g.P("func (x ", enum.GoIdent, ") MarshalProtoJSON(s *", jsonPluginPackage.Ident("MarshalState"), ") {")
 	// We write the enum, passing only the original mapping to the marshaler.
-	g.P("s.WriteEnumString(int32(x), ", enum.GoIdent, "_name)")
+	g.P("s.WriteEnum(int32(x), ", enum.GoIdent, "_name)")
 	g.P("}")
 	g.P()
 }
