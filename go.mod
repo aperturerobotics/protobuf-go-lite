@@ -1,6 +1,6 @@
 module github.com/aperturerobotics/protobuf-go-lite
 
-go 1.22
+go 1.23
 
 require (
 	github.com/aperturerobotics/json-iterator-lite v1.0.0
