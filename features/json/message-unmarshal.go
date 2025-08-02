@@ -21,8 +21,12 @@ func (g *jsonGenerator) genMessageUnmarshaler(message *protogen.Message) {
 	g.P("}")
 
 	// If the message doesn't have any fields, there's nothing to do.
+	// But need to consume empty object braces like "{}".
 	if len(message.Fields) == 0 {
-		g.P("}") // end func (x *{message.GoIdent}) MarshalProtoJSON()
+		g.P("s.ReadObject(func(key string) {")
+		g.P("// no fields")
+		g.P("})") // end s.ReadObject()
+		g.P("}")  // end func (x *{message.GoIdent}) MarshalProtoJSON()
 		g.P()
 		return
 	}
