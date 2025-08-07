@@ -10,6 +10,7 @@ import (
 	errors "errors"
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	math "math"
 	slices "slices"
 	strconv "strconv"
@@ -1497,7 +1498,8 @@ func (x *Struct) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("fields: {")
-		for k, v := range x.Fields {
+		for _, k := range slices.Sorted(maps.Keys(x.Fields)) {
+			v := x.Fields[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")

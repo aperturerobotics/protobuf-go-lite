@@ -2499,7 +2499,8 @@ func (x *UnsafeTest_Sub3) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("foo: {")
-		for k, v := range x.Foo {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+			v := x.Foo[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")
@@ -2578,7 +2579,8 @@ func (x *UnsafeTest_Sub5) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("foo: {")
-		for k, v := range x.Foo {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+			v := x.Foo[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")

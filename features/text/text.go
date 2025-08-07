@@ -15,6 +15,8 @@ var (
 	stringsPackage = protogen.GoImportPath("strings")
 	strconvPackage = protogen.GoImportPath("strconv")
 	base64Package  = protogen.GoImportPath("encoding/base64")
+	slicesPackage  = protogen.GoImportPath("slices")
+	mapsPackage    = protogen.GoImportPath("maps")
 )
 
 var disableTextComment = "protobuf-go-lite:disable-text"
@@ -151,7 +153,8 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 			g.P("if len(", accessor, ") > 0 {")
 			maybeAddSpace()
 			g.P("sb.WriteString(\"", field.Desc.Name(), ": {\")")
-			g.P("for k, v := range ", accessor, " {")
+			g.P("for _, k := range ", g.QualifiedGoIdent(slicesPackage.Ident("Sorted")), "(", g.QualifiedGoIdent(mapsPackage.Ident("Keys")), "(", accessor, ")) {")
+			g.P("v := ", accessor, "[k]")
 			g.P("sb.WriteString(\" \")")
 			g.genFieldValue(field.Message.Fields[0], "k", false)
 			g.P("sb.WriteString(\": \")")

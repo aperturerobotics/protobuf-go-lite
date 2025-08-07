@@ -1760,7 +1760,8 @@ func (x *BasicMsg) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("map_string_int32_field: {")
-		for k, v := range x.MapStringInt32Field {
+		for _, k := range slices.Sorted(maps.Keys(x.MapStringInt32Field)) {
+			v := x.MapStringInt32Field[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")

@@ -7,6 +7,7 @@ package testproto_maps
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
@@ -611,7 +612,8 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("stringKeys: {")
-		for k, v := range x.StringKeys {
+		for _, k := range slices.Sorted(maps.Keys(x.StringKeys)) {
+			v := x.StringKeys[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")
@@ -624,7 +626,8 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 			sb.WriteString(" ")
 		}
 		sb.WriteString("intKeys: {")
-		for k, v := range x.IntKeys {
+		for _, k := range slices.Sorted(maps.Keys(x.IntKeys)) {
+			v := x.IntKeys[k]
 			sb.WriteString(" ")
 			sb.WriteString(strconv.FormatUint(uint64(k), 10))
 			sb.WriteString(": ")
