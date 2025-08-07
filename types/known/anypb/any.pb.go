@@ -8,6 +8,7 @@ import (
 	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -192,13 +193,10 @@ func (m *Any) CloneVT() *Any {
 	r := new(Any)
 	r.TypeUrl = m.TypeUrl
 	if rhs := m.Value; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.Value = tmpBytes
+		r.Value = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

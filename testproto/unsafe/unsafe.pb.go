@@ -8,6 +8,8 @@ import (
 	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
+	maps "maps"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -309,13 +311,10 @@ func (m *UnsafeTest_Sub1) CloneVT() *UnsafeTest_Sub1 {
 	r := new(UnsafeTest_Sub1)
 	r.S = m.S
 	if rhs := m.B; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.B = tmpBytes
+		r.B = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -330,22 +329,16 @@ func (m *UnsafeTest_Sub2) CloneVT() *UnsafeTest_Sub2 {
 	}
 	r := new(UnsafeTest_Sub2)
 	if rhs := m.S; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.S = tmpContainer
+		r.S = slices.Clone(rhs)
 	}
 	if rhs := m.B; rhs != nil {
-		tmpContainer := make([][]byte, len(rhs))
+		r.B = make([][]byte, len(rhs))
 		for k, v := range rhs {
-			tmpBytes := make([]byte, len(v))
-			copy(tmpBytes, v)
-			tmpContainer[k] = tmpBytes
+			r.B[k] = slices.Clone(v)
 		}
-		r.B = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -360,17 +353,13 @@ func (m *UnsafeTest_Sub3) CloneVT() *UnsafeTest_Sub3 {
 	}
 	r := new(UnsafeTest_Sub3)
 	if rhs := m.Foo; rhs != nil {
-		tmpContainer := make(map[string][]byte, len(rhs))
+		r.Foo = make(map[string][]byte, len(rhs))
 		for k, v := range rhs {
-			tmpBytes := make([]byte, len(v))
-			copy(tmpBytes, v)
-			tmpContainer[k] = tmpBytes
+			r.Foo[k] = slices.Clone(v)
 		}
-		r.Foo = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -388,8 +377,7 @@ func (m *UnsafeTest_Sub4) CloneVT() *UnsafeTest_Sub4 {
 		r.Foo = m.Foo.(interface{ CloneOneofVT() isUnsafeTest_Sub4_Foo }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -417,9 +405,7 @@ func (m *UnsafeTest_Sub4_B) CloneVT() *UnsafeTest_Sub4_B {
 	}
 	r := new(UnsafeTest_Sub4_B)
 	if rhs := m.B; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.B = tmpBytes
+		r.B = slices.Clone(rhs)
 	}
 	return r
 }
@@ -434,15 +420,10 @@ func (m *UnsafeTest_Sub5) CloneVT() *UnsafeTest_Sub5 {
 	}
 	r := new(UnsafeTest_Sub5)
 	if rhs := m.Foo; rhs != nil {
-		tmpContainer := make(map[string]string, len(rhs))
-		for k, v := range rhs {
-			tmpContainer[k] = v
-		}
-		r.Foo = tmpContainer
+		r.Foo = maps.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -460,8 +441,7 @@ func (m *UnsafeTest) CloneVT() *UnsafeTest {
 		r.Sub = m.Sub.(interface{ CloneOneofVT() isUnsafeTest_Sub }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

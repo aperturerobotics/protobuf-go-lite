@@ -68,9 +68,7 @@ func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind) {
 		p.P(lhs, ` = `, rhs, `.`, cloneName, `()`)
 		//}
 	case kind == protoreflect.BytesKind:
-		p.P(`tmpBytes := make([]byte, len(`, rhs, `))`)
-		p.P(`copy(tmpBytes, `, rhs, `)`)
-		p.P(lhs, ` = tmpBytes`)
+		p.P(lhs, ` = `, p.QualifiedGoIdent(protogen.GoImportPath("slices").Ident("Clone")), `(`, rhs, `)`)
 	case isScalar(kind):
 		p.P(lhs, ` = `, rhs)
 	default:
@@ -103,13 +101,15 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 	fieldKind := field.Desc.Kind()
 
 	if field.Desc.Cardinality() == protoreflect.Repeated { // maps and slices
-		goType, _ := p.FieldGoType(field)
-		p.P(`tmpContainer := make(`, goType, `, len(`, rhs, `))`)
 		if isScalar(fieldKind) && field.Desc.IsList() {
-			// Generated code optimization: instead of iterating over all (key/index, value) pairs,
-			// do a single copy(dst, src) invocation for slices whose elements aren't reference types.
-			p.P(`copy(tmpContainer, `, rhs, `)`)
+			// Generated code optimization: use slices.Clone for slices whose elements aren't reference types.
+			p.P(lhs, ` = `, p.QualifiedGoIdent(protogen.GoImportPath("slices").Ident("Clone")), `(`, rhs, `)`)
+		} else if field.Desc.IsMap() && isScalar(field.Message.Fields[1].Desc.Kind()) {
+			// Use maps.Clone for maps with scalar values
+			p.P(lhs, ` = `, p.QualifiedGoIdent(protogen.GoImportPath("maps").Ident("Clone")), `(`, rhs, `)`)
 		} else {
+			goType, _ := p.FieldGoType(field)
+			p.P(lhs, ` = make(`, goType, `, len(`, rhs, `))`)
 			if field.Desc.IsMap() {
 				// For maps, the type of the value field determines what code is generated for cloning
 				// an entry.
@@ -117,10 +117,9 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 				fieldKind = valueField.Desc.Kind()
 			}
 			p.P(`for k, v := range `, rhs, ` {`)
-			p.cloneFieldSingular("tmpContainer[k]", "v", fieldKind)
+			p.cloneFieldSingular(lhs+"[k]", "v", fieldKind)
 			p.P(`}`)
 		}
-		p.P(lhs, ` = tmpContainer`)
 	} else if isScalar(fieldKind) {
 		p.P(`tmpVal := *`, rhs)
 		p.P(lhs, ` = &tmpVal`)
@@ -197,8 +196,7 @@ func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protoge
 	if cloneUnknownFields {
 		// Clone unknown fields, if any
 		p.P(`if len(m.unknownFields) > 0 {`)
-		p.P(`r.unknownFields = make([]byte, len(m.unknownFields))`)
-		p.P(`copy(r.unknownFields, m.unknownFields)`)
+		p.P(`r.unknownFields = `, p.QualifiedGoIdent(protogen.GoImportPath("slices").Ident("Clone")), `(m.unknownFields)`)
 		p.P(`}`)
 	}
 

@@ -7,6 +7,7 @@ package sourcecontextpb
 import (
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -73,8 +74,7 @@ func (m *SourceContext) CloneVT() *SourceContext {
 	r := new(SourceContext)
 	r.FileName = m.FileName
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

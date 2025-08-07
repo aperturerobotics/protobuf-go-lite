@@ -11,6 +11,7 @@ import (
 	fmt "fmt"
 	io "io"
 	math "math"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	utf8 "unicode/utf8"
@@ -478,15 +479,13 @@ func (m *Struct) CloneVT() *Struct {
 	}
 	r := new(Struct)
 	if rhs := m.Fields; rhs != nil {
-		tmpContainer := make(map[string]*Value, len(rhs))
+		r.Fields = make(map[string]*Value, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Fields[k] = v.CloneVT()
 		}
-		r.Fields = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -504,8 +503,7 @@ func (m *Value) CloneVT() *Value {
 		r.Kind = m.Kind.(interface{ CloneOneofVT() isValue_Kind }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -598,15 +596,13 @@ func (m *ListValue) CloneVT() *ListValue {
 	}
 	r := new(ListValue)
 	if rhs := m.Values; rhs != nil {
-		tmpContainer := make([]*Value, len(rhs))
+		r.Values = make([]*Value, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Values[k] = v.CloneVT()
 		}
-		r.Values = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

@@ -7,6 +7,7 @@ package echo
 import (
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -144,15 +145,13 @@ func (m *EchoMsg) CloneVT() *EchoMsg {
 		r.Demo = m.Demo.(interface{ CloneOneofVT() isEchoMsg_Demo }).CloneOneofVT()
 	}
 	if rhs := m.Timestamps; rhs != nil {
-		tmpContainer := make([]*timestamppb.Timestamp, len(rhs))
+		r.Timestamps = make([]*timestamppb.Timestamp, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Timestamps[k] = v.CloneVT()
 		}
-		r.Timestamps = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

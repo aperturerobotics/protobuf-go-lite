@@ -7,6 +7,7 @@ package typepb
 import (
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -560,27 +561,22 @@ func (m *Type) CloneVT() *Type {
 	r.Syntax = m.Syntax
 	r.Edition = m.Edition
 	if rhs := m.Fields; rhs != nil {
-		tmpContainer := make([]*Field, len(rhs))
+		r.Fields = make([]*Field, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Fields[k] = v.CloneVT()
 		}
-		r.Fields = tmpContainer
 	}
 	if rhs := m.Oneofs; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Oneofs = tmpContainer
+		r.Oneofs = slices.Clone(rhs)
 	}
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*Option, len(rhs))
+		r.Options = make([]*Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -604,15 +600,13 @@ func (m *Field) CloneVT() *Field {
 	r.JsonName = m.JsonName
 	r.DefaultValue = m.DefaultValue
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*Option, len(rhs))
+		r.Options = make([]*Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -631,22 +625,19 @@ func (m *Enum) CloneVT() *Enum {
 	r.Syntax = m.Syntax
 	r.Edition = m.Edition
 	if rhs := m.Enumvalue; rhs != nil {
-		tmpContainer := make([]*EnumValue, len(rhs))
+		r.Enumvalue = make([]*EnumValue, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Enumvalue[k] = v.CloneVT()
 		}
-		r.Enumvalue = tmpContainer
 	}
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*Option, len(rhs))
+		r.Options = make([]*Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -663,15 +654,13 @@ func (m *EnumValue) CloneVT() *EnumValue {
 	r.Name = m.Name
 	r.Number = m.Number
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*Option, len(rhs))
+		r.Options = make([]*Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -688,8 +677,7 @@ func (m *Option) CloneVT() *Option {
 	r.Name = m.Name
 	r.Value = m.Value.CloneVT()
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

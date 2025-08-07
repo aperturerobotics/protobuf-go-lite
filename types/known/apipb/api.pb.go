@@ -7,6 +7,7 @@ package apipb
 import (
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -339,29 +340,25 @@ func (m *Api) CloneVT() *Api {
 	r.SourceContext = m.SourceContext.CloneVT()
 	r.Syntax = m.Syntax
 	if rhs := m.Methods; rhs != nil {
-		tmpContainer := make([]*Method, len(rhs))
+		r.Methods = make([]*Method, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Methods[k] = v.CloneVT()
 		}
-		r.Methods = tmpContainer
 	}
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*typepb.Option, len(rhs))
+		r.Options = make([]*typepb.Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if rhs := m.Mixins; rhs != nil {
-		tmpContainer := make([]*Mixin, len(rhs))
+		r.Mixins = make([]*Mixin, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Mixins[k] = v.CloneVT()
 		}
-		r.Mixins = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -382,15 +379,13 @@ func (m *Method) CloneVT() *Method {
 	r.ResponseStreaming = m.ResponseStreaming
 	r.Syntax = m.Syntax
 	if rhs := m.Options; rhs != nil {
-		tmpContainer := make([]*typepb.Option, len(rhs))
+		r.Options = make([]*typepb.Option, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Options[k] = v.CloneVT()
 		}
-		r.Options = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -407,8 +402,7 @@ func (m *Mixin) CloneVT() *Mixin {
 	r.Name = m.Name
 	r.Root = m.Root
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

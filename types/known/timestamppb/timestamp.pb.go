@@ -8,6 +8,7 @@ import (
 	errors "errors"
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	time "time"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -247,8 +248,7 @@ func (m *Timestamp) CloneVT() *Timestamp {
 	r.Seconds = m.Seconds
 	r.Nanos = m.Nanos
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

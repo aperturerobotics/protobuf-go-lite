@@ -7,6 +7,7 @@ package wkt
 import (
 	fmt "fmt"
 	io "io"
+	slices "slices"
 	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -220,8 +221,7 @@ func (m *MessageWithWKT) CloneVT() *MessageWithWKT {
 		r.ListvalueValue = rhs.CloneVT()
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

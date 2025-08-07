@@ -9,7 +9,9 @@ import (
 	binary "encoding/binary"
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	math "math"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -318,8 +320,7 @@ func (m *BasicMsg_NestedMsg) CloneVT() *BasicMsg_NestedMsg {
 	r.NestedInt32 = m.NestedInt32
 	r.NestedString = m.NestedString
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -350,28 +351,19 @@ func (m *BasicMsg) CloneVT() *BasicMsg {
 	r.EnumField = m.EnumField
 	r.NestedMessage = m.NestedMessage.CloneVT()
 	if rhs := m.BytesField; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.BytesField = tmpBytes
+		r.BytesField = slices.Clone(rhs)
 	}
 	if rhs := m.RepeatedInt32Field; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.RepeatedInt32Field = tmpContainer
+		r.RepeatedInt32Field = slices.Clone(rhs)
 	}
 	if rhs := m.MapStringInt32Field; rhs != nil {
-		tmpContainer := make(map[string]int32, len(rhs))
-		for k, v := range rhs {
-			tmpContainer[k] = v
-		}
-		r.MapStringInt32Field = tmpContainer
+		r.MapStringInt32Field = maps.Clone(rhs)
 	}
 	if m.MyOneof != nil {
 		r.MyOneof = m.MyOneof.(interface{ CloneOneofVT() isBasicMsg_MyOneof }).CloneOneofVT()
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

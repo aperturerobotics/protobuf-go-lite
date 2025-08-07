@@ -10,6 +10,7 @@ import (
 	fmt "fmt"
 	io "io"
 	math "math"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -3023,15 +3024,13 @@ func (m *FileDescriptorSet) CloneVT() *FileDescriptorSet {
 	}
 	r := new(FileDescriptorSet)
 	if rhs := m.File; rhs != nil {
-		tmpContainer := make([]*FileDescriptorProto, len(rhs))
+		r.File = make([]*FileDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.File[k] = v.CloneVT()
 		}
-		r.File = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3056,47 +3055,37 @@ func (m *FileDescriptorProto) CloneVT() *FileDescriptorProto {
 		r.Package = &tmpVal
 	}
 	if rhs := m.Dependency; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Dependency = tmpContainer
+		r.Dependency = slices.Clone(rhs)
 	}
 	if rhs := m.PublicDependency; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.PublicDependency = tmpContainer
+		r.PublicDependency = slices.Clone(rhs)
 	}
 	if rhs := m.WeakDependency; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.WeakDependency = tmpContainer
+		r.WeakDependency = slices.Clone(rhs)
 	}
 	if rhs := m.MessageType; rhs != nil {
-		tmpContainer := make([]*DescriptorProto, len(rhs))
+		r.MessageType = make([]*DescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.MessageType[k] = v.CloneVT()
 		}
-		r.MessageType = tmpContainer
 	}
 	if rhs := m.EnumType; rhs != nil {
-		tmpContainer := make([]*EnumDescriptorProto, len(rhs))
+		r.EnumType = make([]*EnumDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.EnumType[k] = v.CloneVT()
 		}
-		r.EnumType = tmpContainer
 	}
 	if rhs := m.Service; rhs != nil {
-		tmpContainer := make([]*ServiceDescriptorProto, len(rhs))
+		r.Service = make([]*ServiceDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Service[k] = v.CloneVT()
 		}
-		r.Service = tmpContainer
 	}
 	if rhs := m.Extension; rhs != nil {
-		tmpContainer := make([]*FieldDescriptorProto, len(rhs))
+		r.Extension = make([]*FieldDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Extension[k] = v.CloneVT()
 		}
-		r.Extension = tmpContainer
 	}
 	if rhs := m.Syntax; rhs != nil {
 		tmpVal := *rhs
@@ -3107,8 +3096,7 @@ func (m *FileDescriptorProto) CloneVT() *FileDescriptorProto {
 		r.Edition = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3132,8 +3120,7 @@ func (m *DescriptorProto_ExtensionRange) CloneVT() *DescriptorProto_ExtensionRan
 		r.End = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3156,8 +3143,7 @@ func (m *DescriptorProto_ReservedRange) CloneVT() *DescriptorProto_ReservedRange
 		r.End = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3177,62 +3163,52 @@ func (m *DescriptorProto) CloneVT() *DescriptorProto {
 		r.Name = &tmpVal
 	}
 	if rhs := m.Field; rhs != nil {
-		tmpContainer := make([]*FieldDescriptorProto, len(rhs))
+		r.Field = make([]*FieldDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Field[k] = v.CloneVT()
 		}
-		r.Field = tmpContainer
 	}
 	if rhs := m.Extension; rhs != nil {
-		tmpContainer := make([]*FieldDescriptorProto, len(rhs))
+		r.Extension = make([]*FieldDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Extension[k] = v.CloneVT()
 		}
-		r.Extension = tmpContainer
 	}
 	if rhs := m.NestedType; rhs != nil {
-		tmpContainer := make([]*DescriptorProto, len(rhs))
+		r.NestedType = make([]*DescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.NestedType[k] = v.CloneVT()
 		}
-		r.NestedType = tmpContainer
 	}
 	if rhs := m.EnumType; rhs != nil {
-		tmpContainer := make([]*EnumDescriptorProto, len(rhs))
+		r.EnumType = make([]*EnumDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.EnumType[k] = v.CloneVT()
 		}
-		r.EnumType = tmpContainer
 	}
 	if rhs := m.ExtensionRange; rhs != nil {
-		tmpContainer := make([]*DescriptorProto_ExtensionRange, len(rhs))
+		r.ExtensionRange = make([]*DescriptorProto_ExtensionRange, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.ExtensionRange[k] = v.CloneVT()
 		}
-		r.ExtensionRange = tmpContainer
 	}
 	if rhs := m.OneofDecl; rhs != nil {
-		tmpContainer := make([]*OneofDescriptorProto, len(rhs))
+		r.OneofDecl = make([]*OneofDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.OneofDecl[k] = v.CloneVT()
 		}
-		r.OneofDecl = tmpContainer
 	}
 	if rhs := m.ReservedRange; rhs != nil {
-		tmpContainer := make([]*DescriptorProto_ReservedRange, len(rhs))
+		r.ReservedRange = make([]*DescriptorProto_ReservedRange, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.ReservedRange[k] = v.CloneVT()
 		}
-		r.ReservedRange = tmpContainer
 	}
 	if rhs := m.ReservedName; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.ReservedName = tmpContainer
+		r.ReservedName = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3267,8 +3243,7 @@ func (m *ExtensionRangeOptions_Declaration) CloneVT() *ExtensionRangeOptions_Dec
 		r.Repeated = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3284,26 +3259,23 @@ func (m *ExtensionRangeOptions) CloneVT() *ExtensionRangeOptions {
 	r := new(ExtensionRangeOptions)
 	r.Features = m.Features.CloneVT()
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if rhs := m.Declaration; rhs != nil {
-		tmpContainer := make([]*ExtensionRangeOptions_Declaration, len(rhs))
+		r.Declaration = make([]*ExtensionRangeOptions_Declaration, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Declaration[k] = v.CloneVT()
 		}
-		r.Declaration = tmpContainer
 	}
 	if rhs := m.Verification; rhs != nil {
 		tmpVal := *rhs
 		r.Verification = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3359,8 +3331,7 @@ func (m *FieldDescriptorProto) CloneVT() *FieldDescriptorProto {
 		r.Proto3Optional = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3380,8 +3351,7 @@ func (m *OneofDescriptorProto) CloneVT() *OneofDescriptorProto {
 		r.Name = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3404,8 +3374,7 @@ func (m *EnumDescriptorProto_EnumReservedRange) CloneVT() *EnumDescriptorProto_E
 		r.End = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3425,27 +3394,22 @@ func (m *EnumDescriptorProto) CloneVT() *EnumDescriptorProto {
 		r.Name = &tmpVal
 	}
 	if rhs := m.Value; rhs != nil {
-		tmpContainer := make([]*EnumValueDescriptorProto, len(rhs))
+		r.Value = make([]*EnumValueDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Value[k] = v.CloneVT()
 		}
-		r.Value = tmpContainer
 	}
 	if rhs := m.ReservedRange; rhs != nil {
-		tmpContainer := make([]*EnumDescriptorProto_EnumReservedRange, len(rhs))
+		r.ReservedRange = make([]*EnumDescriptorProto_EnumReservedRange, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.ReservedRange[k] = v.CloneVT()
 		}
-		r.ReservedRange = tmpContainer
 	}
 	if rhs := m.ReservedName; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.ReservedName = tmpContainer
+		r.ReservedName = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3469,8 +3433,7 @@ func (m *EnumValueDescriptorProto) CloneVT() *EnumValueDescriptorProto {
 		r.Number = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3490,15 +3453,13 @@ func (m *ServiceDescriptorProto) CloneVT() *ServiceDescriptorProto {
 		r.Name = &tmpVal
 	}
 	if rhs := m.Method; rhs != nil {
-		tmpContainer := make([]*MethodDescriptorProto, len(rhs))
+		r.Method = make([]*MethodDescriptorProto, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Method[k] = v.CloneVT()
 		}
-		r.Method = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3534,8 +3495,7 @@ func (m *MethodDescriptorProto) CloneVT() *MethodDescriptorProto {
 		r.ServerStreaming = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3627,15 +3587,13 @@ func (m *FileOptions) CloneVT() *FileOptions {
 		r.RubyPackage = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3671,15 +3629,13 @@ func (m *MessageOptions) CloneVT() *MessageOptions {
 		r.DeprecatedLegacyJsonFieldConflicts = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3702,8 +3658,7 @@ func (m *FieldOptions_EditionDefault) CloneVT() *FieldOptions_EditionDefault {
 		r.Value = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3755,27 +3710,22 @@ func (m *FieldOptions) CloneVT() *FieldOptions {
 		r.Retention = &tmpVal
 	}
 	if rhs := m.Targets; rhs != nil {
-		tmpContainer := make([]FieldOptions_OptionTargetType, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Targets = tmpContainer
+		r.Targets = slices.Clone(rhs)
 	}
 	if rhs := m.EditionDefaults; rhs != nil {
-		tmpContainer := make([]*FieldOptions_EditionDefault, len(rhs))
+		r.EditionDefaults = make([]*FieldOptions_EditionDefault, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.EditionDefaults[k] = v.CloneVT()
 		}
-		r.EditionDefaults = tmpContainer
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3791,15 +3741,13 @@ func (m *OneofOptions) CloneVT() *OneofOptions {
 	r := new(OneofOptions)
 	r.Features = m.Features.CloneVT()
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3827,15 +3775,13 @@ func (m *EnumOptions) CloneVT() *EnumOptions {
 		r.DeprecatedLegacyJsonFieldConflicts = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3859,15 +3805,13 @@ func (m *EnumValueOptions) CloneVT() *EnumValueOptions {
 		r.DebugRedact = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3887,15 +3831,13 @@ func (m *ServiceOptions) CloneVT() *ServiceOptions {
 		r.Deprecated = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3919,15 +3861,13 @@ func (m *MethodOptions) CloneVT() *MethodOptions {
 		r.IdempotencyLevel = &tmpVal
 	}
 	if rhs := m.UninterpretedOption; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption, len(rhs))
+		r.UninterpretedOption = make([]*UninterpretedOption, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.UninterpretedOption[k] = v.CloneVT()
 		}
-		r.UninterpretedOption = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3950,8 +3890,7 @@ func (m *UninterpretedOption_NamePart) CloneVT() *UninterpretedOption_NamePart {
 		r.IsExtension = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -3966,11 +3905,10 @@ func (m *UninterpretedOption) CloneVT() *UninterpretedOption {
 	}
 	r := new(UninterpretedOption)
 	if rhs := m.Name; rhs != nil {
-		tmpContainer := make([]*UninterpretedOption_NamePart, len(rhs))
+		r.Name = make([]*UninterpretedOption_NamePart, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Name[k] = v.CloneVT()
 		}
-		r.Name = tmpContainer
 	}
 	if rhs := m.IdentifierValue; rhs != nil {
 		tmpVal := *rhs
@@ -3989,17 +3927,14 @@ func (m *UninterpretedOption) CloneVT() *UninterpretedOption {
 		r.DoubleValue = &tmpVal
 	}
 	if rhs := m.StringValue; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.StringValue = tmpBytes
+		r.StringValue = slices.Clone(rhs)
 	}
 	if rhs := m.AggregateValue; rhs != nil {
 		tmpVal := *rhs
 		r.AggregateValue = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4038,8 +3973,7 @@ func (m *FeatureSet) CloneVT() *FeatureSet {
 		r.JsonFormat = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4059,8 +3993,7 @@ func (m *FeatureSetDefaults_FeatureSetEditionDefault) CloneVT() *FeatureSetDefau
 		r.Edition = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4075,11 +4008,10 @@ func (m *FeatureSetDefaults) CloneVT() *FeatureSetDefaults {
 	}
 	r := new(FeatureSetDefaults)
 	if rhs := m.Defaults; rhs != nil {
-		tmpContainer := make([]*FeatureSetDefaults_FeatureSetEditionDefault, len(rhs))
+		r.Defaults = make([]*FeatureSetDefaults_FeatureSetEditionDefault, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Defaults[k] = v.CloneVT()
 		}
-		r.Defaults = tmpContainer
 	}
 	if rhs := m.MinimumEdition; rhs != nil {
 		tmpVal := *rhs
@@ -4090,8 +4022,7 @@ func (m *FeatureSetDefaults) CloneVT() *FeatureSetDefaults {
 		r.MaximumEdition = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4106,14 +4037,10 @@ func (m *SourceCodeInfo_Location) CloneVT() *SourceCodeInfo_Location {
 	}
 	r := new(SourceCodeInfo_Location)
 	if rhs := m.Path; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Path = tmpContainer
+		r.Path = slices.Clone(rhs)
 	}
 	if rhs := m.Span; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Span = tmpContainer
+		r.Span = slices.Clone(rhs)
 	}
 	if rhs := m.LeadingComments; rhs != nil {
 		tmpVal := *rhs
@@ -4124,13 +4051,10 @@ func (m *SourceCodeInfo_Location) CloneVT() *SourceCodeInfo_Location {
 		r.TrailingComments = &tmpVal
 	}
 	if rhs := m.LeadingDetachedComments; rhs != nil {
-		tmpContainer := make([]string, len(rhs))
-		copy(tmpContainer, rhs)
-		r.LeadingDetachedComments = tmpContainer
+		r.LeadingDetachedComments = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4145,15 +4069,13 @@ func (m *SourceCodeInfo) CloneVT() *SourceCodeInfo {
 	}
 	r := new(SourceCodeInfo)
 	if rhs := m.Location; rhs != nil {
-		tmpContainer := make([]*SourceCodeInfo_Location, len(rhs))
+		r.Location = make([]*SourceCodeInfo_Location, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Location[k] = v.CloneVT()
 		}
-		r.Location = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4168,9 +4090,7 @@ func (m *GeneratedCodeInfo_Annotation) CloneVT() *GeneratedCodeInfo_Annotation {
 	}
 	r := new(GeneratedCodeInfo_Annotation)
 	if rhs := m.Path; rhs != nil {
-		tmpContainer := make([]int32, len(rhs))
-		copy(tmpContainer, rhs)
-		r.Path = tmpContainer
+		r.Path = slices.Clone(rhs)
 	}
 	if rhs := m.SourceFile; rhs != nil {
 		tmpVal := *rhs
@@ -4189,8 +4109,7 @@ func (m *GeneratedCodeInfo_Annotation) CloneVT() *GeneratedCodeInfo_Annotation {
 		r.Semantic = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -4205,15 +4124,13 @@ func (m *GeneratedCodeInfo) CloneVT() *GeneratedCodeInfo {
 	}
 	r := new(GeneratedCodeInfo)
 	if rhs := m.Annotation; rhs != nil {
-		tmpContainer := make([]*GeneratedCodeInfo_Annotation, len(rhs))
+		r.Annotation = make([]*GeneratedCodeInfo_Annotation, len(rhs))
 		for k, v := range rhs {
-			tmpContainer[k] = v.CloneVT()
+			r.Annotation[k] = v.CloneVT()
 		}
-		r.Annotation = tmpContainer
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

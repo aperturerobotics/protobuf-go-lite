@@ -10,6 +10,7 @@ import (
 	fmt "fmt"
 	io "io"
 	math "math"
+	slices "slices"
 	strconv "strconv"
 	strings "strings"
 	unsafe "unsafe"
@@ -254,17 +255,14 @@ func (m *OptionalFieldInProto3) CloneVT() *OptionalFieldInProto3 {
 		r.OptionalString = &tmpVal
 	}
 	if rhs := m.OptionalBytes; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.OptionalBytes = tmpBytes
+		r.OptionalBytes = slices.Clone(rhs)
 	}
 	if rhs := m.OptionalEnum; rhs != nil {
 		tmpVal := *rhs
 		r.OptionalEnum = &tmpVal
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }

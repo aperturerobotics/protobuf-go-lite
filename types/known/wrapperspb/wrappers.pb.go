@@ -9,6 +9,7 @@ import (
 	fmt "fmt"
 	io "io"
 	math "math"
+	slices "slices"
 	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -322,8 +323,7 @@ func (m *DoubleValue) CloneVT() *DoubleValue {
 	r := new(DoubleValue)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -339,8 +339,7 @@ func (m *FloatValue) CloneVT() *FloatValue {
 	r := new(FloatValue)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -356,8 +355,7 @@ func (m *Int64Value) CloneVT() *Int64Value {
 	r := new(Int64Value)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -373,8 +371,7 @@ func (m *UInt64Value) CloneVT() *UInt64Value {
 	r := new(UInt64Value)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -390,8 +387,7 @@ func (m *Int32Value) CloneVT() *Int32Value {
 	r := new(Int32Value)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -407,8 +403,7 @@ func (m *UInt32Value) CloneVT() *UInt32Value {
 	r := new(UInt32Value)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -424,8 +419,7 @@ func (m *BoolValue) CloneVT() *BoolValue {
 	r := new(BoolValue)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -441,8 +435,7 @@ func (m *StringValue) CloneVT() *StringValue {
 	r := new(StringValue)
 	r.Value = m.Value
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
@@ -457,13 +450,10 @@ func (m *BytesValue) CloneVT() *BytesValue {
 	}
 	r := new(BytesValue)
 	if rhs := m.Value; rhs != nil {
-		tmpBytes := make([]byte, len(rhs))
-		copy(tmpBytes, rhs)
-		r.Value = tmpBytes
+		r.Value = slices.Clone(rhs)
 	}
 	if len(m.unknownFields) > 0 {
-		r.unknownFields = make([]byte, len(m.unknownFields))
-		copy(r.unknownFields, m.unknownFields)
+		r.unknownFields = slices.Clone(m.unknownFields)
 	}
 	return r
 }
