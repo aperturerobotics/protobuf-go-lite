@@ -5274,22 +5274,13 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -5305,11 +5296,12 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			v2 := float64(math.Float64frombits(v))
 			m.RequiredField = &v2
 			hasFields[0] |= uint64(0x00000001)
@@ -5318,38 +5310,32 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			v2 := float64(math.Float64frombits(v))
 			m.OptionalField = &v2
 		case 3:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				v2 := float64(math.Float64frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5368,11 +5354,12 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					v2 := float64(math.Float64frombits(v))
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
@@ -5382,28 +5369,21 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				v2 := float64(math.Float64frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5422,11 +5402,12 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					v2 := float64(math.Float64frombits(v))
 					m.PackedField = append(m.PackedField, v2)
 				}
@@ -5462,22 +5443,13 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -5493,11 +5465,12 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			v2 := float32(math.Float32frombits(v))
 			m.RequiredField = &v2
 			hasFields[0] |= uint64(0x00000001)
@@ -5506,38 +5479,32 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			v2 := float32(math.Float32frombits(v))
 			m.OptionalField = &v2
 		case 3:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				v2 := float32(math.Float32frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5556,11 +5523,12 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					v2 := float32(math.Float32frombits(v))
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
@@ -5570,28 +5538,21 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				v2 := float32(math.Float32frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5610,11 +5571,12 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					v2 := float32(math.Float32frombits(v))
 					m.PackedField = append(m.PackedField, v2)
 				}
@@ -5650,22 +5612,13 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -5681,19 +5634,9 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -5702,54 +5645,26 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5774,19 +5689,9 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -5796,36 +5701,18 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -5850,19 +5737,9 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -5898,22 +5775,13 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -5929,19 +5797,9 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -5950,54 +5808,26 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6022,19 +5852,9 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -6044,36 +5864,18 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6098,19 +5900,9 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -6146,22 +5938,13 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -6177,19 +5960,9 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -6198,54 +5971,26 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6270,19 +6015,9 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -6292,36 +6027,18 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6346,19 +6063,9 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -6394,22 +6101,13 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -6425,19 +6123,9 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -6446,54 +6134,26 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6518,19 +6178,9 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -6540,36 +6190,18 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6594,19 +6226,9 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -6642,22 +6264,13 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -6673,19 +6286,9 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.RequiredField = &v
@@ -6695,56 +6298,28 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6769,19 +6344,9 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 					m.RepeatedField = append(m.RepeatedField, v)
@@ -6792,37 +6357,19 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -6847,19 +6394,9 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 					m.PackedField = append(m.PackedField, v)
@@ -6896,22 +6433,13 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -6927,19 +6455,9 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			v2 := int64(v)
@@ -6950,19 +6468,9 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			v2 := int64(v)
@@ -6970,37 +6478,19 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 		case 3:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 				m.RepeatedField = append(m.RepeatedField, int64(v))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7025,19 +6515,9 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 					m.RepeatedField = append(m.RepeatedField, int64(v))
@@ -7048,37 +6528,19 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 				m.PackedField = append(m.PackedField, int64(v))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7103,19 +6565,9 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 					m.PackedField = append(m.PackedField, int64(v))
@@ -7152,22 +6604,13 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -7183,11 +6626,12 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -7195,36 +6639,30 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7243,11 +6681,12 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -7256,27 +6695,20 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7295,11 +6727,12 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -7334,22 +6767,13 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -7365,11 +6789,12 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -7377,36 +6802,30 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7425,11 +6844,12 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -7438,27 +6858,20 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7477,11 +6890,12 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -7516,22 +6930,13 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -7547,11 +6952,12 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = int32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -7559,36 +6965,30 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = int32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 5 {
 				var v int32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7607,11 +7007,12 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = int32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -7620,27 +7021,20 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v int32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7659,11 +7053,12 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = int32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -7698,22 +7093,13 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -7729,11 +7115,12 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = int64(_v64)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -7741,36 +7128,30 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = int64(_v64)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 1 {
 				var v int64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7789,11 +7170,12 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = int64(_v64)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -7802,27 +7184,20 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v int64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -7841,11 +7216,12 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = int64(_v64)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -7880,22 +7256,13 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -7911,19 +7278,11 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			b := bool(v != 0)
 			m.RequiredField = &b
@@ -7933,55 +7292,31 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			b := bool(v != 0)
 			m.OptionalField = &b
 		case 3:
 			if wireType == 0 {
 				var v int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = int(_v)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8000,19 +7335,11 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = int(_v)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 				}
@@ -8022,36 +7349,20 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = int(_v)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, bool(v != 0))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8070,19 +7381,11 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = int(_v)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, bool(v != 0))
 				}
@@ -8118,22 +7421,13 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -8149,19 +7443,9 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -8183,19 +7467,9 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -8216,19 +7490,9 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -8272,22 +7536,13 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -8303,19 +7558,11 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -8338,19 +7585,11 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -8372,19 +7611,11 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -8428,22 +7659,13 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -8459,19 +7681,11 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v EnumMessage_Num
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= EnumMessage_Num(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = EnumMessage_Num(_v)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -8480,54 +7694,30 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v EnumMessage_Num
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= EnumMessage_Num(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = EnumMessage_Num(_v)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v EnumMessage_Num
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= EnumMessage_Num(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = EnumMessage_Num(_v)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8545,19 +7735,11 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v EnumMessage_Num
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= EnumMessage_Num(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = EnumMessage_Num(_v)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -8567,36 +7749,20 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v EnumMessage_Num
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= EnumMessage_Num(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = EnumMessage_Num(_v)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8614,19 +7780,11 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v EnumMessage_Num
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= EnumMessage_Num(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = EnumMessage_Num(_v)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -8662,22 +7820,13 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -8693,11 +7842,12 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			v2 := float64(math.Float64frombits(v))
 			m.RequiredField = &v2
 			hasFields[0] |= uint64(0x00000001)
@@ -8706,38 +7856,32 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			v2 := float64(math.Float64frombits(v))
 			m.OptionalField = &v2
 		case 3:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				v2 := float64(math.Float64frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8756,11 +7900,12 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					v2 := float64(math.Float64frombits(v))
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
@@ -8770,28 +7915,21 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				v2 := float64(math.Float64frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8810,11 +7948,12 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					v2 := float64(math.Float64frombits(v))
 					m.PackedField = append(m.PackedField, v2)
 				}
@@ -8850,22 +7989,13 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -8881,11 +8011,12 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			v2 := float32(math.Float32frombits(v))
 			m.RequiredField = &v2
 			hasFields[0] |= uint64(0x00000001)
@@ -8894,38 +8025,32 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			v2 := float32(math.Float32frombits(v))
 			m.OptionalField = &v2
 		case 3:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				v2 := float32(math.Float32frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8944,11 +8069,12 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					v2 := float32(math.Float32frombits(v))
 					m.RepeatedField = append(m.RepeatedField, v2)
 				}
@@ -8958,28 +8084,21 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				v2 := float32(math.Float32frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -8998,11 +8117,12 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					v2 := float32(math.Float32frombits(v))
 					m.PackedField = append(m.PackedField, v2)
 				}
@@ -9038,22 +8158,13 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -9069,19 +8180,9 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -9090,54 +8191,26 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9162,19 +8235,9 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -9184,36 +8247,18 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9238,19 +8283,9 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -9286,22 +8321,13 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -9317,19 +8343,9 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -9338,54 +8354,26 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9410,19 +8398,9 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -9432,36 +8410,18 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9486,19 +8446,9 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -9534,22 +8484,13 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -9565,19 +8506,9 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -9586,54 +8517,26 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9658,19 +8561,9 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -9680,36 +8573,18 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9734,19 +8609,9 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -9782,22 +8647,13 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -9813,19 +8669,9 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -9834,54 +8680,26 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9906,19 +8724,9 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -9928,36 +8736,18 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -9982,19 +8772,9 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}
@@ -10030,22 +8810,13 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -10061,19 +8832,9 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.RequiredField = &v
@@ -10083,56 +8844,28 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10157,19 +8890,9 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 					m.RepeatedField = append(m.RepeatedField, v)
@@ -10180,37 +8903,19 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10235,19 +8940,9 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 					m.PackedField = append(m.PackedField, v)
@@ -10284,22 +8979,13 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -10315,19 +9001,9 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			v2 := int64(v)
@@ -10338,19 +9014,9 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			v2 := int64(v)
@@ -10358,37 +9024,19 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 3:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 				m.RepeatedField = append(m.RepeatedField, int64(v))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10413,19 +9061,9 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 					m.RepeatedField = append(m.RepeatedField, int64(v))
@@ -10436,37 +9074,19 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 				m.PackedField = append(m.PackedField, int64(v))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10491,19 +9111,9 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 					m.PackedField = append(m.PackedField, int64(v))
@@ -10540,22 +9150,13 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -10571,11 +9172,12 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -10583,36 +9185,30 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10631,11 +9227,12 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -10644,27 +9241,20 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v uint32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = uint32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10683,11 +9273,12 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = uint32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -10722,22 +9313,13 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -10753,11 +9335,12 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -10765,36 +9348,30 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10813,11 +9390,12 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -10826,27 +9404,20 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = uint64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10865,11 +9436,12 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = uint64(_v64)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -10904,22 +9476,13 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -10935,11 +9498,12 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = int32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -10947,36 +9511,30 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = int32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 5 {
 				var v int32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -10995,11 +9553,12 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = int32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -11008,27 +9567,20 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 5 {
 				var v int32
-				if (iNdEx + 4) > l {
-					return io.ErrUnexpectedEOF
+				var _v32 uint32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-				iNdEx += 4
+				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11047,11 +9599,12 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					if (iNdEx + 4) > l {
-						return io.ErrUnexpectedEOF
+					var _v32 uint32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-					iNdEx += 4
+					v = int32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -11086,22 +9639,13 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -11117,11 +9661,12 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = int64(_v64)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -11129,36 +9674,30 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = int64(_v64)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 1 {
 				var v int64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11177,11 +9716,12 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = int64(_v64)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -11190,27 +9730,20 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 1 {
 				var v int64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
+				var _v64 uint64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
-				v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
+				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11229,11 +9762,12 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
+					var _v64 uint64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
-					v = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
+					v = int64(_v64)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -11268,22 +9802,13 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -11299,19 +9824,11 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			b := bool(v != 0)
 			m.RequiredField = &b
@@ -11321,55 +9838,31 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			b := bool(v != 0)
 			m.OptionalField = &b
 		case 3:
 			if wireType == 0 {
 				var v int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = int(_v)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11388,19 +9881,11 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = int(_v)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
 				}
@@ -11410,36 +9895,20 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = int(_v)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, bool(v != 0))
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11458,19 +9927,11 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = int(_v)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, bool(v != 0))
 				}
@@ -11506,22 +9967,13 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -11537,19 +9989,9 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -11575,19 +10017,9 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -11612,19 +10044,9 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -11672,22 +10094,13 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -11703,19 +10116,11 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -11735,19 +10140,11 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -11766,19 +10163,11 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -11821,22 +10210,13 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -11852,19 +10232,11 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v EnumMessage_Num
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= EnumMessage_Num(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = EnumMessage_Num(_v)
+			if err != nil {
+				return err
 			}
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
@@ -11873,54 +10245,30 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v EnumMessage_Num
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= EnumMessage_Num(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = EnumMessage_Num(_v)
+			if err != nil {
+				return err
 			}
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v EnumMessage_Num
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= EnumMessage_Num(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = EnumMessage_Num(_v)
+				if err != nil {
+					return err
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -11938,19 +10286,11 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v EnumMessage_Num
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= EnumMessage_Num(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = EnumMessage_Num(_v)
+					if err != nil {
+						return err
 					}
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
@@ -11960,36 +10300,20 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v EnumMessage_Num
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= EnumMessage_Num(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				v = EnumMessage_Num(_v)
+				if err != nil {
+					return err
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -12007,19 +10331,11 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v EnumMessage_Num
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= EnumMessage_Num(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					var _v uint64
+					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					v = EnumMessage_Num(_v)
+					if err != nil {
+						return err
 					}
 					m.PackedField = append(m.PackedField, v)
 				}

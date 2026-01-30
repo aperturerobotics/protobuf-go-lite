@@ -99,6 +99,20 @@ var helpers = map[string]protogen.GoIdent{
 	"ErrInvalidLength":        {GoName: "ErrInvalidLength", GoImportPath: vtHelpersPackage},
 	"ErrIntOverflow":          {GoName: "ErrIntOverflow", GoImportPath: vtHelpersPackage},
 	"ErrUnexpectedEndOfGroup": {GoName: "ErrUnexpectedEndOfGroup", GoImportPath: vtHelpersPackage},
+	"DecodeVarint":            {GoName: "DecodeVarint", GoImportPath: vtHelpersPackage},
+	"DecodeVarintInt32":       {GoName: "DecodeVarintInt32", GoImportPath: vtHelpersPackage},
+	"DecodeVarintInt64":       {GoName: "DecodeVarintInt64", GoImportPath: vtHelpersPackage},
+	"DecodeVarintUint32":      {GoName: "DecodeVarintUint32", GoImportPath: vtHelpersPackage},
+	"DecodeVarintBool":        {GoName: "DecodeVarintBool", GoImportPath: vtHelpersPackage},
+	"DecodeSint32":            {GoName: "DecodeSint32", GoImportPath: vtHelpersPackage},
+	"DecodeSint64":            {GoName: "DecodeSint64", GoImportPath: vtHelpersPackage},
+	"DecodeFixed32":           {GoName: "DecodeFixed32", GoImportPath: vtHelpersPackage},
+	"DecodeFixed64":           {GoName: "DecodeFixed64", GoImportPath: vtHelpersPackage},
+	"DecodeFloat32":           {GoName: "DecodeFloat32", GoImportPath: vtHelpersPackage},
+	"DecodeFloat64":           {GoName: "DecodeFloat64", GoImportPath: vtHelpersPackage},
+	"DecodeBytes":             {GoName: "DecodeBytes", GoImportPath: vtHelpersPackage},
+	"DecodeString":            {GoName: "DecodeString", GoImportPath: vtHelpersPackage},
+	"DecodeStringUnsafe":      {GoName: "DecodeStringUnsafe", GoImportPath: vtHelpersPackage},
 }
 
 func (p *GeneratedFile) Helper(name string) protogen.GoIdent {
