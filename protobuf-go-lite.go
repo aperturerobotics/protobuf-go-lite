@@ -4,8 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"math/bits"
 	"slices"
+	"unsafe"
 )
 
 var (
@@ -309,6 +311,187 @@ func ConsumeVarint(b []byte) (v uint64, n int) {
 // SizeOfVarint returns the size of the varint-encoded value.
 func SizeOfVarint(x uint64) (n int) {
 	return (bits.Len64(x|1) + 6) / 7
+}
+
+// DecodeVarint decodes a varint at the given index, returning value, new index, and error.
+func DecodeVarint(b []byte, idx int) (uint64, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return v, idx + n, nil
+}
+
+// DecodeVarintInt32 decodes a varint as int32.
+func DecodeVarintInt32(b []byte, idx int) (int32, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return int32(v), idx + n, nil
+}
+
+// DecodeVarintInt64 decodes a varint as int64.
+func DecodeVarintInt64(b []byte, idx int) (int64, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return int64(v), idx + n, nil
+}
+
+// DecodeVarintUint32 decodes a varint as uint32.
+func DecodeVarintUint32(b []byte, idx int) (uint32, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return uint32(v), idx + n, nil
+}
+
+// DecodeVarintBool decodes a varint as bool.
+func DecodeVarintBool(b []byte, idx int) (bool, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return false, 0, io.ErrUnexpectedEOF
+		}
+		return false, 0, ErrIntOverflow
+	}
+	return v != 0, idx + n, nil
+}
+
+// DecodeSint32 decodes a zigzag-encoded sint32.
+func DecodeSint32(b []byte, idx int) (int32, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return int32((uint32(v) >> 1) ^ uint32((int32(v&1)<<31)>>31)), idx + n, nil
+}
+
+// DecodeSint64 decodes a zigzag-encoded sint64.
+func DecodeSint64(b []byte, idx int) (int64, int, error) {
+	v, n := ConsumeVarint(b[idx:])
+	if n < 0 {
+		if n == -1 {
+			return 0, 0, io.ErrUnexpectedEOF
+		}
+		return 0, 0, ErrIntOverflow
+	}
+	return int64((v >> 1) ^ uint64((int64(v&1)<<63)>>63)), idx + n, nil
+}
+
+// DecodeFixed32 decodes a fixed 32-bit value.
+func DecodeFixed32(b []byte, idx int) (uint32, int, error) {
+	if idx+4 > len(b) {
+		return 0, 0, io.ErrUnexpectedEOF
+	}
+	v := uint32(b[idx]) | uint32(b[idx+1])<<8 | uint32(b[idx+2])<<16 | uint32(b[idx+3])<<24
+	return v, idx + 4, nil
+}
+
+// DecodeFixed64 decodes a fixed 64-bit value.
+func DecodeFixed64(b []byte, idx int) (uint64, int, error) {
+	if idx+8 > len(b) {
+		return 0, 0, io.ErrUnexpectedEOF
+	}
+	v := uint64(b[idx]) | uint64(b[idx+1])<<8 | uint64(b[idx+2])<<16 | uint64(b[idx+3])<<24 |
+		uint64(b[idx+4])<<32 | uint64(b[idx+5])<<40 | uint64(b[idx+6])<<48 | uint64(b[idx+7])<<56
+	return v, idx + 8, nil
+}
+
+// DecodeFloat32 decodes a 32-bit float.
+func DecodeFloat32(b []byte, idx int) (float32, int, error) {
+	v, idx, err := DecodeFixed32(b, idx)
+	if err != nil {
+		return 0, 0, err
+	}
+	return math.Float32frombits(v), idx, nil
+}
+
+// DecodeFloat64 decodes a 64-bit float.
+func DecodeFloat64(b []byte, idx int) (float64, int, error) {
+	v, idx, err := DecodeFixed64(b, idx)
+	if err != nil {
+		return 0, 0, err
+	}
+	return math.Float64frombits(v), idx, nil
+}
+
+// DecodeBytes decodes a length-prefixed byte slice. If copy is false, returns a sub-slice.
+func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
+	length, idx, err := DecodeVarint(b, idx)
+	if err != nil {
+		return nil, 0, err
+	}
+	l := int(length)
+	if l < 0 {
+		return nil, 0, ErrInvalidLength
+	}
+	end := idx + l
+	if end < idx || end > len(b) {
+		return nil, 0, io.ErrUnexpectedEOF
+	}
+	if cp {
+		out := make([]byte, l)
+		copy(out, b[idx:end])
+		return out, end, nil
+	}
+	return b[idx:end], end, nil
+}
+
+// DecodeString decodes a length-prefixed string (with copy).
+func DecodeString(b []byte, idx int) (string, int, error) {
+	length, idx, err := DecodeVarint(b, idx)
+	if err != nil {
+		return "", 0, err
+	}
+	l := int(length)
+	if l < 0 {
+		return "", 0, ErrInvalidLength
+	}
+	end := idx + l
+	if end < idx || end > len(b) {
+		return "", 0, io.ErrUnexpectedEOF
+	}
+	return string(b[idx:end]), end, nil
+}
+
+// DecodeStringUnsafe decodes a length-prefixed string without copying.
+// The returned string shares memory with the input slice.
+func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
+	length, idx, err := DecodeVarint(b, idx)
+	if err != nil {
+		return "", 0, err
+	}
+	l := int(length)
+	if l < 0 {
+		return "", 0, ErrInvalidLength
+	}
+	end := idx + l
+	if end < idx || end > len(b) {
+		return "", 0, io.ErrUnexpectedEOF
+	}
+	if l == 0 {
+		return "", end, nil
+	}
+	return unsafe.String(&b[idx], l), end, nil
 }
 
 // SizeOfZigzag returns the size of the zigzag-encoded value.

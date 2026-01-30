@@ -67,36 +67,35 @@ func (p *unmarshal) decodeMessage(varName, buf string, message *protogen.Message
 }
 
 func (p *unmarshal) decodeVarint(varName string, typName string) {
-	p.P(`for shift := uint(0); ; shift += 7 {`)
-	p.P(`if shift >= 64 {`)
-	p.P(`return `, p.Helper("ErrIntOverflow"))
-	p.P(`}`)
-	p.P(`if iNdEx >= l {`)
-	p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
-	p.P(`}`)
-	p.P(`b := dAtA[iNdEx]`)
-	p.P(`iNdEx++`)
-	p.P(varName, ` |= `, typName, `(b&0x7F) << shift`)
-	p.P(`if b < 0x80 {`)
-	p.P(`break`)
-	p.P(`}`)
-	p.P(`}`)
+	switch typName {
+	case "int32":
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeVarintInt32"), `(dAtA, iNdEx)`)
+	case "int64":
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeVarintInt64"), `(dAtA, iNdEx)`)
+	case "uint32":
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeVarintUint32"), `(dAtA, iNdEx)`)
+	case "uint64":
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeVarint"), `(dAtA, iNdEx)`)
+	default:
+		p.P(`var _v uint64`)
+		p.P(`_v, iNdEx, err = `, p.Helper("DecodeVarint"), `(dAtA, iNdEx)`)
+		p.P(varName, ` = `, typName, `(_v)`)
+	}
+	p.P(`if err != nil { return err }`)
 }
 
 func (p *unmarshal) decodeFixed32(varName string, typeName string) {
-	p.P(`if (iNdEx+4) > l {`)
-	p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
-	p.P(`}`)
-	p.P(varName, ` = `, typeName, `(`, p.Ident("encoding/binary", "LittleEndian"), `.Uint32(dAtA[iNdEx:]))`)
-	p.P(`iNdEx += 4`)
+	p.P(`var _v32 uint32`)
+	p.P(`_v32, iNdEx, err = `, p.Helper("DecodeFixed32"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+	p.P(varName, ` = `, typeName, `(_v32)`)
 }
 
 func (p *unmarshal) decodeFixed64(varName string, typeName string) {
-	p.P(`if (iNdEx+8) > l {`)
-	p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
-	p.P(`}`)
-	p.P(varName, ` = `, typeName, `(`, p.Ident("encoding/binary", "LittleEndian"), `.Uint64(dAtA[iNdEx:]))`)
-	p.P(`iNdEx += 8`)
+	p.P(`var _v64 uint64`)
+	p.P(`_v64, iNdEx, err = `, p.Helper("DecodeFixed64"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+	p.P(varName, ` = `, typeName, `(_v64)`)
 }
 
 func (p *unmarshal) mapField(varName string, field *protogen.Field) {
@@ -714,6 +713,7 @@ func (p *unmarshal) message(proto3 bool, message *protogen.Message) {
 	}
 	p.P(`l := len(dAtA)`)
 	p.P(`iNdEx := 0`)
+	p.P(`var err error`)
 	p.P(`for iNdEx < l {`)
 	p.P(`preIndex := iNdEx`)
 	p.P(`var wire uint64`)

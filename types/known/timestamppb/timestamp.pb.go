@@ -384,22 +384,13 @@ func (m *Timestamp) SizeVT() (n int) {
 func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -415,38 +406,18 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Seconds |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Seconds, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Nanos |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Nanos, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		default:
 			iNdEx = preIndex
@@ -473,22 +444,13 @@ func (m *Timestamp) UnmarshalVT(dAtA []byte) error {
 func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -504,38 +466,18 @@ func (m *Timestamp) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Seconds", wireType)
 			}
 			m.Seconds = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Seconds |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Seconds, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Nanos", wireType)
 			}
 			m.Nanos = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Nanos |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Nanos, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		default:
 			iNdEx = preIndex

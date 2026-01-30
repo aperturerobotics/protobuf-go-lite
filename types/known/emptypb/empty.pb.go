@@ -180,22 +180,13 @@ func (x *Empty) String() string {
 func (m *Empty) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -231,22 +222,13 @@ func (m *Empty) UnmarshalVT(dAtA []byte) error {
 func (m *Empty) UnmarshalVTUnsafe(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)

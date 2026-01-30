@@ -1813,22 +1813,13 @@ func (x *BasicMsg) String() string {
 func (m *BasicMsg_NestedMsg) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -1844,38 +1835,18 @@ func (m *BasicMsg_NestedMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedInt32", wireType)
 			}
 			m.NestedInt32 = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.NestedInt32 |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.NestedInt32, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedString", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -1915,22 +1886,13 @@ func (m *BasicMsg_NestedMsg) UnmarshalVT(dAtA []byte) error {
 func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -1946,95 +1908,45 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Int32Field", wireType)
 			}
 			m.Int32Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Int32Field |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Int32Field, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Int64Field", wireType)
 			}
 			m.Int64Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Int64Field |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Int64Field, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Uint32Field", wireType)
 			}
 			m.Uint32Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Uint32Field |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Uint32Field, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Uint64Field", wireType)
 			}
 			m.Uint64Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Uint64Field |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Uint64Field, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sint32Field", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.Sint32Field = v
@@ -2043,19 +1955,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sint64Field", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			m.Sint64Field = int64(v)
@@ -2064,81 +1966,79 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed32Field", wireType)
 			}
 			m.Fixed32Field = 0
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Fixed32Field = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			m.Fixed32Field = uint32(_v32)
 		case 8:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed64Field", wireType)
 			}
 			m.Fixed64Field = 0
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Fixed64Field = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			m.Fixed64Field = uint64(_v64)
 		case 9:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sfixed32Field", wireType)
 			}
 			m.Sfixed32Field = 0
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Sfixed32Field = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			m.Sfixed32Field = int32(_v32)
 		case 10:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sfixed64Field", wireType)
 			}
 			m.Sfixed64Field = 0
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Sfixed64Field = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			m.Sfixed64Field = int64(_v64)
 		case 11:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FloatField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.FloatField = float32(math.Float32frombits(v))
 		case 12:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DoubleField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.DoubleField = float64(math.Float64frombits(v))
 		case 13:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BoolField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			m.BoolField = bool(v != 0)
 		case 14:
@@ -2146,19 +2046,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -2178,19 +2068,11 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -2210,36 +2092,18 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 		case 16:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -2264,19 +2128,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 				}
@@ -2288,19 +2142,11 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field MapStringInt32Field", wireType)
 			}
 			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			msglen = int(_v)
+			if err != nil {
+				return err
 			}
 			if msglen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -2320,36 +2166,16 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 			for iNdEx < postIndex {
 				entryPreIndex := iNdEx
 				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
 					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					intStringLenmapkey := int(stringLenmapkey)
 					if intStringLenmapkey < 0 {
@@ -2365,19 +2191,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
 					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapvalue |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					mapvalue, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 				} else {
 					iNdEx = entryPreIndex
@@ -2401,19 +2217,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OneofString", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -2433,19 +2239,9 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OneofInt32", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.MyOneof = &BasicMsg_OneofInt32{OneofInt32: v}
 		case 20:
@@ -2453,38 +2249,22 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field EnumField", wireType)
 			}
 			m.EnumField = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.EnumField |= BasicMsg_MyEnum(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			m.EnumField = BasicMsg_MyEnum(_v)
+			if err != nil {
+				return err
 			}
 		case 21:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMessage", wireType)
 			}
 			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			msglen = int(_v)
+			if err != nil {
+				return err
 			}
 			if msglen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -2528,22 +2308,13 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 func (m *BasicMsg_NestedMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -2559,38 +2330,18 @@ func (m *BasicMsg_NestedMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedInt32", wireType)
 			}
 			m.NestedInt32 = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.NestedInt32 |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.NestedInt32, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedString", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -2634,22 +2385,13 @@ func (m *BasicMsg_NestedMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
+	var err error
 	for iNdEx < l {
 		preIndex := iNdEx
 		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protobuf_go_lite.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
+		wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+		if err != nil {
+			return err
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
@@ -2665,95 +2407,45 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Int32Field", wireType)
 			}
 			m.Int32Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Int32Field |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Int32Field, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Int64Field", wireType)
 			}
 			m.Int64Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Int64Field |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Int64Field, iNdEx, err = protobuf_go_lite.DecodeVarintInt64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Uint32Field", wireType)
 			}
 			m.Uint32Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Uint32Field |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Uint32Field, iNdEx, err = protobuf_go_lite.DecodeVarintUint32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Uint64Field", wireType)
 			}
 			m.Uint64Field = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Uint64Field |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			m.Uint64Field, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sint32Field", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
 			m.Sint32Field = v
@@ -2762,19 +2454,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sint64Field", wireType)
 			}
 			var v uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
 			m.Sint64Field = int64(v)
@@ -2783,81 +2465,79 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed32Field", wireType)
 			}
 			m.Fixed32Field = 0
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Fixed32Field = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			m.Fixed32Field = uint32(_v32)
 		case 8:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed64Field", wireType)
 			}
 			m.Fixed64Field = 0
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Fixed64Field = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			m.Fixed64Field = uint64(_v64)
 		case 9:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sfixed32Field", wireType)
 			}
 			m.Sfixed32Field = 0
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Sfixed32Field = int32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			m.Sfixed32Field = int32(_v32)
 		case 10:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sfixed64Field", wireType)
 			}
 			m.Sfixed64Field = 0
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			m.Sfixed64Field = int64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			m.Sfixed64Field = int64(_v64)
 		case 11:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FloatField", wireType)
 			}
 			var v uint32
-			if (iNdEx + 4) > l {
-				return io.ErrUnexpectedEOF
+			var _v32 uint32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeFixed32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint32(binary.LittleEndian.Uint32(dAtA[iNdEx:]))
-			iNdEx += 4
+			v = uint32(_v32)
 			m.FloatField = float32(math.Float32frombits(v))
 		case 12:
 			if wireType != 1 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DoubleField", wireType)
 			}
 			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			var _v64 uint64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeFixed64(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
-			v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
+			v = uint64(_v64)
 			m.DoubleField = float64(math.Float64frombits(v))
 		case 13:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BoolField", wireType)
 			}
 			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			v = int(_v)
+			if err != nil {
+				return err
 			}
 			m.BoolField = bool(v != 0)
 		case 14:
@@ -2865,19 +2545,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringField", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -2901,19 +2571,11 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesField", wireType)
 			}
 			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			byteLen = int(_v)
+			if err != nil {
+				return err
 			}
 			if byteLen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -2930,36 +2592,18 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 16:
 			if wireType == 0 {
 				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 			} else if wireType == 2 {
 				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				var _v uint64
+				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				packedLen = int(_v)
+				if err != nil {
+					return err
 				}
 				if packedLen < 0 {
 					return protobuf_go_lite.ErrInvalidLength
@@ -2984,19 +2628,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 				}
@@ -3008,19 +2642,11 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field MapStringInt32Field", wireType)
 			}
 			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			msglen = int(_v)
+			if err != nil {
+				return err
 			}
 			if msglen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
@@ -3040,36 +2666,16 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 			for iNdEx < postIndex {
 				entryPreIndex := iNdEx
 				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protobuf_go_lite.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
 					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 					intStringLenmapkey := int(stringLenmapkey)
 					if intStringLenmapkey < 0 {
@@ -3089,19 +2695,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 					}
 					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return protobuf_go_lite.ErrIntOverflow
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapvalue |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
+					mapvalue, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					if err != nil {
+						return err
 					}
 				} else {
 					iNdEx = entryPreIndex
@@ -3125,19 +2721,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OneofString", wireType)
 			}
 			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			intStringLen := int(stringLen)
 			if intStringLen < 0 {
@@ -3161,19 +2747,9 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OneofInt32", wireType)
 			}
 			var v int32
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			if err != nil {
+				return err
 			}
 			m.MyOneof = &BasicMsg_OneofInt32{OneofInt32: v}
 		case 20:
@@ -3181,38 +2757,22 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field EnumField", wireType)
 			}
 			m.EnumField = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.EnumField |= BasicMsg_MyEnum(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			m.EnumField = BasicMsg_MyEnum(_v)
+			if err != nil {
+				return err
 			}
 		case 21:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMessage", wireType)
 			}
 			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protobuf_go_lite.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			var _v uint64
+			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			msglen = int(_v)
+			if err != nil {
+				return err
 			}
 			if msglen < 0 {
 				return protobuf_go_lite.ErrInvalidLength
