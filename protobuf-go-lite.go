@@ -366,6 +366,7 @@ func DecodeVarintUint32(b []byte, idx int) (uint32, int, error) {
 }
 
 // DecodeVarintBool decodes a varint as bool.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeVarintBool(b []byte, idx int) (bool, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -378,6 +379,7 @@ func DecodeVarintBool(b []byte, idx int) (bool, int, error) {
 }
 
 // DecodeSint32 decodes a zigzag-encoded sint32.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeSint32(b []byte, idx int) (int32, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -390,6 +392,7 @@ func DecodeSint32(b []byte, idx int) (int32, int, error) {
 }
 
 // DecodeSint64 decodes a zigzag-encoded sint64.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeSint64(b []byte, idx int) (int64, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -402,7 +405,7 @@ func DecodeSint64(b []byte, idx int) (int64, int, error) {
 }
 
 // DecodeFixed32 decodes a fixed 32-bit value.
-// Assumes idx is within valid bounds; see decode helper documentation above.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeFixed32(b []byte, idx int) (uint32, int, error) {
 	if idx+4 > len(b) {
 		return 0, 0, io.ErrUnexpectedEOF
@@ -412,7 +415,7 @@ func DecodeFixed32(b []byte, idx int) (uint32, int, error) {
 }
 
 // DecodeFixed64 decodes a fixed 64-bit value.
-// Assumes idx is within valid bounds; see decode helper documentation above.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeFixed64(b []byte, idx int) (uint64, int, error) {
 	if idx+8 > len(b) {
 		return 0, 0, io.ErrUnexpectedEOF
@@ -423,6 +426,7 @@ func DecodeFixed64(b []byte, idx int) (uint64, int, error) {
 }
 
 // DecodeFloat32 decodes a 32-bit float.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeFloat32(b []byte, idx int) (float32, int, error) {
 	v, idx, err := DecodeFixed32(b, idx)
 	if err != nil {
@@ -432,6 +436,7 @@ func DecodeFloat32(b []byte, idx int) (float32, int, error) {
 }
 
 // DecodeFloat64 decodes a 64-bit float.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeFloat64(b []byte, idx int) (float64, int, error) {
 	v, idx, err := DecodeFixed64(b, idx)
 	if err != nil {
@@ -441,6 +446,7 @@ func DecodeFloat64(b []byte, idx int) (float64, int, error) {
 }
 
 // DecodeBytes decodes a length-prefixed byte slice. If copy is false, returns a sub-slice.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
 	length, idx, err := DecodeVarint(b, idx)
 	if err != nil {
@@ -463,6 +469,7 @@ func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
 }
 
 // DecodeString decodes a length-prefixed string (with copy).
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeString(b []byte, idx int) (string, int, error) {
 	length, idx, err := DecodeVarint(b, idx)
 	if err != nil {
@@ -481,6 +488,7 @@ func DecodeString(b []byte, idx int) (string, int, error) {
 
 // DecodeStringUnsafe decodes a length-prefixed string without copying.
 // The returned string shares memory with the input slice.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
 	length, idx, err := DecodeVarint(b, idx)
 	if err != nil {
