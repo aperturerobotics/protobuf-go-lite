@@ -314,6 +314,7 @@ func SizeOfVarint(x uint64) (n int) {
 }
 
 // DecodeVarint decodes a varint at the given index, returning value, new index, and error.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeVarint(b []byte, idx int) (uint64, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -326,6 +327,7 @@ func DecodeVarint(b []byte, idx int) (uint64, int, error) {
 }
 
 // DecodeVarintInt32 decodes a varint as int32.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeVarintInt32(b []byte, idx int) (int32, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -334,10 +336,11 @@ func DecodeVarintInt32(b []byte, idx int) (int32, int, error) {
 		}
 		return 0, 0, ErrIntOverflow
 	}
-	return int32(v), idx + n, nil
+	return int32(v), idx + n, nil //nolint:gosec
 }
 
 // DecodeVarintInt64 decodes a varint as int64.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeVarintInt64(b []byte, idx int) (int64, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -346,10 +349,11 @@ func DecodeVarintInt64(b []byte, idx int) (int64, int, error) {
 		}
 		return 0, 0, ErrIntOverflow
 	}
-	return int64(v), idx + n, nil
+	return int64(v), idx + n, nil //nolint:gosec
 }
 
 // DecodeVarintUint32 decodes a varint as uint32.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeVarintUint32(b []byte, idx int) (uint32, int, error) {
 	v, n := ConsumeVarint(b[idx:])
 	if n < 0 {
@@ -358,7 +362,7 @@ func DecodeVarintUint32(b []byte, idx int) (uint32, int, error) {
 		}
 		return 0, 0, ErrIntOverflow
 	}
-	return uint32(v), idx + n, nil
+	return uint32(v), idx + n, nil //nolint:gosec
 }
 
 // DecodeVarintBool decodes a varint as bool.
@@ -382,7 +386,7 @@ func DecodeSint32(b []byte, idx int) (int32, int, error) {
 		}
 		return 0, 0, ErrIntOverflow
 	}
-	return int32((uint32(v) >> 1) ^ uint32((int32(v&1)<<31)>>31)), idx + n, nil
+	return int32((uint32(v) >> 1) ^ uint32((int32(v&1)<<31)>>31)), idx + n, nil //nolint:gosec
 }
 
 // DecodeSint64 decodes a zigzag-encoded sint64.
@@ -394,10 +398,11 @@ func DecodeSint64(b []byte, idx int) (int64, int, error) {
 		}
 		return 0, 0, ErrIntOverflow
 	}
-	return int64((v >> 1) ^ uint64((int64(v&1)<<63)>>63)), idx + n, nil
+	return int64((v >> 1) ^ uint64((int64(v&1)<<63)>>63)), idx + n, nil //nolint:gosec
 }
 
 // DecodeFixed32 decodes a fixed 32-bit value.
+// Assumes idx is within valid bounds; see decode helper documentation above.
 func DecodeFixed32(b []byte, idx int) (uint32, int, error) {
 	if idx+4 > len(b) {
 		return 0, 0, io.ErrUnexpectedEOF
@@ -407,6 +412,7 @@ func DecodeFixed32(b []byte, idx int) (uint32, int, error) {
 }
 
 // DecodeFixed64 decodes a fixed 64-bit value.
+// Assumes idx is within valid bounds; see decode helper documentation above.
 func DecodeFixed64(b []byte, idx int) (uint64, int, error) {
 	if idx+8 > len(b) {
 		return 0, 0, io.ErrUnexpectedEOF
@@ -440,7 +446,7 @@ func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
 	if err != nil {
 		return nil, 0, err
 	}
-	l := int(length)
+	l := int(length) //nolint:gosec
 	if l < 0 {
 		return nil, 0, ErrInvalidLength
 	}
@@ -462,7 +468,7 @@ func DecodeString(b []byte, idx int) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
-	l := int(length)
+	l := int(length) //nolint:gosec
 	if l < 0 {
 		return "", 0, ErrInvalidLength
 	}
@@ -480,7 +486,7 @@ func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
-	l := int(length)
+	l := int(length) //nolint:gosec
 	if l < 0 {
 		return "", 0, ErrInvalidLength
 	}
