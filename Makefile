@@ -94,6 +94,7 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 		protogen "$${d}/*.proto" "--go-lite_opt=features=marshal+marshal_strict+unmarshal+unmarshal_unsafe+size+equal+clone+text"; \
 	done; \
 	protogen "./types/descriptorpb/*.proto" ""; \
+	protogen "./types/pluginpb/*.proto" ""; \
 	protogen "./testproto/*.proto" ""; \
 	rm $$(pwd)/vendor/$${PROJECT} || true
 	$(GOIMPORTS) -w ./
