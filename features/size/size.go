@@ -151,7 +151,7 @@ func (p *size) field(oneof bool, field *protogen.Field, sizeName string) {
 			p.P(`for k, v := range m.`, fieldname, ` { `)
 			p.P(`_ = k`)
 			p.P(`_ = v`)
-			sum := []interface{}{strconv.Itoa(keyKeySize)}
+			sum := []any{strconv.Itoa(keyKeySize)}
 
 			switch field.Message.Fields[0].Desc.Kind() {
 			case protoreflect.DoubleKind, protoreflect.Fixed64Kind, protoreflect.Sfixed64Kind:
@@ -198,7 +198,7 @@ func (p *size) field(oneof bool, field *protogen.Field, sizeName string) {
 				p.P(`l += `, strconv.Itoa(valueKeySize), ` + `, p.Helper("SizeOfVarint"), `(uint64(l))`)
 				sum = append(sum, `l`)
 			}
-			mapEntrySize := []interface{}{"mapEntrySize := "}
+			mapEntrySize := []any{"mapEntrySize := "}
 			for i, elt := range sum {
 				mapEntrySize = append(mapEntrySize, elt)
 				// if elt is not a string, then it is a helper function call

@@ -233,7 +233,7 @@ func TestDecodeFloat(t *testing.T) {
 	buf64 := make([]byte, 8)
 	val64 := 3.14159265359
 	bits64 := math.Float64bits(val64)
-	for i := 0; i < 8; i++ {
+	for i := range 8 {
 		buf64[i] = byte(bits64 >> (i * 8))
 	}
 

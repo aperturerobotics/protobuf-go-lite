@@ -39,8 +39,8 @@ func (g *jsonGenerator) genMessageUnmarshaler(message *protogen.Message) {
 nextField:
 	for _, field := range message.Fields {
 		var (
-			fieldGoName interface{} = fieldGoName(field)
-			nullable                = fieldIsNullable(field)
+			fieldGoName any = fieldGoName(field)
+			nullable        = fieldIsNullable(field)
 		)
 
 		// We need to match both the snake case field name and the camel case JSON name.
@@ -252,7 +252,7 @@ func ifThenElse(condition bool, ifTrue, ifFalse string) string {
 }
 
 // goTypeForField returns the name of the Go type that corresponds to the type of a given field.
-func (g *jsonGenerator) goTypeForField(field *protogen.Field) interface{} {
+func (g *jsonGenerator) goTypeForField(field *protogen.Field) any {
 	switch field.Desc.Kind() {
 	case protoreflect.BoolKind:
 		return "bool"

@@ -178,7 +178,7 @@ func (s *MarshalState) SetError(err error) {
 }
 
 // SetErrorf calls SetError with a formatted error.
-func (s *MarshalState) SetErrorf(format string, a ...interface{}) {
+func (s *MarshalState) SetErrorf(format string, a ...any) {
 	s.SetError(fmt.Errorf(format, a...))
 }
 

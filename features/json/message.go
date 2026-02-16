@@ -42,8 +42,8 @@ func fieldIsNullable(field *protogen.Field) bool {
 	return nullable
 }
 
-func fieldGoName(field *protogen.Field) interface{} {
-	var fieldGoName interface{} = field.GoName
+func fieldGoName(field *protogen.Field) any {
+	var fieldGoName any = field.GoName
 	return fieldGoName
 }
 

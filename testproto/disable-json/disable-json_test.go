@@ -11,7 +11,7 @@ import (
 func TestDisableJson(t *testing.T) {
 	m := &MessageDisableJson{Body: &MessageDisableJson_Hello{Hello: true}}
 
-	var i interface{} = m
+	var i any = m
 	switch i.(type) {
 	case json.Marshaler:
 		t.FailNow()

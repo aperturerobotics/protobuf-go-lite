@@ -34,9 +34,9 @@ func (g *jsonGenerator) genMessageMarshaler(message *protogen.Message) {
 nextField:
 	for _, field := range message.Fields {
 		var (
-			fieldGoName   interface{} = fieldGoName(field)
-			nullable                  = fieldIsNullable(field)
-			fieldJsonName             = field.Desc.JSONName()
+			fieldGoName   any = fieldGoName(field)
+			nullable          = fieldIsNullable(field)
+			fieldJsonName     = field.Desc.JSONName()
 		)
 
 		if field.Desc.IsMap() {

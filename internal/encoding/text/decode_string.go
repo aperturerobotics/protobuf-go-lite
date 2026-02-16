@@ -89,10 +89,7 @@ func (d *Decoder) parseString() (string, error) {
 				in, out = in[2:], append(out, '\f')
 			case '0', '1', '2', '3', '4', '5', '6', '7':
 				// One, two, or three octal characters.
-				n := len(in[1:]) - len(bytes.TrimLeft(in[1:], "01234567"))
-				if n > 3 {
-					n = 3
-				}
+				n := min(len(in[1:])-len(bytes.TrimLeft(in[1:], "01234567")), 3)
 				v, err := strconv.ParseUint(string(in[1:1+n]), 8, 8)
 				if err != nil {
 					return "", d.newSyntaxError("invalid octal escape code %q in string", in[:1+n])
@@ -100,10 +97,7 @@ func (d *Decoder) parseString() (string, error) {
 				in, out = in[1+n:], append(out, byte(v))
 			case 'x':
 				// One or two hexadecimal characters.
-				n := len(in[2:]) - len(bytes.TrimLeft(in[2:], "0123456789abcdefABCDEF"))
-				if n > 2 {
-					n = 2
-				}
+				n := min(len(in[2:])-len(bytes.TrimLeft(in[2:], "0123456789abcdefABCDEF")), 2)
 				v, err := strconv.ParseUint(string(in[2:2+n]), 16, 8)
 				if err != nil {
 					return "", d.newSyntaxError("invalid hex escape code %q in string", in[:2+n])

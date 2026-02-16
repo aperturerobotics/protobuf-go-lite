@@ -86,7 +86,7 @@ func Test_UnmarshalVTUnsafe(t *testing.T) {
 	require.NoError(t, t2Safe.UnmarshalVT(originalData2))
 	assert.Equal(t, (t2Orig.Sub).(*UnsafeTest_Sub2_).Sub2.S, (t2Safe.Sub).(*UnsafeTest_Sub2_).Sub2.S)
 	assert.Equal(t, (t2Orig.Sub).(*UnsafeTest_Sub2_).Sub2.B, (t2Safe.Sub).(*UnsafeTest_Sub2_).Sub2.B)
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		assertStringIsOriginal(t, (t2Safe.Sub).(*UnsafeTest_Sub2_).Sub2.S[i], false, originalData2)
 		assertBytesAreOriginal(t, (t2Safe.Sub).(*UnsafeTest_Sub2_).Sub2.B[i], false, originalData2)
 	}
@@ -95,7 +95,7 @@ func Test_UnmarshalVTUnsafe(t *testing.T) {
 	require.NoError(t, t2Unsafe.UnmarshalVTUnsafe(originalData2))
 	assert.Equal(t, (t2Orig.Sub).(*UnsafeTest_Sub2_).Sub2.S, (t2Unsafe.Sub).(*UnsafeTest_Sub2_).Sub2.S)
 	assert.Equal(t, (t2Orig.Sub).(*UnsafeTest_Sub2_).Sub2.B, (t2Unsafe.Sub).(*UnsafeTest_Sub2_).Sub2.B)
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		assertStringIsOriginal(t, (t2Unsafe.Sub).(*UnsafeTest_Sub2_).Sub2.S[i], true, originalData2)
 		assertBytesAreOriginal(t, (t2Unsafe.Sub).(*UnsafeTest_Sub2_).Sub2.B[i], true, originalData2)
 	}

@@ -59,7 +59,7 @@ func binaryHash() uint64 {
 	}
 	binary.LittleEndian.PutUint64(buf[:8], uint64(fi.Size())) //nolint:gosec
 	h.Write(buf[:8])
-	for i := int64(0); i < numSamples; i++ {
+	for i := range int64(numSamples) {
 		if _, err := f.ReadAt(buf[:], i*fi.Size()/numSamples); err != nil {
 			return 0
 		}

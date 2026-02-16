@@ -126,7 +126,7 @@ func (s *UnmarshalState) SetError(err error) {
 }
 
 // SetErrorf calls SetError with a formatted error.
-func (s *UnmarshalState) SetErrorf(format string, a ...interface{}) {
+func (s *UnmarshalState) SetErrorf(format string, a ...any) {
 	s.SetError(fmt.Errorf(format, a...))
 }
 

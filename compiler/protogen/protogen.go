@@ -48,8 +48,8 @@ var trimTypesPrefix = "google.golang.org/protobuf/types/"
 var ProtobufGoLitePackage = GoImportPath("github.com/aperturerobotics/protobuf-go-lite")
 
 func fixTypesPrefix(impPath GoImportPath) GoImportPath {
-	if strings.HasPrefix(string(impPath), trimTypesPrefix) {
-		impPath = GoImportPath(typesPackage + strings.TrimPrefix(string(impPath), trimTypesPrefix))
+	if after, ok := strings.CutPrefix(string(impPath), trimTypesPrefix); ok {
+		impPath = GoImportPath(typesPackage + after)
 	}
 	return impPath
 }
@@ -508,8 +508,8 @@ func newFile(gen *Plugin, p *descriptorpb.FileDescriptorProto, packageName GoPac
 // splitImportPathAndPackageName splits off the optional Go package name
 // from the Go import path when separated by a ';' delimiter.
 func splitImportPathAndPackageName(s string) (GoImportPath, GoPackageName) {
-	if i := strings.Index(s, ";"); i >= 0 {
-		return GoImportPath(s[:i]), GoPackageName(s[i+1:])
+	if before, after, ok := strings.Cut(s, ";"); ok {
+		return GoImportPath(before), GoPackageName(after)
 	}
 	return GoImportPath(s), ""
 }
@@ -961,7 +961,7 @@ func (gen *Plugin) NewGeneratedFile(filename string, goImportPath GoImportPath) 
 // P prints a line to the generated output. It converts each parameter to a
 // string following the same rules as [fmt.Print]. It never inserts spaces
 // between parameters.
-func (g *GeneratedFile) P(v ...interface{}) {
+func (g *GeneratedFile) P(v ...any) {
 	for _, x := range v {
 		switch x := x.(type) {
 		case GoIdent:
