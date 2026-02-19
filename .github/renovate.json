@@ -12,7 +12,15 @@
   "packageRules": [
     {
       "matchManagers": ["gomod"],
-      "matchDepTypes": ["replace", "toolchain"],
+      "matchDepTypes": [
+        "replace",
+        "toolchain"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["golang"],
       "enabled": false
     }
   ]
