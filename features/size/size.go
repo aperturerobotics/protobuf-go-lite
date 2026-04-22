@@ -9,8 +9,8 @@ import (
 	"strconv"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/encoding/protowire"
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
-	"google.golang.org/protobuf/encoding/protowire"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 

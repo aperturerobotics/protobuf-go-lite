@@ -5,7 +5,7 @@
 package generator
 
 import (
-	"google.golang.org/protobuf/encoding/protowire"
+	"github.com/aperturerobotics/protobuf-go-lite/encoding/protowire"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 

@@ -9,7 +9,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
-	"google.golang.org/protobuf/encoding/protowire"
+	"github.com/aperturerobotics/protobuf-go-lite/encoding/protowire"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
