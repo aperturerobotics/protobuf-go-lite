@@ -209,3 +209,12 @@ func Test_UnmarshalVTUnsafe(t *testing.T) {
 		}
 	}
 }
+
+func TestMarshalProtoTextNilMessageOneof(t *testing.T) {
+	msg := &UnsafeTest{Sub: &UnsafeTest_Sub1_{}}
+	var text string
+	require.NotPanics(t, func() {
+		text = msg.String()
+	})
+	assert.Contains(t, text, "sub1:")
+}

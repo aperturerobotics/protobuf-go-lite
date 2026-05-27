@@ -1,0 +1,40 @@
+edition = "2024";
+
+package editions2024;
+
+option go_package = "github.com/aperturerobotics/protobuf-go-lite/testproto/editions2024;editions2024";
+
+message Edition2024Fixture {
+  enum State {
+    STATE_UNKNOWN = 0;
+    STATE_READY = 1;
+  }
+
+  message Nested {
+    string name = 1;
+    int32 value = 2 [features.field_presence = IMPLICIT];
+  }
+
+  message DelimitedGroup {
+    string label = 1;
+  }
+
+  int32 explicit_int32 = 1;
+  int32 implicit_int32 = 2 [features.field_presence = IMPLICIT];
+  int32 required_int32 = 3 [features.field_presence = LEGACY_REQUIRED];
+  string explicit_string = 4;
+  bytes explicit_bytes = 5;
+  State explicit_state = 6;
+  Nested nested_message = 7;
+  repeated int32 packed_int32 = 8;
+  repeated int32 expanded_int32 = 9 [features.repeated_field_encoding = EXPANDED];
+  map<string, Nested> nested_map = 10;
+  DelimitedGroup delimited_group = 11 [features.message_encoding = DELIMITED];
+  int32 explicit_default_int32 = 14 [default = 42];
+  string explicit_default_string = 15 [default = "edition"];
+
+  oneof choice {
+    string choice_string = 12;
+    int32 choice_int32 = 13;
+  }
+}

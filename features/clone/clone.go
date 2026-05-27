@@ -36,10 +36,8 @@ func (p *clone) Name() string {
 }
 
 func (p *clone) GenerateFile(file *protogen.File) bool {
-	proto3 := file.Desc.Syntax() == protoreflect.Proto3
-
 	for _, message := range file.Messages {
-		p.processMessage(proto3, message)
+		p.processMessage(message)
 	}
 
 	return p.once
@@ -77,7 +75,7 @@ func (p *clone) cloneFieldSingular(lhs, rhs string, kind protoreflect.Kind) {
 }
 
 // cloneField generates the code for cloning a field in a protobuf.
-func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, field *protogen.Field) {
+func (p *clone) cloneField(lhsBase, rhsBase string, field *protogen.Field) {
 	// At this point, if we encounter a non-synthetic oneof, we assume it to be the representative
 	// field for that oneof.
 	if field.Oneof != nil && !field.Oneof.Desc.IsSynthetic() {
@@ -85,7 +83,7 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 		return
 	}
 
-	if !isReference(allFieldsNullable, field) {
+	if !p.FieldSemantics(field).Reference {
 		panic("method should not be invoked for non-reference fields")
 	}
 
@@ -129,10 +127,10 @@ func (p *clone) cloneField(lhsBase, rhsBase string, allFieldsNullable bool, fiel
 	p.P(`}`)
 }
 
-func (p *clone) generateCloneMethodsForMessage(proto3 bool, message *protogen.Message) {
+func (p *clone) generateCloneMethodsForMessage(message *protogen.Message) {
 	ccTypeName := message.GoIdent.GoName
 	p.P(`func (m *`, ccTypeName, `) `, cloneName, `() *`, ccTypeName, ` {`)
-	p.body(!proto3, ccTypeName, message, true)
+	p.body(ccTypeName, message, true)
 	p.P(`}`)
 	p.P()
 
@@ -145,7 +143,7 @@ func (p *clone) generateCloneMethodsForMessage(proto3 bool, message *protogen.Me
 // body generates the code for the actual cloning logic of a structure containing the given fields.
 // In practice, those can be the fields of a message.
 // The object to be cloned is assumed to be called "m".
-func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protogen.Message, cloneUnknownFields bool) {
+func (p *clone) body(ccTypeName string, message *protogen.Message, cloneUnknownFields bool) {
 	// The method body for a message or a oneof wrapper always starts with a nil check.
 	p.P(`if m == nil {`)
 	// We use an explicitly typed nil to avoid returning the nil interface in the oneof wrapper
@@ -172,7 +170,7 @@ func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protoge
 			continue
 		}
 
-		if !isReference(allFieldsNullable, field) {
+		if !p.FieldSemantics(field).Reference {
 			p.P(`r.`, field.GoName, ` = m.`, field.GoName)
 			continue
 		}
@@ -190,7 +188,7 @@ func (p *clone) body(allFieldsNullable bool, ccTypeName string, message *protoge
 
 	// Generate explicit assignment statements for all reference fields.
 	for _, field := range refFields {
-		p.cloneField("r", "m", allFieldsNullable, field)
+		p.cloneField("r", "m", field)
 	}
 
 	if cloneUnknownFields {
@@ -213,7 +211,7 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 
 	p.P("r", " := new(", ccTypeName, `)`)
 
-	if !isReference(false, field) {
+	if !oneofWrapperReference(field) {
 		p.P(`r.`, field.GoName, ` = m.`, field.GoName)
 		p.P(`return r`)
 		return
@@ -227,7 +225,7 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 	}
 
 	// Generate explicit assignment statements for reference field.
-	p.cloneField("r", "m", false, field)
+	p.cloneField("r", "m", field)
 
 	p.P(`return r`)
 }
@@ -264,9 +262,9 @@ func (p *clone) processMessageOneofs(message *protogen.Message) {
 	}
 }
 
-func (p *clone) processMessage(proto3 bool, message *protogen.Message) {
+func (p *clone) processMessage(message *protogen.Message) {
 	for _, nested := range message.Messages {
-		p.processMessage(proto3, nested)
+		p.processMessage(nested)
 	}
 
 	if message.Desc.IsMapEntry() {
@@ -275,19 +273,15 @@ func (p *clone) processMessage(proto3 bool, message *protogen.Message) {
 
 	p.once = true
 
-	p.generateCloneMethodsForMessage(proto3, message)
+	p.generateCloneMethodsForMessage(message)
 	p.processMessageOneofs(message)
 }
 
-// isReference checks whether the Go equivalent of the given field is of reference type, i.e., can be nil.
-func isReference(allFieldsNullable bool, field *protogen.Field) bool {
-	if allFieldsNullable || field.Oneof != nil || field.Message != nil || field.Desc.Cardinality() == protoreflect.Repeated || field.Desc.Kind() == protoreflect.BytesKind {
-		return true
-	}
-	if !isScalar(field.Desc.Kind()) {
-		panic("unexpected non-reference, non-scalar field")
-	}
-	return false
+func oneofWrapperReference(field *protogen.Field) bool {
+	return field.Desc.Cardinality() == protoreflect.Repeated ||
+		field.Desc.Kind() == protoreflect.BytesKind ||
+		field.Desc.Kind() == protoreflect.MessageKind ||
+		field.Desc.Kind() == protoreflect.GroupKind
 }
 
 func isScalar(kind protoreflect.Kind) bool {

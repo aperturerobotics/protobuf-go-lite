@@ -617,7 +617,11 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString(" }")
 	}
@@ -631,7 +635,11 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.FormatUint(uint64(k), 10))
 			sb.WriteString(": ")
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString(" }")
 	}

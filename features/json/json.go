@@ -49,9 +49,8 @@ func (g *jsonGenerator) GenerateFile(file *protogen.File) bool {
 		return false
 	}
 
-	// fields with pointers are not supported (proto2).
-	if file.Desc.Syntax() != protoreflect.Proto3 {
-		g.P("// NOTE: protobuf-go-lite json only supports proto3: ", file.Desc.Syntax().String(), " is not supported.")
+	if file.Desc.Syntax() != protoreflect.Proto3 && file.Desc.Syntax() != protoreflect.Editions {
+		g.P("// NOTE: protobuf-go-lite json only supports proto3 and editions: ", file.Desc.Syntax().String(), " is not supported.")
 		g.P()
 		return true
 	}

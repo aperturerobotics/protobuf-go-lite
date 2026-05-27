@@ -40,7 +40,8 @@ nextField:
 	for _, field := range message.Fields {
 		var (
 			fieldGoName any = fieldGoName(field)
-			nullable        = fieldIsNullable(field)
+			sem             = g.FieldSemantics(field)
+			nilable         = g.fieldIsNilable(field)
 		)
 
 		// We need to match both the snake case field name and the camel case JSON name.
@@ -72,7 +73,7 @@ nextField:
 			value := field.Message.Fields[1]
 
 			// Allocate an empty map[T(key)]T(value).
-			g.P("x.", fieldGoName, " = make(map[", g.goTypeForField(key), "]", ifThenElse(fieldIsNullable(value), "*", ""), g.goTypeForField(value), ")")
+			g.P("x.", fieldGoName, " = make(map[", g.goTypeForField(key), "]", ifThenElse(g.fieldIsNilable(value), "*", ""), g.goTypeForField(value), ")")
 
 			// Tell the library to read a map with keys of the given type, passing our handler func that will be called for each key.
 			g.P("s.Read", g.libNameForField(key), "Map(func(key ", g.goTypeForField(key), ") {")
@@ -87,7 +88,7 @@ nextField:
 				g.P("var v ", value.Enum.GoIdent)
 				g.P(`v.UnmarshalProtoJSON(s)`)
 				g.P("x.", fieldGoName, "[key] = v")
-			case protoreflect.MessageKind:
+			case protoreflect.MessageKind, protoreflect.GroupKind:
 				// If the map value is of type message, and the message has a marshaler,
 				// allocate a zero message, call the unmarshaler and set the map value for the key to the message.
 				g.P("var v ", value.Message.GoIdent)
@@ -130,10 +131,10 @@ nextField:
 				// g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", ", field.Enum.GoIdent, "(s.ReadEnum(", field.Enum.GoIdent, "_value)))")
 
 				g.P("})") // end s.ReadArray()
-			case protoreflect.MessageKind:
+			case protoreflect.MessageKind, protoreflect.GroupKind:
 				g.P("s.ReadArray(func() {")
 
-				if nullable {
+				if nilable {
 					// If we read nil, append nil and return so that we can continue with the next key.
 					g.P("if s.ReadNil() {")
 					g.P("x.", fieldGoName, " = append(x.", fieldGoName, ", nil)")
@@ -141,7 +142,7 @@ nextField:
 					g.P("}") // end if s.ReadNil() {
 				}
 				// Allocate a zero message, call the unmarshaler and append the message to the list.
-				g.P("v := ", ifThenElse(nullable, "&", ""), field.Message.GoIdent, "{}")
+				g.P("v := ", ifThenElse(nilable, "&", ""), field.Message.GoIdent, "{}")
 				g.P(`v.UnmarshalProtoJSON(s.WithField("`, field.Desc.Name(), `", `, delegateMask, `))`)
 				g.P("if s.Err() != nil {")
 				g.P("return")
@@ -174,7 +175,7 @@ nextField:
 
 		// If the field is nullable (it's a message, or bytes with custom type)
 		// and we read null, set the field to nil.
-		if nullable {
+		if nilable {
 			g.P("if s.ReadNil() {")
 			// If the field is a google.protobuf.Value, instead of nil, we write a google.protobuf.NullValue.
 			if field.Message != nil && field.Message.Desc.FullName() == "google.protobuf.Value" {
@@ -197,6 +198,9 @@ nextField:
 			if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
 				g.P("t := s.Read", g.libNameForField(field), "()")
 				g.P(messageOrOneofIdent, ".", fieldGoName, " = &t")
+			} else if sem.Pointer {
+				g.P("t := s.Read", g.libNameForField(field), "()")
+				g.P(messageOrOneofIdent, ".", fieldGoName, " = &t")
 			} else {
 				g.P(messageOrOneofIdent, ".", fieldGoName, " = s.Read", g.libNameForField(field), "()")
 			}
@@ -204,12 +208,18 @@ nextField:
 			g.P(messageOrOneofIdent, ".", fieldGoName, " = s.Read", g.libNameForField(field), "()")
 		case protoreflect.EnumKind:
 			// If the field is of type enum, and the enum has an unmarshaler, call the unmarshaler.
-			g.P(messageOrOneofIdent, ".", fieldGoName, ".UnmarshalProtoJSON(s)")
+			if sem.Pointer {
+				g.P("var v ", field.Enum.GoIdent)
+				g.P("v.UnmarshalProtoJSON(s)")
+				g.P(messageOrOneofIdent, ".", fieldGoName, " = &v")
+			} else {
+				g.P(messageOrOneofIdent, ".", fieldGoName, ".UnmarshalProtoJSON(s)")
+			}
 
 			// Otherwise we let the library read the enum.
 			// g.P(messageOrOneofIdent, ".", fieldGoName, " = ", field.Enum.GoIdent, "(s.ReadEnum(", field.Enum.GoIdent, "_value))")
-		case protoreflect.MessageKind:
-			if nullable {
+		case protoreflect.MessageKind, protoreflect.GroupKind:
+			if nilable {
 				// Set the field (or enum wrapper) to a newly allocated custom type.
 				g.P(messageOrOneofIdent, ".", fieldGoName, " = &", field.Message.GoIdent, "{}")
 			}
@@ -274,7 +284,7 @@ func (g *jsonGenerator) goTypeForField(field *protogen.Field) any {
 		return "string"
 	case protoreflect.BytesKind:
 		return "[]byte"
-	case protoreflect.MessageKind:
+	case protoreflect.MessageKind, protoreflect.GroupKind:
 		return field.Message.GoIdent
 	default:
 		g.gen.Error(fmt.Errorf("unsupported field kind %q", field.Desc.Kind()))

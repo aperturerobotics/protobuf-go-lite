@@ -45,6 +45,13 @@ $(PROTOC_GEN_GO):
 		-o ./bin/protoc-gen-go-lite \
 		github.com/aperturerobotics/protobuf-go-lite/cmd/protoc-gen-go-lite
 
+.PHONY: protoc-gen-go-lite-tool
+protoc-gen-go-lite-tool:
+	cd ./hack; \
+	go build -v \
+		-o ./bin/protoc-gen-go-lite \
+		github.com/aperturerobotics/protobuf-go-lite/cmd/protoc-gen-go-lite
+
 .PHONY: build
 build: vendor
 	go build -v
@@ -67,7 +74,7 @@ test:
 	go test -v ./...
 
 .PHONY: gengo
-gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
+gengo: $(GOIMPORTS) $(PROTOWRAP) protoc-gen-go-lite-tool
 	shopt -s globstar; \
 	set -eo pipefail; \
 	export PROJECT=$$(go list -m); \
@@ -98,3 +105,8 @@ gengo: $(GOIMPORTS) $(PROTOWRAP) $(PROTOC_GEN_GO)
 	protogen "./testproto/*.proto" ""; \
 	rm $$(pwd)/vendor/$${PROJECT} || true
 	$(GOIMPORTS) -w ./
+
+.PHONY: check-gengo
+check-gengo: gengo
+	git diff --exit-code HEAD
+	test -z "$$(git ls-files --others --exclude-standard)" || (git ls-files --others --exclude-standard; exit 1)

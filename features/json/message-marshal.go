@@ -35,7 +35,8 @@ nextField:
 	for _, field := range message.Fields {
 		var (
 			fieldGoName   any = fieldGoName(field)
-			nullable          = fieldIsNullable(field)
+			sem               = g.FieldSemantics(field)
+			nilable           = g.fieldIsNilable(field)
 			fieldJsonName     = field.Desc.JSONName()
 		)
 
@@ -73,7 +74,7 @@ nextField:
 				g.P("s.Write", g.libNameForField(value), "(v)")
 			case protoreflect.EnumKind:
 				g.P("v.MarshalProtoJSON(s)")
-			case protoreflect.MessageKind:
+			case protoreflect.MessageKind, protoreflect.GroupKind:
 				g.P(`v.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 			}
 
@@ -112,7 +113,7 @@ nextField:
 
 				g.P("}") // end for _, element := range x.{fieldGoName} {
 				g.P("s.WriteArrayEnd()")
-			case protoreflect.MessageKind:
+			case protoreflect.MessageKind, protoreflect.GroupKind:
 				g.P("s.WriteArrayStart()")
 
 				// wroteElement keeps track of whether we wrote an element of the list, so that we know when to add a comma before the next.
@@ -155,7 +156,7 @@ nextField:
 			messageOrOneofIdent = "ov"
 		} else {
 			// If we're not in a oneof, start "if not zero value".
-			if nullable {
+			if nilable {
 				// If this field is nullable, we emit it if it's not nil or if it's specified in the field mask.
 				g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != nil || s.HasField("`, fieldJsonName, `") {`)
 			} else {
@@ -176,7 +177,7 @@ nextField:
 					g.P("if ", messageOrOneofIdent, ".", fieldGoName, ` != "" || s.HasField("`, fieldJsonName, `") {`)
 				case protoreflect.BytesKind:
 					g.P("if len(", messageOrOneofIdent, ".", fieldGoName, `) > 0 || s.HasField("`, fieldJsonName, `") {`)
-				case protoreflect.MessageKind:
+				case protoreflect.MessageKind, protoreflect.GroupKind:
 					// For not-nullable messages we have a dummy check.
 					g.P("if true { ")
 				}
@@ -192,7 +193,7 @@ nextField:
 		switch field.Desc.Kind() {
 		default:
 			// Scalar types can be written by the library.
-			if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
+			if sem.Pointer {
 				g.P("s.Write", g.libNameForField(field), "(*", messageOrOneofIdent, ".", fieldGoName, ")")
 			} else {
 				g.P("s.Write", g.libNameForField(field), "(", messageOrOneofIdent, ".", fieldGoName, ")")
@@ -201,10 +202,14 @@ nextField:
 			g.P("s.Write", g.libNameForField(field), "(", messageOrOneofIdent, ".", fieldGoName, ")")
 		case protoreflect.EnumKind:
 			// If the field is of type enum, and the enum has a marshaler, use that.
-			g.P(messageOrOneofIdent, ".", fieldGoName, ".MarshalProtoJSON(s)")
+			if sem.Pointer {
+				g.P("(*", messageOrOneofIdent, ".", fieldGoName, ").MarshalProtoJSON(s)")
+			} else {
+				g.P(messageOrOneofIdent, ".", fieldGoName, ".MarshalProtoJSON(s)")
+			}
 			// Otherwise we write the enum with the standard settings.
 			// g.P("s.WriteEnum(int32(", messageOrOneofIdent, ".", fieldGoName, "), ", field.Enum.GoIdent, "_name)")
-		case protoreflect.MessageKind:
+		case protoreflect.MessageKind, protoreflect.GroupKind:
 			// If the field is of type message, and the message has a marshaler, use that.
 			g.P(messageOrOneofIdent, ".", fieldGoName, `.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 			// Otherwise delegate to the library.

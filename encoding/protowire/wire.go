@@ -371,7 +371,7 @@ func ConsumeVarint(b []byte) (v uint64, n int) {
 func SizeVarint(v uint64) int {
 	// This computes 1 + (bits.Len64(v)-1)/7.
 	// 9/64 is a good enough approximation of 1/7
-	return int(9*uint32(bits.Len64(v))+64) / 64
+	return int(9*uint32(bits.Len64(v))+64) / 64 //nolint:gosec // bits.Len64 is bounded to 64, so the expression is bounded to 10.
 }
 
 // AppendFixed32 appends v to b as a little-endian uint32.
@@ -441,13 +441,13 @@ func ConsumeBytes(b []byte) (v []byte, n int) {
 	if m > uint64(len(b[n:])) {
 		return nil, errCodeTruncated
 	}
-	return b[n:][:m], n + int(m)
+	return b[n:][:m], n + int(m) //nolint:gosec // m is checked against len(b[n:]) before converting back to an index.
 }
 
 // SizeBytes returns the encoded size of a length-prefixed bytes value,
 // given only the length.
 func SizeBytes(n int) int {
-	return SizeVarint(uint64(n)) + n
+	return SizeVarint(uint64(n)) + n //nolint:gosec // callers pass byte lengths, which are non-negative slice/string lengths.
 }
 
 // AppendString appends v to b as a length-prefixed bytes value.
@@ -503,12 +503,12 @@ func DecodeTag(x uint64) (Number, Type) {
 	if x>>3 > uint64(math.MaxInt32) {
 		return -1, 0
 	}
-	return Number(x >> 3), Type(x & 7)
+	return Number(x >> 3), Type(x & 7) //nolint:gosec // field number and wire type are range-checked immediately above.
 }
 
 // EncodeTag encodes the field [Number] and wire [Type] into its unified form.
 func EncodeTag(num Number, typ Type) uint64 {
-	return uint64(num)<<3 | uint64(typ&7)
+	return uint64(num)<<3 | uint64(typ&7) //nolint:gosec // valid protobuf field numbers are positive int32 values.
 }
 
 // DecodeZigZag decodes a zig-zag-encoded uint64 as an int64.
@@ -516,7 +516,7 @@ func EncodeTag(num Number, typ Type) uint64 {
 //	Input:  {…,  5,  3,  1,  0,  2,  4,  6, …}
 //	Output: {…, -3, -2, -1,  0, +1, +2, +3, …}
 func DecodeZigZag(x uint64) int64 {
-	return int64(x>>1) ^ int64(x)<<63>>63
+	return int64(x>>1) ^ int64(x)<<63>>63 //nolint:gosec // zig-zag decoding intentionally reinterprets the high bit as sign.
 }
 
 // EncodeZigZag encodes an int64 as a zig-zag-encoded uint64.
@@ -524,7 +524,7 @@ func DecodeZigZag(x uint64) int64 {
 //	Input:  {…, -3, -2, -1,  0, +1, +2, +3, …}
 //	Output: {…,  5,  3,  1,  0,  2,  4,  6, …}
 func EncodeZigZag(x int64) uint64 {
-	return uint64(x<<1) ^ uint64(x>>63)
+	return uint64(x<<1) ^ uint64(x>>63) //nolint:gosec // zig-zag encoding intentionally maps signed bits into unsigned wire form.
 }
 
 // DecodeBool decodes a uint64 as a bool.

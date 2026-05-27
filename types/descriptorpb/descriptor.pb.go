@@ -5621,7 +5621,7 @@ func (this *GeneratedCodeInfo) EqualMessageVT(thatMsg any) bool {
 	return this.EqualVT(that)
 }
 
-// NOTE: protobuf-go-lite json only supports proto3: proto2 is not supported.
+// NOTE: protobuf-go-lite json only supports proto3 and editions: proto2 is not supported.
 
 func (m *FileDescriptorSet) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
@@ -11743,7 +11743,11 @@ func (x *FileDescriptorSet) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FileDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11793,7 +11797,11 @@ func (x *FileDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&DescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11806,7 +11814,11 @@ func (x *FileDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&EnumDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11819,7 +11831,11 @@ func (x *FileDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&ServiceDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11832,7 +11848,11 @@ func (x *FileDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11973,7 +11993,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11986,7 +12010,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&DescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -11999,7 +12027,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&EnumDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12012,7 +12044,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&DescriptorProto_ExtensionRange{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12025,7 +12061,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12045,7 +12085,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&OneofDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12058,7 +12102,11 @@ func (x *DescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&DescriptorProto_ReservedRange{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12142,7 +12190,11 @@ func (x *ExtensionRangeOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&ExtensionRangeOptions_Declaration{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12171,7 +12223,11 @@ func (x *ExtensionRangeOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12346,7 +12402,11 @@ func (x *EnumDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&EnumValueDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12366,7 +12426,11 @@ func (x *EnumDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&EnumDescriptorProto_EnumReservedRange{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12440,7 +12504,11 @@ func (x *ServiceDescriptorProto) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&MethodDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12667,7 +12735,11 @@ func (x *FileOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12732,7 +12804,11 @@ func (x *MessageOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12877,7 +12953,11 @@ func (x *FieldOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FieldOptions_EditionDefault{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12897,7 +12977,11 @@ func (x *FieldOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12927,7 +13011,11 @@ func (x *OneofOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -12978,7 +13066,11 @@ func (x *EnumOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13022,7 +13114,11 @@ func (x *EnumValueOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13059,7 +13155,11 @@ func (x *ServiceOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13108,7 +13208,11 @@ func (x *MethodOptions) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13155,7 +13259,11 @@ func (x *UninterpretedOption) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&UninterpretedOption_NamePart{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13330,7 +13438,11 @@ func (x *FeatureSetDefaults) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&FeatureSetDefaults_FeatureSetEditionDefault{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13434,7 +13546,11 @@ func (x *SourceCodeInfo) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&SourceCodeInfo_Location{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -13513,7 +13629,11 @@ func (x *GeneratedCodeInfo) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&GeneratedCodeInfo_Annotation{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}

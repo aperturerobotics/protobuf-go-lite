@@ -9,6 +9,7 @@ import (
 	"runtime/debug"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
+	"github.com/aperturerobotics/protobuf-go-lite/internal/editionssupport"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/pluginpb"
 
@@ -68,10 +69,13 @@ type Generator struct {
 	local    map[protoreflect.FullName]bool
 }
 
-const SupportedFeatures = uint64(pluginpb.CodeGeneratorResponse_FEATURE_PROTO3_OPTIONAL)
+const SupportedFeatures = uint64(pluginpb.CodeGeneratorResponse_FEATURE_PROTO3_OPTIONAL) |
+	uint64(pluginpb.CodeGeneratorResponse_FEATURE_SUPPORTS_EDITIONS)
 
 func NewGenerator(plugin *protogen.Plugin, featureNames []string, cfg *Config) (*Generator, error) {
 	plugin.SupportedFeatures = SupportedFeatures
+	plugin.SupportedEditionsMinimum = editionssupport.Minimum
+	plugin.SupportedEditionsMaximum = editionssupport.Maximum
 
 	features, err := findFeatures(featureNames)
 	if err != nil {
@@ -96,6 +100,10 @@ func NewGenerator(plugin *protogen.Plugin, featureNames []string, cfg *Config) (
 func (gen *Generator) Generate() {
 	for _, file := range gen.plugin.Files {
 		if !file.Generate {
+			continue
+		}
+		if err := validateEditionFile(file); err != nil {
+			gen.plugin.Error(err)
 			continue
 		}
 

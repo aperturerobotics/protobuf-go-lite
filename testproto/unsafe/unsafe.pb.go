@@ -2411,7 +2411,7 @@ func (x *UnsafeTest_Sub1) MarshalProtoText() string {
 		sb.WriteString("s: ")
 		sb.WriteString(strconv.Quote(x.S))
 	}
-	if x.B != nil {
+	if len(x.B) != 0 {
 		if sb.Len() > 6 {
 			sb.WriteString(" ")
 		}
@@ -2475,7 +2475,7 @@ func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoText() string {
 		sb.WriteString("key: ")
 		sb.WriteString(strconv.Quote(x.Key))
 	}
-	if x.Value != nil {
+	if len(x.Value) != 0 {
 		if sb.Len() > 10 {
 			sb.WriteString(" ")
 		}
@@ -2522,23 +2522,19 @@ func (x *UnsafeTest_Sub4) MarshalProtoText() string {
 	sb.WriteString("Sub4 {")
 	switch body := x.Foo.(type) {
 	case *UnsafeTest_Sub4_S:
-		if body.S != "" {
-			if sb.Len() > 6 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("s: ")
-			sb.WriteString(strconv.Quote(body.S))
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("s: ")
+		sb.WriteString(strconv.Quote(body.S))
 	case *UnsafeTest_Sub4_B:
-		if body.B != nil {
-			if sb.Len() > 6 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("b: ")
-			sb.WriteString("\"")
-			sb.WriteString(base64.StdEncoding.EncodeToString(body.B))
-			sb.WriteString("\"")
+		if sb.Len() > 6 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("b: ")
+		sb.WriteString("\"")
+		sb.WriteString(base64.StdEncoding.EncodeToString(body.B))
+		sb.WriteString("\"")
 	}
 	sb.WriteString("}")
 	return sb.String()
@@ -2600,43 +2596,53 @@ func (x *UnsafeTest) MarshalProtoText() string {
 	sb.WriteString("UnsafeTest {")
 	switch body := x.Sub.(type) {
 	case *UnsafeTest_Sub1_:
-		if body.Sub1 != nil {
-			if sb.Len() > 12 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("sub1: ")
+		if sb.Len() > 12 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sub1: ")
+		if body.Sub1 == nil {
+			sb.WriteString((&UnsafeTest_Sub1{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.Sub1.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub2_:
-		if body.Sub2 != nil {
-			if sb.Len() > 12 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("sub2: ")
+		if sb.Len() > 12 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sub2: ")
+		if body.Sub2 == nil {
+			sb.WriteString((&UnsafeTest_Sub2{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.Sub2.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub3_:
-		if body.Sub3 != nil {
-			if sb.Len() > 12 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("sub3: ")
+		if sb.Len() > 12 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sub3: ")
+		if body.Sub3 == nil {
+			sb.WriteString((&UnsafeTest_Sub3{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.Sub3.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub4_:
-		if body.Sub4 != nil {
-			if sb.Len() > 12 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("sub4: ")
+		if sb.Len() > 12 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sub4: ")
+		if body.Sub4 == nil {
+			sb.WriteString((&UnsafeTest_Sub4{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.Sub4.MarshalProtoText())
 		}
 	case *UnsafeTest_Sub5_:
-		if body.Sub5 != nil {
-			if sb.Len() > 12 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("sub5: ")
+		if sb.Len() > 12 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("sub5: ")
+		if body.Sub5 == nil {
+			sb.WriteString((&UnsafeTest_Sub5{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.Sub5.MarshalProtoText())
 		}
 	}

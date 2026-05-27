@@ -1152,7 +1152,11 @@ func (x *Api) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Method{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1165,7 +1169,11 @@ func (x *Api) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&typepb.Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1192,7 +1200,11 @@ func (x *Api) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Mixin{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1259,7 +1271,11 @@ func (x *Method) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&typepb.Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}

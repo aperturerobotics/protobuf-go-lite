@@ -1733,7 +1733,7 @@ func (x *BasicMsg) MarshalProtoText() string {
 		sb.WriteString("string_field: ")
 		sb.WriteString(strconv.Quote(x.StringField))
 	}
-	if x.BytesField != nil {
+	if len(x.BytesField) != 0 {
 		if sb.Len() > 10 {
 			sb.WriteString(" ")
 		}
@@ -1771,21 +1771,17 @@ func (x *BasicMsg) MarshalProtoText() string {
 	}
 	switch body := x.MyOneof.(type) {
 	case *BasicMsg_OneofString:
-		if body.OneofString != "" {
-			if sb.Len() > 10 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("oneof_string: ")
-			sb.WriteString(strconv.Quote(body.OneofString))
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("oneof_string: ")
+		sb.WriteString(strconv.Quote(body.OneofString))
 	case *BasicMsg_OneofInt32:
-		if body.OneofInt32 != 0 {
-			if sb.Len() > 10 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("oneof_int32: ")
-			sb.WriteString(strconv.FormatInt(int64(body.OneofInt32), 10))
+		if sb.Len() > 10 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("oneof_int32: ")
+		sb.WriteString(strconv.FormatInt(int64(body.OneofInt32), 10))
 	}
 	if x.EnumField != 0 {
 		if sb.Len() > 10 {

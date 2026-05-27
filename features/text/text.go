@@ -98,7 +98,7 @@ func (g *textGenerator) genMessage(message *protogen.Message) {
 
 	handledOneOfs := make(map[string]struct{})
 	for _, field := range message.Fields {
-		if oneof := field.Oneof; oneof != nil && !field.Desc.HasOptionalKeyword() {
+		if oneof := field.Oneof; oneof != nil && !oneof.Desc.IsSynthetic() {
 			if _, ok := handledOneOfs[oneof.GoName]; ok {
 				continue
 			}
@@ -126,6 +126,8 @@ func (g *textGenerator) genMessage(message *protogen.Message) {
 }
 
 func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, accessor string) {
+	sem := g.FieldSemantics(field)
+
 	maybeAddSpace := func() {
 		g.P("if sb.Len() > ", sbInitialLen, " {")
 		g.P("sb.WriteString(\" \")")
@@ -147,8 +149,15 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 		return
 	}
 
+	if sem.RealOneof {
+		maybeAddSpace()
+		g.P("sb.WriteString(\"", field.Desc.Name(), ": \")")
+		g.genFieldValue(field, accessor, false)
+		return
+	}
+
 	switch field.Desc.Kind() {
-	case protoreflect.MessageKind:
+	case protoreflect.MessageKind, protoreflect.GroupKind:
 		if field.Desc.IsMap() {
 			g.P("if len(", accessor, ") > 0 {")
 			maybeAddSpace()
@@ -156,9 +165,9 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 			g.P("for _, k := range ", g.QualifiedGoIdent(slicesPackage.Ident("Sorted")), "(", g.QualifiedGoIdent(mapsPackage.Ident("Keys")), "(", accessor, ")) {")
 			g.P("v := ", accessor, "[k]")
 			g.P("sb.WriteString(\" \")")
-			g.genFieldValue(field.Message.Fields[0], "k", false)
+			g.genFieldValue(field.Message.Fields[0], "k", true)
 			g.P("sb.WriteString(\": \")")
-			g.genFieldValue(field.Message.Fields[1], "v", false)
+			g.genFieldValue(field.Message.Fields[1], "v", true)
 			g.P("}")
 			g.P("sb.WriteString(\" }\")")
 			g.P("}")
@@ -170,14 +179,15 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 			g.P("}")
 		}
 	case protoreflect.StringKind, protoreflect.BytesKind:
-		if field.Desc.HasOptionalKeyword() || g.file.Desc.Syntax() == protoreflect.Proto2 {
+		if sem.Pointer || sem.EmitDefault {
 			g.P("if ", accessor, " != nil {")
 		} else {
 			emptyCheck := "\"\""
 			if field.Desc.Kind() == protoreflect.BytesKind {
-				emptyCheck = "nil"
+				g.P("if len(", accessor, ") != 0 {")
+			} else {
+				g.P("if ", accessor, " != ", emptyCheck, " {")
 			}
-			g.P("if ", accessor, " != ", emptyCheck, " {")
 		}
 		maybeAddSpace()
 		g.P("sb.WriteString(\"", field.Desc.Name(), ": \")")
@@ -191,7 +201,7 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 		if field.Desc.Kind() == protoreflect.BoolKind {
 			zeroValue = "false"
 		}
-		if field.Desc.HasOptionalKeyword() || g.file.Desc.Syntax() == protoreflect.Proto2 {
+		if sem.Pointer {
 			g.P("if ", accessor, " != nil {")
 		} else {
 			g.P("if ", accessor, " != ", zeroValue, " {")
@@ -207,10 +217,14 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 }
 
 func (g *textGenerator) genFieldValue(field *protogen.Field, accessor string, isList bool) {
-	isPointer := field.Desc.HasOptionalKeyword() || (g.file.Desc.Syntax() == protoreflect.Proto2 && !isList)
+	isPointer := g.FieldSemantics(field).Pointer && !isList
 	switch field.Desc.Kind() {
-	case protoreflect.MessageKind:
+	case protoreflect.MessageKind, protoreflect.GroupKind:
+		g.P("if ", accessor, " == nil {")
+		g.P("sb.WriteString((&", field.Message.GoIdent, "{}).MarshalProtoText())")
+		g.P("} else {")
 		g.P("sb.WriteString(", accessor, ".MarshalProtoText())")
+		g.P("}")
 	case protoreflect.StringKind:
 		if isPointer {
 			g.P("sb.WriteString(", g.QualifiedGoIdent(strconvPackage.Ident("Quote")), "(*", accessor, "))")

@@ -349,7 +349,7 @@ func (x *Any) MarshalProtoText() string {
 		sb.WriteString("type_url: ")
 		sb.WriteString(strconv.Quote(x.TypeUrl))
 	}
-	if x.Value != nil {
+	if len(x.Value) != 0 {
 		if sb.Len() > 5 {
 			sb.WriteString(" ")
 		}

@@ -1912,7 +1912,11 @@ func (x *Type) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Field{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1938,7 +1942,11 @@ func (x *Type) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -2043,7 +2051,11 @@ func (x *Field) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -2087,7 +2099,11 @@ func (x *Enum) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&EnumValue{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -2100,7 +2116,11 @@ func (x *Enum) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -2160,7 +2180,11 @@ func (x *EnumValue) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Option{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}

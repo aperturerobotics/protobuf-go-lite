@@ -26,6 +26,15 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - name: Install protoc
+        run: |
+          PROTOC_VERSION=34.1
+          archive="$RUNNER_TEMP/protoc.zip"
+          url="https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+          curl -sSLo "$archive" "$url"
+          unzip -q "$archive" -d "$HOME/.local"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Cache tools
         uses: actions/cache@v5
         with:
@@ -40,3 +49,6 @@ jobs:
 
       - name: Lint Go
         run: make lint
+
+      - name: Check generated output
+        run: make check-gengo

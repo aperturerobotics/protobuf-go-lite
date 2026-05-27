@@ -24,7 +24,16 @@ which has limited reflection support.
 
 [tinygo]: https://github.com/tinygo-org/tinygo
 
-protobuf-go-lite does not support fieldmasks and extensions.
+protobuf-go-lite supports Edition 2024 schemas that resolve to the open Go API
+and static, reflect-free generated output. The default `features=all` path
+supports explicit and implicit presence, legacy required fields, packed
+encoding, delimited message encoding, oneofs, maps, clone/equal, text,
+unmarshal, unsafe unmarshal, and JSON when the resolved JSON format is
+`ALLOW`.
+
+protobuf-go-lite rejects Edition schemas that require closed enum semantics,
+`LEGACY_BEST_EFFORT` JSON, or explicit hybrid/opaque Go APIs. It does not
+support fieldmasks and extensions.
 
 ### Ecosystem
 

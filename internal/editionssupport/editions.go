@@ -9,5 +9,5 @@ import "google.golang.org/protobuf/types/descriptorpb"
 
 const (
 	Minimum = descriptorpb.Edition_EDITION_PROTO2
-	Maximum = descriptorpb.Edition_EDITION_2023
+	Maximum = descriptorpb.Edition_EDITION_2024
 )

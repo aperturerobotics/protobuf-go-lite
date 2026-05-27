@@ -462,7 +462,7 @@ func (x *OptionalFieldInProto3) MarshalProtoJSON(s *json.MarshalState) {
 	if x.OptionalEnum != nil || s.HasField("optionalEnum") {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalEnum")
-		x.OptionalEnum.MarshalProtoJSON(s)
+		(*x.OptionalEnum).MarshalProtoJSON(s)
 	}
 	s.WriteObjectEnd()
 }
@@ -606,7 +606,9 @@ func (x *OptionalFieldInProto3) UnmarshalProtoJSON(s *json.UnmarshalState) {
 				x.OptionalEnum = nil
 				return
 			}
-			x.OptionalEnum.UnmarshalProtoJSON(s)
+			var v SimpleEnum
+			v.UnmarshalProtoJSON(s)
+			x.OptionalEnum = &v
 		}
 	})
 }

@@ -61,6 +61,12 @@ func TestBasicMarshalUnmarshal(t *testing.T) {
 	}
 }
 
+func TestBasicEqualImplicitBytesTreatsNilAsEmpty(t *testing.T) {
+	if !(&BasicMsg{}).EqualVT(&BasicMsg{BytesField: []byte{}}) {
+		t.Fatal("implicit proto3 bytes nil and empty values should compare equal")
+	}
+}
+
 func TestBasicProtoTextMarshal(t *testing.T) {
 	basic := NewMockBasicMsg()
 	textData := basic.String()

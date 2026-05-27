@@ -55,9 +55,11 @@ func run(opts Options, f func(*Plugin) error) error {
 
 // Plugin stores a protoc plugin invocation.
 type Plugin struct {
-	Request           *pluginpb.CodeGeneratorRequest
-	Files             []*File
-	SupportedFeatures uint64
+	Request                  *pluginpb.CodeGeneratorRequest
+	Files                    []*File
+	SupportedFeatures        uint64
+	SupportedEditionsMinimum descriptorpb.Edition
+	SupportedEditionsMaximum descriptorpb.Edition
 
 	err            *string
 	packageNames   map[GoImportPath]string
@@ -128,6 +130,12 @@ func (p *Plugin) Response() *pluginpb.CodeGeneratorResponse {
 	if p.SupportedFeatures != 0 {
 		supportedFeatures := p.SupportedFeatures
 		resp.SupportedFeatures = &supportedFeatures
+	}
+	if p.SupportedEditionsMinimum != descriptorpb.Edition_EDITION_UNKNOWN && p.SupportedEditionsMaximum != descriptorpb.Edition_EDITION_UNKNOWN {
+		minimumEdition := int32(p.SupportedEditionsMinimum)
+		maximumEdition := int32(p.SupportedEditionsMaximum)
+		resp.MinimumEdition = &minimumEdition
+		resp.MaximumEdition = &maximumEdition
 	}
 	for _, generated := range p.generatedFiles {
 		content, err := generated.file.Content()
@@ -201,7 +209,7 @@ func buildServices(file *File, messagesByFullName map[string]*Message) []*Servic
 			File:     file,
 			Desc:     &ServiceDesc{fullName: fullName},
 			GoName:   goCamelCase(proto.GetName()),
-			Comments: Comments{Leading: lookupLeadingComment(file.Proto, []int32{6, int32(i)})},
+			Comments: Comments{Leading: lookupLeadingComment(file.Proto, []int32{6, sourcePathIndex(i)})},
 		}
 		for j, methodProto := range proto.GetMethod() {
 			input := messagesByFullName[strings.TrimPrefix(methodProto.GetInputType(), ".")]
@@ -220,12 +228,21 @@ func buildServices(file *File, messagesByFullName map[string]*Message) []*Servic
 				GoName:   goCamelCase(methodProto.GetName()),
 				Input:    input,
 				Output:   output,
-				Comments: Comments{Leading: lookupLeadingComment(file.Proto, []int32{6, int32(i), 2, int32(j)})},
+				Comments: Comments{Leading: lookupLeadingComment(file.Proto, []int32{6, sourcePathIndex(i), 2, sourcePathIndex(j)})},
 			})
 		}
 		services = append(services, service)
 	}
 	return services
+}
+
+const maxSourcePathIndex = int(^uint32(0) >> 1)
+
+func sourcePathIndex(i int) int32 {
+	if i > maxSourcePathIndex {
+		panic("source path index exceeds int32")
+	}
+	return int32(i) //nolint:gosec // range indexes are checked against the maximum source-path int32 value above.
 }
 
 func deriveGoPackage(file *descriptorpb.FileDescriptorProto) (GoImportPath, string) {

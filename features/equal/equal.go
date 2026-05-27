@@ -3,8 +3,9 @@
 package equal
 
 import (
+	"cmp"
 	"fmt"
-	"sort"
+	"slices"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -28,9 +29,8 @@ var _ generator.FeatureGenerator = (*equal)(nil)
 func (p *equal) Name() string { return "equal" }
 
 func (p *equal) GenerateFile(file *protogen.File) bool {
-	proto3 := file.Desc.Syntax() == protoreflect.Proto3
 	for _, message := range file.Messages {
-		p.message(proto3, message)
+		p.message(message)
 	}
 	return p.once
 }
@@ -40,9 +40,9 @@ const (
 	equalMessageName = "EqualMessageVT"
 )
 
-func (p *equal) message(proto3 bool, message *protogen.Message) {
+func (p *equal) message(message *protogen.Message) {
 	for _, nested := range message.Messages {
-		p.message(proto3, nested)
+		p.message(nested)
 	}
 
 	if message.Desc.IsMapEntry() {
@@ -60,8 +60,8 @@ func (p *equal) message(proto3 bool, message *protogen.Message) {
 	p.P(`	return false`)
 	p.P(`}`)
 
-	sort.Slice(message.Fields, func(i, j int) bool {
-		return message.Fields[i].Desc.Number() < message.Fields[j].Desc.Number()
+	slices.SortFunc(message.Fields, func(a, b *protogen.Field) int {
+		return cmp.Compare(a.Desc.Number(), b.Desc.Number())
 	})
 
 	{
@@ -94,9 +94,8 @@ func (p *equal) message(proto3 bool, message *protogen.Message) {
 
 	for _, field := range message.Fields {
 		oneof := field.Oneof != nil && !field.Oneof.Desc.IsSynthetic()
-		nullable := field.Message != nil || (field.Oneof != nil && field.Oneof.Desc.IsSynthetic()) || (!proto3 && !oneof)
 		if !oneof {
-			p.field(field, nullable)
+			p.field(field, field.Desc.HasPresence() && !field.Desc.IsList() && !field.Desc.IsMap())
 		}
 	}
 

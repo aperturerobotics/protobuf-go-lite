@@ -681,23 +681,19 @@ func (x *EchoMsg) MarshalProtoText() string {
 	}
 	switch body := x.Demo.(type) {
 	case *EchoMsg_ExampleEnum:
-		if body.ExampleEnum != 0 {
-			if sb.Len() > 9 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("example_enum: ")
-			sb.WriteString("\"")
-			sb.WriteString(ExampleEnum(body.ExampleEnum).String())
-			sb.WriteString("\"")
+		if sb.Len() > 9 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("example_enum: ")
+		sb.WriteString("\"")
+		sb.WriteString(ExampleEnum(body.ExampleEnum).String())
+		sb.WriteString("\"")
 	case *EchoMsg_ExampleString:
-		if body.ExampleString != "" {
-			if sb.Len() > 9 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("example_string: ")
-			sb.WriteString(strconv.Quote(body.ExampleString))
+		if sb.Len() > 9 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("example_string: ")
+		sb.WriteString(strconv.Quote(body.ExampleString))
 	}
 	if len(x.Timestamps) > 0 {
 		if sb.Len() > 9 {
@@ -708,7 +704,11 @@ func (x *EchoMsg) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}

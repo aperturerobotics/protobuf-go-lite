@@ -664,7 +664,7 @@ func (this *CodeGeneratorResponse) EqualMessageVT(thatMsg any) bool {
 	return this.EqualVT(that)
 }
 
-// NOTE: protobuf-go-lite json only supports proto3: proto2 is not supported.
+// NOTE: protobuf-go-lite json only supports proto3 and editions: proto2 is not supported.
 
 func (m *Version) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
@@ -1403,7 +1403,11 @@ func (x *CodeGeneratorRequest) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&descriptorpb.FileDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1416,7 +1420,11 @@ func (x *CodeGeneratorRequest) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&descriptorpb.FileDescriptorProto{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
@@ -1508,7 +1516,11 @@ func (x *CodeGeneratorResponse) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&CodeGeneratorResponse_File{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}

@@ -34,12 +34,19 @@ func (g *jsonGenerator) genMessage(message *protogen.Message) {
 	g.genStdMessageUnmarshaler(message)
 }
 
-func fieldIsNullable(field *protogen.Field) bool {
-	if field.Oneof != nil && field.Oneof.Desc.IsSynthetic() {
+func (g *jsonGenerator) fieldIsNilable(field *protogen.Field) bool {
+	sem := g.FieldSemantics(field)
+	if sem.Pointer {
 		return true
 	}
-	nullable := field.Desc.Kind() == protoreflect.MessageKind
-	return nullable
+	switch field.Desc.Kind() {
+	case protoreflect.BytesKind:
+		return field.Desc.HasPresence() && !sem.RealOneof
+	case protoreflect.MessageKind, protoreflect.GroupKind:
+		return true
+	default:
+		return false
+	}
 }
 
 func fieldGoName(field *protogen.Field) any {

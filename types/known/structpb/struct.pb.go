@@ -1503,7 +1503,11 @@ func (x *Struct) MarshalProtoText() string {
 			sb.WriteString(" ")
 			sb.WriteString(strconv.Quote(k))
 			sb.WriteString(": ")
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Value{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString(" }")
 	}
@@ -1519,53 +1523,49 @@ func (x *Value) MarshalProtoText() string {
 	sb.WriteString("Value {")
 	switch body := x.Kind.(type) {
 	case *Value_NullValue:
-		if body.NullValue != 0 {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("null_value: ")
-			sb.WriteString("\"")
-			sb.WriteString(NullValue(body.NullValue).String())
-			sb.WriteString("\"")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("null_value: ")
+		sb.WriteString("\"")
+		sb.WriteString(NullValue(body.NullValue).String())
+		sb.WriteString("\"")
 	case *Value_NumberValue:
-		if body.NumberValue != 0 {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("number_value: ")
-			sb.WriteString(strconv.FormatFloat(body.NumberValue, 'g', -1, 64))
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("number_value: ")
+		sb.WriteString(strconv.FormatFloat(body.NumberValue, 'g', -1, 64))
 	case *Value_StringValue:
-		if body.StringValue != "" {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("string_value: ")
-			sb.WriteString(strconv.Quote(body.StringValue))
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("string_value: ")
+		sb.WriteString(strconv.Quote(body.StringValue))
 	case *Value_BoolValue:
-		if body.BoolValue != false {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("bool_value: ")
-			sb.WriteString(strconv.FormatBool(body.BoolValue))
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
 		}
+		sb.WriteString("bool_value: ")
+		sb.WriteString(strconv.FormatBool(body.BoolValue))
 	case *Value_StructValue:
-		if body.StructValue != nil {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("struct_value: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("struct_value: ")
+		if body.StructValue == nil {
+			sb.WriteString((&Struct{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.StructValue.MarshalProtoText())
 		}
 	case *Value_ListValue:
-		if body.ListValue != nil {
-			if sb.Len() > 7 {
-				sb.WriteString(" ")
-			}
-			sb.WriteString("list_value: ")
+		if sb.Len() > 7 {
+			sb.WriteString(" ")
+		}
+		sb.WriteString("list_value: ")
+		if body.ListValue == nil {
+			sb.WriteString((&ListValue{}).MarshalProtoText())
+		} else {
 			sb.WriteString(body.ListValue.MarshalProtoText())
 		}
 	}
@@ -1588,7 +1588,11 @@ func (x *ListValue) MarshalProtoText() string {
 			if i > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(v.MarshalProtoText())
+			if v == nil {
+				sb.WriteString((&Value{}).MarshalProtoText())
+			} else {
+				sb.WriteString(v.MarshalProtoText())
+			}
 		}
 		sb.WriteString("]")
 	}
