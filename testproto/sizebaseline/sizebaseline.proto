@@ -1,0 +1,63 @@
+edition = "2024";
+
+package sizebaseline;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "github.com/aperturerobotics/protobuf-go-lite/testproto/sizebaseline;sizebaseline";
+
+message SizeBaseline {
+  enum State {
+    STATE_UNKNOWN = 0;
+    STATE_READY = 1;
+  }
+
+  message Nested {
+    string name = 1;
+    int64 count = 2 [features.field_presence = IMPLICIT];
+    repeated string labels = 3;
+  }
+
+  int32 explicit_int32 = 1;
+  int32 implicit_int32 = 2 [features.field_presence = IMPLICIT];
+  int64 explicit_int64 = 3;
+  uint32 explicit_uint32 = 4;
+  uint64 explicit_uint64 = 5;
+  sint32 explicit_sint32 = 6;
+  sint64 explicit_sint64 = 7;
+  fixed32 fixed32_value = 8;
+  fixed64 fixed64_value = 9;
+  sfixed32 sfixed32_value = 10;
+  sfixed64 sfixed64_value = 11;
+  float float_value = 12;
+  double double_value = 13;
+  bool bool_value = 14;
+  string string_value = 15;
+  bytes bytes_value = 16;
+  int32 required_int32 = 17 [features.field_presence = LEGACY_REQUIRED];
+  repeated int32 packed_int32 = 18;
+  repeated int32 expanded_int32 = 19 [features.repeated_field_encoding = EXPANDED];
+  repeated Nested nested_values = 20;
+  map<string, Nested> nested_by_name = 21;
+  map<uint32, Nested> nested_by_id = 22;
+  State state = 23;
+  Nested nested = 24;
+  google.protobuf.Timestamp timestamp = 25;
+  google.protobuf.Duration duration = 26;
+  google.protobuf.StringValue string_wrapper = 27;
+  google.protobuf.BytesValue bytes_wrapper = 28;
+  google.protobuf.Struct struct_value = 29;
+  google.protobuf.Value value_value = 30;
+  google.protobuf.ListValue list_value = 31;
+  string default_string = 35 [default = "default-size-baseline"];
+  int32 default_int32 = 36 [default = 99];
+
+  oneof selection {
+    string selected_name = 32;
+    int32 selected_id = 33;
+    Nested selected_nested = 34;
+  }
+}

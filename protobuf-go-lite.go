@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"math"
 	"math/bits"
 	"slices"
@@ -70,6 +71,75 @@ func CloneVTSlice[S ~[]E, E CloneVT[E]](s S) S {
 	return out
 }
 
+// ClonePtr clones one explicit scalar pointer.
+func ClonePtr[T any](v *T) *T {
+	if v == nil {
+		return nil
+	}
+	out := *v
+	return &out
+}
+
+// CloneBytes clones one byte slice.
+func CloneBytes[S ~[]byte](v S) S {
+	return slices.Clone(v)
+}
+
+// CloneSlice clones a scalar slice.
+func CloneSlice[S ~[]E, E any](s S) S {
+	return slices.Clone(s)
+}
+
+// CloneMap clones a map whose values do not need deep cloning.
+func CloneMap[M ~map[K]V, K comparable, V any](m M) M {
+	return maps.Clone(m)
+}
+
+// CloneBytesSlice clones a repeated bytes field.
+func CloneBytesSlice[S ~[]E, E ~[]byte](s S) S {
+	out := make(S, len(s))
+	for i := range s {
+		out[i] = slices.Clone(s[i])
+	}
+	return out
+}
+
+// CloneBytesMap clones a map whose values are bytes fields.
+func CloneBytesMap[M ~map[K]V, K comparable, V ~[]byte](m M) M {
+	if m == nil {
+		return nil
+	}
+	out := make(M, len(m))
+	for k, v := range m {
+		out[k] = slices.Clone(v)
+	}
+	return out
+}
+
+// CloneVTValue clones one VT message value.
+func CloneVTValue[T CloneVT[T]](v T) T {
+	var empty T
+	if v == empty {
+		return empty
+	}
+	return v.CloneVT()
+}
+
+// CloneVTMap clones a map whose values are VT messages.
+func CloneVTMap[M ~map[K]V, K comparable, V CloneVT[V]](m M) M {
+	if m == nil {
+		return nil
+	}
+	out := make(M, len(m))
+	var empty V
+	for k, v := range m {
+		if v != empty {
+			out[k] = v.CloneVT()
+		}
+	}
+	return out
+}
+
 // EqualVT is a message with a EqualVT function (VTProtobuf).
 type EqualVT[T comparable] interface {
 	comparable
@@ -107,6 +177,100 @@ func IsEqualVT[T EqualVT[T]](t1, t2 T) bool {
 // IsEqualVTSlice checks if two slices of EqualVT messages are equal.
 func IsEqualVTSlice[S ~[]E, E EqualVT[E]](s1, s2 S) bool {
 	return slices.EqualFunc(s1, s2, CompareEqualVT[E]())
+}
+
+// EqualPtr compares two explicit scalar pointers.
+func EqualPtr[T comparable](a, b *T) bool {
+	return a == nil && b == nil || a != nil && b != nil && *a == *b
+}
+
+// EqualBytes compares two implicit bytes values.
+func EqualBytes(a, b []byte) bool {
+	return string(a) == string(b)
+}
+
+// EqualBytesPresent compares two explicit bytes values where nil and empty differ.
+func EqualBytesPresent(a, b []byte) bool {
+	return a == nil && b == nil || a != nil && b != nil && string(a) == string(b)
+}
+
+// EqualSlice compares repeated comparable values.
+func EqualSlice[S ~[]E, E comparable](a, b S) bool {
+	return slices.Equal(a, b)
+}
+
+// EqualMap compares maps with comparable values.
+func EqualMap[M ~map[K]V, K comparable, V comparable](a, b M) bool {
+	return maps.Equal(a, b)
+}
+
+// EqualBytesSlice compares repeated bytes values.
+func EqualBytesSlice[S ~[]E, E ~[]byte](a, b S) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if !EqualBytes(a[i], b[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+// EqualBytesMap compares maps whose values are bytes fields.
+func EqualBytesMap[M ~map[K]V, K comparable, V ~[]byte](a, b M) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for k, av := range a {
+		bv, ok := b[k]
+		if !ok || !EqualBytes(av, bv) {
+			return false
+		}
+	}
+	return true
+}
+
+// EqualVTImplicit compares VT messages where nil is equivalent to an empty message.
+func EqualVTImplicit[T EqualVT[T]](a, b T, empty func() T) bool {
+	if a == b {
+		return true
+	}
+	var zero T
+	if a == zero {
+		a = empty()
+	}
+	if b == zero {
+		b = empty()
+	}
+	return a.EqualVT(b)
+}
+
+// EqualVTSliceImplicit compares repeated VT messages where nil elements are empty messages.
+func EqualVTSliceImplicit[S ~[]E, E EqualVT[E]](a, b S, empty func() E) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if !EqualVTImplicit(a[i], b[i], empty) {
+			return false
+		}
+	}
+	return true
+}
+
+// EqualVTMapImplicit compares map VT values where nil values are empty messages.
+func EqualVTMapImplicit[M ~map[K]V, K comparable, V EqualVT[V]](a, b M, empty func() V) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for k, av := range a {
+		bv, ok := b[k]
+		if !ok || !EqualVTImplicit(av, bv, empty) {
+			return false
+		}
+	}
+	return true
 }
 
 // EncodeVarint encodes a uint64 into a varint-encoded byte slice and returns the offset of the encoded value.
@@ -511,6 +675,275 @@ func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
 // SizeOfZigzag returns the size of the zigzag-encoded value.
 func SizeOfZigzag(x uint64) (n int) {
 	return SizeOfVarint(uint64((x << 1) ^ uint64((int64(x) >> 63)))) //nolint
+}
+
+type sizeVarintNumber interface {
+	~int32 | ~int64 | ~uint32 | ~uint64
+}
+
+type sizeZigzagNumber interface {
+	~int32 | ~int64
+}
+
+type sizeFixed32Number interface {
+	~int32 | ~uint32 | ~float32
+}
+
+type sizeFixed64Number interface {
+	~int64 | ~uint64 | ~float64
+}
+
+// SizeVarintValue returns the encoded field size for one present varint value.
+func SizeVarintValue[T sizeVarintNumber](keySize int, v T) int {
+	return keySize + SizeOfVarint(uint64(v))
+}
+
+// SizeVarintNonZero returns the encoded field size for one implicit varint value.
+func SizeVarintNonZero[T sizeVarintNumber](keySize int, v T) int {
+	if v == 0 {
+		return 0
+	}
+	return SizeVarintValue(keySize, v)
+}
+
+// SizeVarintPtr returns the encoded field size for one explicit varint value.
+func SizeVarintPtr[T sizeVarintNumber](keySize int, v *T) int {
+	if v == nil {
+		return 0
+	}
+	return SizeVarintValue(keySize, *v)
+}
+
+// SizeVarintSlice returns the encoded field size for unpacked repeated varints.
+func SizeVarintSlice[S ~[]E, E sizeVarintNumber](keySize int, vals S) (n int) {
+	for _, v := range vals {
+		n += SizeVarintValue(keySize, v)
+	}
+	return n
+}
+
+// SizeVarintPacked returns the encoded field size for packed repeated varints.
+func SizeVarintPacked[S ~[]E, E sizeVarintNumber](keySize int, vals S) int {
+	if len(vals) == 0 {
+		return 0
+	}
+	l := 0
+	for _, v := range vals {
+		l += SizeOfVarint(uint64(v))
+	}
+	return SizeBytesValue(keySize, l)
+}
+
+// SizeZigzagValue returns the encoded field size for one present zigzag value.
+func SizeZigzagValue[T sizeZigzagNumber](keySize int, v T) int {
+	return keySize + SizeOfZigzag(uint64(v))
+}
+
+// SizeZigzagNonZero returns the encoded field size for one implicit zigzag value.
+func SizeZigzagNonZero[T sizeZigzagNumber](keySize int, v T) int {
+	if v == 0 {
+		return 0
+	}
+	return SizeZigzagValue(keySize, v)
+}
+
+// SizeZigzagPtr returns the encoded field size for one explicit zigzag value.
+func SizeZigzagPtr[T sizeZigzagNumber](keySize int, v *T) int {
+	if v == nil {
+		return 0
+	}
+	return SizeZigzagValue(keySize, *v)
+}
+
+// SizeZigzagSlice returns the encoded field size for unpacked repeated zigzags.
+func SizeZigzagSlice[S ~[]E, E sizeZigzagNumber](keySize int, vals S) (n int) {
+	for _, v := range vals {
+		n += SizeZigzagValue(keySize, v)
+	}
+	return n
+}
+
+// SizeZigzagPacked returns the encoded field size for packed repeated zigzags.
+func SizeZigzagPacked[S ~[]E, E sizeZigzagNumber](keySize int, vals S) int {
+	if len(vals) == 0 {
+		return 0
+	}
+	l := 0
+	for _, v := range vals {
+		l += SizeOfZigzag(uint64(v))
+	}
+	return SizeBytesValue(keySize, l)
+}
+
+// SizeFixed32Value returns the encoded field size for one present fixed32 value.
+func SizeFixed32Value(keySize int) int {
+	return keySize + 4
+}
+
+// SizeFixed32NonZero returns the encoded field size for one implicit fixed32 value.
+func SizeFixed32NonZero[T sizeFixed32Number](keySize int, v T) int {
+	if v == 0 {
+		return 0
+	}
+	return SizeFixed32Value(keySize)
+}
+
+// SizeFixed32Ptr returns the encoded field size for one explicit fixed32 value.
+func SizeFixed32Ptr[T sizeFixed32Number](keySize int, v *T) int {
+	if v == nil {
+		return 0
+	}
+	return SizeFixed32Value(keySize)
+}
+
+// SizeFixed32Slice returns the encoded field size for unpacked repeated fixed32 values.
+func SizeFixed32Slice[S ~[]E, E sizeFixed32Number](keySize int, vals S) int {
+	return len(vals) * SizeFixed32Value(keySize)
+}
+
+// SizeFixed32Packed returns the encoded field size for packed repeated fixed32 values.
+func SizeFixed32Packed[S ~[]E, E sizeFixed32Number](keySize int, vals S) int {
+	if len(vals) == 0 {
+		return 0
+	}
+	return SizeBytesValue(keySize, len(vals)*4)
+}
+
+// SizeFixed64Value returns the encoded field size for one present fixed64 value.
+func SizeFixed64Value(keySize int) int {
+	return keySize + 8
+}
+
+// SizeFixed64NonZero returns the encoded field size for one implicit fixed64 value.
+func SizeFixed64NonZero[T sizeFixed64Number](keySize int, v T) int {
+	if v == 0 {
+		return 0
+	}
+	return SizeFixed64Value(keySize)
+}
+
+// SizeFixed64Ptr returns the encoded field size for one explicit fixed64 value.
+func SizeFixed64Ptr[T sizeFixed64Number](keySize int, v *T) int {
+	if v == nil {
+		return 0
+	}
+	return SizeFixed64Value(keySize)
+}
+
+// SizeFixed64Slice returns the encoded field size for unpacked repeated fixed64 values.
+func SizeFixed64Slice[S ~[]E, E sizeFixed64Number](keySize int, vals S) int {
+	return len(vals) * SizeFixed64Value(keySize)
+}
+
+// SizeFixed64Packed returns the encoded field size for packed repeated fixed64 values.
+func SizeFixed64Packed[S ~[]E, E sizeFixed64Number](keySize int, vals S) int {
+	if len(vals) == 0 {
+		return 0
+	}
+	return SizeBytesValue(keySize, len(vals)*8)
+}
+
+// SizeBoolValue returns the encoded field size for one present bool value.
+func SizeBoolValue(keySize int) int {
+	return keySize + 1
+}
+
+// SizeBoolNonZero returns the encoded field size for one implicit bool value.
+func SizeBoolNonZero(keySize int, v bool) int {
+	if !v {
+		return 0
+	}
+	return SizeBoolValue(keySize)
+}
+
+// SizeBoolPtr returns the encoded field size for one explicit bool value.
+func SizeBoolPtr(keySize int, v *bool) int {
+	if v == nil {
+		return 0
+	}
+	return SizeBoolValue(keySize)
+}
+
+// SizeBoolSlice returns the encoded field size for unpacked repeated bool values.
+func SizeBoolSlice(keySize int, vals []bool) int {
+	return len(vals) * SizeBoolValue(keySize)
+}
+
+// SizeBoolPacked returns the encoded field size for packed repeated bool values.
+func SizeBoolPacked(keySize int, vals []bool) int {
+	if len(vals) == 0 {
+		return 0
+	}
+	return SizeBytesValue(keySize, len(vals))
+}
+
+// SizeStringValue returns the encoded field size for one present string value.
+func SizeStringValue(keySize int, v string) int {
+	l := len(v)
+	return keySize + l + SizeOfVarint(uint64(l))
+}
+
+// SizeStringNonEmpty returns the encoded field size for one implicit string value.
+func SizeStringNonEmpty(keySize int, v string) int {
+	if v == "" {
+		return 0
+	}
+	return SizeStringValue(keySize, v)
+}
+
+// SizeStringPtr returns the encoded field size for one explicit string value.
+func SizeStringPtr(keySize int, v *string) int {
+	if v == nil {
+		return 0
+	}
+	return SizeStringValue(keySize, *v)
+}
+
+// SizeStringSlice returns the encoded field size for repeated strings.
+func SizeStringSlice[S ~[]E, E ~string](keySize int, vals S) (n int) {
+	for _, v := range vals {
+		n += SizeStringValue(keySize, string(v))
+	}
+	return n
+}
+
+// SizeBytesValue returns the encoded field size for one present length-delimited value.
+func SizeBytesValue(keySize, l int) int {
+	return keySize + l + SizeOfVarint(uint64(l))
+}
+
+// SizeBytesNonEmpty returns the encoded field size for one implicit bytes value.
+func SizeBytesNonEmpty(keySize int, v []byte) int {
+	if len(v) == 0 {
+		return 0
+	}
+	return SizeBytesValue(keySize, len(v))
+}
+
+// SizeBytesPresent returns the encoded field size for one explicit bytes value.
+func SizeBytesPresent(keySize int, v []byte) int {
+	if v == nil {
+		return 0
+	}
+	return SizeBytesValue(keySize, len(v))
+}
+
+// SizeBytesSlice returns the encoded field size for repeated bytes values.
+func SizeBytesSlice[S ~[]E, E ~[]byte](keySize int, vals S) (n int) {
+	for _, v := range vals {
+		n += SizeBytesValue(keySize, len(v))
+	}
+	return n
+}
+
+// SizeMessage returns the encoded field size for one length-delimited message or map entry.
+func SizeMessage(keySize, msgSize int) int {
+	return SizeBytesValue(keySize, msgSize)
+}
+
+// SizeGroup returns the encoded field size for one group value.
+func SizeGroup(keySize, msgSize int) int {
+	return msgSize + 2*keySize
 }
 
 // Skip the first record of the byte slice and return the offset of the next record.
