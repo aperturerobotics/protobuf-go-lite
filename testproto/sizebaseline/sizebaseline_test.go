@@ -27,19 +27,19 @@ var (
 func newSizeBaseline(tb testing.TB) *SizeBaseline {
 	tb.Helper()
 
-	structValue, err := structpb.NewStruct(map[string]interface{}{
+	structValue, err := structpb.NewStruct(map[string]any{
 		"name":    "fixture",
 		"enabled": true,
 		"count":   3,
 	})
 	require.NoError(tb, err)
 
-	valueValue, err := structpb.NewValue(map[string]interface{}{
+	valueValue, err := structpb.NewValue(map[string]any{
 		"kind": "value",
 	})
 	require.NoError(tb, err)
 
-	listValue, err := structpb.NewList([]interface{}{"alpha", float64(2), true})
+	listValue, err := structpb.NewList([]any{"alpha", float64(2), true})
 	require.NoError(tb, err)
 
 	explicitInt32 := int32(11)

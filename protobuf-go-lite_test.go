@@ -23,6 +23,38 @@ func (t *testCase) EqualVT(ot *testCase) bool {
 	return t.val == ot.val
 }
 
+func (t *testCase) CloneVT() *testCase {
+	if t == nil {
+		return nil
+	}
+	out := *t
+	return &out
+}
+
+func (t *testCase) CloneMessageVT() CloneMessage {
+	return t.CloneVT()
+}
+
+func (t *testCase) SizeVT() int {
+	return 0
+}
+
+func (t *testCase) MarshalToSizedBufferVT([]byte) (int, error) {
+	return 0, nil
+}
+
+func (t *testCase) MarshalVT() ([]byte, error) {
+	return nil, nil
+}
+
+func (t *testCase) UnmarshalVT([]byte) error {
+	return nil
+}
+
+func (t *testCase) Reset() {
+	*t = testCase{}
+}
+
 func TestCompareVT(t *testing.T) {
 	t1, t2 := &testCase{val: 1}, &testCase{val: 2}
 	cmp := CompareEqualVT[*testCase]()
@@ -88,6 +120,155 @@ func TestIsEqualVTSlice(t *testing.T) {
 			t.Errorf("IsEqualVTSlice(%v, %v) = %v; want %v", tc.s1, tc.s2, actual, tc.expect)
 		}
 	}
+}
+
+func TestCloneHelpers(t *testing.T) {
+	v := 7
+	vp := ClonePtr(&v)
+	*vp = 8
+	if v != 7 {
+		t.Fatalf("ClonePtr aliases source")
+	}
+	if ClonePtr[int](nil) != nil {
+		t.Fatalf("ClonePtr(nil) != nil")
+	}
+
+	bytesValue := []byte{1, 2}
+	bytesClone := CloneBytes(bytesValue)
+	bytesClone[0] = 9
+	if bytesValue[0] != 1 {
+		t.Fatalf("CloneBytes aliases source")
+	}
+
+	ints := []int{1, 2}
+	intsClone := CloneSlice(ints)
+	intsClone[0] = 9
+	if ints[0] != 1 {
+		t.Fatalf("CloneSlice aliases source")
+	}
+
+	intMap := map[string]int{"a": 1}
+	intMapClone := CloneMap(intMap)
+	intMapClone["a"] = 9
+	if intMap["a"] != 1 {
+		t.Fatalf("CloneMap aliases source")
+	}
+
+	if CloneBytesSlice([][]byte(nil)) != nil {
+		t.Fatalf("CloneBytesSlice(nil) != nil")
+	}
+	bytesSlice := [][]byte{{1}, nil}
+	bytesSliceClone := CloneBytesSlice(bytesSlice)
+	bytesSliceClone[0][0] = 9
+	if bytesSlice[0][0] != 1 || bytesSliceClone[1] != nil {
+		t.Fatalf("CloneBytesSlice did not preserve deep copy and nil element")
+	}
+
+	bytesMap := map[string][]byte{"a": {1}, "nil": nil}
+	bytesMapClone := CloneBytesMap(bytesMap)
+	bytesMapClone["a"][0] = 9
+	if bytesMap["a"][0] != 1 || bytesMapClone["nil"] != nil {
+		t.Fatalf("CloneBytesMap did not preserve deep copy and nil value")
+	}
+
+	if CloneVTSlice([]*testCase(nil)) != nil {
+		t.Fatalf("CloneVTSlice(nil) != nil")
+	}
+	msgSlice := []*testCase{{val: 1}, nil}
+	msgSliceClone := CloneVTSlice(msgSlice)
+	msgSliceClone[0].val = 9
+	if msgSlice[0].val != 1 || msgSliceClone[1] != nil {
+		t.Fatalf("CloneVTSlice did not preserve deep copy and nil element")
+	}
+
+	msgMap := map[string]*testCase{"a": {val: 1}, "nil": nil}
+	msgMapClone := CloneVTMap(msgMap)
+	msgMapClone["a"].val = 9
+	if msgMap["a"].val != 1 {
+		t.Fatalf("CloneVTMap aliases message values")
+	}
+	if _, ok := msgMapClone["nil"]; !ok || msgMapClone["nil"] != nil {
+		t.Fatalf("CloneVTMap did not preserve nil-valued key")
+	}
+}
+
+func TestEqualHelpers(t *testing.T) {
+	if !EqualPtr(ptr(1), ptr(1)) || EqualPtr(ptr(1), ptr(2)) || EqualPtr(ptr(1), nil) {
+		t.Fatalf("EqualPtr mismatch")
+	}
+	if !EqualBytes(nil, []byte{}) {
+		t.Fatalf("EqualBytes should treat nil and empty as equal")
+	}
+	if EqualBytesPresent(nil, []byte{}) {
+		t.Fatalf("EqualBytesPresent should distinguish nil and empty")
+	}
+	if !EqualSlice([]int{1, 2}, []int{1, 2}) || EqualSlice([]int{1}, []int{2}) {
+		t.Fatalf("EqualSlice mismatch")
+	}
+	if !EqualMap(map[string]int{"a": 1}, map[string]int{"a": 1}) || EqualMap(map[string]int{"a": 1}, map[string]int{"a": 2}) {
+		t.Fatalf("EqualMap mismatch")
+	}
+	if !EqualBytesSlice([][]byte{{1}, nil}, [][]byte{{1}, []byte{}}) {
+		t.Fatalf("EqualBytesSlice should use implicit bytes equality")
+	}
+	if !EqualBytesMap(map[string][]byte{"a": nil}, map[string][]byte{"a": {}}) {
+		t.Fatalf("EqualBytesMap should use implicit bytes equality")
+	}
+
+	empty := func() *testCase { return &testCase{} }
+	if !EqualVTImplicit((*testCase)(nil), &testCase{}, empty) {
+		t.Fatalf("EqualVTImplicit should treat nil as empty")
+	}
+	if !EqualVTSliceImplicit([]*testCase{{val: 1}, nil}, []*testCase{{val: 1}, {}}, empty) {
+		t.Fatalf("EqualVTSliceImplicit mismatch")
+	}
+	if !EqualVTMapImplicit(map[string]*testCase{"a": nil}, map[string]*testCase{"a": {}}, empty) {
+		t.Fatalf("EqualVTMapImplicit mismatch")
+	}
+}
+
+func TestSizeHelpers(t *testing.T) {
+	if got, want := SizeVarintValue(1, uint32(300)), 1+SizeOfVarint(300); got != want {
+		t.Fatalf("SizeVarintValue = %d, want %d", got, want)
+	}
+	if SizeVarintNonZero(1, int32(0)) != 0 || SizeVarintPtr[int32](1, nil) != 0 {
+		t.Fatalf("varint zero or nil size mismatch")
+	}
+	if got, want := SizeVarintPacked(1, []uint32{1, 300}), SizeBytesValue(1, SizeOfVarint(1)+SizeOfVarint(300)); got != want {
+		t.Fatalf("SizeVarintPacked = %d, want %d", got, want)
+	}
+	sint := int32(-1)
+	if got, want := SizeZigzagValue(1, sint), 1+SizeOfZigzag(uint64(sint)); got != want {
+		t.Fatalf("SizeZigzagValue = %d, want %d", got, want)
+	}
+	if SizeFixed32NonZero(1, float32(0)) != 0 || SizeFixed64NonZero(1, float64(0)) != 0 {
+		t.Fatalf("fixed zero size mismatch")
+	}
+	if got, want := SizeFixed32Packed(1, []uint32{1, 2}), SizeBytesValue(1, 8); got != want {
+		t.Fatalf("SizeFixed32Packed = %d, want %d", got, want)
+	}
+	if SizeBoolNonZero(1, false) != 0 || SizeBoolValue(1) != 2 {
+		t.Fatalf("bool size mismatch")
+	}
+	if got, want := SizeStringValue(1, "abc"), SizeBytesValue(1, 3); got != want {
+		t.Fatalf("SizeStringValue = %d, want %d", got, want)
+	}
+	if SizeStringNonEmpty(1, "") != 0 || SizeStringPtr(1, (*string)(nil)) != 0 {
+		t.Fatalf("string empty or nil size mismatch")
+	}
+	if got, want := SizeBytesSlice(1, [][]byte{{1, 2}, nil}), SizeBytesValue(1, 2)+SizeBytesValue(1, 0); got != want {
+		t.Fatalf("SizeBytesSlice = %d, want %d", got, want)
+	}
+	if SizeBytesNonEmpty(1, nil) != 0 || SizeBytesPresent(1, nil) != 0 {
+		t.Fatalf("bytes empty or nil size mismatch")
+	}
+	if SizeMessage(1, 3) != SizeBytesValue(1, 3) || SizeGroup(1, 3) != 5 {
+		t.Fatalf("message or group size mismatch")
+	}
+}
+
+func ptr[T any](v T) *T {
+	return &v
 }
 
 func TestDecodeVarint(t *testing.T) {

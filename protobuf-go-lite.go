@@ -61,6 +61,9 @@ type CloneVT[T comparable] interface {
 
 // CloneVTSlice clones a slice of CloneVT messages.
 func CloneVTSlice[S ~[]E, E CloneVT[E]](s S) S {
+	if s == nil {
+		return nil
+	}
 	out := make([]E, len(s))
 	var empty E
 	for i := range s {
@@ -97,6 +100,9 @@ func CloneMap[M ~map[K]V, K comparable, V any](m M) M {
 
 // CloneBytesSlice clones a repeated bytes field.
 func CloneBytesSlice[S ~[]E, E ~[]byte](s S) S {
+	if s == nil {
+		return nil
+	}
 	out := make(S, len(s))
 	for i := range s {
 		out[i] = slices.Clone(s[i])
@@ -131,11 +137,8 @@ func CloneVTMap[M ~map[K]V, K comparable, V CloneVT[V]](m M) M {
 		return nil
 	}
 	out := make(M, len(m))
-	var empty V
 	for k, v := range m {
-		if v != empty {
-			out[k] = v.CloneVT()
-		}
+		out[k] = CloneVTValue(v)
 	}
 	return out
 }
