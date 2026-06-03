@@ -346,6 +346,69 @@ func TestDecodeVarint(t *testing.T) {
 	}
 }
 
+func TestDecodeLengthDelimitedHelpers(t *testing.T) {
+	buf := []byte{0x03, 'a', 'b', 'c'}
+	start, end, err := DecodeLengthDelimited(buf, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if start != 1 || end != 4 {
+		t.Fatalf("DecodeLengthDelimited = (%d, %d), want (1, 4)", start, end)
+	}
+
+	out, idx, err := DecodeBytes(buf, 0, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if idx != len(buf) || !bytes.Equal(out, []byte("abc")) {
+		t.Fatalf("DecodeBytes copy = (%v, %d), want (abc, %d)", out, idx, len(buf))
+	}
+	out[0] = 'z'
+	if buf[1] != 'a' {
+		t.Fatalf("DecodeBytes copy aliases input")
+	}
+
+	out, idx, err = DecodeBytes(buf, 0, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if idx != len(buf) || !bytes.Equal(out, []byte("abc")) {
+		t.Fatalf("DecodeBytes alias = (%v, %d), want (abc, %d)", out, idx, len(buf))
+	}
+	out[0] = 'z'
+	if buf[1] != 'z' {
+		t.Fatalf("DecodeBytes alias did not share input")
+	}
+
+	dst := []byte{1, 2, 3, 4}
+	dst, idx, err = DecodeBytesAppend(dst, []byte{0x02, 9, 8}, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if idx != 3 || !bytes.Equal(dst, []byte{9, 8}) {
+		t.Fatalf("DecodeBytesAppend = (%v, %d), want ([9 8], 3)", dst, idx)
+	}
+
+	dst, idx, err = DecodeBytesAppend(nil, []byte{0x00}, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if idx != 1 || dst == nil || len(dst) != 0 {
+		t.Fatalf("DecodeBytesAppend empty = (%v, %d), want non-nil empty at 1", dst, idx)
+	}
+
+	if _, _, err = DecodeLengthDelimited([]byte{0x03, 'a'}, 0); err != io.ErrUnexpectedEOF {
+		t.Fatalf("DecodeLengthDelimited truncated = %v, want ErrUnexpectedEOF", err)
+	}
+
+	_, _, err = DecodeLengthDelimited([]byte{
+		0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f,
+	}, 0)
+	if err != ErrInvalidLength {
+		t.Fatalf("DecodeLengthDelimited overflow = %v, want ErrInvalidLength", err)
+	}
+}
+
 func TestDecodeVarintTyped(t *testing.T) {
 	buf := AppendVarint(nil, 0xFFFFFFFF)
 

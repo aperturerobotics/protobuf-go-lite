@@ -26,6 +26,7 @@ message Msg {
     bytes choice_payload = 8;
     Child choice_child = 9;
   }
+  bool enabled = 10;
 }
 
 message Child {
@@ -62,6 +63,11 @@ func TestCodegenModeDefaultUsesHelperMethods(t *testing.T) {
 		"protobuf_go_lite.EncodeBytes",
 		"protobuf_go_lite.EncodeZigzag32",
 		"protobuf_go_lite.EncodeVarintPacked",
+		"protobuf_go_lite.DecodeVarintBool",
+		"protobuf_go_lite.DecodeSint32",
+		"protobuf_go_lite.DecodeString",
+		"protobuf_go_lite.DecodeBytesAppend",
+		"protobuf_go_lite.DecodeLengthDelimited",
 	} {
 		if !strings.Contains(out, expected) {
 			t.Fatalf("default helper output missing %s:\n%s", expected, out)
@@ -95,6 +101,11 @@ func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 		"protobuf_go_lite.EncodeBytes",
 		"protobuf_go_lite.EncodeZigzag32",
 		"protobuf_go_lite.EncodeVarintPacked",
+		"protobuf_go_lite.DecodeVarintBool",
+		"protobuf_go_lite.DecodeSint32",
+		"protobuf_go_lite.DecodeString",
+		"protobuf_go_lite.DecodeBytesAppend",
+		"protobuf_go_lite.DecodeLengthDelimited",
 	} {
 		if strings.Contains(out, helper) {
 			t.Fatalf("unrolled output should not contain helper %s:\n%s", helper, out)
@@ -142,7 +153,7 @@ func generateCodegenModeFixture(t *testing.T, opts ...string) string {
 	protoPath := writeTempProto(t, codegenModeProto)
 	outDir := t.TempDir()
 
-	opt := "features=size+equal+clone+marshal,paths=source_relative"
+	opt := "features=size+equal+clone+marshal+unmarshal,paths=source_relative"
 	if len(opts) != 0 {
 		opt += "," + strings.Join(opts, ",")
 	}

@@ -719,67 +719,78 @@ func DecodeFloat64(b []byte, idx int) (float64, int, error) {
 	return math.Float64frombits(v), idx, nil
 }
 
-// DecodeBytes decodes a length-prefixed byte slice. If copy is false, returns a sub-slice.
+// DecodeLengthDelimited decodes a length-delimited payload and returns its start and end offsets.
 // Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
-func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
+func DecodeLengthDelimited(b []byte, idx int) (int, int, error) {
 	length, idx, err := DecodeVarint(b, idx)
 	if err != nil {
-		return nil, 0, err
+		return 0, 0, err
 	}
 	l := int(length) //nolint:gosec
 	if l < 0 {
-		return nil, 0, ErrInvalidLength
+		return 0, 0, ErrInvalidLength
 	}
 	end := idx + l
-	if end < idx || end > len(b) {
-		return nil, 0, io.ErrUnexpectedEOF
+	if end < 0 {
+		return 0, 0, ErrInvalidLength
+	}
+	if end > len(b) {
+		return 0, 0, io.ErrUnexpectedEOF
+	}
+	return idx, end, nil
+}
+
+// DecodeBytes decodes a length-prefixed byte slice. If copy is false, returns a sub-slice.
+// Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
+func DecodeBytes(b []byte, idx int, cp bool) ([]byte, int, error) {
+	start, end, err := DecodeLengthDelimited(b, idx)
+	if err != nil {
+		return nil, 0, err
 	}
 	if cp {
-		out := make([]byte, l)
-		copy(out, b[idx:end])
+		out := make([]byte, end-start)
+		copy(out, b[start:end])
 		return out, end, nil
 	}
-	return b[idx:end], end, nil
+	return b[start:end], end, nil
+}
+
+// DecodeBytesAppend decodes a length-prefixed byte slice into dst and returns the new offset.
+// It preserves generated singular bytes behavior by reusing dst and making empty values non-nil.
+func DecodeBytesAppend(dst []byte, b []byte, idx int) ([]byte, int, error) {
+	start, end, err := DecodeLengthDelimited(b, idx)
+	if err != nil {
+		return dst, 0, err
+	}
+	dst = append(dst[:0], b[start:end]...)
+	if dst == nil {
+		dst = []byte{}
+	}
+	return dst, end, nil
 }
 
 // DecodeString decodes a length-prefixed string (with copy).
 // Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeString(b []byte, idx int) (string, int, error) {
-	length, idx, err := DecodeVarint(b, idx)
+	start, end, err := DecodeLengthDelimited(b, idx)
 	if err != nil {
 		return "", 0, err
 	}
-	l := int(length) //nolint:gosec
-	if l < 0 {
-		return "", 0, ErrInvalidLength
-	}
-	end := idx + l
-	if end < idx || end > len(b) {
-		return "", 0, io.ErrUnexpectedEOF
-	}
-	return string(b[idx:end]), end, nil
+	return string(b[start:end]), end, nil
 }
 
 // DecodeStringUnsafe decodes a length-prefixed string without copying.
 // The returned string shares memory with the input slice.
 // Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
-	length, idx, err := DecodeVarint(b, idx)
+	start, end, err := DecodeLengthDelimited(b, idx)
 	if err != nil {
 		return "", 0, err
 	}
-	l := int(length) //nolint:gosec
-	if l < 0 {
-		return "", 0, ErrInvalidLength
-	}
-	end := idx + l
-	if end < idx || end > len(b) {
-		return "", 0, io.ErrUnexpectedEOF
-	}
-	if l == 0 {
+	if start == end {
 		return "", end, nil
 	}
-	return unsafe.String(&b[idx], l), end, nil
+	return unsafe.String(&b[start], end-start), end, nil
 }
 
 // SizeOfZigzag returns the size of the zigzag-encoded value.

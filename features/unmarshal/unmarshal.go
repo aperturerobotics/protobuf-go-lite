@@ -98,6 +98,49 @@ func (p *unmarshal) decodeFixed64(varName string, typeName string) {
 	p.P(varName, ` = `, typeName, `(_v64)`)
 }
 
+func (p *unmarshal) decodeBool(varName string) {
+	p.P(varName, `, iNdEx, err = `, p.Helper("DecodeVarintBool"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+}
+
+func (p *unmarshal) decodeSint32(varName string, typeName string) {
+	p.P(`var _v32 int32`)
+	p.P(`_v32, iNdEx, err = `, p.Helper("DecodeSint32"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+	p.P(varName, ` = `, typeName, `(_v32)`)
+}
+
+func (p *unmarshal) decodeSint64(varName string, typeName string) {
+	p.P(`var _v64 int64`)
+	p.P(`_v64, iNdEx, err = `, p.Helper("DecodeSint64"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+	p.P(varName, ` = `, typeName, `(_v64)`)
+}
+
+func (p *unmarshal) decodeLengthDelimited(startName, endName string) {
+	p.P(startName, `, `, endName, `, err := `, p.Helper("DecodeLengthDelimited"), `(dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+}
+
+func (p *unmarshal) decodeStringValue(varName string) {
+	if p.unsafe {
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeStringUnsafe"), `(dAtA, iNdEx)`)
+	} else {
+		p.P(varName, `, iNdEx, err = `, p.Helper("DecodeString"), `(dAtA, iNdEx)`)
+	}
+	p.P(`if err != nil { return err }`)
+}
+
+func (p *unmarshal) decodeBytesValue(varName string, copyBytes bool) {
+	p.P(varName, `, iNdEx, err = `, p.Helper("DecodeBytes"), `(dAtA, iNdEx, `, strconv.FormatBool(copyBytes), `)`)
+	p.P(`if err != nil { return err }`)
+}
+
+func (p *unmarshal) decodeBytesAppend(dstName string) {
+	p.P(dstName, `, iNdEx, err = `, p.Helper("DecodeBytesAppend"), `(`, dstName, `, dAtA, iNdEx)`)
+	p.P(`if err != nil { return err }`)
+}
+
 func (p *unmarshal) validateUTF8(field *protogen.Field, value string) {
 	if field.Desc.Kind() != protoreflect.StringKind ||
 		field.Desc.Syntax() != protoreflect.Editions ||
@@ -350,53 +393,84 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 			p.P(`m.`, fieldname, ` = &v`)
 		}
 	case protoreflect.BoolKind:
-		p.P(`var v int`)
-		p.decodeVarint("v", "int")
-		if oneof {
-			p.P(`b := `, typ, `(v != 0)`)
-			p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: b}`)
-		} else if repeated {
-			p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, typ, `(v != 0))`)
-		} else if !pointer {
-			p.P(`m.`, fieldname, ` = `, typ, `(v != 0)`)
+		if p.Config.HelperCodegen() {
+			p.P(`var v bool`)
+			p.decodeBool("v")
+			if oneof {
+				p.P(`b := `, typ, `(v)`)
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: b}`)
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, typ, `(v))`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = `, typ, `(v)`)
+			} else {
+				p.P(`b := `, typ, `(v)`)
+				p.P(`m.`, fieldname, ` = &b`)
+			}
 		} else {
-			p.P(`b := `, typ, `(v != 0)`)
-			p.P(`m.`, fieldname, ` = &b`)
+			p.P(`var v int`)
+			p.decodeVarint("v", "int")
+			if oneof {
+				p.P(`b := `, typ, `(v != 0)`)
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: b}`)
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, typ, `(v != 0))`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = `, typ, `(v != 0)`)
+			} else {
+				p.P(`b := `, typ, `(v != 0)`)
+				p.P(`m.`, fieldname, ` = &b`)
+			}
 		}
 	case protoreflect.StringKind:
-		p.P(`var stringLen uint64`)
-		p.decodeVarint("stringLen", "uint64")
-		p.P(`intStringLen := int(stringLen)`)
-		p.P(`if intStringLen < 0 {`)
-		p.P(`return `, p.Helper("ErrInvalidLength"))
-		p.P(`}`)
-		p.P(`postIndex := iNdEx + intStringLen`)
-		p.P(`if postIndex < 0 {`)
-		p.P(`return `, p.Helper("ErrInvalidLength"))
-		p.P(`}`)
-		p.P(`if postIndex > l {`)
-		p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
-		p.P(`}`)
-		str := "string(dAtA[iNdEx:postIndex])"
-		if p.unsafe {
-			str = "stringValue"
-			p.P(`var stringValue string`)
-			p.P(`if intStringLen > 0 {`)
-			p.P(`stringValue = `, p.Ident("unsafe", `String`), `(&dAtA[iNdEx], intStringLen)`)
-			p.P(`}`)
-		}
-		p.validateUTF8(field, str)
-		if oneof {
-			p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": ", str, `}`)
-		} else if repeated {
-			p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, str, `)`)
-		} else if !pointer {
-			p.P(`m.`, fieldname, ` = `, str)
+		if p.Config.HelperCodegen() {
+			p.P(`var v string`)
+			p.decodeStringValue("v")
+			p.validateUTF8(field, "v")
+			if oneof {
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": v}")
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, v)`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = v`)
+			} else {
+				p.P(`m.`, fieldname, ` = &v`)
+			}
 		} else {
-			p.P(`s := `, str)
-			p.P(`m.`, fieldname, ` = &s`)
+			p.P(`var stringLen uint64`)
+			p.decodeVarint("stringLen", "uint64")
+			p.P(`intStringLen := int(stringLen)`)
+			p.P(`if intStringLen < 0 {`)
+			p.P(`return `, p.Helper("ErrInvalidLength"))
+			p.P(`}`)
+			p.P(`postIndex := iNdEx + intStringLen`)
+			p.P(`if postIndex < 0 {`)
+			p.P(`return `, p.Helper("ErrInvalidLength"))
+			p.P(`}`)
+			p.P(`if postIndex > l {`)
+			p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
+			p.P(`}`)
+			str := "string(dAtA[iNdEx:postIndex])"
+			if p.unsafe {
+				str = "stringValue"
+				p.P(`var stringValue string`)
+				p.P(`if intStringLen > 0 {`)
+				p.P(`stringValue = `, p.Ident("unsafe", `String`), `(&dAtA[iNdEx], intStringLen)`)
+				p.P(`}`)
+			}
+			p.validateUTF8(field, str)
+			if oneof {
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": ", str, `}`)
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, str, `)`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = `, str)
+			} else {
+				p.P(`s := `, str)
+				p.P(`m.`, fieldname, ` = &s`)
+			}
+			p.P(`iNdEx = postIndex`)
 		}
-		p.P(`iNdEx = postIndex`)
 	case protoreflect.GroupKind:
 		p.P(`groupStart := iNdEx`)
 		p.P(`for {`)
@@ -433,6 +507,31 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 		p.P(`iNdEx += skippy`)
 		p.P(`}`)
 	case protoreflect.MessageKind:
+		if p.Config.HelperCodegen() && !field.Desc.IsMap() {
+			p.decodeLengthDelimited("msgStart", "postIndex")
+			buf := `dAtA[msgStart:postIndex]`
+			if oneof {
+				msgname := p.noStarOrSliceType(field)
+				p.P(`if oneof, ok := m.`, fieldname, `.(*`, field.GoIdent, `); ok {`)
+				p.decodeMessage("oneof."+field.GoName, buf, field.Message)
+				p.P(`} else {`)
+				p.P(`v := &`, msgname, `{}`)
+				p.decodeMessage("v", buf, field.Message)
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
+				p.P(`}`)
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, &`, field.Message.GoIdent, `{})`)
+				varname := fmt.Sprintf("m.%s[len(m.%s) - 1]", fieldname, fieldname)
+				p.decodeMessage(varname, buf, field.Message)
+			} else {
+				p.P(`if m.`, fieldname, ` == nil {`)
+				p.P(`m.`, fieldname, ` = &`, field.Message.GoIdent, `{}`)
+				p.P(`}`)
+				p.decodeMessage("m."+fieldname, buf, field.Message)
+			}
+			p.P(`iNdEx = postIndex`)
+			break
+		}
 		p.P(`var msglen int`)
 		p.decodeVarint("msglen", "int")
 		p.P(`if msglen < 0 {`)
@@ -507,44 +606,60 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 		p.P(`iNdEx = postIndex`)
 
 	case protoreflect.BytesKind:
-		p.P(`var byteLen int`)
-		p.decodeVarint("byteLen", "int")
-		p.P(`if byteLen < 0 {`)
-		p.P(`return `, p.Helper("ErrInvalidLength"))
-		p.P(`}`)
-		p.P(`postIndex := iNdEx + byteLen`)
-		p.P(`if postIndex < 0 {`)
-		p.P(`return `, p.Helper("ErrInvalidLength"))
-		p.P(`}`)
-		p.P(`if postIndex > l {`)
-		p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
-		p.P(`}`)
-		if oneof {
-			if p.unsafe {
-				p.P(`v := dAtA[iNdEx:postIndex]`)
+		if p.Config.HelperCodegen() {
+			if oneof {
+				p.P(`var v []byte`)
+				p.decodeBytesValue("v", !p.unsafe)
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
+			} else if repeated {
+				p.P(`var v []byte`)
+				p.decodeBytesValue("v", !p.unsafe)
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, v)`)
+			} else if p.unsafe {
+				p.decodeBytesValue("m."+fieldname, false)
 			} else {
-				p.P(`v := make([]byte, postIndex-iNdEx)`)
-				p.P(`copy(v, dAtA[iNdEx:postIndex])`)
-			}
-			p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
-		} else if repeated {
-			if p.unsafe {
-				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, dAtA[iNdEx:postIndex])`)
-			} else {
-				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, make([]byte, postIndex-iNdEx))`)
-				p.P(`copy(m.`, fieldname, `[len(m.`, fieldname, `)-1], dAtA[iNdEx:postIndex])`)
+				p.decodeBytesAppend("m." + fieldname)
 			}
 		} else {
-			if p.unsafe {
-				p.P(`m.`, fieldname, ` = dAtA[iNdEx:postIndex]`)
+			p.P(`var byteLen int`)
+			p.decodeVarint("byteLen", "int")
+			p.P(`if byteLen < 0 {`)
+			p.P(`return `, p.Helper("ErrInvalidLength"))
+			p.P(`}`)
+			p.P(`postIndex := iNdEx + byteLen`)
+			p.P(`if postIndex < 0 {`)
+			p.P(`return `, p.Helper("ErrInvalidLength"))
+			p.P(`}`)
+			p.P(`if postIndex > l {`)
+			p.P(`return `, p.Ident("io", `ErrUnexpectedEOF`))
+			p.P(`}`)
+			if oneof {
+				if p.unsafe {
+					p.P(`v := dAtA[iNdEx:postIndex]`)
+				} else {
+					p.P(`v := make([]byte, postIndex-iNdEx)`)
+					p.P(`copy(v, dAtA[iNdEx:postIndex])`)
+				}
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
+			} else if repeated {
+				if p.unsafe {
+					p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, dAtA[iNdEx:postIndex])`)
+				} else {
+					p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, make([]byte, postIndex-iNdEx))`)
+					p.P(`copy(m.`, fieldname, `[len(m.`, fieldname, `)-1], dAtA[iNdEx:postIndex])`)
+				}
 			} else {
-				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `[:0] , dAtA[iNdEx:postIndex]...)`)
-				p.P(`if m.`, fieldname, ` == nil {`)
-				p.P(`m.`, fieldname, ` = []byte{}`)
-				p.P(`}`)
+				if p.unsafe {
+					p.P(`m.`, fieldname, ` = dAtA[iNdEx:postIndex]`)
+				} else {
+					p.P(`m.`, fieldname, ` = append(m.`, fieldname, `[:0] , dAtA[iNdEx:postIndex]...)`)
+					p.P(`if m.`, fieldname, ` == nil {`)
+					p.P(`m.`, fieldname, ` = []byte{}`)
+					p.P(`}`)
+				}
 			}
+			p.P(`iNdEx = postIndex`)
 		}
-		p.P(`iNdEx = postIndex`)
 	case protoreflect.Uint32Kind:
 		if oneof {
 			p.P(`var v `, typ)
@@ -615,8 +730,12 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 		}
 	case protoreflect.Sint32Kind:
 		p.P(`var v `, typ)
-		p.decodeVarint("v", typ)
-		p.P(`v = `, typ, `((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))`)
+		if p.Config.HelperCodegen() {
+			p.decodeSint32("v", typ)
+		} else {
+			p.decodeVarint("v", typ)
+			p.P(`v = `, typ, `((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))`)
+		}
 		if oneof {
 			p.P(`m.`, fieldname, ` = &`, field.GoIdent, "{", field.GoName, `: v}`)
 		} else if repeated {
@@ -627,18 +746,32 @@ func (p *unmarshal) fieldItem(field *protogen.Field, fieldname string, message *
 			p.P(`m.`, fieldname, ` = &v`)
 		}
 	case protoreflect.Sint64Kind:
-		p.P(`var v uint64`)
-		p.decodeVarint("v", "uint64")
-		p.P(`v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)`)
-		if oneof {
-			p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": ", typ, `(v)}`)
-		} else if repeated {
-			p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, typ, `(v))`)
-		} else if !pointer {
-			p.P(`m.`, fieldname, ` = `, typ, `(v)`)
+		if p.Config.HelperCodegen() {
+			p.P(`var v `, typ)
+			p.decodeSint64("v", typ)
+			if oneof {
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": v}")
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, v)`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = v`)
+			} else {
+				p.P(`m.`, fieldname, ` = &v`)
+			}
 		} else {
-			p.P(`v2 := `, typ, `(v)`)
-			p.P(`m.`, fieldname, ` = &v2`)
+			p.P(`var v uint64`)
+			p.decodeVarint("v", "uint64")
+			p.P(`v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)`)
+			if oneof {
+				p.P(`m.`, fieldname, ` = &`, field.GoIdent, `{`, field.GoName, ": ", typ, `(v)}`)
+			} else if repeated {
+				p.P(`m.`, fieldname, ` = append(m.`, fieldname, `, `, typ, `(v))`)
+			} else if !pointer {
+				p.P(`m.`, fieldname, ` = `, typ, `(v)`)
+			} else {
+				p.P(`v2 := `, typ, `(v)`)
+				p.P(`m.`, fieldname, ` = &v2`)
+			}
 		}
 	default:
 		panic("not implemented")

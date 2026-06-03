@@ -2965,28 +2965,15 @@ func (m *SizeBaseline_Nested) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.Nested.name contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
@@ -3000,27 +2987,15 @@ func (m *SizeBaseline_Nested) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Labels", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.Nested.labels contains invalid UTF-8")
 			}
-			m.Labels = append(m.Labels, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
+			m.Labels = append(m.Labels, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -3118,24 +3093,25 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitSint32", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.ExplicitSint32 = &v
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitSint64", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.ExplicitSint64 = &v2
+			v = int64(_v64)
+			m.ExplicitSint64 = &v
 		case 8:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed32Value", wireType)
@@ -3214,67 +3190,34 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BoolValue", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.BoolValue = &b
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringValue", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.string_value contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.StringValue = &s
-			iNdEx = postIndex
+			m.StringValue = &v
 		case 16:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesValue", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.BytesValue, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.BytesValue, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.BytesValue = append(m.BytesValue[:0], dAtA[iNdEx:postIndex]...)
-			if m.BytesValue == nil {
-				m.BytesValue = []byte{}
-			}
-			iNdEx = postIndex
 		case 17:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredInt32", wireType)
@@ -3386,25 +3329,12 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedValues", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.NestedValues = append(m.NestedValues, &SizeBaseline_Nested{})
-			if err := m.NestedValues[len(m.NestedValues)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.NestedValues[len(m.NestedValues)-1].UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3599,27 +3529,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Nested", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Nested == nil {
 				m.Nested = &SizeBaseline_Nested{}
 			}
-			if err := m.Nested.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Nested.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3627,27 +3544,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Timestamp == nil {
 				m.Timestamp = &timestamppb.Timestamp{}
 			}
-			if err := m.Timestamp.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Timestamp.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3655,27 +3559,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Duration", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Duration == nil {
 				m.Duration = &durationpb.Duration{}
 			}
-			if err := m.Duration.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Duration.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3683,27 +3574,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringWrapper", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.StringWrapper == nil {
 				m.StringWrapper = &wrapperspb.StringValue{}
 			}
-			if err := m.StringWrapper.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.StringWrapper.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3711,27 +3589,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesWrapper", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.BytesWrapper == nil {
 				m.BytesWrapper = &wrapperspb.BytesValue{}
 			}
-			if err := m.BytesWrapper.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.BytesWrapper.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3739,27 +3604,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StructValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.StructValue == nil {
 				m.StructValue = &structpb.Struct{}
 			}
-			if err := m.StructValue.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.StructValue.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3767,27 +3619,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValueValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.ValueValue == nil {
 				m.ValueValue = &structpb.Value{}
 			}
-			if err := m.ValueValue.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ValueValue.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3795,27 +3634,14 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ListValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.ListValue == nil {
 				m.ListValue = &structpb.ListValue{}
 			}
-			if err := m.ListValue.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ListValue.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3823,27 +3649,15 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedName", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.selected_name contains invalid UTF-8")
 			}
-			m.Selection = &SizeBaseline_SelectedName{SelectedName: string(dAtA[iNdEx:postIndex])}
-			iNdEx = postIndex
+			m.Selection = &SizeBaseline_SelectedName{SelectedName: v}
 		case 33:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedId", wireType)
@@ -3858,30 +3672,17 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedNested", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Selection.(*SizeBaseline_SelectedNested); ok {
-				if err := oneof.SelectedNested.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.SelectedNested.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &SizeBaseline_Nested{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Selection = &SizeBaseline_SelectedNested{SelectedNested: v}
@@ -3891,28 +3692,15 @@ func (m *SizeBaseline) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.default_string contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.DefaultString = &s
-			iNdEx = postIndex
+			m.DefaultString = &v
 		case 36:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultInt32", wireType)
@@ -3972,32 +3760,15 @@ func (m *SizeBaseline_Nested) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.Nested.name contains invalid UTF-8")
 			}
-			s := stringValue
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
@@ -4011,31 +3782,15 @@ func (m *SizeBaseline_Nested) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Labels", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.Nested.labels contains invalid UTF-8")
 			}
-			m.Labels = append(m.Labels, stringValue)
-			iNdEx = postIndex
+			m.Labels = append(m.Labels, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -4133,24 +3888,25 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitSint32", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.ExplicitSint32 = &v
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitSint64", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.ExplicitSint64 = &v2
+			v = int64(_v64)
+			m.ExplicitSint64 = &v
 		case 8:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fixed32Value", wireType)
@@ -4229,68 +3985,34 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BoolValue", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.BoolValue = &b
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringValue", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.string_value contains invalid UTF-8")
 			}
-			s := stringValue
-			m.StringValue = &s
-			iNdEx = postIndex
+			m.StringValue = &v
 		case 16:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesValue", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.BytesValue, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.BytesValue = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		case 17:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredInt32", wireType)
@@ -4402,25 +4124,12 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedValues", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.NestedValues = append(m.NestedValues, &SizeBaseline_Nested{})
-			if err := m.NestedValues[len(m.NestedValues)-1].UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.NestedValues[len(m.NestedValues)-1].UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4619,27 +4328,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Nested", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Nested == nil {
 				m.Nested = &SizeBaseline_Nested{}
 			}
-			if err := m.Nested.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Nested.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4647,27 +4343,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Timestamp == nil {
 				m.Timestamp = &timestamppb.Timestamp{}
 			}
-			if err := m.Timestamp.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Timestamp.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4675,27 +4358,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Duration", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Duration == nil {
 				m.Duration = &durationpb.Duration{}
 			}
-			if err := m.Duration.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Duration.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4703,27 +4373,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StringWrapper", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.StringWrapper == nil {
 				m.StringWrapper = &wrapperspb.StringValue{}
 			}
-			if err := m.StringWrapper.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.StringWrapper.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4731,27 +4388,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BytesWrapper", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.BytesWrapper == nil {
 				m.BytesWrapper = &wrapperspb.BytesValue{}
 			}
-			if err := m.BytesWrapper.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.BytesWrapper.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4759,27 +4403,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StructValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.StructValue == nil {
 				m.StructValue = &structpb.Struct{}
 			}
-			if err := m.StructValue.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.StructValue.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4787,27 +4418,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValueValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.ValueValue == nil {
 				m.ValueValue = &structpb.Value{}
 			}
-			if err := m.ValueValue.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ValueValue.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4815,27 +4433,14 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ListValue", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.ListValue == nil {
 				m.ListValue = &structpb.ListValue{}
 			}
-			if err := m.ListValue.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ListValue.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4843,31 +4448,15 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedName", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.selected_name contains invalid UTF-8")
 			}
-			m.Selection = &SizeBaseline_SelectedName{SelectedName: stringValue}
-			iNdEx = postIndex
+			m.Selection = &SizeBaseline_SelectedName{SelectedName: v}
 		case 33:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedId", wireType)
@@ -4882,30 +4471,17 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SelectedNested", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Selection.(*SizeBaseline_SelectedNested); ok {
-				if err := oneof.SelectedNested.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.SelectedNested.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &SizeBaseline_Nested{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Selection = &SizeBaseline_SelectedNested{SelectedNested: v}
@@ -4915,32 +4491,15 @@ func (m *SizeBaseline) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field sizebaseline.SizeBaseline.default_string contains invalid UTF-8")
 			}
-			s := stringValue
-			m.DefaultString = &s
-			iNdEx = postIndex
+			m.DefaultString = &v
 		case 36:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultInt32", wireType)
