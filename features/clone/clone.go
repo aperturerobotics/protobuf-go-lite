@@ -232,6 +232,10 @@ func (p *clone) body(ccTypeName string, message *protogen.Message, cloneUnknownF
 			p.P(`r.`, field.GoName, ` = m.`, field.GoName)
 			continue
 		}
+		if p.Config.HelperCodegen() {
+			refFields = append(refFields, field)
+			continue
+		}
 		// Shortcut: for types where we know that an optimized clone method exists, we can call it directly as it is
 		// nil-safe.
 		if field.Desc.Cardinality() != protoreflect.Repeated {
@@ -271,6 +275,11 @@ func (p *clone) bodyForOneOf(ccTypeName string, field *protogen.Field) {
 
 	if !oneofWrapperReference(field) {
 		p.P(`r.`, field.GoName, ` = m.`, field.GoName)
+		p.P(`return r`)
+		return
+	}
+	if p.Config.HelperCodegen() {
+		p.cloneField("r", "m", field)
 		p.P(`return r`)
 		return
 	}

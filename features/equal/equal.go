@@ -144,8 +144,16 @@ func (p *equal) oneof(field *protogen.Field) {
 	case isScalar(kind):
 		p.compareScalar(lhs, rhs, false)
 	case kind == protoreflect.BytesKind:
+		if p.Config.HelperCodegen() {
+			p.helperCheck("EqualBytes", lhs, rhs)
+			break
+		}
 		p.compareBytes(lhs, rhs, false)
 	case kind == protoreflect.MessageKind || kind == protoreflect.GroupKind:
+		if p.Config.HelperCodegen() {
+			p.helperCheck("EqualVTImplicit", lhs, rhs, p.emptyMessageFunc(field.Message))
+			break
+		}
 		p.compareCall(lhs, rhs, field.Message, false)
 	default:
 		panic("not implemented")

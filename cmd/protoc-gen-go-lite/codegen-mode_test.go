@@ -18,10 +18,22 @@ message Msg {
   optional int32 value = 1;
   sint32 signed = 2;
   repeated int32 nums = 3;
+  bytes payload = 4;
+  repeated Child children = 5;
+  map<string, Child> child_by_name = 6;
+  Child child = 7;
+  oneof choice {
+    bytes choice_payload = 8;
+    Child choice_child = 9;
+  }
+}
+
+message Child {
+  string name = 1;
 }
 `
 
-func TestCodegenModeDefaultUsesHelperSize(t *testing.T) {
+func TestCodegenModeDefaultUsesHelperMethods(t *testing.T) {
 	out := generateCodegenModeFixture(t)
 	if !strings.Contains(out, "protobuf_go_lite.SizeVarintPtr") {
 		t.Fatalf("default helper output missing SizeVarintPtr:\n%s", out)
@@ -32,15 +44,61 @@ func TestCodegenModeDefaultUsesHelperSize(t *testing.T) {
 	if strings.Contains(out, "protobuf_go_lite.SizeOfZigzag") {
 		t.Fatalf("default helper output should not contain unrolled SizeOfZigzag:\n%s", out)
 	}
+	for _, expected := range []string{
+		"protobuf_go_lite.ClonePtr",
+		"protobuf_go_lite.CloneSlice",
+		"protobuf_go_lite.CloneBytes",
+		"protobuf_go_lite.CloneVTSlice",
+		"protobuf_go_lite.CloneVTMap",
+		"protobuf_go_lite.CloneVTValue",
+		"protobuf_go_lite.EqualPtr",
+		"protobuf_go_lite.EqualSlice",
+		"protobuf_go_lite.EqualBytes",
+		"protobuf_go_lite.IsEqualVT",
+		"protobuf_go_lite.EqualVTSliceImplicit",
+		"protobuf_go_lite.EqualVTMapImplicit",
+		"protobuf_go_lite.EqualVTImplicit",
+	} {
+		if !strings.Contains(out, expected) {
+			t.Fatalf("default helper output missing %s:\n%s", expected, out)
+		}
+	}
 }
 
-func TestCodegenModeUnrolledUsesPreviousSizeShape(t *testing.T) {
+func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 	out := generateCodegenModeFixture(t, "codegen=unrolled")
 	if !strings.Contains(out, "protobuf_go_lite.SizeOfZigzag") {
 		t.Fatalf("unrolled output missing SizeOfZigzag:\n%s", out)
 	}
 	if strings.Contains(out, "protobuf_go_lite.SizeZigzagNonZero") {
 		t.Fatalf("unrolled output should not contain helper SizeZigzagNonZero:\n%s", out)
+	}
+	for _, helper := range []string{
+		"protobuf_go_lite.ClonePtr",
+		"protobuf_go_lite.CloneSlice",
+		"protobuf_go_lite.CloneBytes",
+		"protobuf_go_lite.CloneVTSlice",
+		"protobuf_go_lite.CloneVTMap",
+		"protobuf_go_lite.CloneVTValue",
+		"protobuf_go_lite.EqualPtr",
+		"protobuf_go_lite.EqualSlice",
+		"protobuf_go_lite.EqualBytes",
+		"protobuf_go_lite.IsEqualVT",
+		"protobuf_go_lite.EqualVTSliceImplicit",
+		"protobuf_go_lite.EqualVTMapImplicit",
+		"protobuf_go_lite.EqualVTImplicit",
+	} {
+		if strings.Contains(out, helper) {
+			t.Fatalf("unrolled output should not contain helper %s:\n%s", helper, out)
+		}
+	}
+	for _, expected := range []string{
+		"tmpVal := *rhs",
+		"for i, vx := range this.Nums",
+	} {
+		if !strings.Contains(out, expected) {
+			t.Fatalf("unrolled output missing previous clone/equal shape %s:\n%s", expected, out)
+		}
 	}
 }
 
@@ -76,7 +134,7 @@ func generateCodegenModeFixture(t *testing.T, opts ...string) string {
 	protoPath := writeTempProto(t, codegenModeProto)
 	outDir := t.TempDir()
 
-	opt := "features=size,paths=source_relative"
+	opt := "features=size+equal+clone,paths=source_relative"
 	if len(opts) != 0 {
 		opt += "," + strings.Join(opts, ",")
 	}

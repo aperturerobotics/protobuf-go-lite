@@ -486,13 +486,8 @@ func (m *SizeBaseline_Nested) CloneVT() *SizeBaseline_Nested {
 	}
 	r := new(SizeBaseline_Nested)
 	r.Count = m.Count
-	if rhs := m.Name; rhs != nil {
-		tmpVal := *rhs
-		r.Name = &tmpVal
-	}
-	if rhs := m.Labels; rhs != nil {
-		r.Labels = slices.Clone(rhs)
-	}
+	r.Name = protobuf_go_lite.ClonePtr(m.Name)
+	r.Labels = protobuf_go_lite.CloneSlice(m.Labels)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -509,127 +504,38 @@ func (m *SizeBaseline) CloneVT() *SizeBaseline {
 	}
 	r := new(SizeBaseline)
 	r.ImplicitInt32 = m.ImplicitInt32
-	r.Nested = m.Nested.CloneVT()
-	if rhs := m.ExplicitInt32; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitInt32 = &tmpVal
-	}
-	if rhs := m.ExplicitInt64; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitInt64 = &tmpVal
-	}
-	if rhs := m.ExplicitUint32; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitUint32 = &tmpVal
-	}
-	if rhs := m.ExplicitUint64; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitUint64 = &tmpVal
-	}
-	if rhs := m.ExplicitSint32; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitSint32 = &tmpVal
-	}
-	if rhs := m.ExplicitSint64; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitSint64 = &tmpVal
-	}
-	if rhs := m.Fixed32Value; rhs != nil {
-		tmpVal := *rhs
-		r.Fixed32Value = &tmpVal
-	}
-	if rhs := m.Fixed64Value; rhs != nil {
-		tmpVal := *rhs
-		r.Fixed64Value = &tmpVal
-	}
-	if rhs := m.Sfixed32Value; rhs != nil {
-		tmpVal := *rhs
-		r.Sfixed32Value = &tmpVal
-	}
-	if rhs := m.Sfixed64Value; rhs != nil {
-		tmpVal := *rhs
-		r.Sfixed64Value = &tmpVal
-	}
-	if rhs := m.FloatValue; rhs != nil {
-		tmpVal := *rhs
-		r.FloatValue = &tmpVal
-	}
-	if rhs := m.DoubleValue; rhs != nil {
-		tmpVal := *rhs
-		r.DoubleValue = &tmpVal
-	}
-	if rhs := m.BoolValue; rhs != nil {
-		tmpVal := *rhs
-		r.BoolValue = &tmpVal
-	}
-	if rhs := m.StringValue; rhs != nil {
-		tmpVal := *rhs
-		r.StringValue = &tmpVal
-	}
-	if rhs := m.BytesValue; rhs != nil {
-		r.BytesValue = slices.Clone(rhs)
-	}
-	if rhs := m.RequiredInt32; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredInt32 = &tmpVal
-	}
-	if rhs := m.PackedInt32; rhs != nil {
-		r.PackedInt32 = slices.Clone(rhs)
-	}
-	if rhs := m.ExpandedInt32; rhs != nil {
-		r.ExpandedInt32 = slices.Clone(rhs)
-	}
-	if rhs := m.NestedValues; rhs != nil {
-		r.NestedValues = make([]*SizeBaseline_Nested, len(rhs))
-		for k, v := range rhs {
-			r.NestedValues[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.NestedByName; rhs != nil {
-		r.NestedByName = make(map[string]*SizeBaseline_Nested, len(rhs))
-		for k, v := range rhs {
-			r.NestedByName[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.NestedById; rhs != nil {
-		r.NestedById = make(map[uint32]*SizeBaseline_Nested, len(rhs))
-		for k, v := range rhs {
-			r.NestedById[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.State; rhs != nil {
-		tmpVal := *rhs
-		r.State = &tmpVal
-	}
-	if rhs := m.Timestamp; rhs != nil {
-		r.Timestamp = rhs.CloneVT()
-	}
-	if rhs := m.Duration; rhs != nil {
-		r.Duration = rhs.CloneVT()
-	}
-	if rhs := m.StringWrapper; rhs != nil {
-		r.StringWrapper = rhs.CloneVT()
-	}
-	if rhs := m.BytesWrapper; rhs != nil {
-		r.BytesWrapper = rhs.CloneVT()
-	}
-	if rhs := m.StructValue; rhs != nil {
-		r.StructValue = rhs.CloneVT()
-	}
-	if rhs := m.ValueValue; rhs != nil {
-		r.ValueValue = rhs.CloneVT()
-	}
-	if rhs := m.ListValue; rhs != nil {
-		r.ListValue = rhs.CloneVT()
-	}
-	if rhs := m.DefaultString; rhs != nil {
-		tmpVal := *rhs
-		r.DefaultString = &tmpVal
-	}
-	if rhs := m.DefaultInt32; rhs != nil {
-		tmpVal := *rhs
-		r.DefaultInt32 = &tmpVal
-	}
+	r.ExplicitInt32 = protobuf_go_lite.ClonePtr(m.ExplicitInt32)
+	r.ExplicitInt64 = protobuf_go_lite.ClonePtr(m.ExplicitInt64)
+	r.ExplicitUint32 = protobuf_go_lite.ClonePtr(m.ExplicitUint32)
+	r.ExplicitUint64 = protobuf_go_lite.ClonePtr(m.ExplicitUint64)
+	r.ExplicitSint32 = protobuf_go_lite.ClonePtr(m.ExplicitSint32)
+	r.ExplicitSint64 = protobuf_go_lite.ClonePtr(m.ExplicitSint64)
+	r.Fixed32Value = protobuf_go_lite.ClonePtr(m.Fixed32Value)
+	r.Fixed64Value = protobuf_go_lite.ClonePtr(m.Fixed64Value)
+	r.Sfixed32Value = protobuf_go_lite.ClonePtr(m.Sfixed32Value)
+	r.Sfixed64Value = protobuf_go_lite.ClonePtr(m.Sfixed64Value)
+	r.FloatValue = protobuf_go_lite.ClonePtr(m.FloatValue)
+	r.DoubleValue = protobuf_go_lite.ClonePtr(m.DoubleValue)
+	r.BoolValue = protobuf_go_lite.ClonePtr(m.BoolValue)
+	r.StringValue = protobuf_go_lite.ClonePtr(m.StringValue)
+	r.BytesValue = protobuf_go_lite.CloneBytes(m.BytesValue)
+	r.RequiredInt32 = protobuf_go_lite.ClonePtr(m.RequiredInt32)
+	r.PackedInt32 = protobuf_go_lite.CloneSlice(m.PackedInt32)
+	r.ExpandedInt32 = protobuf_go_lite.CloneSlice(m.ExpandedInt32)
+	r.NestedValues = protobuf_go_lite.CloneVTSlice(m.NestedValues)
+	r.NestedByName = protobuf_go_lite.CloneVTMap(m.NestedByName)
+	r.NestedById = protobuf_go_lite.CloneVTMap(m.NestedById)
+	r.State = protobuf_go_lite.ClonePtr(m.State)
+	r.Nested = protobuf_go_lite.CloneVTValue(m.Nested)
+	r.Timestamp = protobuf_go_lite.CloneVTValue(m.Timestamp)
+	r.Duration = protobuf_go_lite.CloneVTValue(m.Duration)
+	r.StringWrapper = protobuf_go_lite.CloneVTValue(m.StringWrapper)
+	r.BytesWrapper = protobuf_go_lite.CloneVTValue(m.BytesWrapper)
+	r.StructValue = protobuf_go_lite.CloneVTValue(m.StructValue)
+	r.ValueValue = protobuf_go_lite.CloneVTValue(m.ValueValue)
+	r.ListValue = protobuf_go_lite.CloneVTValue(m.ListValue)
+	r.DefaultString = protobuf_go_lite.ClonePtr(m.DefaultString)
+	r.DefaultInt32 = protobuf_go_lite.ClonePtr(m.DefaultInt32)
 	if m.Selection != nil {
 		r.Selection = m.Selection.(interface {
 			CloneOneofVT() isSizeBaseline_Selection
@@ -676,7 +582,7 @@ func (m *SizeBaseline_SelectedNested) CloneVT() *SizeBaseline_SelectedNested {
 		return (*SizeBaseline_SelectedNested)(nil)
 	}
 	r := new(SizeBaseline_SelectedNested)
-	r.SelectedNested = m.SelectedNested.CloneVT()
+	r.SelectedNested = protobuf_go_lite.CloneVTValue(m.SelectedNested)
 	return r
 }
 
@@ -690,20 +596,14 @@ func (this *SizeBaseline_Nested) EqualVT(that *SizeBaseline_Nested) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Name, that.Name; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Name, that.Name) {
 		return false
 	}
 	if this.Count != that.Count {
 		return false
 	}
-	if len(this.Labels) != len(that.Labels) {
+	if !protobuf_go_lite.EqualSlice(this.Labels, that.Labels) {
 		return false
-	}
-	for i, vx := range this.Labels {
-		vy := that.Labels[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -733,163 +633,103 @@ func (this *SizeBaseline) EqualVT(that *SizeBaseline) bool {
 			return false
 		}
 	}
-	if p, q := this.ExplicitInt32, that.ExplicitInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitInt32, that.ExplicitInt32) {
 		return false
 	}
 	if this.ImplicitInt32 != that.ImplicitInt32 {
 		return false
 	}
-	if p, q := this.ExplicitInt64, that.ExplicitInt64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitInt64, that.ExplicitInt64) {
 		return false
 	}
-	if p, q := this.ExplicitUint32, that.ExplicitUint32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitUint32, that.ExplicitUint32) {
 		return false
 	}
-	if p, q := this.ExplicitUint64, that.ExplicitUint64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitUint64, that.ExplicitUint64) {
 		return false
 	}
-	if p, q := this.ExplicitSint32, that.ExplicitSint32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitSint32, that.ExplicitSint32) {
 		return false
 	}
-	if p, q := this.ExplicitSint64, that.ExplicitSint64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitSint64, that.ExplicitSint64) {
 		return false
 	}
-	if p, q := this.Fixed32Value, that.Fixed32Value; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Fixed32Value, that.Fixed32Value) {
 		return false
 	}
-	if p, q := this.Fixed64Value, that.Fixed64Value; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Fixed64Value, that.Fixed64Value) {
 		return false
 	}
-	if p, q := this.Sfixed32Value, that.Sfixed32Value; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Sfixed32Value, that.Sfixed32Value) {
 		return false
 	}
-	if p, q := this.Sfixed64Value, that.Sfixed64Value; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Sfixed64Value, that.Sfixed64Value) {
 		return false
 	}
-	if p, q := this.FloatValue, that.FloatValue; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.FloatValue, that.FloatValue) {
 		return false
 	}
-	if p, q := this.DoubleValue, that.DoubleValue; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.DoubleValue, that.DoubleValue) {
 		return false
 	}
-	if p, q := this.BoolValue, that.BoolValue; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.BoolValue, that.BoolValue) {
 		return false
 	}
-	if p, q := this.StringValue, that.StringValue; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.StringValue, that.StringValue) {
 		return false
 	}
-	if p, q := this.BytesValue, that.BytesValue; (p == nil && q != nil) || (p != nil && q == nil) || string(p) != string(q) {
+	if !protobuf_go_lite.EqualBytesPresent(this.BytesValue, that.BytesValue) {
 		return false
 	}
-	if p, q := this.RequiredInt32, that.RequiredInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredInt32, that.RequiredInt32) {
 		return false
 	}
-	if len(this.PackedInt32) != len(that.PackedInt32) {
+	if !protobuf_go_lite.EqualSlice(this.PackedInt32, that.PackedInt32) {
 		return false
 	}
-	for i, vx := range this.PackedInt32 {
-		vy := that.PackedInt32[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.ExpandedInt32) != len(that.ExpandedInt32) {
+	if !protobuf_go_lite.EqualSlice(this.ExpandedInt32, that.ExpandedInt32) {
 		return false
 	}
-	for i, vx := range this.ExpandedInt32 {
-		vy := that.ExpandedInt32[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.NestedValues) != len(that.NestedValues) {
+	if !protobuf_go_lite.EqualVTSliceImplicit(this.NestedValues, that.NestedValues, func() *SizeBaseline_Nested { return &SizeBaseline_Nested{} }) {
 		return false
 	}
-	for i, vx := range this.NestedValues {
-		vy := that.NestedValues[i]
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &SizeBaseline_Nested{}
-			}
-			if q == nil {
-				q = &SizeBaseline_Nested{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if len(this.NestedByName) != len(that.NestedByName) {
+	if !protobuf_go_lite.EqualVTMapImplicit(this.NestedByName, that.NestedByName, func() *SizeBaseline_Nested { return &SizeBaseline_Nested{} }) {
 		return false
 	}
-	for i, vx := range this.NestedByName {
-		vy, ok := that.NestedByName[i]
-		if !ok {
-			return false
-		}
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &SizeBaseline_Nested{}
-			}
-			if q == nil {
-				q = &SizeBaseline_Nested{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if len(this.NestedById) != len(that.NestedById) {
+	if !protobuf_go_lite.EqualVTMapImplicit(this.NestedById, that.NestedById, func() *SizeBaseline_Nested { return &SizeBaseline_Nested{} }) {
 		return false
 	}
-	for i, vx := range this.NestedById {
-		vy, ok := that.NestedById[i]
-		if !ok {
-			return false
-		}
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &SizeBaseline_Nested{}
-			}
-			if q == nil {
-				q = &SizeBaseline_Nested{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if p, q := this.State, that.State; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.State, that.State) {
 		return false
 	}
-	if !this.Nested.EqualVT(that.Nested) {
+	if !protobuf_go_lite.IsEqualVT(this.Nested, that.Nested) {
 		return false
 	}
-	if !this.Timestamp.EqualVT(that.Timestamp) {
+	if !protobuf_go_lite.IsEqualVT(this.Timestamp, that.Timestamp) {
 		return false
 	}
-	if !this.Duration.EqualVT(that.Duration) {
+	if !protobuf_go_lite.IsEqualVT(this.Duration, that.Duration) {
 		return false
 	}
-	if !this.StringWrapper.EqualVT(that.StringWrapper) {
+	if !protobuf_go_lite.IsEqualVT(this.StringWrapper, that.StringWrapper) {
 		return false
 	}
-	if !this.BytesWrapper.EqualVT(that.BytesWrapper) {
+	if !protobuf_go_lite.IsEqualVT(this.BytesWrapper, that.BytesWrapper) {
 		return false
 	}
-	if !this.StructValue.EqualVT(that.StructValue) {
+	if !protobuf_go_lite.IsEqualVT(this.StructValue, that.StructValue) {
 		return false
 	}
-	if !this.ValueValue.EqualVT(that.ValueValue) {
+	if !protobuf_go_lite.IsEqualVT(this.ValueValue, that.ValueValue) {
 		return false
 	}
-	if !this.ListValue.EqualVT(that.ListValue) {
+	if !protobuf_go_lite.IsEqualVT(this.ListValue, that.ListValue) {
 		return false
 	}
-	if p, q := this.DefaultString, that.DefaultString; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.DefaultString, that.DefaultString) {
 		return false
 	}
-	if p, q := this.DefaultInt32, that.DefaultInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.DefaultInt32, that.DefaultInt32) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -947,16 +787,8 @@ func (this *SizeBaseline_SelectedNested) EqualVT(thatIface isSizeBaseline_Select
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.SelectedNested, that.SelectedNested; p != q {
-		if p == nil {
-			p = &SizeBaseline_Nested{}
-		}
-		if q == nil {
-			q = &SizeBaseline_Nested{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.SelectedNested, that.SelectedNested, func() *SizeBaseline_Nested { return &SizeBaseline_Nested{} }) {
+		return false
 	}
 	return true
 }
