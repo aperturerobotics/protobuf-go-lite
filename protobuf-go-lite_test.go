@@ -1,6 +1,7 @@
 package protobuf_go_lite
 
 import (
+	"bytes"
 	"io"
 	"math"
 	"testing"
@@ -265,6 +266,59 @@ func TestSizeHelpers(t *testing.T) {
 	if SizeMessage(1, 3) != SizeBytesValue(1, 3) || SizeGroup(1, 3) != 5 {
 		t.Fatalf("message or group size mismatch")
 	}
+}
+
+func TestEncodeHelpers(t *testing.T) {
+	check := func(name string, size int, encode func([]byte, int) int, want []byte) {
+		t.Helper()
+		buf := make([]byte, size)
+		if got := encode(buf, len(buf)); got != 0 {
+			t.Fatalf("%s offset = %d, want 0", name, got)
+		}
+		if !bytes.Equal(buf, want) {
+			t.Fatalf("%s bytes = %v, want %v", name, buf, want)
+		}
+	}
+
+	check("varint", 2, func(buf []byte, offset int) int {
+		return EncodeVarint(buf, offset, 300)
+	}, []byte{0xac, 0x02})
+	check("raw bytes", 2, func(buf []byte, offset int) int {
+		return EncodeRawBytes(buf, offset, []byte{0x11, 0x22})
+	}, []byte{0x11, 0x22})
+	check("fixed32", 4, func(buf []byte, offset int) int {
+		return EncodeFixed32(buf, offset, 0x12345678)
+	}, []byte{0x78, 0x56, 0x34, 0x12})
+	check("fixed64", 8, func(buf []byte, offset int) int {
+		return EncodeFixed64(buf, offset, 0x1234567890abcdef)
+	}, []byte{0xef, 0xcd, 0xab, 0x90, 0x78, 0x56, 0x34, 0x12})
+	check("bool true", 1, func(buf []byte, offset int) int {
+		return EncodeBool(buf, offset, true)
+	}, []byte{1})
+	check("bool false", 1, func(buf []byte, offset int) int {
+		return EncodeBool(buf, offset, false)
+	}, []byte{0})
+	check("string", 4, func(buf []byte, offset int) int {
+		return EncodeString(buf, offset, "abc")
+	}, []byte{0x03, 'a', 'b', 'c'})
+	check("bytes", 3, func(buf []byte, offset int) int {
+		return EncodeBytes(buf, offset, []byte{0x11, 0x22})
+	}, []byte{0x02, 0x11, 0x22})
+	check("zigzag32", 1, func(buf []byte, offset int) int {
+		return EncodeZigzag32(buf, offset, int32(-1))
+	}, []byte{0x01})
+	check("zigzag64", 1, func(buf []byte, offset int) int {
+		return EncodeZigzag64(buf, offset, int64(-1))
+	}, []byte{0x01})
+	check("varint packed", 4, func(buf []byte, offset int) int {
+		return EncodeVarintPacked(buf, offset, []int32{1, 300})
+	}, []byte{0x03, 0x01, 0xac, 0x02})
+	check("zigzag32 packed", 4, func(buf []byte, offset int) int {
+		return EncodeZigzag32Packed(buf, offset, []int32{-1, 150})
+	}, []byte{0x03, 0x01, 0xac, 0x02})
+	check("zigzag64 packed", 4, func(buf []byte, offset int) int {
+		return EncodeZigzag64Packed(buf, offset, []int64{-1, 150})
+	}, []byte{0x03, 0x01, 0xac, 0x02})
 }
 
 func ptr[T any](v T) *T {

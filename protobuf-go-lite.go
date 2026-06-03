@@ -1,6 +1,7 @@
 package protobuf_go_lite
 
 import (
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
@@ -281,13 +282,119 @@ func EqualVTMapImplicit[M ~map[K]V, K comparable, V EqualVT[V]](a, b M, empty fu
 func EncodeVarint(dAtA []byte, offset int, v uint64) int {
 	offset -= SizeOfVarint(v)
 	base := offset
+	putVarintAt(dAtA, offset, v)
+	return base
+}
+
+// EncodeRawBytes writes raw bytes before offset and returns the new offset.
+func EncodeRawBytes[S ~[]byte](dAtA []byte, offset int, v S) int {
+	offset -= len(v)
+	copy(dAtA[offset:], v)
+	return offset
+}
+
+// EncodeFixed32 writes a fixed-width 32-bit value before offset and returns the new offset.
+func EncodeFixed32(dAtA []byte, offset int, v uint32) int {
+	offset -= 4
+	binary.LittleEndian.PutUint32(dAtA[offset:], v)
+	return offset
+}
+
+// EncodeFixed64 writes a fixed-width 64-bit value before offset and returns the new offset.
+func EncodeFixed64(dAtA []byte, offset int, v uint64) int {
+	offset -= 8
+	binary.LittleEndian.PutUint64(dAtA[offset:], v)
+	return offset
+}
+
+// EncodeBool writes a bool value before offset and returns the new offset.
+func EncodeBool(dAtA []byte, offset int, v bool) int {
+	offset--
+	b := byte(0)
+	if v {
+		b = 1
+	}
+	dAtA[offset] = b
+	return offset
+}
+
+// EncodeString writes a length-delimited string before offset and returns the new offset.
+func EncodeString[S ~string](dAtA []byte, offset int, v S) int {
+	offset -= len(v)
+	copy(dAtA[offset:], string(v))
+	return EncodeVarint(dAtA, offset, uint64(len(v)))
+}
+
+// EncodeBytes writes a length-delimited byte slice before offset and returns the new offset.
+func EncodeBytes[S ~[]byte](dAtA []byte, offset int, v S) int {
+	offset = EncodeRawBytes(dAtA, offset, v)
+	return EncodeVarint(dAtA, offset, uint64(len(v)))
+}
+
+// EncodeZigzag32 writes a zigzag-encoded 32-bit value before offset and returns the new offset.
+func EncodeZigzag32[T ~int32](dAtA []byte, offset int, v T) int {
+	return EncodeVarint(dAtA, offset, uint64((uint32(v)<<1)^uint32(v>>31)))
+}
+
+// EncodeZigzag64 writes a zigzag-encoded 64-bit value before offset and returns the new offset.
+func EncodeZigzag64[T ~int64](dAtA []byte, offset int, v T) int {
+	return EncodeVarint(dAtA, offset, uint64((uint64(v)<<1)^uint64(v>>63)))
+}
+
+type marshalVarintNumber interface {
+	~int32 | ~int64 | ~uint32 | ~uint64
+}
+
+// EncodeVarintPacked writes packed varint values before offset and returns the new offset.
+func EncodeVarintPacked[S ~[]E, E marshalVarintNumber](dAtA []byte, offset int, vals S) int {
+	total := 0
+	for _, v := range vals {
+		total += SizeOfVarint(uint64(v))
+	}
+	offset -= total
+	j := offset
+	for _, v := range vals {
+		j = putVarintAt(dAtA, j, uint64(v))
+	}
+	return EncodeVarint(dAtA, offset, uint64(total))
+}
+
+// EncodeZigzag32Packed writes packed zigzag-encoded 32-bit values before offset and returns the new offset.
+func EncodeZigzag32Packed[S ~[]E, E ~int32](dAtA []byte, offset int, vals S) int {
+	total := 0
+	for _, v := range vals {
+		total += SizeOfZigzag(uint64(v))
+	}
+	offset -= total
+	j := offset
+	for _, v := range vals {
+		j = putVarintAt(dAtA, j, uint64((uint32(v)<<1)^uint32(v>>31)))
+	}
+	return EncodeVarint(dAtA, offset, uint64(total))
+}
+
+// EncodeZigzag64Packed writes packed zigzag-encoded 64-bit values before offset and returns the new offset.
+func EncodeZigzag64Packed[S ~[]E, E ~int64](dAtA []byte, offset int, vals S) int {
+	total := 0
+	for _, v := range vals {
+		total += SizeOfZigzag(uint64(v))
+	}
+	offset -= total
+	j := offset
+	for _, v := range vals {
+		j = putVarintAt(dAtA, j, uint64((uint64(v)<<1)^uint64(v>>63)))
+	}
+	return EncodeVarint(dAtA, offset, uint64(total))
+}
+
+func putVarintAt(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80) //nolint:gosec
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 
 // AppendVarint appends v to b as a varint-encoded uint64.

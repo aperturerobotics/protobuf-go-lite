@@ -57,7 +57,18 @@ func (p *GeneratedFile) IsLocalField(field *protogen.Field) bool {
 const vtHelpersPackage = protogen.GoImportPath("github.com/aperturerobotics/protobuf-go-lite")
 
 var helpers = map[string]protogen.GoIdent{
+	"EncodeBool":              {GoName: "EncodeBool", GoImportPath: vtHelpersPackage},
+	"EncodeBytes":             {GoName: "EncodeBytes", GoImportPath: vtHelpersPackage},
+	"EncodeFixed32":           {GoName: "EncodeFixed32", GoImportPath: vtHelpersPackage},
+	"EncodeFixed64":           {GoName: "EncodeFixed64", GoImportPath: vtHelpersPackage},
+	"EncodeRawBytes":          {GoName: "EncodeRawBytes", GoImportPath: vtHelpersPackage},
+	"EncodeString":            {GoName: "EncodeString", GoImportPath: vtHelpersPackage},
 	"EncodeVarint":            {GoName: "EncodeVarint", GoImportPath: vtHelpersPackage},
+	"EncodeVarintPacked":      {GoName: "EncodeVarintPacked", GoImportPath: vtHelpersPackage},
+	"EncodeZigzag32":          {GoName: "EncodeZigzag32", GoImportPath: vtHelpersPackage},
+	"EncodeZigzag32Packed":    {GoName: "EncodeZigzag32Packed", GoImportPath: vtHelpersPackage},
+	"EncodeZigzag64":          {GoName: "EncodeZigzag64", GoImportPath: vtHelpersPackage},
+	"EncodeZigzag64Packed":    {GoName: "EncodeZigzag64Packed", GoImportPath: vtHelpersPackage},
 	"SizeOfVarint":            {GoName: "SizeOfVarint", GoImportPath: vtHelpersPackage},
 	"SizeOfZigzag":            {GoName: "SizeOfZigzag", GoImportPath: vtHelpersPackage},
 	"Skip":                    {GoName: "Skip", GoImportPath: vtHelpersPackage},

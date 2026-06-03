@@ -58,6 +58,10 @@ func TestCodegenModeDefaultUsesHelperMethods(t *testing.T) {
 		"protobuf_go_lite.EqualVTSliceImplicit",
 		"protobuf_go_lite.EqualVTMapImplicit",
 		"protobuf_go_lite.EqualVTImplicit",
+		"protobuf_go_lite.EncodeString",
+		"protobuf_go_lite.EncodeBytes",
+		"protobuf_go_lite.EncodeZigzag32",
+		"protobuf_go_lite.EncodeVarintPacked",
 	} {
 		if !strings.Contains(out, expected) {
 			t.Fatalf("default helper output missing %s:\n%s", expected, out)
@@ -87,6 +91,10 @@ func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 		"protobuf_go_lite.EqualVTSliceImplicit",
 		"protobuf_go_lite.EqualVTMapImplicit",
 		"protobuf_go_lite.EqualVTImplicit",
+		"protobuf_go_lite.EncodeString",
+		"protobuf_go_lite.EncodeBytes",
+		"protobuf_go_lite.EncodeZigzag32",
+		"protobuf_go_lite.EncodeVarintPacked",
 	} {
 		if strings.Contains(out, helper) {
 			t.Fatalf("unrolled output should not contain helper %s:\n%s", helper, out)
@@ -134,7 +142,7 @@ func generateCodegenModeFixture(t *testing.T, opts ...string) string {
 	protoPath := writeTempProto(t, codegenModeProto)
 	outDir := t.TempDir()
 
-	opt := "features=size+equal+clone,paths=source_relative"
+	opt := "features=size+equal+clone+marshal,paths=source_relative"
 	if len(opts) != 0 {
 		opt += "," + strings.Join(opts, ",")
 	}
