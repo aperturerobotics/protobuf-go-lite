@@ -62,7 +62,7 @@ func (m *Parent) CloneVT() *Parent {
 		return (*Parent)(nil)
 	}
 	r := new(Parent)
-	r.Empty = m.Empty.CloneVT()
+	r.Empty = protobuf_go_lite.CloneVTValue(m.Empty)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -95,7 +95,7 @@ func (this *Parent) EqualVT(that *Parent) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if !this.Empty.EqualVT(that.Empty) {
+	if !protobuf_go_lite.IsEqualVT(this.Empty, that.Empty) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -212,8 +212,7 @@ func (m *Parent_Empty) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	return len(dAtA) - i, nil
 }
@@ -245,8 +244,7 @@ func (m *Parent) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Empty != nil {
 		size, err := m.Empty.MarshalToSizedBufferVT(dAtA[:i])
@@ -288,8 +286,7 @@ func (m *Parent_Empty) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	return len(dAtA) - i, nil
 }
@@ -321,8 +318,7 @@ func (m *Parent) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Empty != nil {
 		size, err := m.Empty.MarshalToSizedBufferVTStrict(dAtA[:i])
@@ -355,7 +351,7 @@ func (m *Parent) SizeVT() (n int) {
 	_ = l
 	if m.Empty != nil {
 		l = m.Empty.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -454,27 +450,14 @@ func (m *Parent) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Empty", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Empty == nil {
 				m.Empty = &Parent_Empty{}
 			}
-			if err := m.Empty.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Empty.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -566,27 +549,14 @@ func (m *Parent) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Empty", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Empty == nil {
 				m.Empty = &Parent_Empty{}
 			}
-			if err := m.Empty.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Empty.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

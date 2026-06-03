@@ -306,8 +306,7 @@ func (m *Timestamp) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Nanos != 0 {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Nanos))
@@ -349,8 +348,7 @@ func (m *Timestamp) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Nanos != 0 {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Nanos))
@@ -371,12 +369,8 @@ func (m *Timestamp) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Seconds != 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.Seconds))
-	}
-	if m.Nanos != 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.Nanos))
-	}
+	n += protobuf_go_lite.SizeVarintNonZero(1, m.Seconds)
+	n += protobuf_go_lite.SizeVarintNonZero(1, m.Nanos)
 	n += len(m.unknownFields)
 	return n
 }

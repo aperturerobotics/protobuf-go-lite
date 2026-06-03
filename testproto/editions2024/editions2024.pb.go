@@ -290,10 +290,7 @@ func (m *Edition2024Fixture_Nested) CloneVT() *Edition2024Fixture_Nested {
 	}
 	r := new(Edition2024Fixture_Nested)
 	r.Value = m.Value
-	if rhs := m.Name; rhs != nil {
-		tmpVal := *rhs
-		r.Name = &tmpVal
-	}
+	r.Name = protobuf_go_lite.ClonePtr(m.Name)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -309,10 +306,7 @@ func (m *Edition2024Fixture_DelimitedGroup) CloneVT() *Edition2024Fixture_Delimi
 		return (*Edition2024Fixture_DelimitedGroup)(nil)
 	}
 	r := new(Edition2024Fixture_DelimitedGroup)
-	if rhs := m.Label; rhs != nil {
-		tmpVal := *rhs
-		r.Label = &tmpVal
-	}
+	r.Label = protobuf_go_lite.ClonePtr(m.Label)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -329,47 +323,18 @@ func (m *Edition2024Fixture) CloneVT() *Edition2024Fixture {
 	}
 	r := new(Edition2024Fixture)
 	r.ImplicitInt32 = m.ImplicitInt32
-	r.NestedMessage = m.NestedMessage.CloneVT()
-	r.DelimitedGroup = m.DelimitedGroup.CloneVT()
-	if rhs := m.ExplicitInt32; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitInt32 = &tmpVal
-	}
-	if rhs := m.RequiredInt32; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredInt32 = &tmpVal
-	}
-	if rhs := m.ExplicitString; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitString = &tmpVal
-	}
-	if rhs := m.ExplicitBytes; rhs != nil {
-		r.ExplicitBytes = slices.Clone(rhs)
-	}
-	if rhs := m.ExplicitState; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitState = &tmpVal
-	}
-	if rhs := m.PackedInt32; rhs != nil {
-		r.PackedInt32 = slices.Clone(rhs)
-	}
-	if rhs := m.ExpandedInt32; rhs != nil {
-		r.ExpandedInt32 = slices.Clone(rhs)
-	}
-	if rhs := m.NestedMap; rhs != nil {
-		r.NestedMap = make(map[string]*Edition2024Fixture_Nested, len(rhs))
-		for k, v := range rhs {
-			r.NestedMap[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.ExplicitDefaultInt32; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitDefaultInt32 = &tmpVal
-	}
-	if rhs := m.ExplicitDefaultString; rhs != nil {
-		tmpVal := *rhs
-		r.ExplicitDefaultString = &tmpVal
-	}
+	r.ExplicitInt32 = protobuf_go_lite.ClonePtr(m.ExplicitInt32)
+	r.RequiredInt32 = protobuf_go_lite.ClonePtr(m.RequiredInt32)
+	r.ExplicitString = protobuf_go_lite.ClonePtr(m.ExplicitString)
+	r.ExplicitBytes = protobuf_go_lite.CloneBytes(m.ExplicitBytes)
+	r.ExplicitState = protobuf_go_lite.ClonePtr(m.ExplicitState)
+	r.NestedMessage = protobuf_go_lite.CloneVTValue(m.NestedMessage)
+	r.PackedInt32 = protobuf_go_lite.CloneSlice(m.PackedInt32)
+	r.ExpandedInt32 = protobuf_go_lite.CloneSlice(m.ExpandedInt32)
+	r.NestedMap = protobuf_go_lite.CloneVTMap(m.NestedMap)
+	r.DelimitedGroup = protobuf_go_lite.CloneVTValue(m.DelimitedGroup)
+	r.ExplicitDefaultInt32 = protobuf_go_lite.ClonePtr(m.ExplicitDefaultInt32)
+	r.ExplicitDefaultString = protobuf_go_lite.ClonePtr(m.ExplicitDefaultString)
 	if m.Choice != nil {
 		r.Choice = m.Choice.(interface {
 			CloneOneofVT() isEdition2024Fixture_Choice
@@ -417,7 +382,7 @@ func (this *Edition2024Fixture_Nested) EqualVT(that *Edition2024Fixture_Nested) 
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Name, that.Name; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Name, that.Name) {
 		return false
 	}
 	if this.Value != that.Value {
@@ -439,7 +404,7 @@ func (this *Edition2024Fixture_DelimitedGroup) EqualVT(that *Edition2024Fixture_
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Label, that.Label; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Label, that.Label) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -470,72 +435,43 @@ func (this *Edition2024Fixture) EqualVT(that *Edition2024Fixture) bool {
 			return false
 		}
 	}
-	if p, q := this.ExplicitInt32, that.ExplicitInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitInt32, that.ExplicitInt32) {
 		return false
 	}
 	if this.ImplicitInt32 != that.ImplicitInt32 {
 		return false
 	}
-	if p, q := this.RequiredInt32, that.RequiredInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredInt32, that.RequiredInt32) {
 		return false
 	}
-	if p, q := this.ExplicitString, that.ExplicitString; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitString, that.ExplicitString) {
 		return false
 	}
-	if p, q := this.ExplicitBytes, that.ExplicitBytes; (p == nil && q != nil) || (p != nil && q == nil) || string(p) != string(q) {
+	if !protobuf_go_lite.EqualBytesPresent(this.ExplicitBytes, that.ExplicitBytes) {
 		return false
 	}
-	if p, q := this.ExplicitState, that.ExplicitState; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitState, that.ExplicitState) {
 		return false
 	}
-	if !this.NestedMessage.EqualVT(that.NestedMessage) {
+	if !protobuf_go_lite.IsEqualVT(this.NestedMessage, that.NestedMessage) {
 		return false
 	}
-	if len(this.PackedInt32) != len(that.PackedInt32) {
+	if !protobuf_go_lite.EqualSlice(this.PackedInt32, that.PackedInt32) {
 		return false
 	}
-	for i, vx := range this.PackedInt32 {
-		vy := that.PackedInt32[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.ExpandedInt32) != len(that.ExpandedInt32) {
+	if !protobuf_go_lite.EqualSlice(this.ExpandedInt32, that.ExpandedInt32) {
 		return false
 	}
-	for i, vx := range this.ExpandedInt32 {
-		vy := that.ExpandedInt32[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.NestedMap) != len(that.NestedMap) {
+	if !protobuf_go_lite.EqualVTMapImplicit(this.NestedMap, that.NestedMap, func() *Edition2024Fixture_Nested { return &Edition2024Fixture_Nested{} }) {
 		return false
 	}
-	for i, vx := range this.NestedMap {
-		vy, ok := that.NestedMap[i]
-		if !ok {
-			return false
-		}
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &Edition2024Fixture_Nested{}
-			}
-			if q == nil {
-				q = &Edition2024Fixture_Nested{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if !this.DelimitedGroup.EqualVT(that.DelimitedGroup) {
+	if !protobuf_go_lite.IsEqualVT(this.DelimitedGroup, that.DelimitedGroup) {
 		return false
 	}
-	if p, q := this.ExplicitDefaultInt32, that.ExplicitDefaultInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitDefaultInt32, that.ExplicitDefaultInt32) {
 		return false
 	}
-	if p, q := this.ExplicitDefaultString, that.ExplicitDefaultString; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.ExplicitDefaultString, that.ExplicitDefaultString) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -1037,8 +973,7 @@ func (m *Edition2024Fixture_Nested) MarshalToSizedBufferVT(dAtA []byte) (int, er
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Value != 0 {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Value))
@@ -1046,9 +981,7 @@ func (m *Edition2024Fixture_Nested) MarshalToSizedBufferVT(dAtA []byte) (int, er
 		dAtA[i] = 0x10
 	}
 	if m.Name != nil {
-		i -= len(*m.Name)
-		copy(dAtA[i:], *m.Name)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Name)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Name)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1082,13 +1015,10 @@ func (m *Edition2024Fixture_DelimitedGroup) MarshalToSizedBufferVT(dAtA []byte) 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Label != nil {
-		i -= len(*m.Label)
-		copy(dAtA[i:], *m.Label)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Label)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Label)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1122,8 +1052,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if vtmsg, ok := m.Choice.(interface {
 		MarshalToSizedBufferVT([]byte) (int, error)
@@ -1135,9 +1064,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= size
 	}
 	if m.ExplicitDefaultString != nil {
-		i -= len(*m.ExplicitDefaultString)
-		copy(dAtA[i:], *m.ExplicitDefaultString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.ExplicitDefaultString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.ExplicitDefaultString)
 		i--
 		dAtA[i] = 0x7a
 	}
@@ -1169,9 +1096,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(size))
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -1187,23 +1112,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		}
 	}
 	if len(m.PackedInt32) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedInt32 {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedInt32 {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedInt32)
 		i--
 		dAtA[i] = 0x42
 	}
@@ -1223,16 +1132,12 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x30
 	}
 	if m.ExplicitBytes != nil {
-		i -= len(m.ExplicitBytes)
-		copy(dAtA[i:], m.ExplicitBytes)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ExplicitBytes)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.ExplicitBytes)
 		i--
 		dAtA[i] = 0x2a
 	}
 	if m.ExplicitString != nil {
-		i -= len(*m.ExplicitString)
-		copy(dAtA[i:], *m.ExplicitString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.ExplicitString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.ExplicitString)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -1263,9 +1168,7 @@ func (m *Edition2024Fixture_ChoiceString) MarshalToVT(dAtA []byte) (int, error) 
 
 func (m *Edition2024Fixture_ChoiceString) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.ChoiceString)
-	copy(dAtA[i:], m.ChoiceString)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ChoiceString)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.ChoiceString)
 	i--
 	dAtA[i] = 0x62
 	return len(dAtA) - i, nil
@@ -1309,8 +1212,7 @@ func (m *Edition2024Fixture_Nested) MarshalToSizedBufferVTStrict(dAtA []byte) (i
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Value != 0 {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(m.Value))
@@ -1318,9 +1220,7 @@ func (m *Edition2024Fixture_Nested) MarshalToSizedBufferVTStrict(dAtA []byte) (i
 		dAtA[i] = 0x10
 	}
 	if m.Name != nil {
-		i -= len(*m.Name)
-		copy(dAtA[i:], *m.Name)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Name)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Name)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1354,13 +1254,10 @@ func (m *Edition2024Fixture_DelimitedGroup) MarshalToSizedBufferVTStrict(dAtA []
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Label != nil {
-		i -= len(*m.Label)
-		copy(dAtA[i:], *m.Label)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Label)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Label)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1394,13 +1291,10 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVTStrict(dAtA []byte) (int, err
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.ExplicitDefaultString != nil {
-		i -= len(*m.ExplicitDefaultString)
-		copy(dAtA[i:], *m.ExplicitDefaultString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.ExplicitDefaultString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.ExplicitDefaultString)
 		i--
 		dAtA[i] = 0x7a
 	}
@@ -1446,9 +1340,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVTStrict(dAtA []byte) (int, err
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(size))
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -1464,23 +1356,7 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVTStrict(dAtA []byte) (int, err
 		}
 	}
 	if len(m.PackedInt32) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedInt32 {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedInt32 {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedInt32)
 		i--
 		dAtA[i] = 0x42
 	}
@@ -1500,16 +1376,12 @@ func (m *Edition2024Fixture) MarshalToSizedBufferVTStrict(dAtA []byte) (int, err
 		dAtA[i] = 0x30
 	}
 	if m.ExplicitBytes != nil {
-		i -= len(m.ExplicitBytes)
-		copy(dAtA[i:], m.ExplicitBytes)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ExplicitBytes)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.ExplicitBytes)
 		i--
 		dAtA[i] = 0x2a
 	}
 	if m.ExplicitString != nil {
-		i -= len(*m.ExplicitString)
-		copy(dAtA[i:], *m.ExplicitString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.ExplicitString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.ExplicitString)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -1540,9 +1412,7 @@ func (m *Edition2024Fixture_ChoiceString) MarshalToVTStrict(dAtA []byte) (int, e
 
 func (m *Edition2024Fixture_ChoiceString) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.ChoiceString)
-	copy(dAtA[i:], m.ChoiceString)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ChoiceString)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.ChoiceString)
 	i--
 	dAtA[i] = 0x62
 	return len(dAtA) - i, nil
@@ -1565,13 +1435,8 @@ func (m *Edition2024Fixture_Nested) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Name != nil {
-		l = len(*m.Name)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.Value != 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.Value))
-	}
+	n += protobuf_go_lite.SizeStringPtr(1, m.Name)
+	n += protobuf_go_lite.SizeVarintNonZero(1, m.Value)
 	n += len(m.unknownFields)
 	return n
 }
@@ -1582,10 +1447,7 @@ func (m *Edition2024Fixture_DelimitedGroup) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Label != nil {
-		l = len(*m.Label)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringPtr(1, m.Label)
 	n += len(m.unknownFields)
 	return n
 }
@@ -1596,69 +1458,37 @@ func (m *Edition2024Fixture) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.ExplicitInt32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.ExplicitInt32))
-	}
-	if m.ImplicitInt32 != 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.ImplicitInt32))
-	}
-	if m.RequiredInt32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredInt32))
-	}
-	if m.ExplicitString != nil {
-		l = len(*m.ExplicitString)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.ExplicitBytes != nil {
-		l = len(m.ExplicitBytes)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.ExplicitState != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.ExplicitState))
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.ExplicitInt32)
+	n += protobuf_go_lite.SizeVarintNonZero(1, m.ImplicitInt32)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredInt32)
+	n += protobuf_go_lite.SizeStringPtr(1, m.ExplicitString)
+	n += protobuf_go_lite.SizeBytesPresent(1, m.ExplicitBytes)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.ExplicitState)
 	if m.NestedMessage != nil {
 		l = m.NestedMessage.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
-	if len(m.PackedInt32) > 0 {
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedInt32)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.ExpandedInt32)
+	for k, v := range m.NestedMap {
+		_ = k
+		_ = v
 		l = 0
-		for _, e := range m.PackedInt32 {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
+		if v != nil {
+			l = v.SizeVT()
 		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
-	if len(m.ExpandedInt32) > 0 {
-		for _, e := range m.ExpandedInt32 {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.NestedMap) > 0 {
-		for k, v := range m.NestedMap {
-			_ = k
-			_ = v
-			l = 0
-			if v != nil {
-				l = v.SizeVT()
-			}
-			l += 1 + protobuf_go_lite.SizeOfVarint(uint64(l))
-			mapEntrySize := 1 + len(k) + protobuf_go_lite.SizeOfVarint(uint64(len(k))) + l
-			n += mapEntrySize + 1 + protobuf_go_lite.SizeOfVarint(uint64(mapEntrySize))
-		}
+		mapEntrySize := protobuf_go_lite.SizeStringValue(1, k) + protobuf_go_lite.SizeMessage(1, l)
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
 	if m.DelimitedGroup != nil {
 		l = m.DelimitedGroup.SizeVT()
-		n += l + 2
+		n += protobuf_go_lite.SizeGroup(1, l)
 	}
 	if vtmsg, ok := m.Choice.(interface{ SizeVT() int }); ok {
 		n += vtmsg.SizeVT()
 	}
-	if m.ExplicitDefaultInt32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.ExplicitDefaultInt32))
-	}
-	if m.ExplicitDefaultString != nil {
-		l = len(*m.ExplicitDefaultString)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.ExplicitDefaultInt32)
+	n += protobuf_go_lite.SizeStringPtr(1, m.ExplicitDefaultString)
 	n += len(m.unknownFields)
 	return n
 }
@@ -1669,8 +1499,7 @@ func (m *Edition2024Fixture_ChoiceString) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ChoiceString)
-	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+	n += protobuf_go_lite.SizeStringValue(1, m.ChoiceString)
 	return n
 }
 func (m *Edition2024Fixture_ChoiceInt32) SizeVT() (n int) {
@@ -1679,7 +1508,7 @@ func (m *Edition2024Fixture_ChoiceInt32) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.ChoiceInt32))
+	n += protobuf_go_lite.SizeVarintValue(1, m.ChoiceInt32)
 	return n
 }
 func (x Edition2024Fixture_State) MarshalProtoText() string {
@@ -1916,28 +1745,15 @@ func (m *Edition2024Fixture_Nested) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.Nested.name contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
@@ -1993,28 +1809,15 @@ func (m *Edition2024Fixture_DelimitedGroup) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Label", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.DelimitedGroup.label contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Label = &s
-			iNdEx = postIndex
+			m.Label = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2092,54 +1895,23 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.explicit_string contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.ExplicitString = &s
-			iNdEx = postIndex
+			m.ExplicitString = &v
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitBytes", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.ExplicitBytes, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.ExplicitBytes, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ExplicitBytes = append(m.ExplicitBytes[:0], dAtA[iNdEx:postIndex]...)
-			if m.ExplicitBytes == nil {
-				m.ExplicitBytes = []byte{}
-			}
-			iNdEx = postIndex
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitState", wireType)
@@ -2156,27 +1928,14 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMessage", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.NestedMessage == nil {
 				m.NestedMessage = &Edition2024Fixture_Nested{}
 			}
-			if err := m.NestedMessage.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.NestedMessage.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2408,27 +2167,15 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChoiceString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.choice_string contains invalid UTF-8")
 			}
-			m.Choice = &Edition2024Fixture_ChoiceString{ChoiceString: string(dAtA[iNdEx:postIndex])}
-			iNdEx = postIndex
+			m.Choice = &Edition2024Fixture_ChoiceString{ChoiceString: v}
 		case 13:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChoiceInt32", wireType)
@@ -2453,28 +2200,15 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitDefaultString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if !utf8.ValidString(string(dAtA[iNdEx:postIndex])) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.explicit_default_string contains invalid UTF-8")
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.ExplicitDefaultString = &s
-			iNdEx = postIndex
+			m.ExplicitDefaultString = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2524,32 +2258,15 @@ func (m *Edition2024Fixture_Nested) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.Nested.name contains invalid UTF-8")
 			}
-			s := stringValue
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
@@ -2605,32 +2322,15 @@ func (m *Edition2024Fixture_DelimitedGroup) UnmarshalVTUnsafe(dAtA []byte) error
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Label", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.DelimitedGroup.label contains invalid UTF-8")
 			}
-			s := stringValue
-			m.Label = &s
-			iNdEx = postIndex
+			m.Label = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2708,55 +2408,23 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.explicit_string contains invalid UTF-8")
 			}
-			s := stringValue
-			m.ExplicitString = &s
-			iNdEx = postIndex
+			m.ExplicitString = &v
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitBytes", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.ExplicitBytes, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ExplicitBytes = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitState", wireType)
@@ -2773,27 +2441,14 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMessage", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.NestedMessage == nil {
 				m.NestedMessage = &Edition2024Fixture_Nested{}
 			}
-			if err := m.NestedMessage.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.NestedMessage.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3029,31 +2684,15 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChoiceString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.choice_string contains invalid UTF-8")
 			}
-			m.Choice = &Edition2024Fixture_ChoiceString{ChoiceString: stringValue}
-			iNdEx = postIndex
+			m.Choice = &Edition2024Fixture_ChoiceString{ChoiceString: v}
 		case 13:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChoiceInt32", wireType)
@@ -3078,32 +2717,15 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExplicitDefaultString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			if !utf8.ValidString(stringValue) {
+			if !utf8.ValidString(v) {
 				return fmt.Errorf("proto: field editions2024.Edition2024Fixture.explicit_default_string contains invalid UTF-8")
 			}
-			s := stringValue
-			m.ExplicitDefaultString = &s
-			iNdEx = postIndex
+			m.ExplicitDefaultString = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])

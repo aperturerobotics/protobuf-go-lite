@@ -10,7 +10,6 @@ import (
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -138,18 +137,11 @@ func (m *EchoMsg) CloneVT() *EchoMsg {
 	}
 	r := new(EchoMsg)
 	r.Body = m.Body
-	if rhs := m.Ts; rhs != nil {
-		r.Ts = rhs.CloneVT()
-	}
+	r.Ts = protobuf_go_lite.CloneVTValue(m.Ts)
 	if m.Demo != nil {
 		r.Demo = m.Demo.(interface{ CloneOneofVT() isEchoMsg_Demo }).CloneOneofVT()
 	}
-	if rhs := m.Timestamps; rhs != nil {
-		r.Timestamps = make([]*timestamppb.Timestamp, len(rhs))
-		for k, v := range rhs {
-			r.Timestamps[k] = v.CloneVT()
-		}
-	}
+	r.Timestamps = protobuf_go_lite.CloneVTSlice(m.Timestamps)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -205,25 +197,11 @@ func (this *EchoMsg) EqualVT(that *EchoMsg) bool {
 	if this.Body != that.Body {
 		return false
 	}
-	if !this.Ts.EqualVT(that.Ts) {
+	if !protobuf_go_lite.IsEqualVT(this.Ts, that.Ts) {
 		return false
 	}
-	if len(this.Timestamps) != len(that.Timestamps) {
+	if !protobuf_go_lite.EqualVTSliceImplicit(this.Timestamps, that.Timestamps, func() *timestamppb.Timestamp { return &timestamppb.Timestamp{} }) {
 		return false
-	}
-	for i, vx := range this.Timestamps {
-		vy := that.Timestamps[i]
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &timestamppb.Timestamp{}
-			}
-			if q == nil {
-				q = &timestamppb.Timestamp{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -441,8 +419,7 @@ func (m *EchoMsg) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if vtmsg, ok := m.Demo.(interface {
 		MarshalToSizedBufferVT([]byte) (int, error)
@@ -476,9 +453,7 @@ func (m *EchoMsg) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if len(m.Body) > 0 {
-		i -= len(m.Body)
-		copy(dAtA[i:], m.Body)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.Body)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.Body)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -504,9 +479,7 @@ func (m *EchoMsg_ExampleString) MarshalToVT(dAtA []byte) (int, error) {
 
 func (m *EchoMsg_ExampleString) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.ExampleString)
-	copy(dAtA[i:], m.ExampleString)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ExampleString)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.ExampleString)
 	i--
 	dAtA[i] = 0x22
 	return len(dAtA) - i, nil
@@ -538,8 +511,7 @@ func (m *EchoMsg) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Timestamps) > 0 {
 		for iNdEx := len(m.Timestamps) - 1; iNdEx >= 0; iNdEx-- {
@@ -578,9 +550,7 @@ func (m *EchoMsg) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if len(m.Body) > 0 {
-		i -= len(m.Body)
-		copy(dAtA[i:], m.Body)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.Body)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.Body)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -606,9 +576,7 @@ func (m *EchoMsg_ExampleString) MarshalToVTStrict(dAtA []byte) (int, error) {
 
 func (m *EchoMsg_ExampleString) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.ExampleString)
-	copy(dAtA[i:], m.ExampleString)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.ExampleString)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.ExampleString)
 	i--
 	dAtA[i] = 0x22
 	return len(dAtA) - i, nil
@@ -619,22 +587,17 @@ func (m *EchoMsg) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Body)
-	if l > 0 {
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringNonEmpty(1, m.Body)
 	if m.Ts != nil {
 		l = m.Ts.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
 	if vtmsg, ok := m.Demo.(interface{ SizeVT() int }); ok {
 		n += vtmsg.SizeVT()
 	}
-	if len(m.Timestamps) > 0 {
-		for _, e := range m.Timestamps {
-			l = e.SizeVT()
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
+	for _, e := range m.Timestamps {
+		l = e.SizeVT()
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -646,7 +609,7 @@ func (m *EchoMsg_ExampleEnum) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + protobuf_go_lite.SizeOfVarint(uint64(m.ExampleEnum))
+	n += protobuf_go_lite.SizeVarintValue(1, m.ExampleEnum)
 	return n
 }
 func (m *EchoMsg_ExampleString) SizeVT() (n int) {
@@ -655,8 +618,7 @@ func (m *EchoMsg_ExampleString) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ExampleString)
-	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+	n += protobuf_go_lite.SizeStringValue(1, m.ExampleString)
 	return n
 }
 func (x ExampleEnum) MarshalProtoText() string {
@@ -743,49 +705,24 @@ func (m *EchoMsg) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Body = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.Body = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Ts", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Ts == nil {
 				m.Ts = &timestamppb.Timestamp{}
 			}
-			if err := m.Ts.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Ts.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -805,47 +742,22 @@ func (m *EchoMsg) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExampleString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Demo = &EchoMsg_ExampleString{ExampleString: string(dAtA[iNdEx:postIndex])}
-			iNdEx = postIndex
+			m.Demo = &EchoMsg_ExampleString{ExampleString: v}
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Timestamps", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.Timestamps = append(m.Timestamps, &timestamppb.Timestamp{})
-			if err := m.Timestamps[len(m.Timestamps)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Timestamps[len(m.Timestamps)-1].UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -895,53 +807,24 @@ func (m *EchoMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.Body = stringValue
-			iNdEx = postIndex
+			m.Body = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Ts", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.Ts == nil {
 				m.Ts = &timestamppb.Timestamp{}
 			}
-			if err := m.Ts.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Ts.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -961,51 +844,22 @@ func (m *EchoMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExampleString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.Demo = &EchoMsg_ExampleString{ExampleString: stringValue}
-			iNdEx = postIndex
+			m.Demo = &EchoMsg_ExampleString{ExampleString: v}
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Timestamps", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.Timestamps = append(m.Timestamps, &timestamppb.Timestamp{})
-			if err := m.Timestamps[len(m.Timestamps)-1].UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Timestamps[len(m.Timestamps)-1].UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

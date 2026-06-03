@@ -310,9 +310,7 @@ func (m *UnsafeTest_Sub1) CloneVT() *UnsafeTest_Sub1 {
 	}
 	r := new(UnsafeTest_Sub1)
 	r.S = m.S
-	if rhs := m.B; rhs != nil {
-		r.B = slices.Clone(rhs)
-	}
+	r.B = protobuf_go_lite.CloneBytes(m.B)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -328,15 +326,8 @@ func (m *UnsafeTest_Sub2) CloneVT() *UnsafeTest_Sub2 {
 		return (*UnsafeTest_Sub2)(nil)
 	}
 	r := new(UnsafeTest_Sub2)
-	if rhs := m.S; rhs != nil {
-		r.S = slices.Clone(rhs)
-	}
-	if rhs := m.B; rhs != nil {
-		r.B = make([][]byte, len(rhs))
-		for k, v := range rhs {
-			r.B[k] = slices.Clone(v)
-		}
-	}
+	r.S = protobuf_go_lite.CloneSlice(m.S)
+	r.B = protobuf_go_lite.CloneBytesSlice(m.B)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -352,12 +343,7 @@ func (m *UnsafeTest_Sub3) CloneVT() *UnsafeTest_Sub3 {
 		return (*UnsafeTest_Sub3)(nil)
 	}
 	r := new(UnsafeTest_Sub3)
-	if rhs := m.Foo; rhs != nil {
-		r.Foo = make(map[string][]byte, len(rhs))
-		for k, v := range rhs {
-			r.Foo[k] = slices.Clone(v)
-		}
-	}
+	r.Foo = protobuf_go_lite.CloneBytesMap(m.Foo)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -404,9 +390,7 @@ func (m *UnsafeTest_Sub4_B) CloneVT() *UnsafeTest_Sub4_B {
 		return (*UnsafeTest_Sub4_B)(nil)
 	}
 	r := new(UnsafeTest_Sub4_B)
-	if rhs := m.B; rhs != nil {
-		r.B = slices.Clone(rhs)
-	}
+	r.B = protobuf_go_lite.CloneBytes(m.B)
 	return r
 }
 
@@ -419,9 +403,7 @@ func (m *UnsafeTest_Sub5) CloneVT() *UnsafeTest_Sub5 {
 		return (*UnsafeTest_Sub5)(nil)
 	}
 	r := new(UnsafeTest_Sub5)
-	if rhs := m.Foo; rhs != nil {
-		r.Foo = maps.Clone(rhs)
-	}
+	r.Foo = protobuf_go_lite.CloneMap(m.Foo)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -455,7 +437,7 @@ func (m *UnsafeTest_Sub1_) CloneVT() *UnsafeTest_Sub1_ {
 		return (*UnsafeTest_Sub1_)(nil)
 	}
 	r := new(UnsafeTest_Sub1_)
-	r.Sub1 = m.Sub1.CloneVT()
+	r.Sub1 = protobuf_go_lite.CloneVTValue(m.Sub1)
 	return r
 }
 
@@ -468,7 +450,7 @@ func (m *UnsafeTest_Sub2_) CloneVT() *UnsafeTest_Sub2_ {
 		return (*UnsafeTest_Sub2_)(nil)
 	}
 	r := new(UnsafeTest_Sub2_)
-	r.Sub2 = m.Sub2.CloneVT()
+	r.Sub2 = protobuf_go_lite.CloneVTValue(m.Sub2)
 	return r
 }
 
@@ -481,7 +463,7 @@ func (m *UnsafeTest_Sub3_) CloneVT() *UnsafeTest_Sub3_ {
 		return (*UnsafeTest_Sub3_)(nil)
 	}
 	r := new(UnsafeTest_Sub3_)
-	r.Sub3 = m.Sub3.CloneVT()
+	r.Sub3 = protobuf_go_lite.CloneVTValue(m.Sub3)
 	return r
 }
 
@@ -494,7 +476,7 @@ func (m *UnsafeTest_Sub4_) CloneVT() *UnsafeTest_Sub4_ {
 		return (*UnsafeTest_Sub4_)(nil)
 	}
 	r := new(UnsafeTest_Sub4_)
-	r.Sub4 = m.Sub4.CloneVT()
+	r.Sub4 = protobuf_go_lite.CloneVTValue(m.Sub4)
 	return r
 }
 
@@ -507,7 +489,7 @@ func (m *UnsafeTest_Sub5_) CloneVT() *UnsafeTest_Sub5_ {
 		return (*UnsafeTest_Sub5_)(nil)
 	}
 	r := new(UnsafeTest_Sub5_)
-	r.Sub5 = m.Sub5.CloneVT()
+	r.Sub5 = protobuf_go_lite.CloneVTValue(m.Sub5)
 	return r
 }
 
@@ -524,7 +506,7 @@ func (this *UnsafeTest_Sub1) EqualVT(that *UnsafeTest_Sub1) bool {
 	if this.S != that.S {
 		return false
 	}
-	if string(this.B) != string(that.B) {
+	if !protobuf_go_lite.EqualBytes(this.B, that.B) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -543,23 +525,11 @@ func (this *UnsafeTest_Sub2) EqualVT(that *UnsafeTest_Sub2) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if len(this.S) != len(that.S) {
+	if !protobuf_go_lite.EqualSlice(this.S, that.S) {
 		return false
 	}
-	for i, vx := range this.S {
-		vy := that.S[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.B) != len(that.B) {
+	if !protobuf_go_lite.EqualBytesSlice(this.B, that.B) {
 		return false
-	}
-	for i, vx := range this.B {
-		vy := that.B[i]
-		if string(vx) != string(vy) {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -577,17 +547,8 @@ func (this *UnsafeTest_Sub3) EqualVT(that *UnsafeTest_Sub3) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if len(this.Foo) != len(that.Foo) {
+	if !protobuf_go_lite.EqualBytesMap(this.Foo, that.Foo) {
 		return false
-	}
-	for i, vx := range this.Foo {
-		vy, ok := that.Foo[i]
-		if !ok {
-			return false
-		}
-		if string(vx) != string(vy) {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -655,7 +616,7 @@ func (this *UnsafeTest_Sub4_B) EqualVT(thatIface isUnsafeTest_Sub4_Foo) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if string(this.B) != string(that.B) {
+	if !protobuf_go_lite.EqualBytes(this.B, that.B) {
 		return false
 	}
 	return true
@@ -667,17 +628,8 @@ func (this *UnsafeTest_Sub5) EqualVT(that *UnsafeTest_Sub5) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if len(this.Foo) != len(that.Foo) {
+	if !protobuf_go_lite.EqualMap(this.Foo, that.Foo) {
 		return false
-	}
-	for i, vx := range this.Foo {
-		vy, ok := that.Foo[i]
-		if !ok {
-			return false
-		}
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -726,16 +678,8 @@ func (this *UnsafeTest_Sub1_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.Sub1, that.Sub1; p != q {
-		if p == nil {
-			p = &UnsafeTest_Sub1{}
-		}
-		if q == nil {
-			q = &UnsafeTest_Sub1{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.Sub1, that.Sub1, func() *UnsafeTest_Sub1 { return &UnsafeTest_Sub1{} }) {
+		return false
 	}
 	return true
 }
@@ -751,16 +695,8 @@ func (this *UnsafeTest_Sub2_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.Sub2, that.Sub2; p != q {
-		if p == nil {
-			p = &UnsafeTest_Sub2{}
-		}
-		if q == nil {
-			q = &UnsafeTest_Sub2{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.Sub2, that.Sub2, func() *UnsafeTest_Sub2 { return &UnsafeTest_Sub2{} }) {
+		return false
 	}
 	return true
 }
@@ -776,16 +712,8 @@ func (this *UnsafeTest_Sub3_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.Sub3, that.Sub3; p != q {
-		if p == nil {
-			p = &UnsafeTest_Sub3{}
-		}
-		if q == nil {
-			q = &UnsafeTest_Sub3{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.Sub3, that.Sub3, func() *UnsafeTest_Sub3 { return &UnsafeTest_Sub3{} }) {
+		return false
 	}
 	return true
 }
@@ -801,16 +729,8 @@ func (this *UnsafeTest_Sub4_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.Sub4, that.Sub4; p != q {
-		if p == nil {
-			p = &UnsafeTest_Sub4{}
-		}
-		if q == nil {
-			q = &UnsafeTest_Sub4{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.Sub4, that.Sub4, func() *UnsafeTest_Sub4 { return &UnsafeTest_Sub4{} }) {
+		return false
 	}
 	return true
 }
@@ -826,16 +746,8 @@ func (this *UnsafeTest_Sub5_) EqualVT(thatIface isUnsafeTest_Sub) bool {
 	if this == nil && that != nil || this != nil && that == nil {
 		return false
 	}
-	if p, q := this.Sub5, that.Sub5; p != q {
-		if p == nil {
-			p = &UnsafeTest_Sub5{}
-		}
-		if q == nil {
-			q = &UnsafeTest_Sub5{}
-		}
-		if !p.EqualVT(q) {
-			return false
-		}
+	if !protobuf_go_lite.EqualVTImplicit(this.Sub5, that.Sub5, func() *UnsafeTest_Sub5 { return &UnsafeTest_Sub5{} }) {
+		return false
 	}
 	return true
 }
@@ -1346,20 +1258,15 @@ func (m *UnsafeTest_Sub1) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.B) > 0 {
-		i -= len(m.B)
-		copy(dAtA[i:], m.B)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.S) > 0 {
-		i -= len(m.S)
-		copy(dAtA[i:], m.S)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.S)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1393,23 +1300,18 @@ func (m *UnsafeTest_Sub2) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.B) > 0 {
 		for iNdEx := len(m.B) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.B[iNdEx])
-			copy(dAtA[i:], m.B[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B[iNdEx])))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B[iNdEx])
 			i--
 			dAtA[i] = 0x12
 		}
 	}
 	if len(m.S) > 0 {
 		for iNdEx := len(m.S) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.S[iNdEx])
-			copy(dAtA[i:], m.S[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.S[iNdEx])
 			i--
 			dAtA[i] = 0xa
 		}
@@ -1444,21 +1346,16 @@ func (m *UnsafeTest_Sub3) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Foo) > 0 {
 		for k := range m.Foo {
 			v := m.Foo[k]
 			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(v)))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, v)
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -1496,8 +1393,7 @@ func (m *UnsafeTest_Sub4) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if vtmsg, ok := m.Foo.(interface {
 		MarshalToSizedBufferVT([]byte) (int, error)
@@ -1518,9 +1414,7 @@ func (m *UnsafeTest_Sub4_S) MarshalToVT(dAtA []byte) (int, error) {
 
 func (m *UnsafeTest_Sub4_S) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.S)
-	copy(dAtA[i:], m.S)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.S)
 	i--
 	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
@@ -1532,9 +1426,7 @@ func (m *UnsafeTest_Sub4_B) MarshalToVT(dAtA []byte) (int, error) {
 
 func (m *UnsafeTest_Sub4_B) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.B)
-	copy(dAtA[i:], m.B)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B)))
+	i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B)
 	i--
 	dAtA[i] = 0x12
 	return len(dAtA) - i, nil
@@ -1566,21 +1458,16 @@ func (m *UnsafeTest_Sub5) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Foo) > 0 {
 		for k := range m.Foo {
 			v := m.Foo[k]
 			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(v)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, v)
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -1618,8 +1505,7 @@ func (m *UnsafeTest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if vtmsg, ok := m.Sub.(interface {
 		MarshalToSizedBufferVT([]byte) (int, error)
@@ -1775,20 +1661,15 @@ func (m *UnsafeTest_Sub1) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.B) > 0 {
-		i -= len(m.B)
-		copy(dAtA[i:], m.B)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.S) > 0 {
-		i -= len(m.S)
-		copy(dAtA[i:], m.S)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.S)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1822,23 +1703,18 @@ func (m *UnsafeTest_Sub2) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.B) > 0 {
 		for iNdEx := len(m.B) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.B[iNdEx])
-			copy(dAtA[i:], m.B[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B[iNdEx])))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B[iNdEx])
 			i--
 			dAtA[i] = 0x12
 		}
 	}
 	if len(m.S) > 0 {
 		for iNdEx := len(m.S) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.S[iNdEx])
-			copy(dAtA[i:], m.S[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.S[iNdEx])
 			i--
 			dAtA[i] = 0xa
 		}
@@ -1873,21 +1749,16 @@ func (m *UnsafeTest_Sub3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Foo) > 0 {
 		for k := range m.Foo {
 			v := m.Foo[k]
 			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(v)))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, v)
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -1925,8 +1796,7 @@ func (m *UnsafeTest_Sub4) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if msg, ok := m.Foo.(*UnsafeTest_Sub4_B); ok {
 		size, err := msg.MarshalToSizedBufferVTStrict(dAtA[:i])
@@ -1952,9 +1822,7 @@ func (m *UnsafeTest_Sub4_S) MarshalToVTStrict(dAtA []byte) (int, error) {
 
 func (m *UnsafeTest_Sub4_S) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.S)
-	copy(dAtA[i:], m.S)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.S)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.S)
 	i--
 	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
@@ -1966,9 +1834,7 @@ func (m *UnsafeTest_Sub4_B) MarshalToVTStrict(dAtA []byte) (int, error) {
 
 func (m *UnsafeTest_Sub4_B) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.B)
-	copy(dAtA[i:], m.B)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.B)))
+	i = protobuf_go_lite.EncodeBytes(dAtA, i, m.B)
 	i--
 	dAtA[i] = 0x12
 	return len(dAtA) - i, nil
@@ -2000,21 +1866,16 @@ func (m *UnsafeTest_Sub5) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Foo) > 0 {
 		for k := range m.Foo {
 			v := m.Foo[k]
 			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(v)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, v)
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -2052,8 +1913,7 @@ func (m *UnsafeTest) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if msg, ok := m.Sub.(*UnsafeTest_Sub5_); ok {
 		size, err := msg.MarshalToSizedBufferVTStrict(dAtA[:i])
@@ -2214,14 +2074,8 @@ func (m *UnsafeTest_Sub1) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.S)
-	if l > 0 {
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	l = len(m.B)
-	if l > 0 {
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringNonEmpty(1, m.S)
+	n += protobuf_go_lite.SizeBytesNonEmpty(1, m.B)
 	n += len(m.unknownFields)
 	return n
 }
@@ -2232,18 +2086,8 @@ func (m *UnsafeTest_Sub2) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.S) > 0 {
-		for _, s := range m.S {
-			l = len(s)
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
-	}
-	if len(m.B) > 0 {
-		for _, b := range m.B {
-			l = len(b)
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
-	}
+	n += protobuf_go_lite.SizeStringSlice(1, m.S)
+	n += protobuf_go_lite.SizeBytesSlice(1, m.B)
 	n += len(m.unknownFields)
 	return n
 }
@@ -2254,14 +2098,11 @@ func (m *UnsafeTest_Sub3) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.Foo) > 0 {
-		for k, v := range m.Foo {
-			_ = k
-			_ = v
-			l = 1 + len(v) + protobuf_go_lite.SizeOfVarint(uint64(len(v)))
-			mapEntrySize := 1 + len(k) + protobuf_go_lite.SizeOfVarint(uint64(len(k))) + l
-			n += mapEntrySize + 1 + protobuf_go_lite.SizeOfVarint(uint64(mapEntrySize))
-		}
+	for k, v := range m.Foo {
+		_ = k
+		_ = v
+		mapEntrySize := protobuf_go_lite.SizeStringValue(1, k) + protobuf_go_lite.SizeBytesValue(1, len(v))
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -2286,8 +2127,7 @@ func (m *UnsafeTest_Sub4_S) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.S)
-	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+	n += protobuf_go_lite.SizeStringValue(1, m.S)
 	return n
 }
 func (m *UnsafeTest_Sub4_B) SizeVT() (n int) {
@@ -2296,8 +2136,7 @@ func (m *UnsafeTest_Sub4_B) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.B)
-	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+	n += protobuf_go_lite.SizeBytesValue(1, len(m.B))
 	return n
 }
 func (m *UnsafeTest_Sub5) SizeVT() (n int) {
@@ -2306,13 +2145,11 @@ func (m *UnsafeTest_Sub5) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.Foo) > 0 {
-		for k, v := range m.Foo {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + len(k) + protobuf_go_lite.SizeOfVarint(uint64(len(k))) + 1 + len(v) + protobuf_go_lite.SizeOfVarint(uint64(len(v)))
-			n += mapEntrySize + 1 + protobuf_go_lite.SizeOfVarint(uint64(mapEntrySize))
-		}
+	for k, v := range m.Foo {
+		_ = k
+		_ = v
+		mapEntrySize := protobuf_go_lite.SizeStringValue(1, k) + protobuf_go_lite.SizeStringValue(1, v)
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -2339,7 +2176,7 @@ func (m *UnsafeTest_Sub1_) SizeVT() (n int) {
 	_ = l
 	if m.Sub1 != nil {
 		l = m.Sub1.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	} else {
 		n += 2
 	}
@@ -2353,7 +2190,7 @@ func (m *UnsafeTest_Sub2_) SizeVT() (n int) {
 	_ = l
 	if m.Sub2 != nil {
 		l = m.Sub2.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	} else {
 		n += 2
 	}
@@ -2367,7 +2204,7 @@ func (m *UnsafeTest_Sub3_) SizeVT() (n int) {
 	_ = l
 	if m.Sub3 != nil {
 		l = m.Sub3.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	} else {
 		n += 2
 	}
@@ -2381,7 +2218,7 @@ func (m *UnsafeTest_Sub4_) SizeVT() (n int) {
 	_ = l
 	if m.Sub4 != nil {
 		l = m.Sub4.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	} else {
 		n += 2
 	}
@@ -2395,7 +2232,7 @@ func (m *UnsafeTest_Sub5_) SizeVT() (n int) {
 	_ = l
 	if m.Sub5 != nil {
 		l = m.Sub5.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	} else {
 		n += 2
 	}
@@ -2677,50 +2514,20 @@ func (m *UnsafeTest_Sub1) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.S = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.S = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.B, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.B, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.B = append(m.B[:0], dAtA[iNdEx:postIndex]...)
-			if m.B == nil {
-				m.B = []byte{}
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2767,48 +2574,22 @@ func (m *UnsafeTest_Sub2) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.S = append(m.S, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
+			m.S = append(m.S, v)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, true)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.B = append(m.B, make([]byte, postIndex-iNdEx))
-			copy(m.B[len(m.B)-1], dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.B = append(m.B, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2987,49 +2768,22 @@ func (m *UnsafeTest_Sub4) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Foo = &UnsafeTest_Sub4_S{S: string(dAtA[iNdEx:postIndex])}
-			iNdEx = postIndex
+			m.Foo = &UnsafeTest_Sub4_S{S: v}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, true)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := make([]byte, postIndex-iNdEx)
-			copy(v, dAtA[iNdEx:postIndex])
 			m.Foo = &UnsafeTest_Sub4_B{B: v}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -3207,30 +2961,17 @@ func (m *UnsafeTest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub1", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub1_); ok {
-				if err := oneof.Sub1.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub1.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub1{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub1_{Sub1: v}
@@ -3240,30 +2981,17 @@ func (m *UnsafeTest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub2", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub2_); ok {
-				if err := oneof.Sub2.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub2.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub2{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub2_{Sub2: v}
@@ -3273,30 +3001,17 @@ func (m *UnsafeTest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub3", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub3_); ok {
-				if err := oneof.Sub3.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub3.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub3{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub3_{Sub3: v}
@@ -3306,30 +3021,17 @@ func (m *UnsafeTest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub4", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub4_); ok {
-				if err := oneof.Sub4.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub4.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub4{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub4_{Sub4: v}
@@ -3339,30 +3041,17 @@ func (m *UnsafeTest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub5", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub5_); ok {
-				if err := oneof.Sub5.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub5.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub5{}
-				if err := v.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub5_{Sub5: v}
@@ -3414,51 +3103,20 @@ func (m *UnsafeTest_Sub1) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.S = stringValue
-			iNdEx = postIndex
+			m.S = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.B, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.B = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -3505,51 +3163,22 @@ func (m *UnsafeTest_Sub2) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.S = append(m.S, stringValue)
-			iNdEx = postIndex
+			m.S = append(m.S, v)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.B = append(m.B, dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.B = append(m.B, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -3731,52 +3360,22 @@ func (m *UnsafeTest_Sub4) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.Foo = &UnsafeTest_Sub4_S{S: stringValue}
-			iNdEx = postIndex
+			m.Foo = &UnsafeTest_Sub4_S{S: v}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := dAtA[iNdEx:postIndex]
 			m.Foo = &UnsafeTest_Sub4_B{B: v}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -3962,30 +3561,17 @@ func (m *UnsafeTest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub1", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub1_); ok {
-				if err := oneof.Sub1.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub1.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub1{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub1_{Sub1: v}
@@ -3995,30 +3581,17 @@ func (m *UnsafeTest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub2", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub2_); ok {
-				if err := oneof.Sub2.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub2.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub2{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub2_{Sub2: v}
@@ -4028,30 +3601,17 @@ func (m *UnsafeTest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub3", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub3_); ok {
-				if err := oneof.Sub3.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub3.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub3{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub3_{Sub3: v}
@@ -4061,30 +3621,17 @@ func (m *UnsafeTest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub4", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub4_); ok {
-				if err := oneof.Sub4.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub4.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub4{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub4_{Sub4: v}
@@ -4094,30 +3641,17 @@ func (m *UnsafeTest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sub5", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			if oneof, ok := m.Sub.(*UnsafeTest_Sub5_); ok {
-				if err := oneof.Sub5.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := oneof.Sub5.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 			} else {
 				v := &UnsafeTest_Sub5{}
-				if err := v.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+				if err := v.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 					return err
 				}
 				m.Sub = &UnsafeTest_Sub5_{Sub5: v}

@@ -6,14 +6,12 @@ package proto2
 
 import (
 	base64 "encoding/base64"
-	binary "encoding/binary"
 	fmt "fmt"
 	io "io"
 	math "math"
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -812,20 +810,10 @@ func (m *DoubleMessage) CloneVT() *DoubleMessage {
 		return (*DoubleMessage)(nil)
 	}
 	r := new(DoubleMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -841,20 +829,10 @@ func (m *FloatMessage) CloneVT() *FloatMessage {
 		return (*FloatMessage)(nil)
 	}
 	r := new(FloatMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -870,20 +848,10 @@ func (m *Int32Message) CloneVT() *Int32Message {
 		return (*Int32Message)(nil)
 	}
 	r := new(Int32Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -899,20 +867,10 @@ func (m *Int64Message) CloneVT() *Int64Message {
 		return (*Int64Message)(nil)
 	}
 	r := new(Int64Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -928,20 +886,10 @@ func (m *Uint32Message) CloneVT() *Uint32Message {
 		return (*Uint32Message)(nil)
 	}
 	r := new(Uint32Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -957,20 +905,10 @@ func (m *Uint64Message) CloneVT() *Uint64Message {
 		return (*Uint64Message)(nil)
 	}
 	r := new(Uint64Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -986,20 +924,10 @@ func (m *Sint32Message) CloneVT() *Sint32Message {
 		return (*Sint32Message)(nil)
 	}
 	r := new(Sint32Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1015,20 +943,10 @@ func (m *Sint64Message) CloneVT() *Sint64Message {
 		return (*Sint64Message)(nil)
 	}
 	r := new(Sint64Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1044,20 +962,10 @@ func (m *Fixed32Message) CloneVT() *Fixed32Message {
 		return (*Fixed32Message)(nil)
 	}
 	r := new(Fixed32Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1073,20 +981,10 @@ func (m *Fixed64Message) CloneVT() *Fixed64Message {
 		return (*Fixed64Message)(nil)
 	}
 	r := new(Fixed64Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1102,20 +1000,10 @@ func (m *Sfixed32Message) CloneVT() *Sfixed32Message {
 		return (*Sfixed32Message)(nil)
 	}
 	r := new(Sfixed32Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1131,20 +1019,10 @@ func (m *Sfixed64Message) CloneVT() *Sfixed64Message {
 		return (*Sfixed64Message)(nil)
 	}
 	r := new(Sfixed64Message)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1160,20 +1038,10 @@ func (m *BoolMessage) CloneVT() *BoolMessage {
 		return (*BoolMessage)(nil)
 	}
 	r := new(BoolMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1189,17 +1057,9 @@ func (m *StringMessage) CloneVT() *StringMessage {
 		return (*StringMessage)(nil)
 	}
 	r := new(StringMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1215,18 +1075,9 @@ func (m *BytesMessage) CloneVT() *BytesMessage {
 		return (*BytesMessage)(nil)
 	}
 	r := new(BytesMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		r.RequiredField = slices.Clone(rhs)
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		r.OptionalField = slices.Clone(rhs)
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = make([][]byte, len(rhs))
-		for k, v := range rhs {
-			r.RepeatedField[k] = slices.Clone(v)
-		}
-	}
+	r.RequiredField = protobuf_go_lite.CloneBytes(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.CloneBytes(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneBytesSlice(m.RepeatedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1242,20 +1093,10 @@ func (m *EnumMessage) CloneVT() *EnumMessage {
 		return (*EnumMessage)(nil)
 	}
 	r := new(EnumMessage)
-	if rhs := m.RequiredField; rhs != nil {
-		tmpVal := *rhs
-		r.RequiredField = &tmpVal
-	}
-	if rhs := m.OptionalField; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalField = &tmpVal
-	}
-	if rhs := m.RepeatedField; rhs != nil {
-		r.RepeatedField = slices.Clone(rhs)
-	}
-	if rhs := m.PackedField; rhs != nil {
-		r.PackedField = slices.Clone(rhs)
-	}
+	r.RequiredField = protobuf_go_lite.ClonePtr(m.RequiredField)
+	r.OptionalField = protobuf_go_lite.ClonePtr(m.OptionalField)
+	r.RepeatedField = protobuf_go_lite.CloneSlice(m.RepeatedField)
+	r.PackedField = protobuf_go_lite.CloneSlice(m.PackedField)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -1272,29 +1113,17 @@ func (this *DoubleMessage) EqualVT(that *DoubleMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1312,29 +1141,17 @@ func (this *FloatMessage) EqualVT(that *FloatMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1352,29 +1169,17 @@ func (this *Int32Message) EqualVT(that *Int32Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1392,29 +1197,17 @@ func (this *Int64Message) EqualVT(that *Int64Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1432,29 +1225,17 @@ func (this *Uint32Message) EqualVT(that *Uint32Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1472,29 +1253,17 @@ func (this *Uint64Message) EqualVT(that *Uint64Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1512,29 +1281,17 @@ func (this *Sint32Message) EqualVT(that *Sint32Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1552,29 +1309,17 @@ func (this *Sint64Message) EqualVT(that *Sint64Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1592,29 +1337,17 @@ func (this *Fixed32Message) EqualVT(that *Fixed32Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1632,29 +1365,17 @@ func (this *Fixed64Message) EqualVT(that *Fixed64Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1672,29 +1393,17 @@ func (this *Sfixed32Message) EqualVT(that *Sfixed32Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1712,29 +1421,17 @@ func (this *Sfixed64Message) EqualVT(that *Sfixed64Message) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1752,29 +1449,17 @@ func (this *BoolMessage) EqualVT(that *BoolMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1792,20 +1477,14 @@ func (this *StringMessage) EqualVT(that *StringMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
-	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1823,20 +1502,14 @@ func (this *BytesMessage) EqualVT(that *BytesMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && q == nil) || string(p) != string(q) {
+	if !protobuf_go_lite.EqualBytesPresent(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && q == nil) || string(p) != string(q) {
+	if !protobuf_go_lite.EqualBytesPresent(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualBytesSlice(this.RepeatedField, that.RepeatedField) {
 		return false
-	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if string(vx) != string(vy) {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1854,29 +1527,17 @@ func (this *EnumMessage) EqualVT(that *EnumMessage) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.RequiredField, that.RequiredField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.RequiredField, that.RequiredField) {
 		return false
 	}
-	if p, q := this.OptionalField, that.OptionalField; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalField, that.OptionalField) {
 		return false
 	}
-	if len(this.RepeatedField) != len(that.RepeatedField) {
+	if !protobuf_go_lite.EqualSlice(this.RepeatedField, that.RepeatedField) {
 		return false
 	}
-	for i, vx := range this.RepeatedField {
-		vy := that.RepeatedField[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if len(this.PackedField) != len(that.PackedField) {
+	if !protobuf_go_lite.EqualSlice(this.PackedField, that.PackedField) {
 		return false
-	}
-	for i, vx := range this.PackedField {
-		vy := that.PackedField[i]
-		if vx != vy {
-			return false
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -1918,14 +1579,12 @@ func (m *DoubleMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
 			f1 := math.Float64bits(float64(m.PackedField[iNdEx]))
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(f1))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(f1))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -1934,23 +1593,20 @@ func (m *DoubleMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
 			f2 := math.Float64bits(float64(m.RepeatedField[iNdEx]))
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(f2))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(f2))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.OptionalField))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.OptionalField))))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.RequiredField))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.RequiredField))))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -1984,14 +1640,12 @@ func (m *FloatMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
 			f1 := math.Float32bits(float32(m.PackedField[iNdEx]))
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(f1))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(f1))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -2000,23 +1654,20 @@ func (m *FloatMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
 			f2 := math.Float32bits(float32(m.RepeatedField[iNdEx]))
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(f2))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(f2))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.OptionalField))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.OptionalField))))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.RequiredField))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.RequiredField))))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -2050,27 +1701,10 @@ func (m *Int32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -2123,27 +1757,10 @@ func (m *Int64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -2196,26 +1813,10 @@ func (m *Uint32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -2268,26 +1869,10 @@ func (m *Uint64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -2340,47 +1925,29 @@ func (m *Sint32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfZigzag(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			x3 := (uint32(num) << 1) ^ uint32((num >> 31))
-			for x3 >= 1<<7 {
-				dAtA[j1] = uint8(uint64(x3)&0x7f | 0x80)
-				j1++
-				x3 >>= 7
-			}
-			dAtA[j1] = uint8(x3)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeZigzag32Packed(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			x4 := (uint32(m.RepeatedField[iNdEx]) << 1) ^ uint32((m.RepeatedField[iNdEx] >> 31))
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(x4))
+			i = protobuf_go_lite.EncodeZigzag32(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalField)<<1)^uint32((*m.OptionalField>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.RequiredField)<<1)^uint32((*m.RequiredField>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -2414,47 +1981,29 @@ func (m *Sint64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfZigzag(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			x3 := (uint64(num) << 1) ^ uint64((num >> 63))
-			for x3 >= 1<<7 {
-				dAtA[j1] = uint8(uint64(x3)&0x7f | 0x80)
-				j1++
-				x3 >>= 7
-			}
-			dAtA[j1] = uint8(x3)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeZigzag64Packed(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			x4 := (uint64(m.RepeatedField[iNdEx]) << 1) ^ uint64((m.RepeatedField[iNdEx] >> 63))
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(x4))
+			i = protobuf_go_lite.EncodeZigzag64(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalField)<<1)^uint64((*m.OptionalField>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.RequiredField)<<1)^uint64((*m.RequiredField>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -2488,13 +2037,11 @@ func (m *Fixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -2502,23 +2049,20 @@ func (m *Fixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalField))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.RequiredField))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -2552,13 +2096,11 @@ func (m *Fixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -2566,23 +2108,20 @@ func (m *Fixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalField))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.RequiredField))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -2616,13 +2155,11 @@ func (m *Sfixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -2630,23 +2167,20 @@ func (m *Sfixed32Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalField))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.RequiredField))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -2680,13 +2214,11 @@ func (m *Sfixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -2694,23 +2226,20 @@ func (m *Sfixed64Message) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalField))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.RequiredField))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -2744,17 +2273,11 @@ func (m *BoolMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i--
-			if m.PackedField[iNdEx] {
-				dAtA[i] = 1
-			} else {
-				dAtA[i] = 0
-			}
+			i = protobuf_go_lite.EncodeBool(dAtA, i, m.PackedField[iNdEx])
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)))
 		i--
@@ -2762,35 +2285,20 @@ func (m *BoolMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i--
-			if m.RepeatedField[iNdEx] {
-				dAtA[i] = 1
-			} else {
-				dAtA[i] = 0
-			}
+			i = protobuf_go_lite.EncodeBool(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i--
-		if *m.OptionalField {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i--
-		if *m.RequiredField {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -2824,31 +2332,24 @@ func (m *StringMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.RepeatedField[iNdEx])
-			copy(dAtA[i:], m.RepeatedField[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RepeatedField[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x1a
 		}
 	}
 	if m.OptionalField != nil {
-		i -= len(*m.OptionalField)
-		copy(dAtA[i:], *m.OptionalField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalField)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= len(*m.RequiredField)
-		copy(dAtA[i:], *m.RequiredField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.RequiredField)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -2882,31 +2383,24 @@ func (m *BytesMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.RepeatedField[iNdEx])
-			copy(dAtA[i:], m.RepeatedField[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RepeatedField[iNdEx])))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x1a
 		}
 	}
 	if m.OptionalField != nil {
-		i -= len(m.OptionalField)
-		copy(dAtA[i:], m.OptionalField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalField)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.OptionalField)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= len(m.RequiredField)
-		copy(dAtA[i:], m.RequiredField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RequiredField)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.RequiredField)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -2940,27 +2434,10 @@ func (m *EnumMessage) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -3013,14 +2490,12 @@ func (m *DoubleMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
 			f1 := math.Float64bits(float64(m.PackedField[iNdEx]))
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(f1))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(f1))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -3029,23 +2504,20 @@ func (m *DoubleMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
 			f2 := math.Float64bits(float64(m.RepeatedField[iNdEx]))
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(f2))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(f2))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.OptionalField))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.OptionalField))))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.RequiredField))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.RequiredField))))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -3079,14 +2551,12 @@ func (m *FloatMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
 			f1 := math.Float32bits(float32(m.PackedField[iNdEx]))
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(f1))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(f1))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -3095,23 +2565,20 @@ func (m *FloatMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
 			f2 := math.Float32bits(float32(m.RepeatedField[iNdEx]))
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(f2))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(f2))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.OptionalField))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.OptionalField))))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.RequiredField))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.RequiredField))))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -3145,27 +2612,10 @@ func (m *Int32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -3218,27 +2668,10 @@ func (m *Int64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -3291,26 +2724,10 @@ func (m *Uint32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -3363,26 +2780,10 @@ func (m *Uint64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -3435,47 +2836,29 @@ func (m *Sint32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfZigzag(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			x3 := (uint32(num) << 1) ^ uint32((num >> 31))
-			for x3 >= 1<<7 {
-				dAtA[j1] = uint8(uint64(x3)&0x7f | 0x80)
-				j1++
-				x3 >>= 7
-			}
-			dAtA[j1] = uint8(x3)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeZigzag32Packed(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			x4 := (uint32(m.RepeatedField[iNdEx]) << 1) ^ uint32((m.RepeatedField[iNdEx] >> 31))
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(x4))
+			i = protobuf_go_lite.EncodeZigzag32(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalField)<<1)^uint32((*m.OptionalField>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.RequiredField)<<1)^uint32((*m.RequiredField>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -3509,47 +2892,29 @@ func (m *Sint64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfZigzag(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num := range m.PackedField {
-			x3 := (uint64(num) << 1) ^ uint64((num >> 63))
-			for x3 >= 1<<7 {
-				dAtA[j1] = uint8(uint64(x3)&0x7f | 0x80)
-				j1++
-				x3 >>= 7
-			}
-			dAtA[j1] = uint8(x3)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeZigzag64Packed(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			x4 := (uint64(m.RepeatedField[iNdEx]) << 1) ^ uint64((m.RepeatedField[iNdEx] >> 63))
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(x4))
+			i = protobuf_go_lite.EncodeZigzag64(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalField)<<1)^uint64((*m.OptionalField>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.RequiredField)<<1)^uint64((*m.RequiredField>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -3583,13 +2948,11 @@ func (m *Fixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -3597,23 +2960,20 @@ func (m *Fixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalField))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.RequiredField))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -3647,13 +3007,11 @@ func (m *Fixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -3661,23 +3019,20 @@ func (m *Fixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) 
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalField))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.RequiredField))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -3711,13 +3066,11 @@ func (m *Sfixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*4))
 		i--
@@ -3725,23 +3078,20 @@ func (m *Sfixed32Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 4
-			binary.LittleEndian.PutUint32(dAtA[i:], uint32(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x1d
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalField))
 		i--
 		dAtA[i] = 0x15
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.RequiredField))
 		i--
 		dAtA[i] = 0xd
 	}
@@ -3775,13 +3125,11 @@ func (m *Sfixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.PackedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.PackedField[iNdEx]))
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)*8))
 		i--
@@ -3789,23 +3137,20 @@ func (m *Sfixed64Message) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(m.RepeatedField[iNdEx]))
+			i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(m.RepeatedField[iNdEx]))
 			i--
 			dAtA[i] = 0x19
 		}
 	}
 	if m.OptionalField != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalField))
 		i--
 		dAtA[i] = 0x11
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.RequiredField))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.RequiredField))
 		i--
 		dAtA[i] = 0x9
 	}
@@ -3839,17 +3184,11 @@ func (m *BoolMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
 		for iNdEx := len(m.PackedField) - 1; iNdEx >= 0; iNdEx-- {
-			i--
-			if m.PackedField[iNdEx] {
-				dAtA[i] = 1
-			} else {
-				dAtA[i] = 0
-			}
+			i = protobuf_go_lite.EncodeBool(dAtA, i, m.PackedField[iNdEx])
 		}
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.PackedField)))
 		i--
@@ -3857,35 +3196,20 @@ func (m *BoolMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i--
-			if m.RepeatedField[iNdEx] {
-				dAtA[i] = 1
-			} else {
-				dAtA[i] = 0
-			}
+			i = protobuf_go_lite.EncodeBool(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x18
 		}
 	}
 	if m.OptionalField != nil {
-		i--
-		if *m.OptionalField {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x10
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i--
-		if *m.RequiredField {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0x8
 	}
@@ -3919,31 +3243,24 @@ func (m *StringMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.RepeatedField[iNdEx])
-			copy(dAtA[i:], m.RepeatedField[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RepeatedField[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x1a
 		}
 	}
 	if m.OptionalField != nil {
-		i -= len(*m.OptionalField)
-		copy(dAtA[i:], *m.OptionalField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalField)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.OptionalField)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= len(*m.RequiredField)
-		copy(dAtA[i:], *m.RequiredField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.RequiredField)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.RequiredField)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -3977,31 +3294,24 @@ func (m *BytesMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.RepeatedField) > 0 {
 		for iNdEx := len(m.RepeatedField) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.RepeatedField[iNdEx])
-			copy(dAtA[i:], m.RepeatedField[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RepeatedField[iNdEx])))
+			i = protobuf_go_lite.EncodeBytes(dAtA, i, m.RepeatedField[iNdEx])
 			i--
 			dAtA[i] = 0x1a
 		}
 	}
 	if m.OptionalField != nil {
-		i -= len(m.OptionalField)
-		copy(dAtA[i:], m.OptionalField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalField)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.OptionalField)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.RequiredField == nil {
 		return 0, fmt.Errorf("proto: required field required_field not set")
 	} else {
-		i -= len(m.RequiredField)
-		copy(dAtA[i:], m.RequiredField)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.RequiredField)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.RequiredField)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -4035,27 +3345,10 @@ func (m *EnumMessage) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.PackedField) > 0 {
-		var pksize2 int
-		for _, num := range m.PackedField {
-			pksize2 += protobuf_go_lite.SizeOfVarint(uint64(num))
-		}
-		i -= pksize2
-		j1 := i
-		for _, num1 := range m.PackedField {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA[j1] = uint8(num)
-			j1++
-		}
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(pksize2))
+		i = protobuf_go_lite.EncodeVarintPacked(dAtA, i, m.PackedField)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -4087,18 +3380,10 @@ func (m *DoubleMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 9
-	}
-	if m.OptionalField != nil {
-		n += 9
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 9 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*8)) + len(m.PackedField)*8
-	}
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed64Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed64Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4109,18 +3394,10 @@ func (m *FloatMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 5
-	}
-	if m.OptionalField != nil {
-		n += 5
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 5 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*4)) + len(m.PackedField)*4
-	}
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed32Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed32Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4131,24 +3408,10 @@ func (m *Int32Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4159,24 +3422,10 @@ func (m *Int64Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4187,24 +3436,10 @@ func (m *Uint32Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4215,24 +3450,10 @@ func (m *Uint64Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4243,24 +3464,10 @@ func (m *Sint32Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfZigzag(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeZigzagSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeZigzagPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4271,24 +3478,10 @@ func (m *Sint64Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfZigzag(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeZigzagSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeZigzagPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4299,18 +3492,10 @@ func (m *Fixed32Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 5
-	}
-	if m.OptionalField != nil {
-		n += 5
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 5 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*4)) + len(m.PackedField)*4
-	}
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed32Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed32Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4321,18 +3506,10 @@ func (m *Fixed64Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 9
-	}
-	if m.OptionalField != nil {
-		n += 9
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 9 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*8)) + len(m.PackedField)*8
-	}
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed64Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed64Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4343,18 +3520,10 @@ func (m *Sfixed32Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 5
-	}
-	if m.OptionalField != nil {
-		n += 5
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 5 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*4)) + len(m.PackedField)*4
-	}
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed32Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed32Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4365,18 +3534,10 @@ func (m *Sfixed64Message) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 9
-	}
-	if m.OptionalField != nil {
-		n += 9
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 9 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField)*8)) + len(m.PackedField)*8
-	}
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeFixed64Slice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeFixed64Packed(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4387,18 +3548,10 @@ func (m *BoolMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 2
-	}
-	if m.OptionalField != nil {
-		n += 2
-	}
-	if len(m.RepeatedField) > 0 {
-		n += 2 * len(m.RepeatedField)
-	}
-	if len(m.PackedField) > 0 {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(len(m.PackedField))) + len(m.PackedField)*1
-	}
+	n += protobuf_go_lite.SizeBoolPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeBoolPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeBoolSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeBoolPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4409,20 +3562,9 @@ func (m *StringMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		l = len(*m.RequiredField)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.OptionalField != nil {
-		l = len(*m.OptionalField)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, s := range m.RepeatedField {
-			l = len(s)
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
-	}
+	n += protobuf_go_lite.SizeStringPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeStringPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeStringSlice(1, m.RepeatedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4433,20 +3575,9 @@ func (m *BytesMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		l = len(m.RequiredField)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.OptionalField != nil {
-		l = len(m.OptionalField)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, b := range m.RepeatedField {
-			l = len(b)
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
-	}
+	n += protobuf_go_lite.SizeBytesPresent(1, m.RequiredField)
+	n += protobuf_go_lite.SizeBytesPresent(1, m.OptionalField)
+	n += protobuf_go_lite.SizeBytesSlice(1, m.RepeatedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -4457,24 +3588,10 @@ func (m *EnumMessage) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RequiredField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.RequiredField))
-	}
-	if m.OptionalField != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalField))
-	}
-	if len(m.RepeatedField) > 0 {
-		for _, e := range m.RepeatedField {
-			n += 1 + protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-	}
-	if len(m.PackedField) > 0 {
-		l = 0
-		for _, e := range m.PackedField {
-			l += protobuf_go_lite.SizeOfVarint(uint64(e))
-		}
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(l)) + l
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.RequiredField)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalField)
+	n += protobuf_go_lite.SizeVarintSlice(1, m.RepeatedField)
+	n += protobuf_go_lite.SizeVarintPacked(1, m.PackedField)
 	n += len(m.unknownFields)
 	return n
 }
@@ -6286,11 +5403,12 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -6298,20 +5416,22 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				var _v32 int32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
@@ -6344,11 +5464,12 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					var _v32 int32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+					v = int32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -6357,11 +5478,12 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				var _v32 int32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
@@ -6394,11 +5516,12 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					var _v32 int32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+					v = int32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -6454,36 +5577,37 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.RequiredField = &v2
+			v = int64(_v64)
+			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.OptionalField = &v2
+			v = int64(_v64)
+			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
-				var v uint64
-				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				var v int64
+				var _v64 int64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-				m.RepeatedField = append(m.RepeatedField, int64(v))
+				v = int64(_v64)
+				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -6514,26 +5638,28 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v uint64
-					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					var v int64
+					var _v64 int64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-					m.RepeatedField = append(m.RepeatedField, int64(v))
+					v = int64(_v64)
+					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
-				var v uint64
-				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				var v int64
+				var _v64 int64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-				m.PackedField = append(m.PackedField, int64(v))
+				v = int64(_v64)
+				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -6564,13 +5690,14 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v uint64
-					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					var v int64
+					var _v64 int64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-					m.PackedField = append(m.PackedField, int64(v))
+					v = int64(_v64)
+					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
@@ -7277,39 +6404,33 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.RequiredField = &b
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.OptionalField = &b
 		case 3:
 			if wireType == 0 {
-				var v int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				v = int(_v)
+				var v bool
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				m.RepeatedField = append(m.RepeatedField, bool(v != 0))
+				m.RepeatedField = append(m.RepeatedField, bool(v))
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -7334,28 +6455,24 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 					m.RepeatedField = make([]bool, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					v = int(_v)
+					var v bool
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
+					m.RepeatedField = append(m.RepeatedField, bool(v))
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
-				var v int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				v = int(_v)
+				var v bool
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				m.PackedField = append(m.PackedField, bool(v != 0))
+				m.PackedField = append(m.PackedField, bool(v))
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -7380,14 +6497,12 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 					m.PackedField = make([]bool, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					v = int(_v)
+					var v bool
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					m.PackedField = append(m.PackedField, bool(v != 0))
+					m.PackedField = append(m.PackedField, bool(v))
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
@@ -7442,71 +6557,33 @@ func (m *StringMessage) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.RequiredField = &s
-			iNdEx = postIndex
+			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.OptionalField = &s
-			iNdEx = postIndex
+			m.OptionalField = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RepeatedField = append(m.RepeatedField, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
+			m.RepeatedField = append(m.RepeatedField, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -7557,79 +6634,29 @@ func (m *BytesMessage) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.RequiredField, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.RequiredField, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RequiredField = append(m.RequiredField[:0], dAtA[iNdEx:postIndex]...)
-			if m.RequiredField == nil {
-				m.RequiredField = []byte{}
-			}
-			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.OptionalField, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.OptionalField, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OptionalField = append(m.OptionalField[:0], dAtA[iNdEx:postIndex]...)
-			if m.OptionalField == nil {
-				m.OptionalField = []byte{}
-			}
-			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, true)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RepeatedField = append(m.RepeatedField, make([]byte, postIndex-iNdEx))
-			copy(m.RepeatedField[len(m.RepeatedField)-1], dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.RepeatedField = append(m.RepeatedField, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -8832,11 +7859,12 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
@@ -8844,20 +7872,22 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
 				var v int32
-				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				var _v32 int32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
@@ -8890,11 +7920,12 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					var _v32 int32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+					v = int32(_v32)
 					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
@@ -8903,11 +7934,12 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 		case 4:
 			if wireType == 0 {
 				var v int32
-				v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+				var _v32 int32
+				_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
@@ -8940,11 +7972,12 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				for iNdEx < postIndex {
 					var v int32
-					v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+					var _v32 int32
+					_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+					v = int32(_v32)
 					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
@@ -9000,36 +8033,37 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.RequiredField = &v2
+			v = int64(_v64)
+			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.OptionalField = &v2
+			v = int64(_v64)
+			m.OptionalField = &v
 		case 3:
 			if wireType == 0 {
-				var v uint64
-				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				var v int64
+				var _v64 int64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-				m.RepeatedField = append(m.RepeatedField, int64(v))
+				v = int64(_v64)
+				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -9060,26 +8094,28 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v uint64
-					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					var v int64
+					var _v64 int64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-					m.RepeatedField = append(m.RepeatedField, int64(v))
+					v = int64(_v64)
+					m.RepeatedField = append(m.RepeatedField, v)
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
-				var v uint64
-				v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				var v int64
+				var _v64 int64
+				_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-				m.PackedField = append(m.PackedField, int64(v))
+				v = int64(_v64)
+				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -9110,13 +8146,14 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v uint64
-					v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					var v int64
+					var _v64 int64
+					_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-					m.PackedField = append(m.PackedField, int64(v))
+					v = int64(_v64)
+					m.PackedField = append(m.PackedField, v)
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
@@ -9823,39 +8860,33 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.RequiredField = &b
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.OptionalField = &b
 		case 3:
 			if wireType == 0 {
-				var v int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				v = int(_v)
+				var v bool
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				m.RepeatedField = append(m.RepeatedField, bool(v != 0))
+				m.RepeatedField = append(m.RepeatedField, bool(v))
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -9880,28 +8911,24 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.RepeatedField = make([]bool, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					v = int(_v)
+					var v bool
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					m.RepeatedField = append(m.RepeatedField, bool(v != 0))
+					m.RepeatedField = append(m.RepeatedField, bool(v))
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
 		case 4:
 			if wireType == 0 {
-				var v int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				v = int(_v)
+				var v bool
+				v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				m.PackedField = append(m.PackedField, bool(v != 0))
+				m.PackedField = append(m.PackedField, bool(v))
 			} else if wireType == 2 {
 				var packedLen int
 				var _v uint64
@@ -9926,14 +8953,12 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 					m.PackedField = make([]bool, 0, elementCount)
 				}
 				for iNdEx < postIndex {
-					var v int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					v = int(_v)
+					var v bool
+					v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					m.PackedField = append(m.PackedField, bool(v != 0))
+					m.PackedField = append(m.PackedField, bool(v))
 				}
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field PackedField", wireType)
@@ -9988,83 +9013,33 @@ func (m *StringMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.RequiredField = &s
-			iNdEx = postIndex
+			m.RequiredField = &v
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.OptionalField = &s
-			iNdEx = postIndex
+			m.OptionalField = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.RepeatedField = append(m.RepeatedField, stringValue)
-			iNdEx = postIndex
+			m.RepeatedField = append(m.RepeatedField, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -10115,72 +9090,29 @@ func (m *BytesMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.RequiredField, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RequiredField = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.OptionalField, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OptionalField = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RepeatedField", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			var v []byte
+			v, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RepeatedField = append(m.RepeatedField, dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.RepeatedField = append(m.RepeatedField, v)
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])

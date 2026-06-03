@@ -101,18 +101,8 @@ func (m *MsgWithMaps) CloneVT() *MsgWithMaps {
 		return (*MsgWithMaps)(nil)
 	}
 	r := new(MsgWithMaps)
-	if rhs := m.StringKeys; rhs != nil {
-		r.StringKeys = make(map[string]*timestamppb.Timestamp, len(rhs))
-		for k, v := range rhs {
-			r.StringKeys[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.IntKeys; rhs != nil {
-		r.IntKeys = make(map[uint32]*timestamppb.Timestamp, len(rhs))
-		for k, v := range rhs {
-			r.IntKeys[k] = v.CloneVT()
-		}
-	}
+	r.StringKeys = protobuf_go_lite.CloneVTMap(m.StringKeys)
+	r.IntKeys = protobuf_go_lite.CloneVTMap(m.IntKeys)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -129,45 +119,11 @@ func (this *MsgWithMaps) EqualVT(that *MsgWithMaps) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if len(this.StringKeys) != len(that.StringKeys) {
+	if !protobuf_go_lite.EqualVTMapImplicit(this.StringKeys, that.StringKeys, func() *timestamppb.Timestamp { return &timestamppb.Timestamp{} }) {
 		return false
 	}
-	for i, vx := range this.StringKeys {
-		vy, ok := that.StringKeys[i]
-		if !ok {
-			return false
-		}
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &timestamppb.Timestamp{}
-			}
-			if q == nil {
-				q = &timestamppb.Timestamp{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if len(this.IntKeys) != len(that.IntKeys) {
+	if !protobuf_go_lite.EqualVTMapImplicit(this.IntKeys, that.IntKeys, func() *timestamppb.Timestamp { return &timestamppb.Timestamp{} }) {
 		return false
-	}
-	for i, vx := range this.IntKeys {
-		vy, ok := that.IntKeys[i]
-		if !ok {
-			return false
-		}
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &timestamppb.Timestamp{}
-			}
-			if q == nil {
-				q = &timestamppb.Timestamp{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -397,8 +353,7 @@ func (m *MsgWithMaps) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.IntKeys) > 0 {
 		for k := range m.IntKeys {
@@ -432,9 +387,7 @@ func (m *MsgWithMaps) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(size))
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -472,8 +425,7 @@ func (m *MsgWithMaps) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.IntKeys) > 0 {
 		for k := range m.IntKeys {
@@ -507,9 +459,7 @@ func (m *MsgWithMaps) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(size))
 			i--
 			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(k)))
+			i = protobuf_go_lite.EncodeString(dAtA, i, k)
 			i--
 			dAtA[i] = 0xa
 			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
@@ -526,31 +476,25 @@ func (m *MsgWithMaps) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.StringKeys) > 0 {
-		for k, v := range m.StringKeys {
-			_ = k
-			_ = v
-			l = 0
-			if v != nil {
-				l = v.SizeVT()
-			}
-			l += 1 + protobuf_go_lite.SizeOfVarint(uint64(l))
-			mapEntrySize := 1 + len(k) + protobuf_go_lite.SizeOfVarint(uint64(len(k))) + l
-			n += mapEntrySize + 1 + protobuf_go_lite.SizeOfVarint(uint64(mapEntrySize))
+	for k, v := range m.StringKeys {
+		_ = k
+		_ = v
+		l = 0
+		if v != nil {
+			l = v.SizeVT()
 		}
+		mapEntrySize := protobuf_go_lite.SizeStringValue(1, k) + protobuf_go_lite.SizeMessage(1, l)
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
-	if len(m.IntKeys) > 0 {
-		for k, v := range m.IntKeys {
-			_ = k
-			_ = v
-			l = 0
-			if v != nil {
-				l = v.SizeVT()
-			}
-			l += 1 + protobuf_go_lite.SizeOfVarint(uint64(l))
-			mapEntrySize := 1 + protobuf_go_lite.SizeOfVarint(uint64(k)) + l
-			n += mapEntrySize + 1 + protobuf_go_lite.SizeOfVarint(uint64(mapEntrySize))
+	for k, v := range m.IntKeys {
+		_ = k
+		_ = v
+		l = 0
+		if v != nil {
+			l = v.SizeVT()
 		}
+		mapEntrySize := protobuf_go_lite.SizeVarintValue(1, k) + protobuf_go_lite.SizeMessage(1, l)
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
 	n += len(m.unknownFields)
 	return n

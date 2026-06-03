@@ -10,7 +10,6 @@ import (
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -203,8 +202,7 @@ func (m *MessageDisableJson) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if vtmsg, ok := m.Body.(interface {
 		MarshalToSizedBufferVT([]byte) (int, error)
@@ -225,12 +223,7 @@ func (m *MessageDisableJson_Hello) MarshalToVT(dAtA []byte) (int, error) {
 
 func (m *MessageDisableJson_Hello) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i--
-	if m.Hello {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
-	}
+	i = protobuf_go_lite.EncodeBool(dAtA, i, m.Hello)
 	i--
 	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
@@ -242,9 +235,7 @@ func (m *MessageDisableJson_World) MarshalToVT(dAtA []byte) (int, error) {
 
 func (m *MessageDisableJson_World) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.World)
-	copy(dAtA[i:], m.World)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.World)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.World)
 	i--
 	dAtA[i] = 0x12
 	return len(dAtA) - i, nil
@@ -276,8 +267,7 @@ func (m *MessageDisableJson) MarshalToSizedBufferVTStrict(dAtA []byte) (int, err
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if msg, ok := m.Body.(*MessageDisableJson_World); ok {
 		size, err := msg.MarshalToSizedBufferVTStrict(dAtA[:i])
@@ -303,12 +293,7 @@ func (m *MessageDisableJson_Hello) MarshalToVTStrict(dAtA []byte) (int, error) {
 
 func (m *MessageDisableJson_Hello) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i--
-	if m.Hello {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
-	}
+	i = protobuf_go_lite.EncodeBool(dAtA, i, m.Hello)
 	i--
 	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
@@ -320,9 +305,7 @@ func (m *MessageDisableJson_World) MarshalToVTStrict(dAtA []byte) (int, error) {
 
 func (m *MessageDisableJson_World) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	i -= len(m.World)
-	copy(dAtA[i:], m.World)
-	i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.World)))
+	i = protobuf_go_lite.EncodeString(dAtA, i, m.World)
 	i--
 	dAtA[i] = 0x12
 	return len(dAtA) - i, nil
@@ -346,7 +329,7 @@ func (m *MessageDisableJson_Hello) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
+	n += protobuf_go_lite.SizeBoolValue(1)
 	return n
 }
 func (m *MessageDisableJson_World) SizeVT() (n int) {
@@ -355,8 +338,7 @@ func (m *MessageDisableJson_World) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.World)
-	n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+	n += protobuf_go_lite.SizeStringValue(1, m.World)
 	return n
 }
 func (x *MessageDisableJson) MarshalProtoText() string {
@@ -407,37 +389,23 @@ func (m *MessageDisableJson) UnmarshalVT(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Hello", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.Body = &MessageDisableJson_Hello{Hello: b}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field World", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Body = &MessageDisableJson_World{World: string(dAtA[iNdEx:postIndex])}
-			iNdEx = postIndex
+			m.Body = &MessageDisableJson_World{World: v}
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -484,41 +452,23 @@ func (m *MessageDisableJson) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Hello", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.Body = &MessageDisableJson_Hello{Hello: b}
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field World", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.Body = &MessageDisableJson_World{World: stringValue}
-			iNdEx = postIndex
+			m.Body = &MessageDisableJson_World{World: v}
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])

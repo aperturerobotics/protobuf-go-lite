@@ -6,14 +6,12 @@ package proto3opt
 
 import (
 	base64 "encoding/base64"
-	binary "encoding/binary"
 	fmt "fmt"
 	io "io"
 	math "math"
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -198,69 +196,22 @@ func (m *OptionalFieldInProto3) CloneVT() *OptionalFieldInProto3 {
 		return (*OptionalFieldInProto3)(nil)
 	}
 	r := new(OptionalFieldInProto3)
-	if rhs := m.OptionalInt32; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalInt32 = &tmpVal
-	}
-	if rhs := m.OptionalInt64; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalInt64 = &tmpVal
-	}
-	if rhs := m.OptionalUint32; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalUint32 = &tmpVal
-	}
-	if rhs := m.OptionalUint64; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalUint64 = &tmpVal
-	}
-	if rhs := m.OptionalSint32; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalSint32 = &tmpVal
-	}
-	if rhs := m.OptionalSint64; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalSint64 = &tmpVal
-	}
-	if rhs := m.OptionalFixed32; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalFixed32 = &tmpVal
-	}
-	if rhs := m.OptionalFixed64; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalFixed64 = &tmpVal
-	}
-	if rhs := m.OptionalSfixed32; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalSfixed32 = &tmpVal
-	}
-	if rhs := m.OptionalSfixed64; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalSfixed64 = &tmpVal
-	}
-	if rhs := m.OptionalFloat; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalFloat = &tmpVal
-	}
-	if rhs := m.OptionalDouble; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalDouble = &tmpVal
-	}
-	if rhs := m.OptionalBool; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalBool = &tmpVal
-	}
-	if rhs := m.OptionalString; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalString = &tmpVal
-	}
-	if rhs := m.OptionalBytes; rhs != nil {
-		r.OptionalBytes = slices.Clone(rhs)
-	}
-	if rhs := m.OptionalEnum; rhs != nil {
-		tmpVal := *rhs
-		r.OptionalEnum = &tmpVal
-	}
+	r.OptionalInt32 = protobuf_go_lite.ClonePtr(m.OptionalInt32)
+	r.OptionalInt64 = protobuf_go_lite.ClonePtr(m.OptionalInt64)
+	r.OptionalUint32 = protobuf_go_lite.ClonePtr(m.OptionalUint32)
+	r.OptionalUint64 = protobuf_go_lite.ClonePtr(m.OptionalUint64)
+	r.OptionalSint32 = protobuf_go_lite.ClonePtr(m.OptionalSint32)
+	r.OptionalSint64 = protobuf_go_lite.ClonePtr(m.OptionalSint64)
+	r.OptionalFixed32 = protobuf_go_lite.ClonePtr(m.OptionalFixed32)
+	r.OptionalFixed64 = protobuf_go_lite.ClonePtr(m.OptionalFixed64)
+	r.OptionalSfixed32 = protobuf_go_lite.ClonePtr(m.OptionalSfixed32)
+	r.OptionalSfixed64 = protobuf_go_lite.ClonePtr(m.OptionalSfixed64)
+	r.OptionalFloat = protobuf_go_lite.ClonePtr(m.OptionalFloat)
+	r.OptionalDouble = protobuf_go_lite.ClonePtr(m.OptionalDouble)
+	r.OptionalBool = protobuf_go_lite.ClonePtr(m.OptionalBool)
+	r.OptionalString = protobuf_go_lite.ClonePtr(m.OptionalString)
+	r.OptionalBytes = protobuf_go_lite.CloneBytes(m.OptionalBytes)
+	r.OptionalEnum = protobuf_go_lite.ClonePtr(m.OptionalEnum)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -277,52 +228,52 @@ func (this *OptionalFieldInProto3) EqualVT(that *OptionalFieldInProto3) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.OptionalInt32, that.OptionalInt32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalInt32, that.OptionalInt32) {
 		return false
 	}
-	if p, q := this.OptionalInt64, that.OptionalInt64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalInt64, that.OptionalInt64) {
 		return false
 	}
-	if p, q := this.OptionalUint32, that.OptionalUint32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalUint32, that.OptionalUint32) {
 		return false
 	}
-	if p, q := this.OptionalUint64, that.OptionalUint64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalUint64, that.OptionalUint64) {
 		return false
 	}
-	if p, q := this.OptionalSint32, that.OptionalSint32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalSint32, that.OptionalSint32) {
 		return false
 	}
-	if p, q := this.OptionalSint64, that.OptionalSint64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalSint64, that.OptionalSint64) {
 		return false
 	}
-	if p, q := this.OptionalFixed32, that.OptionalFixed32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalFixed32, that.OptionalFixed32) {
 		return false
 	}
-	if p, q := this.OptionalFixed64, that.OptionalFixed64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalFixed64, that.OptionalFixed64) {
 		return false
 	}
-	if p, q := this.OptionalSfixed32, that.OptionalSfixed32; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalSfixed32, that.OptionalSfixed32) {
 		return false
 	}
-	if p, q := this.OptionalSfixed64, that.OptionalSfixed64; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalSfixed64, that.OptionalSfixed64) {
 		return false
 	}
-	if p, q := this.OptionalFloat, that.OptionalFloat; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalFloat, that.OptionalFloat) {
 		return false
 	}
-	if p, q := this.OptionalDouble, that.OptionalDouble; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalDouble, that.OptionalDouble) {
 		return false
 	}
-	if p, q := this.OptionalBool, that.OptionalBool; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalBool, that.OptionalBool) {
 		return false
 	}
-	if p, q := this.OptionalString, that.OptionalString; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalString, that.OptionalString) {
 		return false
 	}
-	if p, q := this.OptionalBytes, that.OptionalBytes; (p == nil && q != nil) || (p != nil && q == nil) || string(p) != string(q) {
+	if !protobuf_go_lite.EqualBytesPresent(this.OptionalBytes, that.OptionalBytes) {
 		return false
 	}
-	if p, q := this.OptionalEnum, that.OptionalEnum; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.OptionalEnum, that.OptionalEnum) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -645,8 +596,7 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.OptionalEnum != nil {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
@@ -656,72 +606,57 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 		dAtA[i] = 0x80
 	}
 	if m.OptionalBytes != nil {
-		i -= len(m.OptionalBytes)
-		copy(dAtA[i:], m.OptionalBytes)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.OptionalBytes)
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.OptionalString != nil {
-		i -= len(*m.OptionalString)
-		copy(dAtA[i:], *m.OptionalString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.OptionalString)
 		i--
 		dAtA[i] = 0x72
 	}
 	if m.OptionalBool != nil {
-		i--
-		if *m.OptionalBool {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.OptionalBool)
 		i--
 		dAtA[i] = 0x68
 	}
 	if m.OptionalDouble != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.OptionalDouble))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.OptionalDouble))))
 		i--
 		dAtA[i] = 0x61
 	}
 	if m.OptionalFloat != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.OptionalFloat))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.OptionalFloat))))
 		i--
 		dAtA[i] = 0x5d
 	}
 	if m.OptionalSfixed64 != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalSfixed64))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalSfixed64))
 		i--
 		dAtA[i] = 0x51
 	}
 	if m.OptionalSfixed32 != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalSfixed32))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalSfixed32))
 		i--
 		dAtA[i] = 0x4d
 	}
 	if m.OptionalFixed64 != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalFixed64))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalFixed64))
 		i--
 		dAtA[i] = 0x41
 	}
 	if m.OptionalFixed32 != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalFixed32))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalFixed32))
 		i--
 		dAtA[i] = 0x3d
 	}
 	if m.OptionalSint64 != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.OptionalSint64)
 		i--
 		dAtA[i] = 0x30
 	}
 	if m.OptionalSint32 != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.OptionalSint32)
 		i--
 		dAtA[i] = 0x28
 	}
@@ -775,8 +710,7 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.OptionalEnum != nil {
 		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(*m.OptionalEnum))
@@ -786,72 +720,57 @@ func (m *OptionalFieldInProto3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 		dAtA[i] = 0x80
 	}
 	if m.OptionalBytes != nil {
-		i -= len(m.OptionalBytes)
-		copy(dAtA[i:], m.OptionalBytes)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.OptionalBytes)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.OptionalBytes)
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.OptionalString != nil {
-		i -= len(*m.OptionalString)
-		copy(dAtA[i:], *m.OptionalString)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.OptionalString)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.OptionalString)
 		i--
 		dAtA[i] = 0x72
 	}
 	if m.OptionalBool != nil {
-		i--
-		if *m.OptionalBool {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
+		i = protobuf_go_lite.EncodeBool(dAtA, i, *m.OptionalBool)
 		i--
 		dAtA[i] = 0x68
 	}
 	if m.OptionalDouble != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(*m.OptionalDouble))))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(math.Float64bits(float64(*m.OptionalDouble))))
 		i--
 		dAtA[i] = 0x61
 	}
 	if m.OptionalFloat != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(*m.OptionalFloat))))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(math.Float32bits(float32(*m.OptionalFloat))))
 		i--
 		dAtA[i] = 0x5d
 	}
 	if m.OptionalSfixed64 != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalSfixed64))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalSfixed64))
 		i--
 		dAtA[i] = 0x51
 	}
 	if m.OptionalSfixed32 != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalSfixed32))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalSfixed32))
 		i--
 		dAtA[i] = 0x4d
 	}
 	if m.OptionalFixed64 != nil {
-		i -= 8
-		binary.LittleEndian.PutUint64(dAtA[i:], uint64(*m.OptionalFixed64))
+		i = protobuf_go_lite.EncodeFixed64(dAtA, i, uint64(*m.OptionalFixed64))
 		i--
 		dAtA[i] = 0x41
 	}
 	if m.OptionalFixed32 != nil {
-		i -= 4
-		binary.LittleEndian.PutUint32(dAtA[i:], uint32(*m.OptionalFixed32))
+		i = protobuf_go_lite.EncodeFixed32(dAtA, i, uint32(*m.OptionalFixed32))
 		i--
 		dAtA[i] = 0x3d
 	}
 	if m.OptionalSint64 != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint64(*m.OptionalSint64)<<1)^uint64((*m.OptionalSint64>>63))))
+		i = protobuf_go_lite.EncodeZigzag64(dAtA, i, *m.OptionalSint64)
 		i--
 		dAtA[i] = 0x30
 	}
 	if m.OptionalSint32 != nil {
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64((uint32(*m.OptionalSint32)<<1)^uint32((*m.OptionalSint32>>31))))
+		i = protobuf_go_lite.EncodeZigzag32(dAtA, i, *m.OptionalSint32)
 		i--
 		dAtA[i] = 0x28
 	}
@@ -884,56 +803,22 @@ func (m *OptionalFieldInProto3) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.OptionalInt32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalInt32))
-	}
-	if m.OptionalInt64 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalInt64))
-	}
-	if m.OptionalUint32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalUint32))
-	}
-	if m.OptionalUint64 != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalUint64))
-	}
-	if m.OptionalSint32 != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalSint32))
-	}
-	if m.OptionalSint64 != nil {
-		n += 1 + protobuf_go_lite.SizeOfZigzag(uint64(*m.OptionalSint64))
-	}
-	if m.OptionalFixed32 != nil {
-		n += 5
-	}
-	if m.OptionalFixed64 != nil {
-		n += 9
-	}
-	if m.OptionalSfixed32 != nil {
-		n += 5
-	}
-	if m.OptionalSfixed64 != nil {
-		n += 9
-	}
-	if m.OptionalFloat != nil {
-		n += 5
-	}
-	if m.OptionalDouble != nil {
-		n += 9
-	}
-	if m.OptionalBool != nil {
-		n += 2
-	}
-	if m.OptionalString != nil {
-		l = len(*m.OptionalString)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.OptionalBytes != nil {
-		l = len(m.OptionalBytes)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.OptionalEnum != nil {
-		n += 2 + protobuf_go_lite.SizeOfVarint(uint64(*m.OptionalEnum))
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalInt32)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalInt64)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalUint32)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.OptionalUint64)
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.OptionalSint32)
+	n += protobuf_go_lite.SizeZigzagPtr(1, m.OptionalSint64)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalFixed32)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalFixed64)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalSfixed32)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalSfixed64)
+	n += protobuf_go_lite.SizeFixed32Ptr(1, m.OptionalFloat)
+	n += protobuf_go_lite.SizeFixed64Ptr(1, m.OptionalDouble)
+	n += protobuf_go_lite.SizeBoolPtr(1, m.OptionalBool)
+	n += protobuf_go_lite.SizeStringPtr(1, m.OptionalString)
+	n += protobuf_go_lite.SizeBytesPresent(1, m.OptionalBytes)
+	n += protobuf_go_lite.SizeVarintPtr(2, m.OptionalEnum)
 	n += len(m.unknownFields)
 	return n
 }
@@ -1132,24 +1017,25 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.OptionalSint32 = &v
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.OptionalSint64 = &v2
+			v = int64(_v64)
+			m.OptionalSint64 = &v
 		case 7:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
@@ -1228,64 +1114,31 @@ func (m *OptionalFieldInProto3) UnmarshalVT(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.OptionalBool = &b
 		case 14:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.OptionalString = &s
-			iNdEx = postIndex
+			m.OptionalString = &v
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.OptionalBytes, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.OptionalBytes, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OptionalBytes = append(m.OptionalBytes[:0], dAtA[iNdEx:postIndex]...)
-			if m.OptionalBytes == nil {
-				m.OptionalBytes = []byte{}
-			}
-			iNdEx = postIndex
 		case 16:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)
@@ -1385,24 +1238,25 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint32", wireType)
 			}
 			var v int32
-			v, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
+			var _v32 int32
+			_v32, iNdEx, err = protobuf_go_lite.DecodeSint32(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = int32((uint32(v) >> 1) ^ uint32(((v&1)<<31)>>31))
+			v = int32(_v32)
 			m.OptionalSint32 = &v
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalSint64", wireType)
 			}
-			var v uint64
-			v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v int64
+			var _v64 int64
+			_v64, iNdEx, err = protobuf_go_lite.DecodeSint64(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			v = (v >> 1) ^ uint64((int64(v&1)<<63)>>63)
-			v2 := int64(v)
-			m.OptionalSint64 = &v2
+			v = int64(_v64)
+			m.OptionalSint64 = &v
 		case 7:
 			if wireType != 5 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalFixed32", wireType)
@@ -1481,65 +1335,31 @@ func (m *OptionalFieldInProto3) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBool", wireType)
 			}
-			var v int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			v = int(_v)
+			var v bool
+			v, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			b := bool(v != 0)
+			b := bool(v)
 			m.OptionalBool = &b
 		case 14:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalString", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.OptionalString = &s
-			iNdEx = postIndex
+			m.OptionalString = &v
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalBytes", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.OptionalBytes, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OptionalBytes = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		case 16:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OptionalEnum", wireType)

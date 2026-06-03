@@ -10,7 +10,6 @@ import (
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	descriptorpb "github.com/aperturerobotics/protobuf-go-lite/types/descriptorpb"
@@ -369,22 +368,10 @@ func (m *Version) CloneVT() *Version {
 		return (*Version)(nil)
 	}
 	r := new(Version)
-	if rhs := m.Major; rhs != nil {
-		tmpVal := *rhs
-		r.Major = &tmpVal
-	}
-	if rhs := m.Minor; rhs != nil {
-		tmpVal := *rhs
-		r.Minor = &tmpVal
-	}
-	if rhs := m.Patch; rhs != nil {
-		tmpVal := *rhs
-		r.Patch = &tmpVal
-	}
-	if rhs := m.Suffix; rhs != nil {
-		tmpVal := *rhs
-		r.Suffix = &tmpVal
-	}
+	r.Major = protobuf_go_lite.ClonePtr(m.Major)
+	r.Minor = protobuf_go_lite.ClonePtr(m.Minor)
+	r.Patch = protobuf_go_lite.ClonePtr(m.Patch)
+	r.Suffix = protobuf_go_lite.ClonePtr(m.Suffix)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -400,26 +387,11 @@ func (m *CodeGeneratorRequest) CloneVT() *CodeGeneratorRequest {
 		return (*CodeGeneratorRequest)(nil)
 	}
 	r := new(CodeGeneratorRequest)
-	r.CompilerVersion = m.CompilerVersion.CloneVT()
-	if rhs := m.FileToGenerate; rhs != nil {
-		r.FileToGenerate = slices.Clone(rhs)
-	}
-	if rhs := m.Parameter; rhs != nil {
-		tmpVal := *rhs
-		r.Parameter = &tmpVal
-	}
-	if rhs := m.ProtoFile; rhs != nil {
-		r.ProtoFile = make([]*descriptorpb.FileDescriptorProto, len(rhs))
-		for k, v := range rhs {
-			r.ProtoFile[k] = v.CloneVT()
-		}
-	}
-	if rhs := m.SourceFileDescriptors; rhs != nil {
-		r.SourceFileDescriptors = make([]*descriptorpb.FileDescriptorProto, len(rhs))
-		for k, v := range rhs {
-			r.SourceFileDescriptors[k] = v.CloneVT()
-		}
-	}
+	r.FileToGenerate = protobuf_go_lite.CloneSlice(m.FileToGenerate)
+	r.Parameter = protobuf_go_lite.ClonePtr(m.Parameter)
+	r.ProtoFile = protobuf_go_lite.CloneVTSlice(m.ProtoFile)
+	r.SourceFileDescriptors = protobuf_go_lite.CloneVTSlice(m.SourceFileDescriptors)
+	r.CompilerVersion = protobuf_go_lite.CloneVTValue(m.CompilerVersion)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -435,21 +407,10 @@ func (m *CodeGeneratorResponse_File) CloneVT() *CodeGeneratorResponse_File {
 		return (*CodeGeneratorResponse_File)(nil)
 	}
 	r := new(CodeGeneratorResponse_File)
-	if rhs := m.Name; rhs != nil {
-		tmpVal := *rhs
-		r.Name = &tmpVal
-	}
-	if rhs := m.InsertionPoint; rhs != nil {
-		tmpVal := *rhs
-		r.InsertionPoint = &tmpVal
-	}
-	if rhs := m.Content; rhs != nil {
-		tmpVal := *rhs
-		r.Content = &tmpVal
-	}
-	if rhs := m.GeneratedCodeInfo; rhs != nil {
-		r.GeneratedCodeInfo = rhs.CloneVT()
-	}
+	r.Name = protobuf_go_lite.ClonePtr(m.Name)
+	r.InsertionPoint = protobuf_go_lite.ClonePtr(m.InsertionPoint)
+	r.Content = protobuf_go_lite.ClonePtr(m.Content)
+	r.GeneratedCodeInfo = protobuf_go_lite.CloneVTValue(m.GeneratedCodeInfo)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -465,28 +426,11 @@ func (m *CodeGeneratorResponse) CloneVT() *CodeGeneratorResponse {
 		return (*CodeGeneratorResponse)(nil)
 	}
 	r := new(CodeGeneratorResponse)
-	if rhs := m.Error; rhs != nil {
-		tmpVal := *rhs
-		r.Error = &tmpVal
-	}
-	if rhs := m.SupportedFeatures; rhs != nil {
-		tmpVal := *rhs
-		r.SupportedFeatures = &tmpVal
-	}
-	if rhs := m.MinimumEdition; rhs != nil {
-		tmpVal := *rhs
-		r.MinimumEdition = &tmpVal
-	}
-	if rhs := m.MaximumEdition; rhs != nil {
-		tmpVal := *rhs
-		r.MaximumEdition = &tmpVal
-	}
-	if rhs := m.File; rhs != nil {
-		r.File = make([]*CodeGeneratorResponse_File, len(rhs))
-		for k, v := range rhs {
-			r.File[k] = v.CloneVT()
-		}
-	}
+	r.Error = protobuf_go_lite.ClonePtr(m.Error)
+	r.SupportedFeatures = protobuf_go_lite.ClonePtr(m.SupportedFeatures)
+	r.MinimumEdition = protobuf_go_lite.ClonePtr(m.MinimumEdition)
+	r.MaximumEdition = protobuf_go_lite.ClonePtr(m.MaximumEdition)
+	r.File = protobuf_go_lite.CloneVTSlice(m.File)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -503,16 +447,16 @@ func (this *Version) EqualVT(that *Version) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Major, that.Major; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Major, that.Major) {
 		return false
 	}
-	if p, q := this.Minor, that.Minor; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Minor, that.Minor) {
 		return false
 	}
-	if p, q := this.Patch, that.Patch; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Patch, that.Patch) {
 		return false
 	}
-	if p, q := this.Suffix, that.Suffix; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Suffix, that.Suffix) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -531,54 +475,20 @@ func (this *CodeGeneratorRequest) EqualVT(that *CodeGeneratorRequest) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if len(this.FileToGenerate) != len(that.FileToGenerate) {
+	if !protobuf_go_lite.EqualSlice(this.FileToGenerate, that.FileToGenerate) {
 		return false
 	}
-	for i, vx := range this.FileToGenerate {
-		vy := that.FileToGenerate[i]
-		if vx != vy {
-			return false
-		}
-	}
-	if p, q := this.Parameter, that.Parameter; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Parameter, that.Parameter) {
 		return false
 	}
-	if !this.CompilerVersion.EqualVT(that.CompilerVersion) {
+	if !protobuf_go_lite.IsEqualVT(this.CompilerVersion, that.CompilerVersion) {
 		return false
 	}
-	if len(this.ProtoFile) != len(that.ProtoFile) {
+	if !protobuf_go_lite.EqualVTSliceImplicit(this.ProtoFile, that.ProtoFile, func() *descriptorpb.FileDescriptorProto { return &descriptorpb.FileDescriptorProto{} }) {
 		return false
 	}
-	for i, vx := range this.ProtoFile {
-		vy := that.ProtoFile[i]
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &descriptorpb.FileDescriptorProto{}
-			}
-			if q == nil {
-				q = &descriptorpb.FileDescriptorProto{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
-	}
-	if len(this.SourceFileDescriptors) != len(that.SourceFileDescriptors) {
+	if !protobuf_go_lite.EqualVTSliceImplicit(this.SourceFileDescriptors, that.SourceFileDescriptors, func() *descriptorpb.FileDescriptorProto { return &descriptorpb.FileDescriptorProto{} }) {
 		return false
-	}
-	for i, vx := range this.SourceFileDescriptors {
-		vy := that.SourceFileDescriptors[i]
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &descriptorpb.FileDescriptorProto{}
-			}
-			if q == nil {
-				q = &descriptorpb.FileDescriptorProto{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -596,16 +506,16 @@ func (this *CodeGeneratorResponse_File) EqualVT(that *CodeGeneratorResponse_File
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Name, that.Name; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Name, that.Name) {
 		return false
 	}
-	if p, q := this.InsertionPoint, that.InsertionPoint; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.InsertionPoint, that.InsertionPoint) {
 		return false
 	}
-	if p, q := this.Content, that.Content; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Content, that.Content) {
 		return false
 	}
-	if !this.GeneratedCodeInfo.EqualVT(that.GeneratedCodeInfo) {
+	if !protobuf_go_lite.IsEqualVT(this.GeneratedCodeInfo, that.GeneratedCodeInfo) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -624,34 +534,20 @@ func (this *CodeGeneratorResponse) EqualVT(that *CodeGeneratorResponse) bool {
 	} else if this == nil || that == nil {
 		return false
 	}
-	if p, q := this.Error, that.Error; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.Error, that.Error) {
 		return false
 	}
-	if p, q := this.SupportedFeatures, that.SupportedFeatures; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.SupportedFeatures, that.SupportedFeatures) {
 		return false
 	}
-	if p, q := this.MinimumEdition, that.MinimumEdition; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.MinimumEdition, that.MinimumEdition) {
 		return false
 	}
-	if p, q := this.MaximumEdition, that.MaximumEdition; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+	if !protobuf_go_lite.EqualPtr(this.MaximumEdition, that.MaximumEdition) {
 		return false
 	}
-	if len(this.File) != len(that.File) {
+	if !protobuf_go_lite.EqualVTSliceImplicit(this.File, that.File, func() *CodeGeneratorResponse_File { return &CodeGeneratorResponse_File{} }) {
 		return false
-	}
-	for i, vx := range this.File {
-		vy := that.File[i]
-		if p, q := vx, vy; p != q {
-			if p == nil {
-				p = &CodeGeneratorResponse_File{}
-			}
-			if q == nil {
-				q = &CodeGeneratorResponse_File{}
-			}
-			if !p.EqualVT(q) {
-				return false
-			}
-		}
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
 }
@@ -693,13 +589,10 @@ func (m *Version) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Suffix != nil {
-		i -= len(*m.Suffix)
-		copy(dAtA[i:], *m.Suffix)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Suffix)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Suffix)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -748,8 +641,7 @@ func (m *CodeGeneratorRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.SourceFileDescriptors) > 0 {
 		for iNdEx := len(m.SourceFileDescriptors) - 1; iNdEx >= 0; iNdEx-- {
@@ -788,17 +680,13 @@ func (m *CodeGeneratorRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) 
 		dAtA[i] = 0x1a
 	}
 	if m.Parameter != nil {
-		i -= len(*m.Parameter)
-		copy(dAtA[i:], *m.Parameter)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Parameter)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Parameter)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.FileToGenerate) > 0 {
 		for iNdEx := len(m.FileToGenerate) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.FileToGenerate[iNdEx])
-			copy(dAtA[i:], m.FileToGenerate[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.FileToGenerate[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.FileToGenerate[iNdEx])
 			i--
 			dAtA[i] = 0xa
 		}
@@ -833,8 +721,7 @@ func (m *CodeGeneratorResponse_File) MarshalToSizedBufferVT(dAtA []byte) (int, e
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.GeneratedCodeInfo != nil {
 		size, err := m.GeneratedCodeInfo.MarshalToSizedBufferVT(dAtA[:i])
@@ -849,23 +736,17 @@ func (m *CodeGeneratorResponse_File) MarshalToSizedBufferVT(dAtA []byte) (int, e
 		dAtA[i] = 0x82
 	}
 	if m.Content != nil {
-		i -= len(*m.Content)
-		copy(dAtA[i:], *m.Content)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Content)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Content)
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.InsertionPoint != nil {
-		i -= len(*m.InsertionPoint)
-		copy(dAtA[i:], *m.InsertionPoint)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.InsertionPoint)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.InsertionPoint)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.Name != nil {
-		i -= len(*m.Name)
-		copy(dAtA[i:], *m.Name)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Name)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Name)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -899,8 +780,7 @@ func (m *CodeGeneratorResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.File) > 0 {
 		for iNdEx := len(m.File) - 1; iNdEx >= 0; iNdEx-- {
@@ -930,9 +810,7 @@ func (m *CodeGeneratorResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error)
 		dAtA[i] = 0x10
 	}
 	if m.Error != nil {
-		i -= len(*m.Error)
-		copy(dAtA[i:], *m.Error)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Error)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Error)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -966,13 +844,10 @@ func (m *Version) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.Suffix != nil {
-		i -= len(*m.Suffix)
-		copy(dAtA[i:], *m.Suffix)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Suffix)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Suffix)
 		i--
 		dAtA[i] = 0x22
 	}
@@ -1021,8 +896,7 @@ func (m *CodeGeneratorRequest) MarshalToSizedBufferVTStrict(dAtA []byte) (int, e
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.SourceFileDescriptors) > 0 {
 		for iNdEx := len(m.SourceFileDescriptors) - 1; iNdEx >= 0; iNdEx-- {
@@ -1061,17 +935,13 @@ func (m *CodeGeneratorRequest) MarshalToSizedBufferVTStrict(dAtA []byte) (int, e
 		dAtA[i] = 0x1a
 	}
 	if m.Parameter != nil {
-		i -= len(*m.Parameter)
-		copy(dAtA[i:], *m.Parameter)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Parameter)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Parameter)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.FileToGenerate) > 0 {
 		for iNdEx := len(m.FileToGenerate) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.FileToGenerate[iNdEx])
-			copy(dAtA[i:], m.FileToGenerate[iNdEx])
-			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.FileToGenerate[iNdEx])))
+			i = protobuf_go_lite.EncodeString(dAtA, i, m.FileToGenerate[iNdEx])
 			i--
 			dAtA[i] = 0xa
 		}
@@ -1106,8 +976,7 @@ func (m *CodeGeneratorResponse_File) MarshalToSizedBufferVTStrict(dAtA []byte) (
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if m.GeneratedCodeInfo != nil {
 		size, err := m.GeneratedCodeInfo.MarshalToSizedBufferVTStrict(dAtA[:i])
@@ -1122,23 +991,17 @@ func (m *CodeGeneratorResponse_File) MarshalToSizedBufferVTStrict(dAtA []byte) (
 		dAtA[i] = 0x82
 	}
 	if m.Content != nil {
-		i -= len(*m.Content)
-		copy(dAtA[i:], *m.Content)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Content)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Content)
 		i--
 		dAtA[i] = 0x7a
 	}
 	if m.InsertionPoint != nil {
-		i -= len(*m.InsertionPoint)
-		copy(dAtA[i:], *m.InsertionPoint)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.InsertionPoint)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.InsertionPoint)
 		i--
 		dAtA[i] = 0x12
 	}
 	if m.Name != nil {
-		i -= len(*m.Name)
-		copy(dAtA[i:], *m.Name)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Name)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Name)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1172,8 +1035,7 @@ func (m *CodeGeneratorResponse) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.File) > 0 {
 		for iNdEx := len(m.File) - 1; iNdEx >= 0; iNdEx-- {
@@ -1203,9 +1065,7 @@ func (m *CodeGeneratorResponse) MarshalToSizedBufferVTStrict(dAtA []byte) (int, 
 		dAtA[i] = 0x10
 	}
 	if m.Error != nil {
-		i -= len(*m.Error)
-		copy(dAtA[i:], *m.Error)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(*m.Error)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, *m.Error)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1218,19 +1078,10 @@ func (m *Version) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Major != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.Major))
-	}
-	if m.Minor != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.Minor))
-	}
-	if m.Patch != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.Patch))
-	}
-	if m.Suffix != nil {
-		l = len(*m.Suffix)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeVarintPtr(1, m.Major)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.Minor)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.Patch)
+	n += protobuf_go_lite.SizeStringPtr(1, m.Suffix)
 	n += len(m.unknownFields)
 	return n
 }
@@ -1241,31 +1092,19 @@ func (m *CodeGeneratorRequest) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.FileToGenerate) > 0 {
-		for _, s := range m.FileToGenerate {
-			l = len(s)
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
-	}
-	if m.Parameter != nil {
-		l = len(*m.Parameter)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringSlice(1, m.FileToGenerate)
+	n += protobuf_go_lite.SizeStringPtr(1, m.Parameter)
 	if m.CompilerVersion != nil {
 		l = m.CompilerVersion.SizeVT()
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
-	if len(m.ProtoFile) > 0 {
-		for _, e := range m.ProtoFile {
-			l = e.SizeVT()
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
+	for _, e := range m.ProtoFile {
+		l = e.SizeVT()
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
-	if len(m.SourceFileDescriptors) > 0 {
-		for _, e := range m.SourceFileDescriptors {
-			l = e.SizeVT()
-			n += 2 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
+	for _, e := range m.SourceFileDescriptors {
+		l = e.SizeVT()
+		n += protobuf_go_lite.SizeMessage(2, l)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -1277,21 +1116,12 @@ func (m *CodeGeneratorResponse_File) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Name != nil {
-		l = len(*m.Name)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.InsertionPoint != nil {
-		l = len(*m.InsertionPoint)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.Content != nil {
-		l = len(*m.Content)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringPtr(1, m.Name)
+	n += protobuf_go_lite.SizeStringPtr(1, m.InsertionPoint)
+	n += protobuf_go_lite.SizeStringPtr(1, m.Content)
 	if m.GeneratedCodeInfo != nil {
 		l = m.GeneratedCodeInfo.SizeVT()
-		n += 2 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
+		n += protobuf_go_lite.SizeMessage(2, l)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -1303,24 +1133,13 @@ func (m *CodeGeneratorResponse) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Error != nil {
-		l = len(*m.Error)
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	if m.SupportedFeatures != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.SupportedFeatures))
-	}
-	if m.MinimumEdition != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.MinimumEdition))
-	}
-	if m.MaximumEdition != nil {
-		n += 1 + protobuf_go_lite.SizeOfVarint(uint64(*m.MaximumEdition))
-	}
-	if len(m.File) > 0 {
-		for _, e := range m.File {
-			l = e.SizeVT()
-			n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-		}
+	n += protobuf_go_lite.SizeStringPtr(1, m.Error)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.SupportedFeatures)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.MinimumEdition)
+	n += protobuf_go_lite.SizeVarintPtr(1, m.MaximumEdition)
+	for _, e := range m.File {
+		l = e.SizeVT()
+		n += protobuf_go_lite.SizeMessage(1, l)
 	}
 	n += len(m.unknownFields)
 	return n
@@ -1585,25 +1404,12 @@ func (m *Version) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Suffix", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Suffix = &s
-			iNdEx = postIndex
+			m.Suffix = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -1650,72 +1456,34 @@ func (m *CodeGeneratorRequest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FileToGenerate", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.FileToGenerate = append(m.FileToGenerate, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
+			m.FileToGenerate = append(m.FileToGenerate, v)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Parameter", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Parameter = &s
-			iNdEx = postIndex
+			m.Parameter = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CompilerVersion", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.CompilerVersion == nil {
 				m.CompilerVersion = &Version{}
 			}
-			if err := m.CompilerVersion.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.CompilerVersion.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1723,25 +1491,12 @@ func (m *CodeGeneratorRequest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ProtoFile", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.ProtoFile = append(m.ProtoFile, &descriptorpb.FileDescriptorProto{})
-			if err := m.ProtoFile[len(m.ProtoFile)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ProtoFile[len(m.ProtoFile)-1].UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1749,25 +1504,12 @@ func (m *CodeGeneratorRequest) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SourceFileDescriptors", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.SourceFileDescriptors = append(m.SourceFileDescriptors, &descriptorpb.FileDescriptorProto{})
-			if err := m.SourceFileDescriptors[len(m.SourceFileDescriptors)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.SourceFileDescriptors[len(m.SourceFileDescriptors)-1].UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1817,96 +1559,44 @@ func (m *CodeGeneratorResponse_File) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field InsertionPoint", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.InsertionPoint = &s
-			iNdEx = postIndex
+			m.InsertionPoint = &v
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Content = &s
-			iNdEx = postIndex
+			m.Content = &v
 		case 16:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field GeneratedCodeInfo", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.GeneratedCodeInfo == nil {
 				m.GeneratedCodeInfo = &descriptorpb.GeneratedCodeInfo{}
 			}
-			if err := m.GeneratedCodeInfo.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.GeneratedCodeInfo.UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1956,25 +1646,12 @@ func (m *CodeGeneratorResponse) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Error = &s
-			iNdEx = postIndex
+			m.Error = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SupportedFeatures", wireType)
@@ -2009,25 +1686,12 @@ func (m *CodeGeneratorResponse) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field File", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.File = append(m.File, &CodeGeneratorResponse_File{})
-			if err := m.File[len(m.File)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.File[len(m.File)-1].UnmarshalVT(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2107,29 +1771,12 @@ func (m *Version) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Suffix", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.Suffix = &s
-			iNdEx = postIndex
+			m.Suffix = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -2176,80 +1823,34 @@ func (m *CodeGeneratorRequest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FileToGenerate", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.FileToGenerate = append(m.FileToGenerate, stringValue)
-			iNdEx = postIndex
+			m.FileToGenerate = append(m.FileToGenerate, v)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Parameter", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.Parameter = &s
-			iNdEx = postIndex
+			m.Parameter = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CompilerVersion", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.CompilerVersion == nil {
 				m.CompilerVersion = &Version{}
 			}
-			if err := m.CompilerVersion.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.CompilerVersion.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2257,25 +1858,12 @@ func (m *CodeGeneratorRequest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ProtoFile", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.ProtoFile = append(m.ProtoFile, &descriptorpb.FileDescriptorProto{})
-			if err := m.ProtoFile[len(m.ProtoFile)-1].UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ProtoFile[len(m.ProtoFile)-1].UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2283,25 +1871,12 @@ func (m *CodeGeneratorRequest) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SourceFileDescriptors", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.SourceFileDescriptors = append(m.SourceFileDescriptors, &descriptorpb.FileDescriptorProto{})
-			if err := m.SourceFileDescriptors[len(m.SourceFileDescriptors)-1].UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.SourceFileDescriptors[len(m.SourceFileDescriptors)-1].UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2351,108 +1926,44 @@ func (m *CodeGeneratorResponse_File) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.Name = &s
-			iNdEx = postIndex
+			m.Name = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field InsertionPoint", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.InsertionPoint = &s
-			iNdEx = postIndex
+			m.InsertionPoint = &v
 		case 15:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.Content = &s
-			iNdEx = postIndex
+			m.Content = &v
 		case 16:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field GeneratedCodeInfo", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
-			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
 			}
 			if m.GeneratedCodeInfo == nil {
 				m.GeneratedCodeInfo = &descriptorpb.GeneratedCodeInfo{}
 			}
-			if err := m.GeneratedCodeInfo.UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.GeneratedCodeInfo.UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2502,29 +2013,12 @@ func (m *CodeGeneratorResponse) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			s := stringValue
-			m.Error = &s
-			iNdEx = postIndex
+			m.Error = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SupportedFeatures", wireType)
@@ -2559,25 +2053,12 @@ func (m *CodeGeneratorResponse) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field File", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
 			m.File = append(m.File, &CodeGeneratorResponse_File{})
-			if err := m.File[len(m.File)-1].UnmarshalVTUnsafe(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.File[len(m.File)-1].UnmarshalVTUnsafe(dAtA[msgStart:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

@@ -11,7 +11,6 @@ import (
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -192,9 +191,7 @@ func (m *Any) CloneVT() *Any {
 	}
 	r := new(Any)
 	r.TypeUrl = m.TypeUrl
-	if rhs := m.Value; rhs != nil {
-		r.Value = slices.Clone(rhs)
-	}
+	r.Value = protobuf_go_lite.CloneBytes(m.Value)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -214,7 +211,7 @@ func (this *Any) EqualVT(that *Any) bool {
 	if this.TypeUrl != that.TypeUrl {
 		return false
 	}
-	if string(this.Value) != string(that.Value) {
+	if !protobuf_go_lite.EqualBytes(this.Value, that.Value) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -254,20 +251,15 @@ func (m *Any) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Value) > 0 {
-		i -= len(m.Value)
-		copy(dAtA[i:], m.Value)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.Value)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.Value)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.TypeUrl) > 0 {
-		i -= len(m.TypeUrl)
-		copy(dAtA[i:], m.TypeUrl)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.TypeUrl)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.TypeUrl)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -301,20 +293,15 @@ func (m *Any) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
+		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
 	if len(m.Value) > 0 {
-		i -= len(m.Value)
-		copy(dAtA[i:], m.Value)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.Value)))
+		i = protobuf_go_lite.EncodeBytes(dAtA, i, m.Value)
 		i--
 		dAtA[i] = 0x12
 	}
 	if len(m.TypeUrl) > 0 {
-		i -= len(m.TypeUrl)
-		copy(dAtA[i:], m.TypeUrl)
-		i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(len(m.TypeUrl)))
+		i = protobuf_go_lite.EncodeString(dAtA, i, m.TypeUrl)
 		i--
 		dAtA[i] = 0xa
 	}
@@ -327,14 +314,8 @@ func (m *Any) SizeVT() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.TypeUrl)
-	if l > 0 {
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
-	l = len(m.Value)
-	if l > 0 {
-		n += 1 + l + protobuf_go_lite.SizeOfVarint(uint64(l))
-	}
+	n += protobuf_go_lite.SizeStringNonEmpty(1, m.TypeUrl)
+	n += protobuf_go_lite.SizeBytesNonEmpty(1, m.Value)
 	n += len(m.unknownFields)
 	return n
 }
@@ -389,50 +370,20 @@ func (m *Any) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TypeUrl", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TypeUrl = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			m.TypeUrl = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.Value, iNdEx, err = protobuf_go_lite.DecodeBytesAppend(m.Value, dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Value = append(m.Value[:0], dAtA[iNdEx:postIndex]...)
-			if m.Value == nil {
-				m.Value = []byte{}
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
@@ -479,51 +430,20 @@ func (m *Any) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TypeUrl", wireType)
 			}
-			var stringLen uint64
-			stringLen, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+			var v string
+			v, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var stringValue string
-			if intStringLen > 0 {
-				stringValue = unsafe.String(&dAtA[iNdEx], intStringLen)
-			}
-			m.TypeUrl = stringValue
-			iNdEx = postIndex
+			m.TypeUrl = v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
 			}
-			var byteLen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			byteLen = int(_v)
+			m.Value, iNdEx, err = protobuf_go_lite.DecodeBytes(dAtA, iNdEx, false)
 			if err != nil {
 				return err
 			}
-			if byteLen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Value = dAtA[iNdEx:postIndex]
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
