@@ -239,7 +239,7 @@ func TestSizeHelpers(t *testing.T) {
 		t.Fatalf("SizeVarintPacked = %d, want %d", got, want)
 	}
 	sint := int32(-1)
-	if got, want := SizeZigzagValue(1, sint), 1+SizeOfZigzag(uint64(sint)); got != want {
+	if got, want := SizeZigzagValue(1, sint), 1+SizeOfVarint(1); got != want {
 		t.Fatalf("SizeZigzagValue = %d, want %d", got, want)
 	}
 	if SizeFixed32NonZero(1, float32(0)) != 0 || SizeFixed64NonZero(1, float64(0)) != 0 {

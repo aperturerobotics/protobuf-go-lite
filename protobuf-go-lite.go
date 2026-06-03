@@ -322,13 +322,13 @@ func EncodeBool(dAtA []byte, offset int, v bool) int {
 func EncodeString[S ~string](dAtA []byte, offset int, v S) int {
 	offset -= len(v)
 	copy(dAtA[offset:], string(v))
-	return EncodeVarint(dAtA, offset, uint64(len(v)))
+	return EncodeVarint(dAtA, offset, uint64Len(len(v)))
 }
 
 // EncodeBytes writes a length-delimited byte slice before offset and returns the new offset.
 func EncodeBytes[S ~[]byte](dAtA []byte, offset int, v S) int {
 	offset = EncodeRawBytes(dAtA, offset, v)
-	return EncodeVarint(dAtA, offset, uint64(len(v)))
+	return EncodeVarint(dAtA, offset, uint64Len(len(v)))
 }
 
 // EncodeZigzag32 writes a zigzag-encoded 32-bit value before offset and returns the new offset.
@@ -338,7 +338,7 @@ func EncodeZigzag32[T ~int32](dAtA []byte, offset int, v T) int {
 
 // EncodeZigzag64 writes a zigzag-encoded 64-bit value before offset and returns the new offset.
 func EncodeZigzag64[T ~int64](dAtA []byte, offset int, v T) int {
-	return EncodeVarint(dAtA, offset, uint64((uint64(v)<<1)^uint64(v>>63)))
+	return EncodeVarint(dAtA, offset, (uint64(v)<<1)^uint64(v>>63))
 }
 
 type marshalVarintNumber interface {
@@ -356,7 +356,7 @@ func EncodeVarintPacked[S ~[]E, E marshalVarintNumber](dAtA []byte, offset int, 
 	for _, v := range vals {
 		j = putVarintAt(dAtA, j, uint64(v))
 	}
-	return EncodeVarint(dAtA, offset, uint64(total))
+	return EncodeVarint(dAtA, offset, uint64Len(total))
 }
 
 // EncodeZigzag32Packed writes packed zigzag-encoded 32-bit values before offset and returns the new offset.
@@ -370,7 +370,7 @@ func EncodeZigzag32Packed[S ~[]E, E ~int32](dAtA []byte, offset int, vals S) int
 	for _, v := range vals {
 		j = putVarintAt(dAtA, j, uint64((uint32(v)<<1)^uint32(v>>31)))
 	}
-	return EncodeVarint(dAtA, offset, uint64(total))
+	return EncodeVarint(dAtA, offset, uint64Len(total))
 }
 
 // EncodeZigzag64Packed writes packed zigzag-encoded 64-bit values before offset and returns the new offset.
@@ -382,9 +382,9 @@ func EncodeZigzag64Packed[S ~[]E, E ~int64](dAtA []byte, offset int, vals S) int
 	offset -= total
 	j := offset
 	for _, v := range vals {
-		j = putVarintAt(dAtA, j, uint64((uint64(v)<<1)^uint64(v>>63)))
+		j = putVarintAt(dAtA, j, (uint64(v)<<1)^uint64(v>>63))
 	}
-	return EncodeVarint(dAtA, offset, uint64(total))
+	return EncodeVarint(dAtA, offset, uint64Len(total))
 }
 
 func putVarintAt(dAtA []byte, offset int, v uint64) int {
@@ -395,6 +395,10 @@ func putVarintAt(dAtA []byte, offset int, v uint64) int {
 	}
 	dAtA[offset] = uint8(v)
 	return offset + 1
+}
+
+func uint64Len(v int) uint64 {
+	return uint64(v) //nolint:gosec
 }
 
 // AppendVarint appends v to b as a varint-encoded uint64.
@@ -1001,7 +1005,7 @@ func SizeBoolPacked(keySize int, vals []bool) int {
 // SizeStringValue returns the encoded field size for one present string value.
 func SizeStringValue(keySize int, v string) int {
 	l := len(v)
-	return keySize + l + SizeOfVarint(uint64(l))
+	return keySize + l + SizeOfVarint(uint64Len(l))
 }
 
 // SizeStringNonEmpty returns the encoded field size for one implicit string value.
@@ -1030,7 +1034,7 @@ func SizeStringSlice[S ~[]E, E ~string](keySize int, vals S) (n int) {
 
 // SizeBytesValue returns the encoded field size for one present length-delimited value.
 func SizeBytesValue(keySize, l int) int {
-	return keySize + l + SizeOfVarint(uint64(l))
+	return keySize + l + SizeOfVarint(uint64Len(l))
 }
 
 // SizeBytesNonEmpty returns the encoded field size for one implicit bytes value.
