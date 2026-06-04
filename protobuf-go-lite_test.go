@@ -448,6 +448,60 @@ func TestSkipWithin(t *testing.T) {
 	}
 }
 
+type testTextEnum int
+
+func (e testTextEnum) String() string {
+	if e == 1 {
+		return "READY"
+	}
+	return "UNKNOWN"
+}
+
+type testTextMessage string
+
+func (m testTextMessage) MarshalProtoText() string {
+	return string(m)
+}
+
+func TestTextHelpers(t *testing.T) {
+	var sb TextBuilder
+	initialLen := TextStartMessage(&sb, "Msg")
+
+	TextWriteFieldPrefix(&sb, initialLen, "name")
+	TextWriteString(&sb, "alpha")
+	TextWriteFieldPrefix(&sb, initialLen, "payload")
+	TextWriteBytes(&sb, []byte{1, 2})
+	TextWriteListStart(&sb, initialLen, "nums")
+	for i, v := range []int32{1, 2} {
+		TextWriteListSeparator(&sb, i)
+		TextWriteInt(&sb, v)
+	}
+	TextWriteListEnd(&sb)
+	TextWriteMapStart(&sb, initialLen, "labels")
+	labels := map[string]uint32{"b": 2, "a": 1}
+	for _, k := range TextSortedMapKeys(labels) {
+		TextWriteMapEntryPrefix(&sb)
+		TextWriteString(&sb, k)
+		TextWriteMapKeyValueSeparator(&sb)
+		TextWriteUint(&sb, labels[k])
+	}
+	TextWriteMapEnd(&sb)
+	TextWriteFieldPrefix(&sb, initialLen, "child")
+	TextWriteTextMarshaler(&sb, testTextMessage("Child {}"))
+	TextWriteFieldPrefix(&sb, initialLen, "state")
+	TextWriteStringer(&sb, testTextEnum(1))
+	TextWriteFieldPrefix(&sb, initialLen, "ratio")
+	TextWriteFloat32(&sb, 1.5)
+	TextWriteFieldPrefix(&sb, initialLen, "enabled")
+	TextWriteBool(&sb, true)
+
+	got := TextFinishMessage(&sb)
+	want := `Msg {name: "alpha" payload: "AQI=" nums: [1, 2] labels: { "a": 1 "b": 2 } child: Child {} state: "READY" ratio: 1.5 enabled: true}`
+	if got != want {
+		t.Fatalf("text helpers = %q, want %q", got, want)
+	}
+}
+
 func TestDecodeVarintTyped(t *testing.T) {
 	buf := AppendVarint(nil, 0xFFFFFFFF)
 

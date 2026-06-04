@@ -5,12 +5,9 @@
 package anypb
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -321,26 +318,17 @@ func (m *Any) SizeVT() (n int) {
 }
 
 func (x *Any) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Any {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Any")
 	if x.TypeUrl != "" {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("type_url: ")
-		sb.WriteString(strconv.Quote(x.TypeUrl))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "type_url")
+		protobuf_go_lite.TextWriteString(&sb, x.TypeUrl)
 	}
 	if len(x.Value) != 0 {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteBytes(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Any) String() string {

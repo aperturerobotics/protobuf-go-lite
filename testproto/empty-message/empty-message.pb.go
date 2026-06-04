@@ -8,7 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -358,27 +357,22 @@ func (m *Parent) SizeVT() (n int) {
 }
 
 func (x *Parent_Empty) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Empty {")
-	sb.WriteString("}")
-	return sb.String()
+	var sb protobuf_go_lite.TextBuilder
+	protobuf_go_lite.TextStartMessage(&sb, "Empty")
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Parent_Empty) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Parent) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Parent {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Parent")
 	if x.Empty != nil {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("empty: ")
-		sb.WriteString(x.Empty.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "empty")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Empty)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Parent) String() string {

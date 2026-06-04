@@ -9,11 +9,9 @@ import (
 	errors "errors"
 	fmt "fmt"
 	io "io"
-	maps "maps"
 	math "math"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 	utf8 "unicode/utf8"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -1376,137 +1374,99 @@ func (x NullValue) MarshalProtoText() string {
 	return x.String()
 }
 func (x *Struct_FieldsEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FieldsEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FieldsEntry")
 	if x.Key != "" {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.Quote(x.Key))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteString(&sb, x.Key)
 	}
 	if x.Value != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(x.Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Struct_FieldsEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Struct) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Struct {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Struct")
 	if len(x.Fields) > 0 {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("fields: {")
-		for _, k := range slices.Sorted(maps.Keys(x.Fields)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "fields")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Fields) {
 			v := x.Fields[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.Quote(k))
-			sb.WriteString(": ")
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteString(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
 			if v == nil {
-				sb.WriteString((&Value{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &Value{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Struct) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Value) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Value {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Value")
 	switch body := x.Kind.(type) {
 	case *Value_NullValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("null_value: ")
-		sb.WriteString("\"")
-		sb.WriteString(NullValue(body.NullValue).String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "null_value")
+		protobuf_go_lite.TextWriteStringer(&sb, NullValue(body.NullValue))
 	case *Value_NumberValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("number_value: ")
-		sb.WriteString(strconv.FormatFloat(body.NumberValue, 'g', -1, 64))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "number_value")
+		protobuf_go_lite.TextWriteFloat64(&sb, body.NumberValue)
 	case *Value_StringValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("string_value: ")
-		sb.WriteString(strconv.Quote(body.StringValue))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "string_value")
+		protobuf_go_lite.TextWriteString(&sb, body.StringValue)
 	case *Value_BoolValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("bool_value: ")
-		sb.WriteString(strconv.FormatBool(body.BoolValue))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "bool_value")
+		protobuf_go_lite.TextWriteBool(&sb, body.BoolValue)
 	case *Value_StructValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("struct_value: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "struct_value")
 		if body.StructValue == nil {
-			sb.WriteString((&Struct{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &Struct{})
 		} else {
-			sb.WriteString(body.StructValue.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.StructValue)
 		}
 	case *Value_ListValue:
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("list_value: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "list_value")
 		if body.ListValue == nil {
-			sb.WriteString((&ListValue{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &ListValue{})
 		} else {
-			sb.WriteString(body.ListValue.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.ListValue)
 		}
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Value) String() string {
 	return x.MarshalProtoText()
 }
 func (x *ListValue) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ListValue {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ListValue")
 	if len(x.Values) > 0 {
-		if sb.Len() > 11 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("values: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "values")
 		for i, v := range x.Values {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&Value{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &Value{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *ListValue) String() string {

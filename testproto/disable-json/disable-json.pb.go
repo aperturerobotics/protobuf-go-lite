@@ -8,8 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -342,24 +340,17 @@ func (m *MessageDisableJson_World) SizeVT() (n int) {
 	return n
 }
 func (x *MessageDisableJson) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MessageDisableJson {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MessageDisableJson")
 	switch body := x.Body.(type) {
 	case *MessageDisableJson_Hello:
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("hello: ")
-		sb.WriteString(strconv.FormatBool(body.Hello))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "hello")
+		protobuf_go_lite.TextWriteBool(&sb, body.Hello)
 	case *MessageDisableJson_World:
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("world: ")
-		sb.WriteString(strconv.Quote(body.World))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "world")
+		protobuf_go_lite.TextWriteString(&sb, body.World)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MessageDisableJson) String() string {

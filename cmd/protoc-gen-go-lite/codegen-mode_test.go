@@ -73,6 +73,9 @@ func TestCodegenModeDefaultUsesHelperMethods(t *testing.T) {
 		"protobuf_go_lite.PackedVarintElementCount",
 		"protobuf_go_lite.PackedFixedElementCount",
 		"protobuf_go_lite.SkipWithin",
+		"protobuf_go_lite.TextStartMessage",
+		"protobuf_go_lite.TextWriteFieldPrefix",
+		"protobuf_go_lite.TextWriteString",
 	} {
 		if !strings.Contains(out, expected) {
 			t.Fatalf("default helper output missing %s:\n%s", expected, out)
@@ -114,6 +117,9 @@ func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 		"protobuf_go_lite.PackedVarintElementCount",
 		"protobuf_go_lite.PackedFixedElementCount",
 		"protobuf_go_lite.SkipWithin",
+		"protobuf_go_lite.TextStartMessage",
+		"protobuf_go_lite.TextWriteFieldPrefix",
+		"protobuf_go_lite.TextWriteString",
 	} {
 		if strings.Contains(out, helper) {
 			t.Fatalf("unrolled output should not contain helper %s:\n%s", helper, out)
@@ -122,6 +128,7 @@ func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 	for _, expected := range []string{
 		"tmpVal := *rhs",
 		"for i, vx := range this.Nums",
+		"var sb strings.Builder",
 	} {
 		if !strings.Contains(out, expected) {
 			t.Fatalf("unrolled output missing previous clone/equal shape %s:\n%s", expected, out)
@@ -161,7 +168,7 @@ func generateCodegenModeFixture(t *testing.T, opts ...string) string {
 	protoPath := writeTempProto(t, codegenModeProto)
 	outDir := t.TempDir()
 
-	opt := "features=size+equal+clone+marshal+unmarshal,paths=source_relative"
+	opt := "features=size+equal+clone+marshal+unmarshal+text,paths=source_relative"
 	if len(opts) != 0 {
 		opt += "," + strings.Join(opts, ",")
 	}

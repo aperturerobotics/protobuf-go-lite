@@ -8,7 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -166,10 +165,9 @@ func (m *Empty) SizeVT() (n int) {
 }
 
 func (x *Empty) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Empty {")
-	sb.WriteString("}")
-	return sb.String()
+	var sb protobuf_go_lite.TextBuilder
+	protobuf_go_lite.TextStartMessage(&sb, "Empty")
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Empty) String() string {

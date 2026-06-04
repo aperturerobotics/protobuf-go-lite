@@ -1,6 +1,8 @@
 package protobuf_go_lite
 
 import (
+	"cmp"
+	"encoding/base64"
 	"encoding/binary"
 	"errors"
 	"fmt"
@@ -9,6 +11,8 @@ import (
 	"math"
 	"math/bits"
 	"slices"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -41,6 +45,11 @@ type JSONMessage interface {
 	MarshalJSON() ([]byte, error)
 	// UnmarshalJSON unmarshals the message from JSON.
 	UnmarshalJSON(data []byte) error
+}
+
+// TextMarshaler is a message with a MarshalProtoText function.
+type TextMarshaler interface {
+	MarshalProtoText() string
 }
 
 // CloneMessage is a message with a CloneMessage function.
@@ -275,6 +284,124 @@ func EqualVTMapImplicit[M ~map[K]V, K comparable, V EqualVT[V]](a, b M, empty fu
 		}
 	}
 	return true
+}
+
+// TextBuilder is the builder used by generated proto text marshalers.
+type TextBuilder = strings.Builder
+
+// TextStartMessage writes the opening message label and returns its initial length.
+func TextStartMessage(sb *TextBuilder, name string) int {
+	sb.WriteString(name)
+	sb.WriteString(" {")
+	return len(name) + 2
+}
+
+// TextFinishMessage writes the closing message delimiter and returns the final text.
+func TextFinishMessage(sb *TextBuilder) string {
+	sb.WriteString("}")
+	return sb.String()
+}
+
+// TextWriteFieldPrefix writes the optional separator, field name, and value separator.
+func TextWriteFieldPrefix(sb *TextBuilder, initialLen int, name string) {
+	if sb.Len() > initialLen {
+		sb.WriteString(" ")
+	}
+	sb.WriteString(name)
+	sb.WriteString(": ")
+}
+
+// TextWriteListStart writes a repeated field prefix and opening delimiter.
+func TextWriteListStart(sb *TextBuilder, initialLen int, name string) {
+	TextWriteFieldPrefix(sb, initialLen, name)
+	sb.WriteString("[")
+}
+
+// TextWriteListSeparator writes the separator before non-first repeated values.
+func TextWriteListSeparator(sb *TextBuilder, index int) {
+	if index > 0 {
+		sb.WriteString(", ")
+	}
+}
+
+// TextWriteListEnd writes the repeated field closing delimiter.
+func TextWriteListEnd(sb *TextBuilder) {
+	sb.WriteString("]")
+}
+
+// TextWriteMapStart writes a map field prefix and opening delimiter.
+func TextWriteMapStart(sb *TextBuilder, initialLen int, name string) {
+	TextWriteFieldPrefix(sb, initialLen, name)
+	sb.WriteString("{")
+}
+
+// TextWriteMapEntryPrefix writes the separator before one sorted map entry.
+func TextWriteMapEntryPrefix(sb *TextBuilder) {
+	sb.WriteString(" ")
+}
+
+// TextWriteMapKeyValueSeparator writes the separator between a map key and value.
+func TextWriteMapKeyValueSeparator(sb *TextBuilder) {
+	sb.WriteString(": ")
+}
+
+// TextWriteMapEnd writes the map field closing delimiter.
+func TextWriteMapEnd(sb *TextBuilder) {
+	sb.WriteString(" }")
+}
+
+// TextSortedMapKeys returns sorted keys for deterministic generated proto text maps.
+func TextSortedMapKeys[M ~map[K]V, K cmp.Ordered, V any](m M) []K {
+	return slices.Sorted(maps.Keys(m))
+}
+
+// TextWriteTextMarshaler writes a nested proto text marshaler value.
+func TextWriteTextMarshaler(sb *TextBuilder, v TextMarshaler) {
+	sb.WriteString(v.MarshalProtoText())
+}
+
+// TextWriteString writes a quoted string proto text value.
+func TextWriteString(sb *TextBuilder, v string) {
+	sb.WriteString(strconv.Quote(v))
+}
+
+// TextWriteBytes writes a quoted base64 proto text bytes value.
+func TextWriteBytes[B ~[]byte](sb *TextBuilder, v B) {
+	sb.WriteString("\"")
+	sb.WriteString(base64.StdEncoding.EncodeToString(v))
+	sb.WriteString("\"")
+}
+
+// TextWriteStringer writes a quoted String value.
+func TextWriteStringer[T interface{ String() string }](sb *TextBuilder, v T) {
+	sb.WriteString("\"")
+	sb.WriteString(v.String())
+	sb.WriteString("\"")
+}
+
+// TextWriteInt writes a signed integer proto text value.
+func TextWriteInt[T ~int32 | ~int64](sb *TextBuilder, v T) {
+	sb.WriteString(strconv.FormatInt(int64(v), 10))
+}
+
+// TextWriteUint writes an unsigned integer proto text value.
+func TextWriteUint[T ~uint32 | ~uint64](sb *TextBuilder, v T) {
+	sb.WriteString(strconv.FormatUint(uint64(v), 10))
+}
+
+// TextWriteFloat32 writes a float32 proto text value.
+func TextWriteFloat32(sb *TextBuilder, v float32) {
+	sb.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+}
+
+// TextWriteFloat64 writes a float64 proto text value.
+func TextWriteFloat64(sb *TextBuilder, v float64) {
+	sb.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+}
+
+// TextWriteBool writes a bool proto text value.
+func TextWriteBool(sb *TextBuilder, v bool) {
+	sb.WriteString(strconv.FormatBool(v))
 }
 
 // EncodeVarint encodes a uint64 into a varint-encoded byte slice and returns the offset of the encoded value.

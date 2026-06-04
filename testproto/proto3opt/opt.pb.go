@@ -5,13 +5,11 @@
 package proto3opt
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
 	math "math"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -827,126 +825,73 @@ func (x SimpleEnum) MarshalProtoText() string {
 	return x.String()
 }
 func (x *OptionalFieldInProto3) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("OptionalFieldInProto3 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "OptionalFieldInProto3")
 	if x.OptionalInt32 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_int32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalInt32)
 	}
 	if x.OptionalInt64 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_int64: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalInt64), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_int64")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalInt64)
 	}
 	if x.OptionalUint32 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_uint32: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalUint32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_uint32")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalUint32)
 	}
 	if x.OptionalUint64 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_uint64: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalUint64), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_uint64")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalUint64)
 	}
 	if x.OptionalSint32 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_sint32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSint32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_sint32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalSint32)
 	}
 	if x.OptionalSint64 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_sint64: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSint64), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_sint64")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalSint64)
 	}
 	if x.OptionalFixed32 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_fixed32: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalFixed32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_fixed32")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalFixed32)
 	}
 	if x.OptionalFixed64 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_fixed64: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalFixed64), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_fixed64")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalFixed64)
 	}
 	if x.OptionalSfixed32 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_sfixed32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSfixed32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_sfixed32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalSfixed32)
 	}
 	if x.OptionalSfixed64 != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_sfixed64: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalSfixed64), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_sfixed64")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalSfixed64)
 	}
 	if x.OptionalFloat != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_float: ")
-		sb.WriteString(strconv.FormatFloat(float64(*x.OptionalFloat), 'g', -1, 32))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_float")
+		protobuf_go_lite.TextWriteFloat32(&sb, *x.OptionalFloat)
 	}
 	if x.OptionalDouble != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_double: ")
-		sb.WriteString(strconv.FormatFloat(*x.OptionalDouble, 'g', -1, 64))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_double")
+		protobuf_go_lite.TextWriteFloat64(&sb, *x.OptionalDouble)
 	}
 	if x.OptionalBool != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_bool: ")
-		sb.WriteString(strconv.FormatBool(*x.OptionalBool))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_bool")
+		protobuf_go_lite.TextWriteBool(&sb, *x.OptionalBool)
 	}
 	if x.OptionalString != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_string: ")
-		sb.WriteString(strconv.Quote(*x.OptionalString))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_string")
+		protobuf_go_lite.TextWriteString(&sb, *x.OptionalString)
 	}
 	if x.OptionalBytes != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_bytes: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.OptionalBytes))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_bytes")
+		protobuf_go_lite.TextWriteBytes(&sb, x.OptionalBytes)
 	}
 	if x.OptionalEnum != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_enum: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.OptionalEnum.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_enum")
+		protobuf_go_lite.TextWriteStringer(&sb, x.OptionalEnum)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *OptionalFieldInProto3) String() string {

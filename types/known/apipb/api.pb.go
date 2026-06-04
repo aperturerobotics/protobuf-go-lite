@@ -8,8 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	sourcecontextpb "github.com/aperturerobotics/protobuf-go-lite/types/known/sourcecontextpb"
@@ -966,186 +964,123 @@ func (m *Mixin) SizeVT() (n int) {
 }
 
 func (x *Api) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Api {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Api")
 	if x.Name != "" {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, x.Name)
 	}
 	if len(x.Methods) > 0 {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("methods: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "methods")
 		for i, v := range x.Methods {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&Method{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &Method{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.Options) > 0 {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "options")
 		for i, v := range x.Options {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&typepb.Option{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &typepb.Option{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Version != "" {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("version: ")
-		sb.WriteString(strconv.Quote(x.Version))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "version")
+		protobuf_go_lite.TextWriteString(&sb, x.Version)
 	}
 	if x.SourceContext != nil {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("source_context: ")
-		sb.WriteString(x.SourceContext.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "source_context")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.SourceContext)
 	}
 	if len(x.Mixins) > 0 {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("mixins: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "mixins")
 		for i, v := range x.Mixins {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&Mixin{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &Mixin{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Syntax != 0 {
-		if sb.Len() > 5 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("syntax: ")
-		sb.WriteString("\"")
-		sb.WriteString(typepb.Syntax(x.Syntax).String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "syntax")
+		protobuf_go_lite.TextWriteStringer(&sb, typepb.Syntax(x.Syntax))
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Api) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Method) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Method {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Method")
 	if x.Name != "" {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, x.Name)
 	}
 	if x.RequestTypeUrl != "" {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("request_type_url: ")
-		sb.WriteString(strconv.Quote(x.RequestTypeUrl))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "request_type_url")
+		protobuf_go_lite.TextWriteString(&sb, x.RequestTypeUrl)
 	}
 	if x.RequestStreaming != false {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("request_streaming: ")
-		sb.WriteString(strconv.FormatBool(x.RequestStreaming))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "request_streaming")
+		protobuf_go_lite.TextWriteBool(&sb, x.RequestStreaming)
 	}
 	if x.ResponseTypeUrl != "" {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("response_type_url: ")
-		sb.WriteString(strconv.Quote(x.ResponseTypeUrl))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "response_type_url")
+		protobuf_go_lite.TextWriteString(&sb, x.ResponseTypeUrl)
 	}
 	if x.ResponseStreaming != false {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("response_streaming: ")
-		sb.WriteString(strconv.FormatBool(x.ResponseStreaming))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "response_streaming")
+		protobuf_go_lite.TextWriteBool(&sb, x.ResponseStreaming)
 	}
 	if len(x.Options) > 0 {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "options")
 		for i, v := range x.Options {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&typepb.Option{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &typepb.Option{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Syntax != 0 {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("syntax: ")
-		sb.WriteString("\"")
-		sb.WriteString(typepb.Syntax(x.Syntax).String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "syntax")
+		protobuf_go_lite.TextWriteStringer(&sb, typepb.Syntax(x.Syntax))
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Method) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Mixin) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Mixin {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Mixin")
 	if x.Name != "" {
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, x.Name)
 	}
 	if x.Root != "" {
-		if sb.Len() > 7 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("root: ")
-		sb.WriteString(strconv.Quote(x.Root))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "root")
+		protobuf_go_lite.TextWriteString(&sb, x.Root)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Mixin) String() string {

@@ -5,13 +5,9 @@
 package unsafe
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
-	maps "maps"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -2238,252 +2234,179 @@ func (m *UnsafeTest_Sub5_) SizeVT() (n int) {
 	return n
 }
 func (x *UnsafeTest_Sub1) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sub1 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub1")
 	if x.S != "" {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("s: ")
-		sb.WriteString(strconv.Quote(x.S))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "s")
+		protobuf_go_lite.TextWriteString(&sb, x.S)
 	}
 	if len(x.B) != 0 {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("b: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.B))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "b")
+		protobuf_go_lite.TextWriteBytes(&sb, x.B)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub1) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub2) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sub2 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub2")
 	if len(x.S) > 0 {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("s: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "s")
 		for i, v := range x.S {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.B) > 0 {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("b: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "b")
 		for i, v := range x.B {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString("\"")
-			sb.WriteString(base64.StdEncoding.EncodeToString(v))
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteBytes(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub2) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub3_FooEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FooEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FooEntry")
 	if x.Key != "" {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.Quote(x.Key))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteString(&sb, x.Key)
 	}
 	if len(x.Value) != 0 {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.Value))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteBytes(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub3_FooEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub3) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sub3 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub3")
 	if len(x.Foo) > 0 {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("foo: {")
-		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "foo")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Foo) {
 			v := x.Foo[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.Quote(k))
-			sb.WriteString(": ")
-			sb.WriteString("\"")
-			sb.WriteString(base64.StdEncoding.EncodeToString(v))
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteString(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
+			protobuf_go_lite.TextWriteBytes(&sb, v)
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub3) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub4) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sub4 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub4")
 	switch body := x.Foo.(type) {
 	case *UnsafeTest_Sub4_S:
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("s: ")
-		sb.WriteString(strconv.Quote(body.S))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "s")
+		protobuf_go_lite.TextWriteString(&sb, body.S)
 	case *UnsafeTest_Sub4_B:
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("b: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(body.B))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "b")
+		protobuf_go_lite.TextWriteBytes(&sb, body.B)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub4) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub5_FooEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FooEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FooEntry")
 	if x.Key != "" {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.Quote(x.Key))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteString(&sb, x.Key)
 	}
 	if x.Value != "" {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(strconv.Quote(x.Value))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteString(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub5_FooEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest_Sub5) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sub5 {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub5")
 	if len(x.Foo) > 0 {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("foo: {")
-		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "foo")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Foo) {
 			v := x.Foo[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.Quote(k))
-			sb.WriteString(": ")
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteString(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest_Sub5) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UnsafeTest) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("UnsafeTest {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "UnsafeTest")
 	switch body := x.Sub.(type) {
 	case *UnsafeTest_Sub1_:
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("sub1: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "sub1")
 		if body.Sub1 == nil {
-			sb.WriteString((&UnsafeTest_Sub1{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &UnsafeTest_Sub1{})
 		} else {
-			sb.WriteString(body.Sub1.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.Sub1)
 		}
 	case *UnsafeTest_Sub2_:
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("sub2: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "sub2")
 		if body.Sub2 == nil {
-			sb.WriteString((&UnsafeTest_Sub2{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &UnsafeTest_Sub2{})
 		} else {
-			sb.WriteString(body.Sub2.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.Sub2)
 		}
 	case *UnsafeTest_Sub3_:
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("sub3: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "sub3")
 		if body.Sub3 == nil {
-			sb.WriteString((&UnsafeTest_Sub3{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &UnsafeTest_Sub3{})
 		} else {
-			sb.WriteString(body.Sub3.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.Sub3)
 		}
 	case *UnsafeTest_Sub4_:
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("sub4: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "sub4")
 		if body.Sub4 == nil {
-			sb.WriteString((&UnsafeTest_Sub4{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &UnsafeTest_Sub4{})
 		} else {
-			sb.WriteString(body.Sub4.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.Sub4)
 		}
 	case *UnsafeTest_Sub5_:
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("sub5: ")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "sub5")
 		if body.Sub5 == nil {
-			sb.WriteString((&UnsafeTest_Sub5{}).MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, &UnsafeTest_Sub5{})
 		} else {
-			sb.WriteString(body.Sub5.MarshalProtoText())
+			protobuf_go_lite.TextWriteTextMarshaler(&sb, body.Sub5)
 		}
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UnsafeTest) String() string {

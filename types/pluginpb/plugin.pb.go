@@ -9,7 +9,6 @@ import (
 	io "io"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	descriptorpb "github.com/aperturerobotics/protobuf-go-lite/types/descriptorpb"
@@ -1146,109 +1145,74 @@ func (m *CodeGeneratorResponse) SizeVT() (n int) {
 }
 
 func (x *Version) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Version {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Version")
 	if x.Major != nil {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("major: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Major), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "major")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Major)
 	}
 	if x.Minor != nil {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("minor: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Minor), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "minor")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Minor)
 	}
 	if x.Patch != nil {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("patch: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Patch), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "patch")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Patch)
 	}
 	if x.Suffix != nil {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("suffix: ")
-		sb.WriteString(strconv.Quote(*x.Suffix))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "suffix")
+		protobuf_go_lite.TextWriteString(&sb, *x.Suffix)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Version) String() string {
 	return x.MarshalProtoText()
 }
 func (x *CodeGeneratorRequest) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("CodeGeneratorRequest {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "CodeGeneratorRequest")
 	if len(x.FileToGenerate) > 0 {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("file_to_generate: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "file_to_generate")
 		for i, v := range x.FileToGenerate {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Parameter != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("parameter: ")
-		sb.WriteString(strconv.Quote(*x.Parameter))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "parameter")
+		protobuf_go_lite.TextWriteString(&sb, *x.Parameter)
 	}
 	if x.CompilerVersion != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("compiler_version: ")
-		sb.WriteString(x.CompilerVersion.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "compiler_version")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.CompilerVersion)
 	}
 	if len(x.ProtoFile) > 0 {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("proto_file: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "proto_file")
 		for i, v := range x.ProtoFile {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&descriptorpb.FileDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &descriptorpb.FileDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.SourceFileDescriptors) > 0 {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("source_file_descriptors: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "source_file_descriptors")
 		for i, v := range x.SourceFileDescriptors {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&descriptorpb.FileDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &descriptorpb.FileDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *CodeGeneratorRequest) String() string {
@@ -1258,93 +1222,62 @@ func (x CodeGeneratorResponse_Feature) MarshalProtoText() string {
 	return x.String()
 }
 func (x *CodeGeneratorResponse_File) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("File {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "File")
 	if x.Name != nil {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.InsertionPoint != nil {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("insertion_point: ")
-		sb.WriteString(strconv.Quote(*x.InsertionPoint))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "insertion_point")
+		protobuf_go_lite.TextWriteString(&sb, *x.InsertionPoint)
 	}
 	if x.Content != nil {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("content: ")
-		sb.WriteString(strconv.Quote(*x.Content))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "content")
+		protobuf_go_lite.TextWriteString(&sb, *x.Content)
 	}
 	if x.GeneratedCodeInfo != nil {
-		if sb.Len() > 6 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("generated_code_info: ")
-		sb.WriteString(x.GeneratedCodeInfo.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "generated_code_info")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.GeneratedCodeInfo)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *CodeGeneratorResponse_File) String() string {
 	return x.MarshalProtoText()
 }
 func (x *CodeGeneratorResponse) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("CodeGeneratorResponse {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "CodeGeneratorResponse")
 	if x.Error != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("error: ")
-		sb.WriteString(strconv.Quote(*x.Error))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "error")
+		protobuf_go_lite.TextWriteString(&sb, *x.Error)
 	}
 	if x.SupportedFeatures != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("supported_features: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.SupportedFeatures), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "supported_features")
+		protobuf_go_lite.TextWriteUint(&sb, *x.SupportedFeatures)
 	}
 	if x.MinimumEdition != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("minimum_edition: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.MinimumEdition), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "minimum_edition")
+		protobuf_go_lite.TextWriteInt(&sb, *x.MinimumEdition)
 	}
 	if x.MaximumEdition != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("maximum_edition: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.MaximumEdition), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "maximum_edition")
+		protobuf_go_lite.TextWriteInt(&sb, *x.MaximumEdition)
 	}
 	if len(x.File) > 0 {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("file: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "file")
 		for i, v := range x.File {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&CodeGeneratorResponse_File{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &CodeGeneratorResponse_File{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *CodeGeneratorResponse) String() string {

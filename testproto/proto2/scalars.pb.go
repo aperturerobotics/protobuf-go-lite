@@ -5,13 +5,11 @@
 package proto2
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
 	math "math"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -3597,730 +3595,479 @@ func (m *EnumMessage) SizeVT() (n int) {
 }
 
 func (x *DoubleMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("DoubleMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "DoubleMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatFloat(*x.RequiredField, 'g', -1, 64))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteFloat64(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatFloat(*x.OptionalField, 'g', -1, 64))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteFloat64(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteFloat64(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteFloat64(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *DoubleMessage) String() string {
 	return x.MarshalProtoText()
 }
 func (x *FloatMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FloatMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FloatMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatFloat(float64(*x.RequiredField), 'g', -1, 32))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteFloat32(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatFloat(float64(*x.OptionalField), 'g', -1, 32))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteFloat32(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteFloat32(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteFloat32(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FloatMessage) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Int32Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Int32Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Int32Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Int32Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Int64Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Int64Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Int64Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Int64Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Uint32Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Uint32Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Uint32Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Uint32Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Uint64Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Uint64Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Uint64Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Uint64Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Sint32Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sint32Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sint32Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Sint32Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Sint64Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sint64Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sint64Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Sint64Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Fixed32Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Fixed32Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Fixed32Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Fixed32Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Fixed64Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Fixed64Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Fixed64Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteUint(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatUint(uint64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteUint(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Fixed64Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Sfixed32Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sfixed32Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sfixed32Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Sfixed32Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Sfixed64Message) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Sfixed64Message {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sfixed64Message")
 	if x.RequiredField != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OptionalField), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Sfixed64Message) String() string {
 	return x.MarshalProtoText()
 }
 func (x *BoolMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("BoolMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "BoolMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.FormatBool(*x.RequiredField))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteBool(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.FormatBool(*x.OptionalField))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteBool(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatBool(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteBool(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatBool(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteBool(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *BoolMessage) String() string {
 	return x.MarshalProtoText()
 }
 func (x *StringMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("StringMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "StringMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString(strconv.Quote(*x.RequiredField))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteString(&sb, *x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString(strconv.Quote(*x.OptionalField))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteString(&sb, *x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *StringMessage) String() string {
 	return x.MarshalProtoText()
 }
 func (x *BytesMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("BytesMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "BytesMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.RequiredField))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteBytes(&sb, x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.OptionalField))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteBytes(&sb, x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString("\"")
-			sb.WriteString(base64.StdEncoding.EncodeToString(v))
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteBytes(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *BytesMessage) String() string {
@@ -4330,58 +4077,33 @@ func (x EnumMessage_Num) MarshalProtoText() string {
 	return x.String()
 }
 func (x *EnumMessage) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumMessage {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumMessage")
 	if x.RequiredField != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_field: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.RequiredField.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_field")
+		protobuf_go_lite.TextWriteStringer(&sb, x.RequiredField)
 	}
 	if x.OptionalField != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optional_field: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.OptionalField.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optional_field")
+		protobuf_go_lite.TextWriteStringer(&sb, x.OptionalField)
 	}
 	if len(x.RepeatedField) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "repeated_field")
 		for i, v := range x.RepeatedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString("\"")
-			sb.WriteString(EnumMessage_Num(v).String())
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteStringer(&sb, EnumMessage_Num(v))
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.PackedField) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_field")
 		for i, v := range x.PackedField {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString("\"")
-			sb.WriteString(EnumMessage_Num(v).String())
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteStringer(&sb, EnumMessage_Num(v))
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumMessage) String() string {

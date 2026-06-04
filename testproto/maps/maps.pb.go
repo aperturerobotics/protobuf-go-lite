@@ -7,10 +7,7 @@ package testproto_maps
 import (
 	fmt "fmt"
 	io "io"
-	maps "maps"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -500,94 +497,73 @@ func (m *MsgWithMaps) SizeVT() (n int) {
 }
 
 func (x *MsgWithMaps_StringKeysEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("StringKeysEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "StringKeysEntry")
 	if x.Key != "" {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.Quote(x.Key))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteString(&sb, x.Key)
 	}
 	if x.Value != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(x.Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MsgWithMaps_StringKeysEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MsgWithMaps_IntKeysEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("IntKeysEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "IntKeysEntry")
 	if x.Key != 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.FormatUint(uint64(x.Key), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteUint(&sb, x.Key)
 	}
 	if x.Value != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(x.Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MsgWithMaps_IntKeysEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MsgWithMaps) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MsgWithMaps {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MsgWithMaps")
 	if len(x.StringKeys) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("stringKeys: {")
-		for _, k := range slices.Sorted(maps.Keys(x.StringKeys)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "stringKeys")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.StringKeys) {
 			v := x.StringKeys[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.Quote(k))
-			sb.WriteString(": ")
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteString(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
 			if v == nil {
-				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &timestamppb.Timestamp{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
 	if len(x.IntKeys) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("intKeys: {")
-		for _, k := range slices.Sorted(maps.Keys(x.IntKeys)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "intKeys")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.IntKeys) {
 			v := x.IntKeys[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.FormatUint(uint64(k), 10))
-			sb.WriteString(": ")
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteUint(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
 			if v == nil {
-				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &timestamppb.Timestamp{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MsgWithMaps) String() string {

@@ -5,13 +5,10 @@
 package editions2024
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
-	maps "maps"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 	utf8 "unicode/utf8"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -1514,207 +1511,135 @@ func (x Edition2024Fixture_State) MarshalProtoText() string {
 	return x.String()
 }
 func (x *Edition2024Fixture_Nested) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Nested {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Nested")
 	if x.Name != nil {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.Value != 0 {
-		if sb.Len() > 8 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(strconv.FormatInt(int64(x.Value), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteInt(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Edition2024Fixture_Nested) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Edition2024Fixture_DelimitedGroup) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("DelimitedGroup {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "DelimitedGroup")
 	if x.Label != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("label: ")
-		sb.WriteString(strconv.Quote(*x.Label))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "label")
+		protobuf_go_lite.TextWriteString(&sb, *x.Label)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Edition2024Fixture_DelimitedGroup) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Edition2024Fixture_NestedMapEntry) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("NestedMapEntry {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "NestedMapEntry")
 	if x.Key != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("key: ")
-		sb.WriteString(strconv.Quote(*x.Key))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteString(&sb, *x.Key)
 	}
 	if x.Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(x.Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Value)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Edition2024Fixture_NestedMapEntry) String() string {
 	return x.MarshalProtoText()
 }
 func (x *Edition2024Fixture) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Edition2024Fixture {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Edition2024Fixture")
 	if x.ExplicitInt32 != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.ExplicitInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_int32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.ExplicitInt32)
 	}
 	if x.ImplicitInt32 != 0 {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("implicit_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(x.ImplicitInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "implicit_int32")
+		protobuf_go_lite.TextWriteInt(&sb, x.ImplicitInt32)
 	}
 	if x.RequiredInt32 != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("required_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.RequiredInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "required_int32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.RequiredInt32)
 	}
 	if x.ExplicitString != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_string: ")
-		sb.WriteString(strconv.Quote(*x.ExplicitString))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_string")
+		protobuf_go_lite.TextWriteString(&sb, *x.ExplicitString)
 	}
 	if x.ExplicitBytes != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_bytes: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.ExplicitBytes))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_bytes")
+		protobuf_go_lite.TextWriteBytes(&sb, x.ExplicitBytes)
 	}
 	if x.ExplicitState != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_state: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.ExplicitState.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_state")
+		protobuf_go_lite.TextWriteStringer(&sb, x.ExplicitState)
 	}
 	if x.NestedMessage != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("nested_message: ")
-		sb.WriteString(x.NestedMessage.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "nested_message")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.NestedMessage)
 	}
 	if len(x.PackedInt32) > 0 {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed_int32: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "packed_int32")
 		for i, v := range x.PackedInt32 {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.ExpandedInt32) > 0 {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("expanded_int32: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "expanded_int32")
 		for i, v := range x.ExpandedInt32 {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.NestedMap) > 0 {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("nested_map: {")
-		for _, k := range slices.Sorted(maps.Keys(x.NestedMap)) {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "nested_map")
+		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.NestedMap) {
 			v := x.NestedMap[k]
-			sb.WriteString(" ")
-			sb.WriteString(strconv.Quote(k))
-			sb.WriteString(": ")
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteString(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
 			if v == nil {
-				sb.WriteString((&Edition2024Fixture_Nested{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &Edition2024Fixture_Nested{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString(" }")
+		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
 	if x.DelimitedGroup != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("delimited_group: ")
-		sb.WriteString(x.DelimitedGroup.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "delimited_group")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.DelimitedGroup)
 	}
 	switch body := x.Choice.(type) {
 	case *Edition2024Fixture_ChoiceString:
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("choice_string: ")
-		sb.WriteString(strconv.Quote(body.ChoiceString))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "choice_string")
+		protobuf_go_lite.TextWriteString(&sb, body.ChoiceString)
 	case *Edition2024Fixture_ChoiceInt32:
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("choice_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(body.ChoiceInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "choice_int32")
+		protobuf_go_lite.TextWriteInt(&sb, body.ChoiceInt32)
 	}
 	if x.ExplicitDefaultInt32 != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_default_int32: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.ExplicitDefaultInt32), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_default_int32")
+		protobuf_go_lite.TextWriteInt(&sb, *x.ExplicitDefaultInt32)
 	}
 	if x.ExplicitDefaultString != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("explicit_default_string: ")
-		sb.WriteString(strconv.Quote(*x.ExplicitDefaultString))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "explicit_default_string")
+		protobuf_go_lite.TextWriteString(&sb, *x.ExplicitDefaultString)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *Edition2024Fixture) String() string {

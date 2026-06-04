@@ -8,8 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -187,17 +185,13 @@ func (m *SourceContext) SizeVT() (n int) {
 }
 
 func (x *SourceContext) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("SourceContext {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "SourceContext")
 	if x.FileName != "" {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("file_name: ")
-		sb.WriteString(strconv.Quote(x.FileName))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "file_name")
+		protobuf_go_lite.TextWriteString(&sb, x.FileName)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *SourceContext) String() string {

@@ -9,7 +9,6 @@ import (
 	io "io"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -625,57 +624,37 @@ func (x ExampleEnum) MarshalProtoText() string {
 	return x.String()
 }
 func (x *EchoMsg) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EchoMsg {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EchoMsg")
 	if x.Body != "" {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("body: ")
-		sb.WriteString(strconv.Quote(x.Body))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "body")
+		protobuf_go_lite.TextWriteString(&sb, x.Body)
 	}
 	if x.Ts != nil {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("ts: ")
-		sb.WriteString(x.Ts.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "ts")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Ts)
 	}
 	switch body := x.Demo.(type) {
 	case *EchoMsg_ExampleEnum:
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("example_enum: ")
-		sb.WriteString("\"")
-		sb.WriteString(ExampleEnum(body.ExampleEnum).String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "example_enum")
+		protobuf_go_lite.TextWriteStringer(&sb, ExampleEnum(body.ExampleEnum))
 	case *EchoMsg_ExampleString:
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("example_string: ")
-		sb.WriteString(strconv.Quote(body.ExampleString))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "example_string")
+		protobuf_go_lite.TextWriteString(&sb, body.ExampleString)
 	}
 	if len(x.Timestamps) > 0 {
-		if sb.Len() > 9 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("timestamps: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "timestamps")
 		for i, v := range x.Timestamps {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&timestamppb.Timestamp{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &timestamppb.Timestamp{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EchoMsg) String() string {

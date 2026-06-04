@@ -5,13 +5,11 @@
 package descriptorpb
 
 import (
-	base64 "encoding/base64"
 	fmt "fmt"
 	io "io"
 	math "math"
 	slices "slices"
 	strconv "strconv"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 )
@@ -9780,399 +9778,273 @@ func (x Edition) MarshalProtoText() string {
 	return x.String()
 }
 func (x *FileDescriptorSet) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FileDescriptorSet {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FileDescriptorSet")
 	if len(x.File) > 0 {
-		if sb.Len() > 19 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("file: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "file")
 		for i, v := range x.File {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FileDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FileDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FileDescriptorSet) String() string {
 	return x.MarshalProtoText()
 }
 func (x *FileDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FileDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FileDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.Package != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("package: ")
-		sb.WriteString(strconv.Quote(*x.Package))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "package")
+		protobuf_go_lite.TextWriteString(&sb, *x.Package)
 	}
 	if len(x.Dependency) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("dependency: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "dependency")
 		for i, v := range x.Dependency {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.MessageType) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("message_type: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "message_type")
 		for i, v := range x.MessageType {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&DescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &DescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.EnumType) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("enum_type: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "enum_type")
 		for i, v := range x.EnumType {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&EnumDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &EnumDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.Service) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("service: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "service")
 		for i, v := range x.Service {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&ServiceDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &ServiceDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.Extension) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("extension: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "extension")
 		for i, v := range x.Extension {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FieldDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Options != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
 	if x.SourceCodeInfo != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("source_code_info: ")
-		sb.WriteString(x.SourceCodeInfo.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "source_code_info")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.SourceCodeInfo)
 	}
 	if len(x.PublicDependency) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("public_dependency: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "public_dependency")
 		for i, v := range x.PublicDependency {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.WeakDependency) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("weak_dependency: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "weak_dependency")
 		for i, v := range x.WeakDependency {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Syntax != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("syntax: ")
-		sb.WriteString(strconv.Quote(*x.Syntax))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "syntax")
+		protobuf_go_lite.TextWriteString(&sb, *x.Syntax)
 	}
 	if x.Edition != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("edition: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Edition.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "edition")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Edition)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FileDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *DescriptorProto_ExtensionRange) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ExtensionRange {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ExtensionRange")
 	if x.Start != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("start: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "start")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Start)
 	}
 	if x.End != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("end: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "end")
+		protobuf_go_lite.TextWriteInt(&sb, *x.End)
 	}
 	if x.Options != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *DescriptorProto_ExtensionRange) String() string {
 	return x.MarshalProtoText()
 }
 func (x *DescriptorProto_ReservedRange) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ReservedRange {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ReservedRange")
 	if x.Start != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("start: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "start")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Start)
 	}
 	if x.End != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("end: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "end")
+		protobuf_go_lite.TextWriteInt(&sb, *x.End)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *DescriptorProto_ReservedRange) String() string {
 	return x.MarshalProtoText()
 }
 func (x *DescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("DescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "DescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if len(x.Field) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("field: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "field")
 		for i, v := range x.Field {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FieldDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.NestedType) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("nested_type: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "nested_type")
 		for i, v := range x.NestedType {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&DescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &DescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.EnumType) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("enum_type: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "enum_type")
 		for i, v := range x.EnumType {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&EnumDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &EnumDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.ExtensionRange) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("extension_range: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "extension_range")
 		for i, v := range x.ExtensionRange {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&DescriptorProto_ExtensionRange{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &DescriptorProto_ExtensionRange{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.Extension) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("extension: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "extension")
 		for i, v := range x.Extension {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FieldDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FieldDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Options != nil {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
 	if len(x.OneofDecl) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("oneof_decl: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "oneof_decl")
 		for i, v := range x.OneofDecl {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&OneofDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &OneofDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.ReservedRange) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("reserved_range: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "reserved_range")
 		for i, v := range x.ReservedRange {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&DescriptorProto_ReservedRange{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &DescriptorProto_ReservedRange{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.ReservedName) > 0 {
-		if sb.Len() > 17 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("reserved_name: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "reserved_name")
 		for i, v := range x.ReservedName {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *DescriptorProto) String() string {
@@ -10182,105 +10054,70 @@ func (x ExtensionRangeOptions_VerificationState) MarshalProtoText() string {
 	return x.String()
 }
 func (x *ExtensionRangeOptions_Declaration) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Declaration {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Declaration")
 	if x.Number != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("number: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "number")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Number)
 	}
 	if x.FullName != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("full_name: ")
-		sb.WriteString(strconv.Quote(*x.FullName))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "full_name")
+		protobuf_go_lite.TextWriteString(&sb, *x.FullName)
 	}
 	if x.Type != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("type: ")
-		sb.WriteString(strconv.Quote(*x.Type))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "type")
+		protobuf_go_lite.TextWriteString(&sb, *x.Type)
 	}
 	if x.Reserved != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("reserved: ")
-		sb.WriteString(strconv.FormatBool(*x.Reserved))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "reserved")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Reserved)
 	}
 	if x.Repeated != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated: ")
-		sb.WriteString(strconv.FormatBool(*x.Repeated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "repeated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Repeated)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *ExtensionRangeOptions_Declaration) String() string {
 	return x.MarshalProtoText()
 }
 func (x *ExtensionRangeOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ExtensionRangeOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ExtensionRangeOptions")
 	if len(x.Declaration) > 0 {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("declaration: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "declaration")
 		for i, v := range x.Declaration {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&ExtensionRangeOptions_Declaration{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &ExtensionRangeOptions_Declaration{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Verification != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("verification: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Verification.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "verification")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Verification)
 	}
 	if x.Features != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *ExtensionRangeOptions) String() string {
@@ -10293,334 +10130,219 @@ func (x FieldDescriptorProto_Label) MarshalProtoText() string {
 	return x.String()
 }
 func (x *FieldDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FieldDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FieldDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.Extendee != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("extendee: ")
-		sb.WriteString(strconv.Quote(*x.Extendee))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "extendee")
+		protobuf_go_lite.TextWriteString(&sb, *x.Extendee)
 	}
 	if x.Number != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("number: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "number")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Number)
 	}
 	if x.Label != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("label: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Label.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "label")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Label)
 	}
 	if x.Type != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("type: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Type.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "type")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Type)
 	}
 	if x.TypeName != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("type_name: ")
-		sb.WriteString(strconv.Quote(*x.TypeName))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "type_name")
+		protobuf_go_lite.TextWriteString(&sb, *x.TypeName)
 	}
 	if x.DefaultValue != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("default_value: ")
-		sb.WriteString(strconv.Quote(*x.DefaultValue))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "default_value")
+		protobuf_go_lite.TextWriteString(&sb, *x.DefaultValue)
 	}
 	if x.Options != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
 	if x.OneofIndex != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("oneof_index: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.OneofIndex), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "oneof_index")
+		protobuf_go_lite.TextWriteInt(&sb, *x.OneofIndex)
 	}
 	if x.JsonName != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("json_name: ")
-		sb.WriteString(strconv.Quote(*x.JsonName))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "json_name")
+		protobuf_go_lite.TextWriteString(&sb, *x.JsonName)
 	}
 	if x.Proto3Optional != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("proto3_optional: ")
-		sb.WriteString(strconv.FormatBool(*x.Proto3Optional))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "proto3_optional")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Proto3Optional)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FieldDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *OneofDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("OneofDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "OneofDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.Options != nil {
-		if sb.Len() > 22 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *OneofDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumDescriptorProto_EnumReservedRange) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumReservedRange {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumReservedRange")
 	if x.Start != nil {
-		if sb.Len() > 19 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("start: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Start), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "start")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Start)
 	}
 	if x.End != nil {
-		if sb.Len() > 19 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("end: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "end")
+		protobuf_go_lite.TextWriteInt(&sb, *x.End)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumDescriptorProto_EnumReservedRange) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if len(x.Value) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "value")
 		for i, v := range x.Value {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&EnumValueDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &EnumValueDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Options != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
 	if len(x.ReservedRange) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("reserved_range: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "reserved_range")
 		for i, v := range x.ReservedRange {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&EnumDescriptorProto_EnumReservedRange{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &EnumDescriptorProto_EnumReservedRange{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.ReservedName) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("reserved_name: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "reserved_name")
 		for i, v := range x.ReservedName {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumValueDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumValueDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumValueDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 26 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.Number != nil {
-		if sb.Len() > 26 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("number: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Number), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "number")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Number)
 	}
 	if x.Options != nil {
-		if sb.Len() > 26 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumValueDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *ServiceDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ServiceDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ServiceDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 24 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if len(x.Method) > 0 {
-		if sb.Len() > 24 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("method: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "method")
 		for i, v := range x.Method {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&MethodDescriptorProto{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &MethodDescriptorProto{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Options != nil {
-		if sb.Len() > 24 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *ServiceDescriptorProto) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MethodDescriptorProto) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MethodDescriptorProto {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MethodDescriptorProto")
 	if x.Name != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: ")
-		sb.WriteString(strconv.Quote(*x.Name))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name")
+		protobuf_go_lite.TextWriteString(&sb, *x.Name)
 	}
 	if x.InputType != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("input_type: ")
-		sb.WriteString(strconv.Quote(*x.InputType))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "input_type")
+		protobuf_go_lite.TextWriteString(&sb, *x.InputType)
 	}
 	if x.OutputType != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("output_type: ")
-		sb.WriteString(strconv.Quote(*x.OutputType))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "output_type")
+		protobuf_go_lite.TextWriteString(&sb, *x.OutputType)
 	}
 	if x.Options != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("options: ")
-		sb.WriteString(x.Options.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "options")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Options)
 	}
 	if x.ClientStreaming != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("client_streaming: ")
-		sb.WriteString(strconv.FormatBool(*x.ClientStreaming))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "client_streaming")
+		protobuf_go_lite.TextWriteBool(&sb, *x.ClientStreaming)
 	}
 	if x.ServerStreaming != nil {
-		if sb.Len() > 23 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("server_streaming: ")
-		sb.WriteString(strconv.FormatBool(*x.ServerStreaming))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "server_streaming")
+		protobuf_go_lite.TextWriteBool(&sb, *x.ServerStreaming)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MethodDescriptorProto) String() string {
@@ -10630,238 +10352,146 @@ func (x FileOptions_OptimizeMode) MarshalProtoText() string {
 	return x.String()
 }
 func (x *FileOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FileOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FileOptions")
 	if x.JavaPackage != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_package: ")
-		sb.WriteString(strconv.Quote(*x.JavaPackage))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_package")
+		protobuf_go_lite.TextWriteString(&sb, *x.JavaPackage)
 	}
 	if x.JavaOuterClassname != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_outer_classname: ")
-		sb.WriteString(strconv.Quote(*x.JavaOuterClassname))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_outer_classname")
+		protobuf_go_lite.TextWriteString(&sb, *x.JavaOuterClassname)
 	}
 	if x.OptimizeFor != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("optimize_for: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.OptimizeFor.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "optimize_for")
+		protobuf_go_lite.TextWriteStringer(&sb, x.OptimizeFor)
 	}
 	if x.JavaMultipleFiles != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_multiple_files: ")
-		sb.WriteString(strconv.FormatBool(*x.JavaMultipleFiles))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_multiple_files")
+		protobuf_go_lite.TextWriteBool(&sb, *x.JavaMultipleFiles)
 	}
 	if x.GoPackage != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("go_package: ")
-		sb.WriteString(strconv.Quote(*x.GoPackage))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "go_package")
+		protobuf_go_lite.TextWriteString(&sb, *x.GoPackage)
 	}
 	if x.CcGenericServices != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("cc_generic_services: ")
-		sb.WriteString(strconv.FormatBool(*x.CcGenericServices))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "cc_generic_services")
+		protobuf_go_lite.TextWriteBool(&sb, *x.CcGenericServices)
 	}
 	if x.JavaGenericServices != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_generic_services: ")
-		sb.WriteString(strconv.FormatBool(*x.JavaGenericServices))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_generic_services")
+		protobuf_go_lite.TextWriteBool(&sb, *x.JavaGenericServices)
 	}
 	if x.PyGenericServices != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("py_generic_services: ")
-		sb.WriteString(strconv.FormatBool(*x.PyGenericServices))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "py_generic_services")
+		protobuf_go_lite.TextWriteBool(&sb, *x.PyGenericServices)
 	}
 	if x.JavaGenerateEqualsAndHash != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_generate_equals_and_hash: ")
-		sb.WriteString(strconv.FormatBool(*x.JavaGenerateEqualsAndHash))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_generate_equals_and_hash")
+		protobuf_go_lite.TextWriteBool(&sb, *x.JavaGenerateEqualsAndHash)
 	}
 	if x.Deprecated != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.JavaStringCheckUtf8 != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("java_string_check_utf8: ")
-		sb.WriteString(strconv.FormatBool(*x.JavaStringCheckUtf8))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "java_string_check_utf8")
+		protobuf_go_lite.TextWriteBool(&sb, *x.JavaStringCheckUtf8)
 	}
 	if x.CcEnableArenas != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("cc_enable_arenas: ")
-		sb.WriteString(strconv.FormatBool(*x.CcEnableArenas))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "cc_enable_arenas")
+		protobuf_go_lite.TextWriteBool(&sb, *x.CcEnableArenas)
 	}
 	if x.ObjcClassPrefix != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("objc_class_prefix: ")
-		sb.WriteString(strconv.Quote(*x.ObjcClassPrefix))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "objc_class_prefix")
+		protobuf_go_lite.TextWriteString(&sb, *x.ObjcClassPrefix)
 	}
 	if x.CsharpNamespace != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("csharp_namespace: ")
-		sb.WriteString(strconv.Quote(*x.CsharpNamespace))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "csharp_namespace")
+		protobuf_go_lite.TextWriteString(&sb, *x.CsharpNamespace)
 	}
 	if x.SwiftPrefix != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("swift_prefix: ")
-		sb.WriteString(strconv.Quote(*x.SwiftPrefix))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "swift_prefix")
+		protobuf_go_lite.TextWriteString(&sb, *x.SwiftPrefix)
 	}
 	if x.PhpClassPrefix != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("php_class_prefix: ")
-		sb.WriteString(strconv.Quote(*x.PhpClassPrefix))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "php_class_prefix")
+		protobuf_go_lite.TextWriteString(&sb, *x.PhpClassPrefix)
 	}
 	if x.PhpNamespace != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("php_namespace: ")
-		sb.WriteString(strconv.Quote(*x.PhpNamespace))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "php_namespace")
+		protobuf_go_lite.TextWriteString(&sb, *x.PhpNamespace)
 	}
 	if x.PhpMetadataNamespace != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("php_metadata_namespace: ")
-		sb.WriteString(strconv.Quote(*x.PhpMetadataNamespace))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "php_metadata_namespace")
+		protobuf_go_lite.TextWriteString(&sb, *x.PhpMetadataNamespace)
 	}
 	if x.RubyPackage != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("ruby_package: ")
-		sb.WriteString(strconv.Quote(*x.RubyPackage))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "ruby_package")
+		protobuf_go_lite.TextWriteString(&sb, *x.RubyPackage)
 	}
 	if x.Features != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FileOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *MessageOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MessageOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MessageOptions")
 	if x.MessageSetWireFormat != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("message_set_wire_format: ")
-		sb.WriteString(strconv.FormatBool(*x.MessageSetWireFormat))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "message_set_wire_format")
+		protobuf_go_lite.TextWriteBool(&sb, *x.MessageSetWireFormat)
 	}
 	if x.NoStandardDescriptorAccessor != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("no_standard_descriptor_accessor: ")
-		sb.WriteString(strconv.FormatBool(*x.NoStandardDescriptorAccessor))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "no_standard_descriptor_accessor")
+		protobuf_go_lite.TextWriteBool(&sb, *x.NoStandardDescriptorAccessor)
 	}
 	if x.Deprecated != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.MapEntry != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("map_entry: ")
-		sb.WriteString(strconv.FormatBool(*x.MapEntry))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "map_entry")
+		protobuf_go_lite.TextWriteBool(&sb, *x.MapEntry)
 	}
 	if x.DeprecatedLegacyJsonFieldConflicts != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated_legacy_json_field_conflicts: ")
-		sb.WriteString(strconv.FormatBool(*x.DeprecatedLegacyJsonFieldConflicts))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated_legacy_json_field_conflicts")
+		protobuf_go_lite.TextWriteBool(&sb, *x.DeprecatedLegacyJsonFieldConflicts)
 	}
 	if x.Features != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MessageOptions) String() string {
@@ -10880,339 +10510,222 @@ func (x FieldOptions_OptionTargetType) MarshalProtoText() string {
 	return x.String()
 }
 func (x *FieldOptions_EditionDefault) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EditionDefault {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EditionDefault")
 	if x.Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value: ")
-		sb.WriteString(strconv.Quote(*x.Value))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteString(&sb, *x.Value)
 	}
 	if x.Edition != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("edition: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Edition.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "edition")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Edition)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FieldOptions_EditionDefault) String() string {
 	return x.MarshalProtoText()
 }
 func (x *FieldOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FieldOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FieldOptions")
 	if x.Ctype != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("ctype: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Ctype.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "ctype")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Ctype)
 	}
 	if x.Packed != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("packed: ")
-		sb.WriteString(strconv.FormatBool(*x.Packed))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "packed")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Packed)
 	}
 	if x.Deprecated != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.Lazy != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("lazy: ")
-		sb.WriteString(strconv.FormatBool(*x.Lazy))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "lazy")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Lazy)
 	}
 	if x.Jstype != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("jstype: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Jstype.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "jstype")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Jstype)
 	}
 	if x.Weak != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("weak: ")
-		sb.WriteString(strconv.FormatBool(*x.Weak))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "weak")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Weak)
 	}
 	if x.UnverifiedLazy != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("unverified_lazy: ")
-		sb.WriteString(strconv.FormatBool(*x.UnverifiedLazy))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "unverified_lazy")
+		protobuf_go_lite.TextWriteBool(&sb, *x.UnverifiedLazy)
 	}
 	if x.DebugRedact != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("debug_redact: ")
-		sb.WriteString(strconv.FormatBool(*x.DebugRedact))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "debug_redact")
+		protobuf_go_lite.TextWriteBool(&sb, *x.DebugRedact)
 	}
 	if x.Retention != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("retention: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Retention.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "retention")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Retention)
 	}
 	if len(x.Targets) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("targets: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "targets")
 		for i, v := range x.Targets {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString("\"")
-			sb.WriteString(FieldOptions_OptionTargetType(v).String())
-			sb.WriteString("\"")
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteStringer(&sb, FieldOptions_OptionTargetType(v))
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.EditionDefaults) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("edition_defaults: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "edition_defaults")
 		for i, v := range x.EditionDefaults {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FieldOptions_EditionDefault{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FieldOptions_EditionDefault{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.Features != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FieldOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *OneofOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("OneofOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "OneofOptions")
 	if x.Features != nil {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 14 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *OneofOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumOptions")
 	if x.AllowAlias != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("allow_alias: ")
-		sb.WriteString(strconv.FormatBool(*x.AllowAlias))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "allow_alias")
+		protobuf_go_lite.TextWriteBool(&sb, *x.AllowAlias)
 	}
 	if x.Deprecated != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.DeprecatedLegacyJsonFieldConflicts != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated_legacy_json_field_conflicts: ")
-		sb.WriteString(strconv.FormatBool(*x.DeprecatedLegacyJsonFieldConflicts))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated_legacy_json_field_conflicts")
+		protobuf_go_lite.TextWriteBool(&sb, *x.DeprecatedLegacyJsonFieldConflicts)
 	}
 	if x.Features != nil {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 13 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *EnumValueOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("EnumValueOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "EnumValueOptions")
 	if x.Deprecated != nil {
-		if sb.Len() > 18 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.Features != nil {
-		if sb.Len() > 18 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if x.DebugRedact != nil {
-		if sb.Len() > 18 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("debug_redact: ")
-		sb.WriteString(strconv.FormatBool(*x.DebugRedact))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "debug_redact")
+		protobuf_go_lite.TextWriteBool(&sb, *x.DebugRedact)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 18 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *EnumValueOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *ServiceOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("ServiceOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "ServiceOptions")
 	if x.Deprecated != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.Features != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *ServiceOptions) String() string {
@@ -11222,145 +10735,95 @@ func (x MethodOptions_IdempotencyLevel) MarshalProtoText() string {
 	return x.String()
 }
 func (x *MethodOptions) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MethodOptions {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MethodOptions")
 	if x.Deprecated != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("deprecated: ")
-		sb.WriteString(strconv.FormatBool(*x.Deprecated))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "deprecated")
+		protobuf_go_lite.TextWriteBool(&sb, *x.Deprecated)
 	}
 	if x.IdempotencyLevel != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("idempotency_level: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.IdempotencyLevel.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "idempotency_level")
+		protobuf_go_lite.TextWriteStringer(&sb, x.IdempotencyLevel)
 	}
 	if x.Features != nil {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if len(x.UninterpretedOption) > 0 {
-		if sb.Len() > 15 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uninterpreted_option: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "uninterpreted_option")
 		for i, v := range x.UninterpretedOption {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MethodOptions) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UninterpretedOption_NamePart) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("NamePart {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "NamePart")
 	if x.NamePart != nil {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name_part: ")
-		sb.WriteString(strconv.Quote(*x.NamePart))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "name_part")
+		protobuf_go_lite.TextWriteString(&sb, *x.NamePart)
 	}
 	if x.IsExtension != nil {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("is_extension: ")
-		sb.WriteString(strconv.FormatBool(*x.IsExtension))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "is_extension")
+		protobuf_go_lite.TextWriteBool(&sb, *x.IsExtension)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UninterpretedOption_NamePart) String() string {
 	return x.MarshalProtoText()
 }
 func (x *UninterpretedOption) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("UninterpretedOption {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "UninterpretedOption")
 	if len(x.Name) > 0 {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("name: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "name")
 		for i, v := range x.Name {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&UninterpretedOption_NamePart{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &UninterpretedOption_NamePart{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.IdentifierValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("identifier_value: ")
-		sb.WriteString(strconv.Quote(*x.IdentifierValue))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "identifier_value")
+		protobuf_go_lite.TextWriteString(&sb, *x.IdentifierValue)
 	}
 	if x.PositiveIntValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("positive_int_value: ")
-		sb.WriteString(strconv.FormatUint(uint64(*x.PositiveIntValue), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "positive_int_value")
+		protobuf_go_lite.TextWriteUint(&sb, *x.PositiveIntValue)
 	}
 	if x.NegativeIntValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("negative_int_value: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.NegativeIntValue), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "negative_int_value")
+		protobuf_go_lite.TextWriteInt(&sb, *x.NegativeIntValue)
 	}
 	if x.DoubleValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("double_value: ")
-		sb.WriteString(strconv.FormatFloat(*x.DoubleValue, 'g', -1, 64))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "double_value")
+		protobuf_go_lite.TextWriteFloat64(&sb, *x.DoubleValue)
 	}
 	if x.StringValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("string_value: ")
-		sb.WriteString("\"")
-		sb.WriteString(base64.StdEncoding.EncodeToString(x.StringValue))
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "string_value")
+		protobuf_go_lite.TextWriteBytes(&sb, x.StringValue)
 	}
 	if x.AggregateValue != nil {
-		if sb.Len() > 21 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("aggregate_value: ")
-		sb.WriteString(strconv.Quote(*x.AggregateValue))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "aggregate_value")
+		protobuf_go_lite.TextWriteString(&sb, *x.AggregateValue)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *UninterpretedOption) String() string {
@@ -11385,225 +10848,141 @@ func (x FeatureSet_JsonFormat) MarshalProtoText() string {
 	return x.String()
 }
 func (x *FeatureSet) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FeatureSet {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FeatureSet")
 	if x.FieldPresence != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("field_presence: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.FieldPresence.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "field_presence")
+		protobuf_go_lite.TextWriteStringer(&sb, x.FieldPresence)
 	}
 	if x.EnumType != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("enum_type: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.EnumType.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "enum_type")
+		protobuf_go_lite.TextWriteStringer(&sb, x.EnumType)
 	}
 	if x.RepeatedFieldEncoding != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("repeated_field_encoding: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.RepeatedFieldEncoding.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "repeated_field_encoding")
+		protobuf_go_lite.TextWriteStringer(&sb, x.RepeatedFieldEncoding)
 	}
 	if x.Utf8Validation != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("utf8_validation: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Utf8Validation.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "utf8_validation")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Utf8Validation)
 	}
 	if x.MessageEncoding != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("message_encoding: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.MessageEncoding.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "message_encoding")
+		protobuf_go_lite.TextWriteStringer(&sb, x.MessageEncoding)
 	}
 	if x.JsonFormat != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("json_format: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.JsonFormat.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "json_format")
+		protobuf_go_lite.TextWriteStringer(&sb, x.JsonFormat)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FeatureSet) String() string {
 	return x.MarshalProtoText()
 }
 func (x *FeatureSetDefaults_FeatureSetEditionDefault) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FeatureSetEditionDefault {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FeatureSetEditionDefault")
 	if x.Features != nil {
-		if sb.Len() > 26 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("features: ")
-		sb.WriteString(x.Features.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "features")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Features)
 	}
 	if x.Edition != nil {
-		if sb.Len() > 26 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("edition: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Edition.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "edition")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Edition)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FeatureSetDefaults_FeatureSetEditionDefault) String() string {
 	return x.MarshalProtoText()
 }
 func (x *FeatureSetDefaults) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("FeatureSetDefaults {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "FeatureSetDefaults")
 	if len(x.Defaults) > 0 {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("defaults: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "defaults")
 		for i, v := range x.Defaults {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&FeatureSetDefaults_FeatureSetEditionDefault{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &FeatureSetDefaults_FeatureSetEditionDefault{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.MinimumEdition != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("minimum_edition: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.MinimumEdition.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "minimum_edition")
+		protobuf_go_lite.TextWriteStringer(&sb, x.MinimumEdition)
 	}
 	if x.MaximumEdition != nil {
-		if sb.Len() > 20 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("maximum_edition: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.MaximumEdition.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "maximum_edition")
+		protobuf_go_lite.TextWriteStringer(&sb, x.MaximumEdition)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *FeatureSetDefaults) String() string {
 	return x.MarshalProtoText()
 }
 func (x *SourceCodeInfo_Location) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Location {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Location")
 	if len(x.Path) > 0 {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("path: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "path")
 		for i, v := range x.Path {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if len(x.Span) > 0 {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("span: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "span")
 		for i, v := range x.Span {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.LeadingComments != nil {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("leading_comments: ")
-		sb.WriteString(strconv.Quote(*x.LeadingComments))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "leading_comments")
+		protobuf_go_lite.TextWriteString(&sb, *x.LeadingComments)
 	}
 	if x.TrailingComments != nil {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("trailing_comments: ")
-		sb.WriteString(strconv.Quote(*x.TrailingComments))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "trailing_comments")
+		protobuf_go_lite.TextWriteString(&sb, *x.TrailingComments)
 	}
 	if len(x.LeadingDetachedComments) > 0 {
-		if sb.Len() > 10 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("leading_detached_comments: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "leading_detached_comments")
 		for i, v := range x.LeadingDetachedComments {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.Quote(v))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *SourceCodeInfo_Location) String() string {
 	return x.MarshalProtoText()
 }
 func (x *SourceCodeInfo) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("SourceCodeInfo {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "SourceCodeInfo")
 	if len(x.Location) > 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("location: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "location")
 		for i, v := range x.Location {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&SourceCodeInfo_Location{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &SourceCodeInfo_Location{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *SourceCodeInfo) String() string {
@@ -11613,80 +10992,54 @@ func (x GeneratedCodeInfo_Annotation_Semantic) MarshalProtoText() string {
 	return x.String()
 }
 func (x *GeneratedCodeInfo_Annotation) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("Annotation {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Annotation")
 	if len(x.Path) > 0 {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("path: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "path")
 		for i, v := range x.Path {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
-			sb.WriteString(strconv.FormatInt(int64(v), 10))
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
+			protobuf_go_lite.TextWriteInt(&sb, v)
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
 	if x.SourceFile != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("source_file: ")
-		sb.WriteString(strconv.Quote(*x.SourceFile))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "source_file")
+		protobuf_go_lite.TextWriteString(&sb, *x.SourceFile)
 	}
 	if x.Begin != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("begin: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.Begin), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "begin")
+		protobuf_go_lite.TextWriteInt(&sb, *x.Begin)
 	}
 	if x.End != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("end: ")
-		sb.WriteString(strconv.FormatInt(int64(*x.End), 10))
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "end")
+		protobuf_go_lite.TextWriteInt(&sb, *x.End)
 	}
 	if x.Semantic != nil {
-		if sb.Len() > 12 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("semantic: ")
-		sb.WriteString("\"")
-		sb.WriteString(x.Semantic.String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "semantic")
+		protobuf_go_lite.TextWriteStringer(&sb, x.Semantic)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *GeneratedCodeInfo_Annotation) String() string {
 	return x.MarshalProtoText()
 }
 func (x *GeneratedCodeInfo) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("GeneratedCodeInfo {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "GeneratedCodeInfo")
 	if len(x.Annotation) > 0 {
-		if sb.Len() > 19 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("annotation: [")
+		protobuf_go_lite.TextWriteListStart(&sb, initialLen, "annotation")
 		for i, v := range x.Annotation {
-			if i > 0 {
-				sb.WriteString(", ")
-			}
+			protobuf_go_lite.TextWriteListSeparator(&sb, i)
 			if v == nil {
-				sb.WriteString((&GeneratedCodeInfo_Annotation{}).MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, &GeneratedCodeInfo_Annotation{})
 			} else {
-				sb.WriteString(v.MarshalProtoText())
+				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
 		}
-		sb.WriteString("]")
+		protobuf_go_lite.TextWriteListEnd(&sb)
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *GeneratedCodeInfo) String() string {

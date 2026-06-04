@@ -8,7 +8,6 @@ import (
 	fmt "fmt"
 	io "io"
 	slices "slices"
-	strings "strings"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -982,131 +981,77 @@ func (m *MessageWithWKT) SizeVT() (n int) {
 }
 
 func (x *MessageWithWKT) MarshalProtoText() string {
-	var sb strings.Builder
-	sb.WriteString("MessageWithWKT {")
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MessageWithWKT")
 	if x.Any != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("any: ")
-		sb.WriteString(x.Any.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "any")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Any)
 	}
 	if x.Duration != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("duration: ")
-		sb.WriteString(x.Duration.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "duration")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Duration)
 	}
 	if x.Empty != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("empty: ")
-		sb.WriteString(x.Empty.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "empty")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Empty)
 	}
 	if x.Timestamp != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("timestamp: ")
-		sb.WriteString(x.Timestamp.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "timestamp")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Timestamp)
 	}
 	if x.DoubleValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("double_value: ")
-		sb.WriteString(x.DoubleValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "double_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.DoubleValue)
 	}
 	if x.FloatValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("float_value: ")
-		sb.WriteString(x.FloatValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "float_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.FloatValue)
 	}
 	if x.Int64Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("int64_value: ")
-		sb.WriteString(x.Int64Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "int64_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Int64Value)
 	}
 	if x.Uint64Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uint64_value: ")
-		sb.WriteString(x.Uint64Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "uint64_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Uint64Value)
 	}
 	if x.Int32Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("int32_value: ")
-		sb.WriteString(x.Int32Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "int32_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Int32Value)
 	}
 	if x.Uint32Value != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("uint32_value: ")
-		sb.WriteString(x.Uint32Value.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "uint32_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.Uint32Value)
 	}
 	if x.BoolValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("bool_value: ")
-		sb.WriteString(x.BoolValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "bool_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.BoolValue)
 	}
 	if x.StringValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("string_value: ")
-		sb.WriteString(x.StringValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "string_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.StringValue)
 	}
 	if x.BytesValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("bytes_value: ")
-		sb.WriteString(x.BytesValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "bytes_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.BytesValue)
 	}
 	if x.StructValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("struct_value: ")
-		sb.WriteString(x.StructValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "struct_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.StructValue)
 	}
 	if x.ValueValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("value_value: ")
-		sb.WriteString(x.ValueValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.ValueValue)
 	}
 	if x.ListvalueValue != nil {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("listvalue_value: ")
-		sb.WriteString(x.ListvalueValue.MarshalProtoText())
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "listvalue_value")
+		protobuf_go_lite.TextWriteTextMarshaler(&sb, x.ListvalueValue)
 	}
 	if x.NullValue != 0 {
-		if sb.Len() > 16 {
-			sb.WriteString(" ")
-		}
-		sb.WriteString("null_value: ")
-		sb.WriteString("\"")
-		sb.WriteString(structpb.NullValue(x.NullValue).String())
-		sb.WriteString("\"")
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "null_value")
+		protobuf_go_lite.TextWriteStringer(&sb, structpb.NullValue(x.NullValue))
 	}
-	sb.WriteString("}")
-	return sb.String()
+	return protobuf_go_lite.TextFinishMessage(&sb)
 }
 
 func (x *MessageWithWKT) String() string {
