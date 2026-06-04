@@ -27,6 +27,8 @@ message Msg {
     Child choice_child = 9;
   }
   bool enabled = 10;
+  repeated fixed32 fixed_nums = 11;
+  repeated bool flags = 12;
 }
 
 message Child {
@@ -68,6 +70,9 @@ func TestCodegenModeDefaultUsesHelperMethods(t *testing.T) {
 		"protobuf_go_lite.DecodeString",
 		"protobuf_go_lite.DecodeBytesAppend",
 		"protobuf_go_lite.DecodeLengthDelimited",
+		"protobuf_go_lite.PackedVarintElementCount",
+		"protobuf_go_lite.PackedFixedElementCount",
+		"protobuf_go_lite.SkipWithin",
 	} {
 		if !strings.Contains(out, expected) {
 			t.Fatalf("default helper output missing %s:\n%s", expected, out)
@@ -106,6 +111,9 @@ func TestCodegenModeUnrolledUsesPreviousMethodShape(t *testing.T) {
 		"protobuf_go_lite.DecodeString",
 		"protobuf_go_lite.DecodeBytesAppend",
 		"protobuf_go_lite.DecodeLengthDelimited",
+		"protobuf_go_lite.PackedVarintElementCount",
+		"protobuf_go_lite.PackedFixedElementCount",
+		"protobuf_go_lite.SkipWithin",
 	} {
 		if strings.Contains(out, helper) {
 			t.Fatalf("unrolled output should not contain helper %s:\n%s", helper, out)

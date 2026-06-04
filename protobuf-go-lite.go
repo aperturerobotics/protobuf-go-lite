@@ -797,6 +797,24 @@ func DecodeStringUnsafe(b []byte, idx int) (string, int, error) {
 	return unsafe.String(&b[start], end-start), end, nil
 }
 
+// PackedVarintElementCount returns the number of varint elements in a packed payload.
+func PackedVarintElementCount(b []byte) (n int) {
+	for _, v := range b {
+		if v < 0x80 {
+			n++
+		}
+	}
+	return n
+}
+
+// PackedFixedElementCount returns the number of fixed-width elements in a packed payload.
+func PackedFixedElementCount(b []byte, width int) int {
+	if width <= 0 {
+		return 0
+	}
+	return len(b) / width
+}
+
 // SizeOfZigzag returns the size of the zigzag-encoded value.
 func SizeOfZigzag(x uint64) (n int) {
 	return SizeOfVarint(uint64((x << 1) ^ uint64((int64(x) >> 63)))) //nolint
@@ -1149,4 +1167,20 @@ func Skip(dAtA []byte) (n int, err error) {
 		}
 	}
 	return 0, io.ErrUnexpectedEOF
+}
+
+// SkipWithin skips one encoded field at idx and verifies it stays within limit.
+func SkipWithin(dAtA []byte, idx, limit int) (int, error) {
+	skippy, err := Skip(dAtA[idx:])
+	if err != nil {
+		return 0, err
+	}
+	next := idx + skippy
+	if skippy < 0 || next < 0 {
+		return 0, ErrInvalidLength
+	}
+	if next > limit {
+		return 0, io.ErrUnexpectedEOF
+	}
+	return next, nil
 }

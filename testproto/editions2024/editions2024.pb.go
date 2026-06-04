@@ -13,7 +13,6 @@ import (
 	strconv "strconv"
 	strings "strings"
 	utf8 "unicode/utf8"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -1948,31 +1947,13 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedInt32 = append(m.PackedInt32, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedInt32) == 0 {
 					m.PackedInt32 = make([]int32, 0, elementCount)
 				}
@@ -1996,31 +1977,13 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 				}
 				m.ExpandedInt32 = append(m.ExpandedInt32, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.ExpandedInt32) == 0 {
 					m.ExpandedInt32 = make([]int32, 0, elementCount)
 				}
@@ -2039,23 +2002,11 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMap", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
+			iNdEx = msgStart
 			if m.NestedMap == nil {
 				m.NestedMap = make(map[string]*Edition2024Fixture_Nested)
 			}
@@ -2070,63 +2021,29 @@ func (m *Edition2024Fixture) UnmarshalVT(dAtA []byte) error {
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
 					if !utf8.ValidString(mapkey) {
 						return fmt.Errorf("proto: field editions2024.Edition2024Fixture.NestedMapEntry.key contains invalid UTF-8")
 					}
-					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
-					var mapmsglen int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					mapmsglen = int(_v)
+					msgStartmapvalue, postmsgIndexmapvalue, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 					if err != nil {
 						return err
-					}
-					if mapmsglen < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postmsgIndex := iNdEx + mapmsglen
-					if postmsgIndex < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postmsgIndex > l {
-						return io.ErrUnexpectedEOF
 					}
 					mapvalue = &Edition2024Fixture_Nested{}
-					if err := mapvalue.UnmarshalVT(dAtA[iNdEx:postmsgIndex]); err != nil {
+					if err := mapvalue.UnmarshalVT(dAtA[msgStartmapvalue:postmsgIndexmapvalue]); err != nil {
 						return err
 					}
-					iNdEx = postmsgIndex
+					iNdEx = postmsgIndexmapvalue
 				} else {
 					iNdEx = entryPreIndex
-					skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
 					if err != nil {
 						return err
 					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
 				}
 			}
 			m.NestedMap[mapkey] = mapvalue
@@ -2461,31 +2378,13 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedInt32 = append(m.PackedInt32, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedInt32) == 0 {
 					m.PackedInt32 = make([]int32, 0, elementCount)
 				}
@@ -2509,31 +2408,13 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.ExpandedInt32 = append(m.ExpandedInt32, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.ExpandedInt32) == 0 {
 					m.ExpandedInt32 = make([]int32, 0, elementCount)
 				}
@@ -2552,23 +2433,11 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NestedMap", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
+			iNdEx = msgStart
 			if m.NestedMap == nil {
 				m.NestedMap = make(map[string]*Edition2024Fixture_Nested)
 			}
@@ -2583,67 +2452,29 @@ func (m *Edition2024Fixture) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 					if err != nil {
 						return err
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					if intStringLenmapkey == 0 {
-						mapkey = ""
-					} else {
-						mapkey = unsafe.String(&dAtA[iNdEx], intStringLenmapkey)
 					}
 					if !utf8.ValidString(mapkey) {
 						return fmt.Errorf("proto: field editions2024.Edition2024Fixture.NestedMapEntry.key contains invalid UTF-8")
 					}
-					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
-					var mapmsglen int
-					var _v uint64
-					_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-					mapmsglen = int(_v)
+					msgStartmapvalue, postmsgIndexmapvalue, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 					if err != nil {
 						return err
-					}
-					if mapmsglen < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postmsgIndex := iNdEx + mapmsglen
-					if postmsgIndex < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postmsgIndex > l {
-						return io.ErrUnexpectedEOF
 					}
 					mapvalue = &Edition2024Fixture_Nested{}
-					if err := mapvalue.UnmarshalVTUnsafe(dAtA[iNdEx:postmsgIndex]); err != nil {
+					if err := mapvalue.UnmarshalVTUnsafe(dAtA[msgStartmapvalue:postmsgIndexmapvalue]); err != nil {
 						return err
 					}
-					iNdEx = postmsgIndex
+					iNdEx = postmsgIndexmapvalue
 				} else {
 					iNdEx = entryPreIndex
-					skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
 					if err != nil {
 						return err
 					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
 				}
 			}
 			m.NestedMap[mapkey] = mapvalue

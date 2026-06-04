@@ -11888,31 +11888,13 @@ func (m *FileDescriptorProto) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PublicDependency = append(m.PublicDependency, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PublicDependency) == 0 {
 					m.PublicDependency = make([]int32, 0, elementCount)
 				}
@@ -11936,31 +11918,13 @@ func (m *FileDescriptorProto) UnmarshalVT(dAtA []byte) error {
 				}
 				m.WeakDependency = append(m.WeakDependency, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.WeakDependency) == 0 {
 					m.WeakDependency = make([]int32, 0, elementCount)
 				}
@@ -13767,24 +13731,13 @@ func (m *FieldOptions) UnmarshalVT(dAtA []byte) error {
 				}
 				m.Targets = append(m.Targets, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Targets) == 0 {
 					m.Targets = make([]FieldOptions_OptionTargetType, 0, elementCount)
 				}
@@ -14782,31 +14735,13 @@ func (m *SourceCodeInfo_Location) UnmarshalVT(dAtA []byte) error {
 				}
 				m.Path = append(m.Path, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Path) == 0 {
 					m.Path = make([]int32, 0, elementCount)
 				}
@@ -14830,31 +14765,13 @@ func (m *SourceCodeInfo_Location) UnmarshalVT(dAtA []byte) error {
 				}
 				m.Span = append(m.Span, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Span) == 0 {
 					m.Span = make([]int32, 0, elementCount)
 				}
@@ -15005,31 +14922,13 @@ func (m *GeneratedCodeInfo_Annotation) UnmarshalVT(dAtA []byte) error {
 				}
 				m.Path = append(m.Path, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Path) == 0 {
 					m.Path = make([]int32, 0, elementCount)
 				}
@@ -15359,31 +15258,13 @@ func (m *FileDescriptorProto) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PublicDependency = append(m.PublicDependency, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PublicDependency) == 0 {
 					m.PublicDependency = make([]int32, 0, elementCount)
 				}
@@ -15407,31 +15288,13 @@ func (m *FileDescriptorProto) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.WeakDependency = append(m.WeakDependency, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.WeakDependency) == 0 {
 					m.WeakDependency = make([]int32, 0, elementCount)
 				}
@@ -17238,24 +17101,13 @@ func (m *FieldOptions) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.Targets = append(m.Targets, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Targets) == 0 {
 					m.Targets = make([]FieldOptions_OptionTargetType, 0, elementCount)
 				}
@@ -18253,31 +18105,13 @@ func (m *SourceCodeInfo_Location) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.Path = append(m.Path, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Path) == 0 {
 					m.Path = make([]int32, 0, elementCount)
 				}
@@ -18301,31 +18135,13 @@ func (m *SourceCodeInfo_Location) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.Span = append(m.Span, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Span) == 0 {
 					m.Span = make([]int32, 0, elementCount)
 				}
@@ -18476,31 +18292,13 @@ func (m *GeneratedCodeInfo_Annotation) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.Path = append(m.Path, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.Path) == 0 {
 					m.Path = make([]int32, 0, elementCount)
 				}

@@ -3,6 +3,7 @@ package sizebaseline
 import (
 	"bytes"
 	stdjson "encoding/json"
+	"io"
 	"strings"
 	"testing"
 	"time"
@@ -165,6 +166,16 @@ func TestSizeBaselineUnknownFieldsAndRequired(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, bytes.Contains(remarshaled, unknownField), "unknown field was not preserved")
 	require.Equal(t, len(remarshaled), out.SizeVT())
+}
+
+func TestSizeBaselineMapEntryTruncatedValue(t *testing.T) {
+	wire := []byte{0xaa, 0x01, 0x03, 0x12, 0x05, 0x00}
+
+	var safeOut SizeBaseline
+	require.ErrorIs(t, safeOut.UnmarshalVT(wire), io.ErrUnexpectedEOF)
+
+	var unsafeOut SizeBaseline
+	require.ErrorIs(t, unsafeOut.UnmarshalVTUnsafe(wire), io.ErrUnexpectedEOF)
 }
 
 func BenchmarkSizeBaselineMarshalVT(b *testing.B) {

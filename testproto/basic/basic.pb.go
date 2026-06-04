@@ -13,7 +13,6 @@ import (
 	slices "slices"
 	strconv "strconv"
 	strings "strings"
-	unsafe "unsafe"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
 	json "github.com/aperturerobotics/protobuf-go-lite/json"
@@ -1904,31 +1903,13 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedInt32Field) == 0 {
 					m.RepeatedInt32Field = make([]int32, 0, elementCount)
 				}
@@ -1947,23 +1928,11 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MapStringInt32Field", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
+			iNdEx = msgStart
 			if m.MapStringInt32Field == nil {
 				m.MapStringInt32Field = make(map[string]int32)
 			}
@@ -1978,24 +1947,10 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
 					mapvalue, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
 					if err != nil {
@@ -2003,17 +1958,10 @@ func (m *BasicMsg) UnmarshalVT(dAtA []byte) error {
 					}
 				} else {
 					iNdEx = entryPreIndex
-					skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
 					if err != nil {
 						return err
 					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
 				}
 			}
 			m.MapStringInt32Field[mapkey] = mapvalue
@@ -2332,31 +2280,13 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedInt32Field = append(m.RepeatedInt32Field, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedInt32Field) == 0 {
 					m.RepeatedInt32Field = make([]int32, 0, elementCount)
 				}
@@ -2375,23 +2305,11 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MapStringInt32Field", wireType)
 			}
-			var msglen int
-			var _v uint64
-			_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-			msglen = int(_v)
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 			if err != nil {
 				return err
 			}
-			if msglen < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return protobuf_go_lite.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
+			iNdEx = msgStart
 			if m.MapStringInt32Field == nil {
 				m.MapStringInt32Field = make(map[string]int32)
 			}
@@ -2406,28 +2324,10 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				fieldNum := int32(wire >> 3)
 				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					stringLenmapkey, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
 					if err != nil {
 						return err
 					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					if intStringLenmapkey == 0 {
-						mapkey = ""
-					} else {
-						mapkey = unsafe.String(&dAtA[iNdEx], intStringLenmapkey)
-					}
-					iNdEx = postStringIndexmapkey
 				} else if fieldNum == 2 {
 					mapvalue, iNdEx, err = protobuf_go_lite.DecodeVarintInt32(dAtA, iNdEx)
 					if err != nil {
@@ -2435,17 +2335,10 @@ func (m *BasicMsg) UnmarshalVTUnsafe(dAtA []byte) error {
 					}
 				} else {
 					iNdEx = entryPreIndex
-					skippy, err := protobuf_go_lite.Skip(dAtA[iNdEx:])
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
 					if err != nil {
 						return err
 					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return protobuf_go_lite.ErrInvalidLength
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
 				}
 			}
 			m.MapStringInt32Field[mapkey] = mapvalue

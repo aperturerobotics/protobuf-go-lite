@@ -409,6 +409,45 @@ func TestDecodeLengthDelimitedHelpers(t *testing.T) {
 	}
 }
 
+func TestPackedElementCountHelpers(t *testing.T) {
+	if got, want := PackedVarintElementCount([]byte{0x01, 0xac, 0x02, 0x00}), 3; got != want {
+		t.Fatalf("PackedVarintElementCount = %d, want %d", got, want)
+	}
+	if got, want := PackedFixedElementCount([]byte{0, 1, 2, 3, 4, 5, 6, 7}, 4), 2; got != want {
+		t.Fatalf("PackedFixedElementCount fixed32 = %d, want %d", got, want)
+	}
+	if got, want := PackedFixedElementCount([]byte{0, 1, 2, 3, 4, 5, 6, 7}, 8), 1; got != want {
+		t.Fatalf("PackedFixedElementCount fixed64 = %d, want %d", got, want)
+	}
+	if got, want := PackedFixedElementCount([]byte{0, 1, 2}, 1), 3; got != want {
+		t.Fatalf("PackedFixedElementCount bool = %d, want %d", got, want)
+	}
+	if got := PackedFixedElementCount([]byte{0, 1, 2}, 0); got != 0 {
+		t.Fatalf("PackedFixedElementCount zero width = %d, want 0", got)
+	}
+}
+
+func TestSkipWithin(t *testing.T) {
+	buf := []byte{0x08, 0x01, 0x12, 0x02, 'a', 'b'}
+	next, err := SkipWithin(buf, 0, len(buf))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if next != 2 {
+		t.Fatalf("SkipWithin first = %d, want 2", next)
+	}
+	next, err = SkipWithin(buf, 2, len(buf))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if next != len(buf) {
+		t.Fatalf("SkipWithin second = %d, want %d", next, len(buf))
+	}
+	if _, err = SkipWithin(buf, 2, len(buf)-1); err != io.ErrUnexpectedEOF {
+		t.Fatalf("SkipWithin limited = %v, want ErrUnexpectedEOF", err)
+	}
+}
+
 func TestDecodeVarintTyped(t *testing.T) {
 	buf := AppendVarint(nil, 0xFFFFFFFF)
 

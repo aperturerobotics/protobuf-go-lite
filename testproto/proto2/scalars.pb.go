@@ -4447,25 +4447,13 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				v2 := float64(math.Float64frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]float64, 0, elementCount)
 				}
@@ -4495,25 +4483,13 @@ func (m *DoubleMessage) UnmarshalVT(dAtA []byte) error {
 				v2 := float64(math.Float64frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]float64, 0, elementCount)
 				}
@@ -4616,25 +4592,13 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				v2 := float32(math.Float32frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]float32, 0, elementCount)
 				}
@@ -4664,25 +4628,13 @@ func (m *FloatMessage) UnmarshalVT(dAtA []byte) error {
 				v2 := float32(math.Float32frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]float32, 0, elementCount)
 				}
@@ -4776,31 +4728,13 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -4824,31 +4758,13 @@ func (m *Int32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -4939,31 +4855,13 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -4987,31 +4885,13 @@ func (m *Int64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -5102,31 +4982,13 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint32, 0, elementCount)
 				}
@@ -5150,31 +5012,13 @@ func (m *Uint32Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint32, 0, elementCount)
 				}
@@ -5265,31 +5109,13 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint64, 0, elementCount)
 				}
@@ -5313,31 +5139,13 @@ func (m *Uint64Message) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint64, 0, elementCount)
 				}
@@ -5434,31 +5242,13 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -5486,31 +5276,13 @@ func (m *Sint32Message) UnmarshalVT(dAtA []byte) error {
 				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -5609,31 +5381,13 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -5661,31 +5415,13 @@ func (m *Sint64Message) UnmarshalVT(dAtA []byte) error {
 				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -5784,25 +5520,13 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				v = uint32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint32, 0, elementCount)
 				}
@@ -5830,25 +5554,13 @@ func (m *Fixed32Message) UnmarshalVT(dAtA []byte) error {
 				v = uint32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint32, 0, elementCount)
 				}
@@ -5947,25 +5659,13 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				v = uint64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint64, 0, elementCount)
 				}
@@ -5993,25 +5693,13 @@ func (m *Fixed64Message) UnmarshalVT(dAtA []byte) error {
 				v = uint64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint64, 0, elementCount)
 				}
@@ -6110,25 +5798,13 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -6156,25 +5832,13 @@ func (m *Sfixed32Message) UnmarshalVT(dAtA []byte) error {
 				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -6273,25 +5937,13 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -6319,25 +5971,13 @@ func (m *Sfixed64Message) UnmarshalVT(dAtA []byte) error {
 				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -6432,25 +6072,13 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, bool(v))
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 1)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]bool, 0, elementCount)
 				}
@@ -6474,25 +6102,13 @@ func (m *BoolMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, bool(v))
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 1)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]bool, 0, elementCount)
 				}
@@ -6739,24 +6355,13 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]EnumMessage_Num, 0, elementCount)
 				}
@@ -6784,24 +6389,13 @@ func (m *EnumMessage) UnmarshalVT(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]EnumMessage_Num, 0, elementCount)
 				}
@@ -6903,25 +6497,13 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				v2 := float64(math.Float64frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]float64, 0, elementCount)
 				}
@@ -6951,25 +6533,13 @@ func (m *DoubleMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				v2 := float64(math.Float64frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]float64, 0, elementCount)
 				}
@@ -7072,25 +6642,13 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				v2 := float32(math.Float32frombits(v))
 				m.RepeatedField = append(m.RepeatedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]float32, 0, elementCount)
 				}
@@ -7120,25 +6678,13 @@ func (m *FloatMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				v2 := float32(math.Float32frombits(v))
 				m.PackedField = append(m.PackedField, v2)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]float32, 0, elementCount)
 				}
@@ -7232,31 +6778,13 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -7280,31 +6808,13 @@ func (m *Int32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -7395,31 +6905,13 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -7443,31 +6935,13 @@ func (m *Int64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -7558,31 +7032,13 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint32, 0, elementCount)
 				}
@@ -7606,31 +7062,13 @@ func (m *Uint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint32, 0, elementCount)
 				}
@@ -7721,31 +7159,13 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint64, 0, elementCount)
 				}
@@ -7769,31 +7189,13 @@ func (m *Uint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint64, 0, elementCount)
 				}
@@ -7890,31 +7292,13 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -7942,31 +7326,13 @@ func (m *Sint32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -8065,31 +7431,13 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -8117,31 +7465,13 @@ func (m *Sint64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				var count int
-				for _, integer := range dAtA[iNdEx:postIndex] {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -8240,25 +7570,13 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = uint32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint32, 0, elementCount)
 				}
@@ -8286,25 +7604,13 @@ func (m *Fixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = uint32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint32, 0, elementCount)
 				}
@@ -8403,25 +7709,13 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = uint64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]uint64, 0, elementCount)
 				}
@@ -8449,25 +7743,13 @@ func (m *Fixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = uint64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]uint64, 0, elementCount)
 				}
@@ -8566,25 +7848,13 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int32(_v32)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int32, 0, elementCount)
 				}
@@ -8612,25 +7882,13 @@ func (m *Sfixed32Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int32(_v32)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 4
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 4)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int32, 0, elementCount)
 				}
@@ -8729,25 +7987,13 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int64(_v64)
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]int64, 0, elementCount)
 				}
@@ -8775,25 +8021,13 @@ func (m *Sfixed64Message) UnmarshalVTUnsafe(dAtA []byte) error {
 				v = int64(_v64)
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen / 8
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 8)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]int64, 0, elementCount)
 				}
@@ -8888,25 +8122,13 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, bool(v))
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 1)
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]bool, 0, elementCount)
 				}
@@ -8930,25 +8152,13 @@ func (m *BoolMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, bool(v))
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
-				elementCount = packedLen
+				elementCount = protobuf_go_lite.PackedFixedElementCount(dAtA[iNdEx:postIndex], 1)
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]bool, 0, elementCount)
 				}
@@ -9195,24 +8405,13 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.RepeatedField = append(m.RepeatedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.RepeatedField) == 0 {
 					m.RepeatedField = make([]EnumMessage_Num, 0, elementCount)
 				}
@@ -9240,24 +8439,13 @@ func (m *EnumMessage) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 				m.PackedField = append(m.PackedField, v)
 			} else if wireType == 2 {
-				var packedLen int
-				var _v uint64
-				_v, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
-				packedLen = int(_v)
+				packedStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
 				if err != nil {
 					return err
 				}
-				if packedLen < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return protobuf_go_lite.ErrInvalidLength
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
+				iNdEx = packedStart
 				var elementCount int
+				elementCount = protobuf_go_lite.PackedVarintElementCount(dAtA[iNdEx:postIndex])
 				if elementCount != 0 && len(m.PackedField) == 0 {
 					m.PackedField = make([]EnumMessage_Num, 0, elementCount)
 				}
