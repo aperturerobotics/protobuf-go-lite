@@ -333,82 +333,82 @@ func (x *OptionalFieldInProto3) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.OptionalInt32 != nil || s.HasField("optionalInt32") {
+	if x.OptionalInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalInt32")
 		s.WriteInt32(*x.OptionalInt32)
 	}
-	if x.OptionalInt64 != nil || s.HasField("optionalInt64") {
+	if x.OptionalInt64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalInt64")
 		s.WriteInt64(*x.OptionalInt64)
 	}
-	if x.OptionalUint32 != nil || s.HasField("optionalUint32") {
+	if x.OptionalUint32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalUint32")
 		s.WriteUint32(*x.OptionalUint32)
 	}
-	if x.OptionalUint64 != nil || s.HasField("optionalUint64") {
+	if x.OptionalUint64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalUint64")
 		s.WriteUint64(*x.OptionalUint64)
 	}
-	if x.OptionalSint32 != nil || s.HasField("optionalSint32") {
+	if x.OptionalSint32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalSint32")
 		s.WriteInt32(*x.OptionalSint32)
 	}
-	if x.OptionalSint64 != nil || s.HasField("optionalSint64") {
+	if x.OptionalSint64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalSint64")
 		s.WriteInt64(*x.OptionalSint64)
 	}
-	if x.OptionalFixed32 != nil || s.HasField("optionalFixed32") {
+	if x.OptionalFixed32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalFixed32")
 		s.WriteUint32(*x.OptionalFixed32)
 	}
-	if x.OptionalFixed64 != nil || s.HasField("optionalFixed64") {
+	if x.OptionalFixed64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalFixed64")
 		s.WriteUint64(*x.OptionalFixed64)
 	}
-	if x.OptionalSfixed32 != nil || s.HasField("optionalSfixed32") {
+	if x.OptionalSfixed32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalSfixed32")
 		s.WriteInt32(*x.OptionalSfixed32)
 	}
-	if x.OptionalSfixed64 != nil || s.HasField("optionalSfixed64") {
+	if x.OptionalSfixed64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalSfixed64")
 		s.WriteInt64(*x.OptionalSfixed64)
 	}
-	if x.OptionalFloat != nil || s.HasField("optionalFloat") {
+	if x.OptionalFloat != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalFloat")
 		s.WriteFloat32(*x.OptionalFloat)
 	}
-	if x.OptionalDouble != nil || s.HasField("optionalDouble") {
+	if x.OptionalDouble != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalDouble")
 		s.WriteFloat64(*x.OptionalDouble)
 	}
-	if x.OptionalBool != nil || s.HasField("optionalBool") {
+	if x.OptionalBool != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalBool")
 		s.WriteBool(*x.OptionalBool)
 	}
-	if x.OptionalString != nil || s.HasField("optionalString") {
+	if x.OptionalString != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalString")
 		s.WriteString(*x.OptionalString)
 	}
-	if x.OptionalBytes != nil || s.HasField("optionalBytes") {
+	if x.OptionalBytes != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalBytes")
 		s.WriteBytes(x.OptionalBytes)
 	}
-	if x.OptionalEnum != nil || s.HasField("optionalEnum") {
+	if x.OptionalEnum != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("optionalEnum")
 		(*x.OptionalEnum).MarshalProtoJSON(s)

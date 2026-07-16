@@ -562,7 +562,7 @@ func (x *Edition2024Fixture_Nested) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Name != nil || s.HasField("name") {
+	if x.Name != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("name")
 		s.WriteString(*x.Name)
@@ -617,7 +617,7 @@ func (x *Edition2024Fixture_DelimitedGroup) MarshalProtoJSON(s *json.MarshalStat
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Label != nil || s.HasField("label") {
+	if x.Label != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("label")
 		s.WriteString(*x.Label)
@@ -664,7 +664,7 @@ func (x *Edition2024Fixture_NestedMapEntry) MarshalProtoJSON(s *json.MarshalStat
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Key != nil || s.HasField("key") {
+	if x.Key != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("key")
 		s.WriteString(*x.Key)
@@ -723,7 +723,7 @@ func (x *Edition2024Fixture) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.ExplicitInt32 != nil || s.HasField("explicitInt32") {
+	if x.ExplicitInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitInt32")
 		s.WriteInt32(*x.ExplicitInt32)
@@ -733,22 +733,22 @@ func (x *Edition2024Fixture) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("implicitInt32")
 		s.WriteInt32(x.ImplicitInt32)
 	}
-	if x.RequiredInt32 != nil || s.HasField("requiredInt32") {
+	if x.RequiredInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("requiredInt32")
 		s.WriteInt32(*x.RequiredInt32)
 	}
-	if x.ExplicitString != nil || s.HasField("explicitString") {
+	if x.ExplicitString != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitString")
 		s.WriteString(*x.ExplicitString)
 	}
-	if x.ExplicitBytes != nil || s.HasField("explicitBytes") {
+	if x.ExplicitBytes != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitBytes")
 		s.WriteBytes(x.ExplicitBytes)
 	}
-	if x.ExplicitState != nil || s.HasField("explicitState") {
+	if x.ExplicitState != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitState")
 		(*x.ExplicitState).MarshalProtoJSON(s)
@@ -797,12 +797,12 @@ func (x *Edition2024Fixture) MarshalProtoJSON(s *json.MarshalState) {
 			s.WriteInt32(ov.ChoiceInt32)
 		}
 	}
-	if x.ExplicitDefaultInt32 != nil || s.HasField("explicitDefaultInt32") {
+	if x.ExplicitDefaultInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitDefaultInt32")
 		s.WriteInt32(*x.ExplicitDefaultInt32)
 	}
-	if x.ExplicitDefaultString != nil || s.HasField("explicitDefaultString") {
+	if x.ExplicitDefaultString != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitDefaultString")
 		s.WriteString(*x.ExplicitDefaultString)

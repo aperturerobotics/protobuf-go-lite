@@ -836,7 +836,7 @@ func (x *SizeBaseline_Nested) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Name != nil || s.HasField("name") {
+	if x.Name != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("name")
 		s.WriteString(*x.Name)
@@ -903,7 +903,7 @@ func (x *SizeBaseline_NestedByNameEntry) MarshalProtoJSON(s *json.MarshalState) 
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Key != nil || s.HasField("key") {
+	if x.Key != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("key")
 		s.WriteString(*x.Key)
@@ -962,7 +962,7 @@ func (x *SizeBaseline_NestedByIdEntry) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.Key != nil || s.HasField("key") {
+	if x.Key != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("key")
 		s.WriteUint32(*x.Key)
@@ -1021,7 +1021,7 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 	}
 	s.WriteObjectStart()
 	var wroteField bool
-	if x.ExplicitInt32 != nil || s.HasField("explicitInt32") {
+	if x.ExplicitInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitInt32")
 		s.WriteInt32(*x.ExplicitInt32)
@@ -1031,77 +1031,77 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("implicitInt32")
 		s.WriteInt32(x.ImplicitInt32)
 	}
-	if x.ExplicitInt64 != nil || s.HasField("explicitInt64") {
+	if x.ExplicitInt64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitInt64")
 		s.WriteInt64(*x.ExplicitInt64)
 	}
-	if x.ExplicitUint32 != nil || s.HasField("explicitUint32") {
+	if x.ExplicitUint32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitUint32")
 		s.WriteUint32(*x.ExplicitUint32)
 	}
-	if x.ExplicitUint64 != nil || s.HasField("explicitUint64") {
+	if x.ExplicitUint64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitUint64")
 		s.WriteUint64(*x.ExplicitUint64)
 	}
-	if x.ExplicitSint32 != nil || s.HasField("explicitSint32") {
+	if x.ExplicitSint32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitSint32")
 		s.WriteInt32(*x.ExplicitSint32)
 	}
-	if x.ExplicitSint64 != nil || s.HasField("explicitSint64") {
+	if x.ExplicitSint64 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("explicitSint64")
 		s.WriteInt64(*x.ExplicitSint64)
 	}
-	if x.Fixed32Value != nil || s.HasField("fixed32Value") {
+	if x.Fixed32Value != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("fixed32Value")
 		s.WriteUint32(*x.Fixed32Value)
 	}
-	if x.Fixed64Value != nil || s.HasField("fixed64Value") {
+	if x.Fixed64Value != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("fixed64Value")
 		s.WriteUint64(*x.Fixed64Value)
 	}
-	if x.Sfixed32Value != nil || s.HasField("sfixed32Value") {
+	if x.Sfixed32Value != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("sfixed32Value")
 		s.WriteInt32(*x.Sfixed32Value)
 	}
-	if x.Sfixed64Value != nil || s.HasField("sfixed64Value") {
+	if x.Sfixed64Value != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("sfixed64Value")
 		s.WriteInt64(*x.Sfixed64Value)
 	}
-	if x.FloatValue != nil || s.HasField("floatValue") {
+	if x.FloatValue != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("floatValue")
 		s.WriteFloat32(*x.FloatValue)
 	}
-	if x.DoubleValue != nil || s.HasField("doubleValue") {
+	if x.DoubleValue != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("doubleValue")
 		s.WriteFloat64(*x.DoubleValue)
 	}
-	if x.BoolValue != nil || s.HasField("boolValue") {
+	if x.BoolValue != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("boolValue")
 		s.WriteBool(*x.BoolValue)
 	}
-	if x.StringValue != nil || s.HasField("stringValue") {
+	if x.StringValue != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("stringValue")
 		s.WriteString(*x.StringValue)
 	}
-	if x.BytesValue != nil || s.HasField("bytesValue") {
+	if x.BytesValue != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("bytesValue")
 		s.WriteBytes(x.BytesValue)
 	}
-	if x.RequiredInt32 != nil || s.HasField("requiredInt32") {
+	if x.RequiredInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("requiredInt32")
 		s.WriteInt32(*x.RequiredInt32)
@@ -1151,7 +1151,7 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 		}
 		s.WriteObjectEnd()
 	}
-	if x.State != nil || s.HasField("state") {
+	if x.State != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("state")
 		(*x.State).MarshalProtoJSON(s)
@@ -1212,12 +1212,12 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 			ov.SelectedNested.MarshalProtoJSON(s.WithField("selectedNested"))
 		}
 	}
-	if x.DefaultString != nil || s.HasField("defaultString") {
+	if x.DefaultString != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("defaultString")
 		s.WriteString(*x.DefaultString)
 	}
-	if x.DefaultInt32 != nil || s.HasField("defaultInt32") {
+	if x.DefaultInt32 != nil {
 		s.WriteMoreIf(&wroteField)
 		s.WriteObjectField("defaultInt32")
 		s.WriteInt32(*x.DefaultInt32)
