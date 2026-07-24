@@ -248,3 +248,66 @@ func TestUnmarshaler(t *testing.T) {
 		return s.ReadFieldMask().GetPaths()
 	}, `{"paths":["foo","bar","baz.qux"]}`, []string{"foo", "bar", "baz.qux"})
 }
+
+func TestReadEnumDiscardUnknown(t *testing.T) {
+	valueMap := map[string]int32{
+		"APP_FLAVOR_UNSPECIFIED": 0,
+		"BETA":                   1,
+		"NORMAL":                 5,
+	}
+
+	t.Run("known string", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"NORMAL"`), UnmarshalerConfig{})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 5 {
+			t.Fatalf("got %d, want 5", got)
+		}
+	})
+
+	t.Run("unknown string errors by default", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"normal"`), UnmarshalerConfig{})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error for unknown enum string")
+		}
+		if got != 0 {
+			t.Fatalf("got %d, want 0", got)
+		}
+	})
+
+	t.Run("unknown string discarded when DiscardUnknown", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"normal"`), UnmarshalerConfig{DiscardUnknown: true})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 0 {
+			t.Fatalf("got %d, want 0", got)
+		}
+	})
+
+	t.Run("unknown name discarded when DiscardUnknown", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"nope"`), UnmarshalerConfig{DiscardUnknown: true})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 0 {
+			t.Fatalf("got %d, want 0", got)
+		}
+	})
+
+	t.Run("numeric still works with DiscardUnknown", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`5`), UnmarshalerConfig{DiscardUnknown: true})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 5 {
+			t.Fatalf("got %d, want 5", got)
+		}
+	})
+}

@@ -40,6 +40,11 @@ func (e *unmarshalError) Unwrap() error {
 type UnmarshalerConfig struct {
 	// AnyTypeResolver is the resolver function for the any well-known type.
 	AnyTypeResolver anypb_resolver.AnyTypeResolver
+	// DiscardUnknown, if true, ignores unknown enum string values and leaves the
+	// field at its zero value instead of failing unmarshaling. This matches
+	// google.golang.org/protobuf encoding/protojson UnmarshalOptions.DiscardUnknown
+	// behavior for invalid enum names.
+	DiscardUnknown bool
 }
 
 // DefaultUnmarshalerConfig is the default configuration for the Unmarshaler.
@@ -799,6 +804,9 @@ func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 		v := s.inner.ReadString()
 		x, err := ParseEnumString(v, valueMaps...)
 		if err != nil {
+			if s.config != nil && s.config.DiscardUnknown {
+				return 0
+			}
 			s.SetErrorf("unknown value for enum: %q", v)
 			return 0
 		}
