@@ -310,4 +310,15 @@ func TestReadEnumDiscardUnknown(t *testing.T) {
 			t.Fatalf("got %d, want 5", got)
 		}
 	})
+
+	t.Run("null returns zero without error", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`null`), UnmarshalerConfig{})
+		got := s.ReadEnum(valueMap)
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 0 {
+			t.Fatalf("got %d, want 0", got)
+		}
+	})
 }

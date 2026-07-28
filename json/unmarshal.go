@@ -811,6 +811,9 @@ func (s *UnmarshalState) ReadEnum(valueMaps ...map[string]int32) int32 {
 			return 0
 		}
 		return x
+	case jsoniter.NilValue:
+		s.inner.ReadNil()
+		return 0
 	default:
 		s.SetErrorf("invalid value type for enum: %s", valueTypeString(nextTok))
 		return 0
