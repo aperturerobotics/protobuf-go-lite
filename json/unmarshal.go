@@ -290,14 +290,14 @@ func (s *UnmarshalState) ReadInt32() int32 {
 			s.SetErrorf("invalid value for int32: %w", err)
 			return 0
 		}
-		return int32(v)
+		return int32(v) //nolint:gosec // bounded by intFromJSONNumber bitSize 32
 	case jsoniter.StringValue:
 		v, err := parseJSONInt(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for int32: %w", err)
 			return 0
 		}
-		return int32(v)
+		return int32(v) //nolint:gosec // bounded by parseJSONInt bitSize 32
 	default:
 		s.SetErrorf("invalid value type for int32: %s", valueTypeString(nextTok))
 		return 0
@@ -416,14 +416,14 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 			s.SetErrorf("invalid value for uint32: %w", err)
 			return 0
 		}
-		return uint32(v)
+		return uint32(v) //nolint:gosec // bounded by uintFromJSONNumber bitSize 32
 	case jsoniter.StringValue:
 		v, err := parseJSONUint(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for uint32: %w", err)
 			return 0
 		}
-		return uint32(v)
+		return uint32(v) //nolint:gosec // bounded by parseJSONUint bitSize 32
 	default:
 		s.SetErrorf("invalid value type for uint32: %s", valueTypeString(nextTok))
 		return 0
