@@ -171,7 +171,7 @@ func (s *UnmarshalState) ReadFloat32() float32 {
 	case jsoniter.NumberValue:
 		return s.inner.ReadFloat32()
 	case jsoniter.StringValue:
-		f, err := parseFloatLenient(s.inner.ReadString(), 32)
+		f, err := parseJSONFloat(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for float32: %w", err)
 			return 0
@@ -213,7 +213,7 @@ func (s *UnmarshalState) ReadFloat64() float64 {
 	case jsoniter.NumberValue:
 		return s.inner.ReadFloat64()
 	case jsoniter.StringValue:
-		f, err := parseFloatLenient(s.inner.ReadString(), 64)
+		f, err := parseJSONFloat(s.inner.ReadString(), 64)
 		if err != nil {
 			s.SetErrorf("invalid value for float64: %w", err)
 			return 0
@@ -292,7 +292,7 @@ func (s *UnmarshalState) ReadInt32() int32 {
 		}
 		return int32(v)
 	case jsoniter.StringValue:
-		v, err := parseSignedIntLenient(s.inner.ReadString(), 32)
+		v, err := parseJSONInt(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for int32: %w", err)
 			return 0
@@ -339,7 +339,7 @@ func (s *UnmarshalState) ReadInt64() int64 {
 		}
 		return v
 	case jsoniter.StringValue:
-		v, err := parseSignedIntLenient(s.inner.ReadString(), 64)
+		v, err := parseJSONInt(s.inner.ReadString(), 64)
 		if err != nil {
 			s.SetErrorf("invalid value for int64: %w", err)
 			return 0
@@ -418,7 +418,7 @@ func (s *UnmarshalState) ReadUint32() uint32 {
 		}
 		return uint32(v)
 	case jsoniter.StringValue:
-		v, err := parseUnsignedIntLenient(s.inner.ReadString(), 32)
+		v, err := parseJSONUint(s.inner.ReadString(), 32)
 		if err != nil {
 			s.SetErrorf("invalid value for uint32: %w", err)
 			return 0
@@ -465,7 +465,7 @@ func (s *UnmarshalState) ReadUint64() uint64 {
 		}
 		return v
 	case jsoniter.StringValue:
-		v, err := parseUnsignedIntLenient(s.inner.ReadString(), 64)
+		v, err := parseJSONUint(s.inner.ReadString(), 64)
 		if err != nil {
 			s.SetErrorf("invalid value for uint64: %w", err)
 			return 0

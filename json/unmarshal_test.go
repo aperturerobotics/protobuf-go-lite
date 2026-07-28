@@ -312,7 +312,7 @@ func TestReadEnumDiscardUnknown(t *testing.T) {
 	})
 }
 
-func TestProtoJSONNumericLeniency(t *testing.T) {
+func TestProtoJSONNumericParsing(t *testing.T) {
 	t.Run("int64 string float looking", func(t *testing.T) {
 		s := NewUnmarshalState([]byte(`"215.0"`), UnmarshalerConfig{})
 		got := s.ReadInt64()

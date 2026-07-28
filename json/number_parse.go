@@ -70,7 +70,7 @@ func scanJSONNumber(input string) (int, bool) {
 	return n, true
 }
 
-func parseSignedIntLenient(s string, bitSize int) (int64, error) {
+func parseJSONInt(s string, bitSize int) (int64, error) {
 	if len(s) != len(strings.TrimSpace(s)) {
 		return 0, fmt.Errorf("invalid syntax")
 	}
@@ -81,7 +81,7 @@ func parseSignedIntLenient(s string, bitSize int) (int64, error) {
 	return intFromJSONNumber(s[:n], bitSize)
 }
 
-func parseUnsignedIntLenient(s string, bitSize int) (uint64, error) {
+func parseJSONUint(s string, bitSize int) (uint64, error) {
 	if len(s) != len(strings.TrimSpace(s)) {
 		return 0, fmt.Errorf("invalid syntax")
 	}
@@ -92,7 +92,7 @@ func parseUnsignedIntLenient(s string, bitSize int) (uint64, error) {
 	return uintFromJSONNumber(s[:n], bitSize)
 }
 
-func parseFloatLenient(s string, bitSize int) (float64, error) {
+func parseJSONFloat(s string, bitSize int) (float64, error) {
 	switch s {
 	case "NaN":
 		return math.NaN(), nil
