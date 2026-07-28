@@ -394,4 +394,72 @@ func TestProtoJSONNumericParsing(t *testing.T) {
 			t.Fatalf("got %d, want 1230", got)
 		}
 	})
+
+	t.Run("int64 keeps digits above 2^53", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"9007199254740993.0"`), UnmarshalerConfig{})
+		got := s.ReadInt64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 9007199254740993 {
+			t.Fatalf("got %d, want 9007199254740993", got)
+		}
+	})
+
+	t.Run("uint64 keeps digits above 2^53", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"9007199254740993.0"`), UnmarshalerConfig{})
+		got := s.ReadUint64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 9007199254740993 {
+			t.Fatalf("got %d, want 9007199254740993", got)
+		}
+	})
+
+	t.Run("int64 rejects value past its range", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"9223372036854775808.0"`), UnmarshalerConfig{})
+		_ = s.ReadInt64()
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error")
+		}
+	})
+
+	t.Run("uint64 accepts value past the signed range", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"9223372036854775808.0"`), UnmarshalerConfig{})
+		got := s.ReadUint64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 9223372036854775808 {
+			t.Fatalf("got %d, want 9223372036854775808", got)
+		}
+	})
+
+	t.Run("uint64 rejects value past its range", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"18446744073709551616.0"`), UnmarshalerConfig{})
+		_ = s.ReadUint64()
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error")
+		}
+	})
+
+	t.Run("int64 reads an empty exponent as zero", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"1e$"`), UnmarshalerConfig{})
+		got := s.ReadInt64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 1 {
+			t.Fatalf("got %d, want 1", got)
+		}
+	})
+
+	t.Run("float64 rejects an empty exponent", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"1e$"`), UnmarshalerConfig{})
+		_ = s.ReadFloat64()
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error")
+		}
+	})
 }
