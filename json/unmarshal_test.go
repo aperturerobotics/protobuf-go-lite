@@ -322,3 +322,76 @@ func TestReadEnumDiscardUnknown(t *testing.T) {
 		}
 	})
 }
+
+func TestProtoJSONNumericParsing(t *testing.T) {
+	t.Run("int64 string float looking", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"215.0"`), UnmarshalerConfig{})
+		got := s.ReadInt64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 215 {
+			t.Fatalf("got %d, want 215", got)
+		}
+	})
+
+	t.Run("int32 number float looking", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`215.0`), UnmarshalerConfig{})
+		got := s.ReadInt32()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 215 {
+			t.Fatalf("got %d, want 215", got)
+		}
+	})
+
+	t.Run("int64 trailing junk after number", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"50$ OFF"`), UnmarshalerConfig{})
+		got := s.ReadInt64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 50 {
+			t.Fatalf("got %d, want 50", got)
+		}
+	})
+
+	t.Run("float64 trailing junk after number", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"10 mins"`), UnmarshalerConfig{})
+		got := s.ReadFloat64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 10 {
+			t.Fatalf("got %v, want 10", got)
+		}
+	})
+
+	t.Run("int64 rejects non integral fraction", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"215.5"`), UnmarshalerConfig{})
+		_ = s.ReadInt64()
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error")
+		}
+	})
+
+	t.Run("int64 rejects letter suffix", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"50abc"`), UnmarshalerConfig{})
+		_ = s.ReadInt64()
+		if err := s.Err(); err == nil {
+			t.Fatal("expected error")
+		}
+	})
+
+	t.Run("int64 scientific", func(t *testing.T) {
+		s := NewUnmarshalState([]byte(`"1.23e3"`), UnmarshalerConfig{})
+		got := s.ReadInt64()
+		if err := s.Err(); err != nil {
+			t.Fatalf("unexpected err: %v", err)
+		}
+		if got != 1230 {
+			t.Fatalf("got %d, want 1230", got)
+		}
+	})
+}
