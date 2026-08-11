@@ -21,7 +21,7 @@ import (
 type MessageTypeResolver = anypb_resolver.AnyTypeResolver
 
 // ErrNotFound is returned if the message type was not found.
-var ErrNotFound = errors.New("message type not found in Any")
+var ErrNotFound = anypb_resolver.ErrNotFound
 
 // New marshals src into a new Any instance.
 func New(src protobuf_go_lite.Message, typeURL string) (*Any, error) {

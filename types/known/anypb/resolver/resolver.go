@@ -9,6 +9,9 @@ import (
 // ErrNoAnyTypeResolver is returned if no resolver was provided for the Any type.
 var ErrNoAnyTypeResolver = errors.New("no resolver provided for the Any type")
 
+// ErrNotFound is returned if the message type was not found.
+var ErrNotFound = errors.New("message type not found in Any")
+
 // AnyTypeResolver is an interface for looking up messages.
 //
 // A compliant implementation must deterministically return the same type
