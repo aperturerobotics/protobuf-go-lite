@@ -1,0 +1,38 @@
+syntax = "proto3";
+package jsononeof;
+
+// Child carries an ordinary nested message value.
+message Child {
+  // Value identifies the child value.
+  string value = 1;
+}
+
+// Interleaved exercises ordinary fields numbered between oneof members.
+message Interleaved {
+  // Before is emitted before the choice.
+  string before = 1;
+
+  // Choice selects one JSON value.
+  oneof choice {
+    // Text carries a scalar choice.
+    string text = 2;
+
+    // ChildValue carries a message choice.
+    Child child_value = 5;
+  }
+
+  // BetweenMessage is numbered between choice members.
+  Child between_message = 3;
+
+  // BetweenScalar is numbered between choice members.
+  int32 between_scalar = 4;
+
+  // After is emitted after the choice members.
+  string after = 6;
+
+  // AfterMessage is an ordinary message after the choice members.
+  Child after_message = 7;
+
+  // OptionalZero preserves explicit zero presence after the choice.
+  optional int32 optional_zero = 8;
+}
