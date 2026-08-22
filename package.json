@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "aptre": {
+    "languages": ["go", "ts"]
+  },
+  "devDependencies": {
+    "@aptre/protobuf-es-lite": "1.1.1"
+  }
+}
