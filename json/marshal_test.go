@@ -5,6 +5,7 @@ package json
 
 import (
 	"bytes"
+	stdjson "encoding/json"
 	"math"
 	"testing"
 	"time"
@@ -207,6 +208,37 @@ func TestMarshalSlice(t *testing.T) {
 
 	if string(result) != expected {
 		t.Errorf("MarshalSlice result does not match expected.\nGot:      %s\nExpected: %s", string(result), expected)
+	}
+}
+
+type stringMarshaler struct {
+	value string
+}
+
+func (m *stringMarshaler) MarshalProtoJSON(s *MarshalState) {
+	s.WriteObjectStart()
+	s.WriteObjectField("value")
+	s.WriteString(m.value)
+	s.WriteObjectEnd()
+}
+
+func TestMarshalStringUsesJSONEscapes(t *testing.T) {
+	want := "\a\v\x1b\"\\\u2028\u2029"
+	encoded, err := Marshal(DefaultMarshalerConfig, &stringMarshaler{value: want})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !stdjson.Valid(encoded) {
+		t.Fatalf("Marshal emitted invalid JSON: %q", encoded)
+	}
+	var decoded struct {
+		Value string `json:"value"`
+	}
+	if err := stdjson.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Value != want {
+		t.Fatalf("decoded string = %q, want %q", decoded.Value, want)
 	}
 }
 
