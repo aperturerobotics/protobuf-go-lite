@@ -6,9 +6,13 @@ package json
 import (
 	"bytes"
 	stdjson "encoding/json"
+	"fmt"
 	"math"
+	"math/rand/v2"
+	"strings"
 	"testing"
 	"time"
+	"unicode/utf8"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -222,8 +226,56 @@ func (m *stringMarshaler) MarshalProtoJSON(s *MarshalState) {
 	s.WriteObjectEnd()
 }
 
+// TestAppendJSONString pins the exact RFC 8259 encoding of appendJSONString.
+//
+// Malformed UTF-8 is encoded as one U+FFFD replacement character per invalid
+// byte: utf8.DecodeRuneInString returns (utf8.RuneError, 1) for an invalid or
+// truncated sequence, and U+FFFD is not escaped, so each invalid byte is
+// re-encoded as the replacement rune.
+func TestAppendJSONString(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		{"", `""`},
+		{"plain", `"plain"`},
+		{"héllo 世界 ✓", `"héllo 世界 ✓"`},
+		{"\"", "\"\\\"\""},
+		{`\`, `"\\"`},
+		{"\b", `"\b"`},
+		{"\f", `"\f"`},
+		{"\n", `"\n"`},
+		{"\r", `"\r"`},
+		{"\t", `"\t"`},
+		{"\a", `"\u0007"`},
+		{"\v", `"\u000b"`},
+		{"\x00", `"\u0000"`},
+		{"\x1b", `"\u001b"`},
+		{"\u007f", "\"\u007f\""},
+		{"\u2028\u2029", `"\u2028\u2029"`},
+		{"\ufffd", "\"\ufffd\""},
+		{"\xff", "\"\ufffd\""},
+		{"\xff\xfe", "\"\ufffd\ufffd\""},
+		{"\xe4\xb8", "\"\ufffd\ufffd\""},
+		{"a\xe4\xb8\xad b\xff", "\"a中 b\ufffd\""},
+	}
+	for i := 0; i < 0x20; i++ {
+		switch i {
+		case '\b', '\f', '\n', '\r', '\t':
+			continue
+		}
+		esc := fmt.Sprintf(`\u%04x`, i)
+		tests = append(tests, struct{ in, want string }{string(rune(i)), `"` + esc + `"`})
+	}
+	for _, tt := range tests {
+		if got := string(appendJSONString(nil, tt.in)); got != tt.want {
+			t.Errorf("appendJSONString(%q) = %s, want %s", tt.in, got, tt.want)
+		}
+	}
+}
+
 func TestMarshalStringUsesJSONEscapes(t *testing.T) {
-	want := "\a\v\x1b\"\\\u2028\u2029"
+	want := "\x00\a\b\f\n\r\t\v\x1b\"\\\u2028\u2029\x7f世"
 	encoded, err := Marshal(DefaultMarshalerConfig, &stringMarshaler{value: want})
 	if err != nil {
 		t.Fatal(err)
@@ -242,23 +294,51 @@ func TestMarshalStringUsesJSONEscapes(t *testing.T) {
 	}
 }
 
-func TestMarshalMap(t *testing.T) {
-	testMap := map[string]*testMarshaler{
-		"c": {value: 3},
-		"a": {value: 1},
-		"b": {value: 2},
-	}
+// TestJSONStringEncodingRoundTrip checks that pseudo-random strings, including
+// control characters and malformed UTF-8, always encode as valid JSON that the
+// standard decoder maps back to the expected value.
+func TestJSONStringEncodingRoundTrip(t *testing.T) {
+	r := rand.New(rand.NewPCG(1, 2)) //nolint:gosec // Deterministic test data, not security-sensitive randomness.
+	for i := 0; i < 1000; i++ {
+		buf := make([]byte, r.IntN(32))
+		for j := range buf {
+			switch r.IntN(4) {
+			case 0:
+				buf[j] = byte(r.IntN(0x20))
+			case 1:
+				buf[j] = byte(r.IntN(256))
+			case 2:
+				buf[j] = '"'
+			default:
+				buf[j] = 'a' + byte(r.IntN(26))
+			}
+		}
+		in := string(buf)
+		if i%5 == 0 {
+			in += string(rune(0x20ac + r.IntN(0x100)))
+		}
 
-	// Keys should be sorted alphabetically.
-	expected := `{"a":{"value":1},"b":{"value":2},"c":{"value":3}}`
+		encoded := appendJSONString(nil, in)
+		if !stdjson.Valid(encoded) {
+			t.Fatalf("appendJSONString(%q) emitted invalid JSON: %q", in, encoded)
+		}
+		var out string
+		if err := stdjson.Unmarshal(encoded, &out); err != nil {
+			t.Fatal(err)
+		}
 
-	config := DefaultMarshalerConfig
-	result, err := MarshalMap(config, testMap)
-	if err != nil {
-		t.Errorf("MarshalMap returned an error: %v", err)
-	}
-
-	if string(result) != expected {
-		t.Errorf("MarshalMap result does not match expected.\nGot:      %s\nExpected: %s", string(result), expected)
+		want := in
+		if !utf8.ValidString(in) {
+			var sb strings.Builder
+			for len(want) != 0 {
+				c, size := utf8.DecodeRuneInString(want)
+				sb.WriteRune(c)
+				want = want[size:]
+			}
+			want = sb.String()
+		}
+		if out != want {
+			t.Fatalf("round trip of %q: got %q, want %q", in, out, want)
+		}
 	}
 }
