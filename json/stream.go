@@ -3,7 +3,41 @@ package json
 import (
 	"io"
 	"strconv"
+	"unicode/utf8"
 )
+
+const jsonHex = "0123456789abcdef"
+
+func appendJSONString(dst []byte, str string) []byte {
+	dst = append(dst, '"')
+	for len(str) != 0 {
+		r, size := utf8.DecodeRuneInString(str)
+		str = str[size:]
+		switch r {
+		case '"', '\\':
+			dst = append(dst, '\\', byte(r))
+		case '\b':
+			dst = append(dst, '\\', 'b')
+		case '\f':
+			dst = append(dst, '\\', 'f')
+		case '\n':
+			dst = append(dst, '\\', 'n')
+		case '\r':
+			dst = append(dst, '\\', 'r')
+		case '\t':
+			dst = append(dst, '\\', 't')
+		case '\u2028', '\u2029':
+			dst = append(dst, '\\', 'u', '2', '0', '2', jsonHex[r&0xf])
+		default:
+			if r < ' ' {
+				dst = append(dst, '\\', 'u', '0', '0', jsonHex[r>>4], jsonHex[r&0xf])
+			} else {
+				dst = utf8.AppendRune(dst, r)
+			}
+		}
+	}
+	return append(dst, '"')
+}
 
 // JsonStream is an outgoing stream of json.
 type JsonStream struct {
@@ -32,7 +66,8 @@ func (s *JsonStream) Write(p []byte) (n int, err error) {
 // WriteString writes a quoted string into the stream.
 func (s *JsonStream) WriteString(str string) {
 	if s.err == nil {
-		_, s.err = io.WriteString(s.wr, strconv.Quote(str))
+		encoded := appendJSONString(make([]byte, 0, len(str)+2), str)
+		_, s.err = s.wr.Write(encoded)
 	}
 }
 
