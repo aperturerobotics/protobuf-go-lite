@@ -7,6 +7,7 @@ import (
 	"io"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -204,6 +205,14 @@ func TestUnmarshaler(t *testing.T) {
 	testUnmarshal(t, func(s *UnmarshalState) any {
 		return s.ReadTime()
 	}, `"2006-01-02T08:04:05Z"`, testTime.UTC().Truncate(1000000000))
+
+	testUnmarshal(t, func(s *UnmarshalState) any {
+		return s.ReadTime()
+	}, `"2026-09-08T00:00:00+05:30"`, time.Date(2026, 9, 7, 18, 30, 0, 0, time.UTC))
+
+	testUnmarshal(t, func(s *UnmarshalState) any {
+		return s.ReadTime()
+	}, `"2026-09-08T00:20:32.000+05:30"`, time.Date(2026, 9, 7, 18, 50, 32, 0, time.UTC))
 
 	// duration
 

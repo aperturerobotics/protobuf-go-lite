@@ -851,7 +851,7 @@ func (s *UnmarshalState) ReadTime() *time.Time {
 	nextTok := s.WhatIsNext()
 	switch nextTok {
 	case jsoniter.StringValue:
-		t, err := time.Parse("2006-01-02T15:04:05.999999999Z", s.inner.ReadString())
+		t, err := parseJSONTime(s.inner.ReadString())
 		if err != nil {
 			s.SetErrorf("invalid time: %w", err)
 			return nil
