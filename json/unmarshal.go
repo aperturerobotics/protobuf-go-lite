@@ -166,6 +166,9 @@ func (s *UnmarshalState) ReadFloat32() float32 {
 	if s.Err() != nil {
 		return 0
 	}
+	if s.ReadNil() {
+		return 0
+	}
 	nextTok := s.inner.WhatIsNext()
 	switch nextTok {
 	case jsoniter.NumberValue:
@@ -206,6 +209,9 @@ func (s *UnmarshalState) ReadWrappedFloat32() float32 {
 // ReadFloat64 reads a float64 value. This also supports string encoding.
 func (s *UnmarshalState) ReadFloat64() float64 {
 	if s.Err() != nil {
+		return 0
+	}
+	if s.ReadNil() {
 		return 0
 	}
 	nextTok := s.inner.WhatIsNext()
@@ -851,7 +857,7 @@ func (s *UnmarshalState) ReadTime() *time.Time {
 	nextTok := s.WhatIsNext()
 	switch nextTok {
 	case jsoniter.StringValue:
-		t, err := parseJSONTime(s.inner.ReadString())
+		t, err := time.Parse(time.RFC3339Nano, s.inner.ReadString())
 		if err != nil {
 			s.SetErrorf("invalid time: %w", err)
 			return nil

@@ -50,6 +50,14 @@ func TestUnmarshaler(t *testing.T) {
 	}, `"-12.34"`, -12.34)
 
 	testUnmarshal(t, func(s *UnmarshalState) any {
+		return s.ReadFloat32()
+	}, `null`, float32(0))
+
+	testUnmarshal(t, func(s *UnmarshalState) any {
+		return s.ReadFloat64()
+	}, `null`, float64(0))
+
+	testUnmarshal(t, func(s *UnmarshalState) any {
 		return s.ReadFloat32Array()
 	}, `[-12.34,56.78]`, []float32{-12.34, 56.78})
 
