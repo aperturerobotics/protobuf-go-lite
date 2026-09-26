@@ -6,4 +6,5 @@ import "google/protobuf/timestamp.proto";
 message MsgWithMaps {
   map<string, google.protobuf.Timestamp> stringKeys = 1;
   map<uint32, google.protobuf.Timestamp> intKeys = 2;
+  map<bool, string> boolKeys = 3;
 }

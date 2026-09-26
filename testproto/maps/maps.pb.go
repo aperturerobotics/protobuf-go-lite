@@ -7,6 +7,7 @@ package testproto_maps
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	slices "slices"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -18,6 +19,7 @@ type MsgWithMaps struct {
 	unknownFields []byte
 	StringKeys    map[string]*timestamppb.Timestamp `protobuf:"bytes,1,rep,name=stringKeys,proto3" json:"stringKeys,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	IntKeys       map[uint32]*timestamppb.Timestamp `protobuf:"bytes,2,rep,name=intKeys,proto3" json:"intKeys,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	BoolKeys      map[bool]string                   `protobuf:"bytes,3,rep,name=boolKeys,proto3" json:"boolKeys,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (x *MsgWithMaps) Reset() {
@@ -36,6 +38,13 @@ func (x *MsgWithMaps) GetStringKeys() map[string]*timestamppb.Timestamp {
 func (x *MsgWithMaps) GetIntKeys() map[uint32]*timestamppb.Timestamp {
 	if x != nil {
 		return x.IntKeys
+	}
+	return nil
+}
+
+func (x *MsgWithMaps) GetBoolKeys() map[bool]string {
+	if x != nil {
+		return x.BoolKeys
 	}
 	return nil
 }
@@ -92,6 +101,32 @@ func (x *MsgWithMaps_IntKeysEntry) GetValue() *timestamppb.Timestamp {
 	return nil
 }
 
+type MsgWithMaps_BoolKeysEntry struct {
+	unknownFields []byte
+	Key           bool   `protobuf:"varint,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *MsgWithMaps_BoolKeysEntry) Reset() {
+	*x = MsgWithMaps_BoolKeysEntry{}
+}
+
+func (*MsgWithMaps_BoolKeysEntry) ProtoMessage() {}
+
+func (x *MsgWithMaps_BoolKeysEntry) GetKey() bool {
+	if x != nil {
+		return x.Key
+	}
+	return false
+}
+
+func (x *MsgWithMaps_BoolKeysEntry) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
 func (m *MsgWithMaps) CloneVT() *MsgWithMaps {
 	if m == nil {
 		return (*MsgWithMaps)(nil)
@@ -99,6 +134,7 @@ func (m *MsgWithMaps) CloneVT() *MsgWithMaps {
 	r := new(MsgWithMaps)
 	r.StringKeys = protobuf_go_lite.CloneVTMap(m.StringKeys)
 	r.IntKeys = protobuf_go_lite.CloneVTMap(m.IntKeys)
+	r.BoolKeys = protobuf_go_lite.CloneMap(m.BoolKeys)
 	if len(m.unknownFields) > 0 {
 		r.unknownFields = slices.Clone(m.unknownFields)
 	}
@@ -119,6 +155,9 @@ func (this *MsgWithMaps) EqualVT(that *MsgWithMaps) bool {
 		return false
 	}
 	if !protobuf_go_lite.EqualVTMapImplicit(this.IntKeys, that.IntKeys, func() *timestamppb.Timestamp { return &timestamppb.Timestamp{} }) {
+		return false
+	}
+	if !protobuf_go_lite.EqualMap(this.BoolKeys, that.BoolKeys) {
 		return false
 	}
 	return string(this.unknownFields) == string(that.unknownFields)
@@ -240,6 +279,56 @@ func (x *MsgWithMaps_IntKeysEntry) UnmarshalJSON(b []byte) error {
 	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
 }
 
+// MarshalProtoJSON marshals the MsgWithMaps_BoolKeysEntry message to JSON.
+func (x *MsgWithMaps_BoolKeysEntry) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Key || s.HasField("key") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("key")
+		s.WriteBool(x.Key)
+	}
+	if x.Value != "" || s.HasField("value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value")
+		s.WriteString(x.Value)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MsgWithMaps_BoolKeysEntry to JSON.
+func (x *MsgWithMaps_BoolKeysEntry) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MsgWithMaps_BoolKeysEntry message from JSON.
+func (x *MsgWithMaps_BoolKeysEntry) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "key":
+			s.AddField("key")
+			x.Key = s.ReadBool()
+		case "value":
+			s.AddField("value")
+			x.Value = s.ReadString()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MsgWithMaps_BoolKeysEntry from JSON.
+func (x *MsgWithMaps_BoolKeysEntry) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
 // MarshalProtoJSON marshals the MsgWithMaps message to JSON.
 func (x *MsgWithMaps) MarshalProtoJSON(s *json.MarshalState) {
 	if x == nil {
@@ -253,7 +342,8 @@ func (x *MsgWithMaps) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("stringKeys")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.StringKeys {
+		for _, k := range slices.Sorted(maps.Keys(x.StringKeys)) {
+			v := x.StringKeys[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			v.MarshalProtoJSON(s.WithField("stringKeys"))
@@ -265,10 +355,27 @@ func (x *MsgWithMaps) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("intKeys")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.IntKeys {
+		for _, k := range slices.Sorted(maps.Keys(x.IntKeys)) {
+			v := x.IntKeys[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectUint32Field(k)
 			v.MarshalProtoJSON(s.WithField("intKeys"))
+		}
+		s.WriteObjectEnd()
+	}
+	if x.BoolKeys != nil || s.HasField("boolKeys") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("boolKeys")
+		s.WriteObjectStart()
+		var wroteElement bool
+		for _, k := range []bool{false, true} {
+			v, ok := x.BoolKeys[k]
+			if !ok {
+				continue
+			}
+			s.WriteMoreIf(&wroteElement)
+			s.WriteObjectBoolField(k)
+			s.WriteString(v)
 		}
 		s.WriteObjectEnd()
 	}
@@ -313,6 +420,16 @@ func (x *MsgWithMaps) UnmarshalProtoJSON(s *json.UnmarshalState) {
 				v.UnmarshalProtoJSON(s)
 				x.IntKeys[key] = &v
 			})
+		case "boolKeys":
+			s.AddField("boolKeys")
+			if s.ReadNil() {
+				x.BoolKeys = nil
+				return
+			}
+			x.BoolKeys = make(map[bool]string)
+			s.ReadBoolMap(func(key bool) {
+				x.BoolKeys[key] = s.ReadString()
+			})
 		}
 	})
 }
@@ -350,6 +467,21 @@ func (m *MsgWithMaps) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	_ = l
 	if m.unknownFields != nil {
 		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
+	}
+	if len(m.BoolKeys) > 0 {
+		for k := range m.BoolKeys {
+			v := m.BoolKeys[k]
+			baseI := i
+			i = protobuf_go_lite.EncodeString(dAtA, i, v)
+			i--
+			dAtA[i] = 0x12
+			i = protobuf_go_lite.EncodeBool(dAtA, i, k)
+			i--
+			dAtA[i] = 0x8
+			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x1a
+		}
 	}
 	if len(m.IntKeys) > 0 {
 		for k := range m.IntKeys {
@@ -423,6 +555,21 @@ func (m *MsgWithMaps) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	if m.unknownFields != nil {
 		i = protobuf_go_lite.EncodeRawBytes(dAtA, i, m.unknownFields)
 	}
+	if len(m.BoolKeys) > 0 {
+		for k := range m.BoolKeys {
+			v := m.BoolKeys[k]
+			baseI := i
+			i = protobuf_go_lite.EncodeString(dAtA, i, v)
+			i--
+			dAtA[i] = 0x12
+			i = protobuf_go_lite.EncodeBool(dAtA, i, k)
+			i--
+			dAtA[i] = 0x8
+			i = protobuf_go_lite.EncodeVarint(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
 	if len(m.IntKeys) > 0 {
 		for k := range m.IntKeys {
 			v := m.IntKeys[k]
@@ -492,6 +639,12 @@ func (m *MsgWithMaps) SizeVT() (n int) {
 		mapEntrySize := protobuf_go_lite.SizeVarintValue(1, k) + protobuf_go_lite.SizeMessage(1, l)
 		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
 	}
+	for k, v := range m.BoolKeys {
+		_ = k
+		_ = v
+		mapEntrySize := protobuf_go_lite.SizeBoolValue(1) + protobuf_go_lite.SizeStringValue(1, v)
+		n += protobuf_go_lite.SizeMessage(1, mapEntrySize)
+	}
 	n += len(m.unknownFields)
 	return n
 }
@@ -530,12 +683,29 @@ func (x *MsgWithMaps_IntKeysEntry) MarshalProtoText() string {
 func (x *MsgWithMaps_IntKeysEntry) String() string {
 	return x.MarshalProtoText()
 }
+func (x *MsgWithMaps_BoolKeysEntry) MarshalProtoText() string {
+	var sb protobuf_go_lite.TextBuilder
+	initialLen := protobuf_go_lite.TextStartMessage(&sb, "BoolKeysEntry")
+	if x.Key != false {
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "key")
+		protobuf_go_lite.TextWriteBool(&sb, x.Key)
+	}
+	if x.Value != "" {
+		protobuf_go_lite.TextWriteFieldPrefix(&sb, initialLen, "value")
+		protobuf_go_lite.TextWriteString(&sb, x.Value)
+	}
+	return protobuf_go_lite.TextFinishMessage(&sb)
+}
+
+func (x *MsgWithMaps_BoolKeysEntry) String() string {
+	return x.MarshalProtoText()
+}
 func (x *MsgWithMaps) MarshalProtoText() string {
 	var sb protobuf_go_lite.TextBuilder
 	initialLen := protobuf_go_lite.TextStartMessage(&sb, "MsgWithMaps")
 	if len(x.StringKeys) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "stringKeys")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.StringKeys) {
+		for _, k := range slices.Sorted(maps.Keys(x.StringKeys)) {
 			v := x.StringKeys[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)
@@ -550,7 +720,7 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 	}
 	if len(x.IntKeys) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "intKeys")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.IntKeys) {
+		for _, k := range slices.Sorted(maps.Keys(x.IntKeys)) {
 			v := x.IntKeys[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteUint(&sb, k)
@@ -560,6 +730,20 @@ func (x *MsgWithMaps) MarshalProtoText() string {
 			} else {
 				protobuf_go_lite.TextWriteTextMarshaler(&sb, v)
 			}
+		}
+		protobuf_go_lite.TextWriteMapEnd(&sb)
+	}
+	if len(x.BoolKeys) > 0 {
+		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "boolKeys")
+		for _, k := range []bool{false, true} {
+			v, ok := x.BoolKeys[k]
+			if !ok {
+				continue
+			}
+			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
+			protobuf_go_lite.TextWriteBool(&sb, k)
+			protobuf_go_lite.TextWriteMapKeyValueSeparator(&sb)
+			protobuf_go_lite.TextWriteString(&sb, v)
 		}
 		protobuf_go_lite.TextWriteMapEnd(&sb)
 	}
@@ -682,6 +866,48 @@ func (m *MsgWithMaps) UnmarshalVT(dAtA []byte) error {
 				}
 			}
 			m.IntKeys[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoolKeys", wireType)
+			}
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
+			if err != nil {
+				return err
+			}
+			iNdEx = msgStart
+			if m.BoolKeys == nil {
+				m.BoolKeys = make(map[bool]string)
+			}
+			var mapkey bool
+			var mapvalue string
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
+					if err != nil {
+						return err
+					}
+				} else if fieldNum == 2 {
+					mapvalue, iNdEx, err = protobuf_go_lite.DecodeString(dAtA, iNdEx)
+					if err != nil {
+						return err
+					}
+				} else {
+					iNdEx = entryPreIndex
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
+					if err != nil {
+						return err
+					}
+				}
+			}
+			m.BoolKeys[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -818,6 +1044,48 @@ func (m *MsgWithMaps) UnmarshalVTUnsafe(dAtA []byte) error {
 				}
 			}
 			m.IntKeys[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoolKeys", wireType)
+			}
+			msgStart, postIndex, err := protobuf_go_lite.DecodeLengthDelimited(dAtA, iNdEx)
+			if err != nil {
+				return err
+			}
+			iNdEx = msgStart
+			if m.BoolKeys == nil {
+				m.BoolKeys = make(map[bool]string)
+			}
+			var mapkey bool
+			var mapvalue string
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				wire, iNdEx, err = protobuf_go_lite.DecodeVarint(dAtA, iNdEx)
+				if err != nil {
+					return err
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					mapkey, iNdEx, err = protobuf_go_lite.DecodeVarintBool(dAtA, iNdEx)
+					if err != nil {
+						return err
+					}
+				} else if fieldNum == 2 {
+					mapvalue, iNdEx, err = protobuf_go_lite.DecodeStringUnsafe(dAtA, iNdEx)
+					if err != nil {
+						return err
+					}
+				} else {
+					iNdEx = entryPreIndex
+					iNdEx, err = protobuf_go_lite.SkipWithin(dAtA, iNdEx, postIndex)
+					if err != nil {
+						return err
+					}
+				}
+			}
+			m.BoolKeys[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

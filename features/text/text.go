@@ -15,8 +15,6 @@ var (
 	stringsPackage = protogen.GoImportPath("strings")
 	strconvPackage = protogen.GoImportPath("strconv")
 	base64Package  = protogen.GoImportPath("encoding/base64")
-	slicesPackage  = protogen.GoImportPath("slices")
-	mapsPackage    = protogen.GoImportPath("maps")
 )
 
 var disableTextComment = "protobuf-go-lite:disable-text"
@@ -199,8 +197,7 @@ func (g *textGenerator) genFieldHelper(field *protogen.Field, accessor string) {
 		if field.Desc.IsMap() {
 			g.P("if len(", accessor, ") > 0 {")
 			g.P(g.Helper("TextWriteMapStart"), "(&sb, initialLen, \"", fieldName, "\")")
-			g.P("for _, k := range ", g.Helper("TextSortedMapKeys"), "(", accessor, ") {")
-			g.P("v := ", accessor, "[k]")
+			g.SortedMapRange(field.Message.Fields[0], accessor)
 			g.P(g.Helper("TextWriteMapEntryPrefix"), "(&sb)")
 			g.genFieldValueHelper(field.Message.Fields[0], "k", true)
 			g.P(g.Helper("TextWriteMapKeyValueSeparator"), "(&sb)")
@@ -340,8 +337,7 @@ func (g *textGenerator) genField(sbInitialLen int, field *protogen.Field, access
 			g.P("if len(", accessor, ") > 0 {")
 			maybeAddSpace()
 			g.P("sb.WriteString(\"", field.Desc.Name(), ": {\")")
-			g.P("for _, k := range ", g.QualifiedGoIdent(slicesPackage.Ident("Sorted")), "(", g.QualifiedGoIdent(mapsPackage.Ident("Keys")), "(", accessor, ")) {")
-			g.P("v := ", accessor, "[k]")
+			g.SortedMapRange(field.Message.Fields[0], accessor)
 			g.P("sb.WriteString(\" \")")
 			g.genFieldValue(field.Message.Fields[0], "k", true)
 			g.P("sb.WriteString(\": \")")

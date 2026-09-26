@@ -7,6 +7,7 @@ package editions2024
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	slices "slices"
 	strconv "strconv"
 	utf8 "unicode/utf8"
@@ -773,7 +774,8 @@ func (x *Edition2024Fixture) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("nestedMap")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.NestedMap {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedMap)) {
+			v := x.NestedMap[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			v.MarshalProtoJSON(s.WithField("nestedMap"))
@@ -1606,7 +1608,7 @@ func (x *Edition2024Fixture) MarshalProtoText() string {
 	}
 	if len(x.NestedMap) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "nested_map")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.NestedMap) {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedMap)) {
 			v := x.NestedMap[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)

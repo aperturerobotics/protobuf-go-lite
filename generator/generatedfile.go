@@ -29,6 +29,22 @@ func (b *GeneratedFile) Alloc(vname string, message *protogen.Message, isQualifi
 	b.P(vname, " := new(", ident, `)`)
 }
 
+// SortedMapRange opens a loop over the map at accessor in key order, binding
+// k and v. The caller writes the body and the closing brace. Bool keys are not
+// ordered in Go, so the loop lists false and true and skips absent keys.
+func (p *GeneratedFile) SortedMapRange(key *protogen.Field, accessor string) {
+	if key.Desc.Kind() == protoreflect.BoolKind {
+		p.P("for _, k := range []bool{false, true} {")
+		p.P("v, ok := ", accessor, "[k]")
+		p.P("if !ok {")
+		p.P("continue")
+		p.P("}")
+		return
+	}
+	p.P("for _, k := range ", p.Ident("slices", "Sorted"), "(", p.Ident("maps", "Keys"), "(", accessor, ")) {")
+	p.P("v := ", accessor, "[k]")
+}
+
 func (p *GeneratedFile) FieldGoType(field *protogen.Field) (goType string, pointer bool) {
 	sem := p.FieldSemantics(field)
 	return sem.Type, sem.Pointer
@@ -151,7 +167,6 @@ var helpers = map[string]protogen.GoIdent{
 	"SizeZigzagValue":               {GoName: "SizeZigzagValue", GoImportPath: vtHelpersPackage},
 	"TextBuilder":                   {GoName: "TextBuilder", GoImportPath: vtHelpersPackage},
 	"TextFinishMessage":             {GoName: "TextFinishMessage", GoImportPath: vtHelpersPackage},
-	"TextSortedMapKeys":             {GoName: "TextSortedMapKeys", GoImportPath: vtHelpersPackage},
 	"TextStartMessage":              {GoName: "TextStartMessage", GoImportPath: vtHelpersPackage},
 	"TextWriteBool":                 {GoName: "TextWriteBool", GoImportPath: vtHelpersPackage},
 	"TextWriteBytes":                {GoName: "TextWriteBytes", GoImportPath: vtHelpersPackage},

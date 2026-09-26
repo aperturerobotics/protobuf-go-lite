@@ -7,6 +7,7 @@ package basic
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	math "math"
 	slices "slices"
 	strconv "strconv"
@@ -759,7 +760,8 @@ func (x *BasicMsg) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("mapStringInt32Field")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.MapStringInt32Field {
+		for _, k := range slices.Sorted(maps.Keys(x.MapStringInt32Field)) {
+			v := x.MapStringInt32Field[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			s.WriteInt32(v)
@@ -1539,7 +1541,7 @@ func (x *BasicMsg) MarshalProtoText() string {
 	}
 	if len(x.MapStringInt32Field) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "map_string_int32_field")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.MapStringInt32Field) {
+		for _, k := range slices.Sorted(maps.Keys(x.MapStringInt32Field)) {
 			v := x.MapStringInt32Field[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)

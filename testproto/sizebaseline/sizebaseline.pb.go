@@ -7,6 +7,7 @@ package sizebaseline
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	math "math"
 	slices "slices"
 	strconv "strconv"
@@ -1132,7 +1133,8 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("nestedByName")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.NestedByName {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedByName)) {
+			v := x.NestedByName[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			v.MarshalProtoJSON(s.WithField("nestedByName"))
@@ -1144,7 +1146,8 @@ func (x *SizeBaseline) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("nestedById")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.NestedById {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedById)) {
+			v := x.NestedById[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectUint32Field(k)
 			v.MarshalProtoJSON(s.WithField("nestedById"))
@@ -2699,7 +2702,7 @@ func (x *SizeBaseline) MarshalProtoText() string {
 	}
 	if len(x.NestedByName) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "nested_by_name")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.NestedByName) {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedByName)) {
 			v := x.NestedByName[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)
@@ -2714,7 +2717,7 @@ func (x *SizeBaseline) MarshalProtoText() string {
 	}
 	if len(x.NestedById) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "nested_by_id")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.NestedById) {
+		for _, k := range slices.Sorted(maps.Keys(x.NestedById)) {
 			v := x.NestedById[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteUint(&sb, k)

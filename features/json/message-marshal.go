@@ -78,7 +78,8 @@ nextField:
 			// wroteElement keeps track of whether we wrote an element of the map, so that we know when to add a comma before the next.
 			g.P("var wroteElement bool")
 
-			g.P("for k, v := range x.", fieldGoName, " {")
+			// Write the entries in key order so equal maps encode to equal bytes.
+			g.SortedMapRange(key, "x."+field.GoName)
 
 			// Write a comma if this isn't the first element of the map.
 			g.P("s.WriteMoreIf(&wroteElement)")
@@ -96,7 +97,7 @@ nextField:
 				g.P(`v.MarshalProtoJSON(s.WithField("`, fieldJsonName, `"))`)
 			}
 
-			g.P("}") // end for k, v := range x.{fieldGoName} {
+			g.P("}") // end map entry loop
 			g.P("s.WriteObjectEnd()")
 			g.P("}") // end if x.{fieldGoName} != nil {
 

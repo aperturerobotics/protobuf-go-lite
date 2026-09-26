@@ -7,6 +7,7 @@ package unsafe
 import (
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	slices "slices"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
@@ -918,7 +919,8 @@ func (x *UnsafeTest_Sub3) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("foo")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.Foo {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+			v := x.Foo[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			s.WriteBytes(v)
@@ -1080,7 +1082,8 @@ func (x *UnsafeTest_Sub5) MarshalProtoJSON(s *json.MarshalState) {
 		s.WriteObjectField("foo")
 		s.WriteObjectStart()
 		var wroteElement bool
-		for k, v := range x.Foo {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
+			v := x.Foo[k]
 			s.WriteMoreIf(&wroteElement)
 			s.WriteObjectStringField(k)
 			s.WriteString(v)
@@ -2297,7 +2300,7 @@ func (x *UnsafeTest_Sub3) MarshalProtoText() string {
 	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub3")
 	if len(x.Foo) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "foo")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Foo) {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
 			v := x.Foo[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)
@@ -2351,7 +2354,7 @@ func (x *UnsafeTest_Sub5) MarshalProtoText() string {
 	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Sub5")
 	if len(x.Foo) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "foo")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Foo) {
+		for _, k := range slices.Sorted(maps.Keys(x.Foo)) {
 			v := x.Foo[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)
