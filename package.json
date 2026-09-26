@@ -5,6 +5,6 @@
     "notes": "descriptorpb, apipb, and pluginpb are excluded until protobuf-es-lite exports descriptor support."
   },
   "devDependencies": {
-    "@aptre/protobuf-es-lite": "1.1.1"
+    "@aptre/protobuf-es-lite": "1.1.2"
   }
 }
