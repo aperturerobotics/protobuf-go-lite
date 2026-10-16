@@ -237,3 +237,42 @@ func readFile(t *testing.T, path string) []byte {
 	}
 	return b
 }
+
+// TestUnreferencedImportNeedsRegistry checks that only a registry build links a
+// dependency the file never references: annotations.proto imports
+// descriptor.proto for its extension, which go-lite does not generate.
+func TestUnreferencedImportNeedsRegistry(t *testing.T) {
+	// Build the plugin and write the fixture that imports descriptor.proto.
+	root := repoRoot(t)
+	plugin := buildCurrentPlugin(t, root)
+	dir := t.TempDir()
+	writeFile(t, filepath.Join(dir, "annotations.proto"), registryAnnotationsProto)
+	const descriptorImport = `_ "github.com/aperturerobotics/protobuf-go-lite/types/descriptorpb"`
+
+	// Generate the fixture without and with the registry and compare imports.
+	for _, registry := range []bool{false, true} {
+		outDir := t.TempDir()
+		opt := "--go-lite_opt=features=size+marshal+unmarshal,paths=source_relative"
+		if registry {
+			opt += ",registry=true"
+		}
+		cmd := exec.Command(
+			"protoc",
+			"-I", dir,
+			"-I", protobufSourceDir(t, root),
+			"--plugin=protoc-gen-go-lite="+plugin,
+			"--go-lite_out="+outDir,
+			opt,
+			"annotations.proto",
+		)
+		cmd.Dir = root
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatalf("generate annotations with registry=%v:\n%s", registry, out)
+		}
+		content := string(readFile(t, filepath.Join(outDir, "annotations.pb.go")))
+		if strings.Contains(content, descriptorImport) != registry {
+			t.Fatalf("registry=%v: descriptorpb import present=%v, want %v:\n%s", registry, !registry, registry, content)
+		}
+	}
+}

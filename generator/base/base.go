@@ -38,15 +38,16 @@ const (
 	fmtPackage     = protogen.GoImportPath("fmt")
 )
 
-// GenerateFile generates the contents of a .pb.go file.
-func GenerateFile(gen *protogen.Plugin, file *protogen.File, g *protogen.GeneratedFile) {
+// GenerateFile generates the contents of a .pb.go file. A registry build links
+// every non-weak dependency, so the registry holds each imported message type.
+func GenerateFile(gen *protogen.Plugin, file *protogen.File, g *protogen.GeneratedFile, registry bool) {
 	f := newFileInfo(file)
 
 	genStandaloneComments(g, f, int32(genid.FileDescriptorProto_Syntax_field_number))
 	genStandaloneComments(g, f, int32(genid.FileDescriptorProto_Package_field_number))
 
 	for i, imps := 0, f.Desc.Imports(); i < imps.Len(); i++ {
-		genImport(gen, g, f, imps.Get(i))
+		genImport(gen, g, f, imps.Get(i), registry)
 	}
 	for _, enum := range f.allEnums {
 		genEnum(g, enum)
@@ -73,7 +74,7 @@ func genStandaloneComments(g *protogen.GeneratedFile, f *fileInfo, n int32) {
 	}
 }
 
-func genImport(gen *protogen.Plugin, g *protogen.GeneratedFile, f *fileInfo, imp protoreflect.FileImport) {
+func genImport(gen *protogen.Plugin, g *protogen.GeneratedFile, f *fileInfo, imp protoreflect.FileImport, registry bool) {
 	impFile, ok := gen.FilesByPath[imp.Path()]
 	if !ok {
 		return
@@ -82,10 +83,12 @@ func genImport(gen *protogen.Plugin, g *protogen.GeneratedFile, f *fileInfo, imp
 		// Don't generate imports or aliases for types in the same Go package.
 		return
 	}
-	// Generate imports for all non-weak dependencies, even if they are not
-	// referenced, because other code and tools depend on having the
-	// full transitive closure of protocol buffer types in the binary.
-	if !imp.IsWeak {
+
+	// Only the registry needs an unreferenced dependency: its init registers
+	// the dependency's message types. Without one, the import links code
+	// nothing calls, and a goscript build fails on a dependency that has no
+	// TypeScript binding, such as descriptorpb behind an options extension.
+	if registry && !imp.IsWeak {
 		g.Import(impFile.GoImportPath)
 	}
 	if !imp.IsPublic {
@@ -95,7 +98,7 @@ func genImport(gen *protogen.Plugin, g *protogen.GeneratedFile, f *fileInfo, imp
 	// Generate public imports by generating the imported file, parsing it,
 	// and extracting every symbol that should receive a forwarding declaration.
 	impGen := gen.NewGeneratedFile(impFile.GeneratedFilenamePrefix+".pb.go", impFile.GoImportPath)
-	GenerateFile(gen, impFile, impGen)
+	GenerateFile(gen, impFile, impGen, registry)
 	impGen.Skip()
 	b, err := impGen.Content()
 	if err != nil {

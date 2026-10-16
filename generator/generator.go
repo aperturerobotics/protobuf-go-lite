@@ -151,7 +151,7 @@ func (gen *Generator) Generate() {
 		gen.generateHeader(p, file)
 
 		// Generate base protobuf adapted from protobuf-go
-		generator_base.GenerateFile(gen.plugin, file, gf)
+		generator_base.GenerateFile(gen.plugin, file, gf, gen.cfg.Registry)
 
 		// Generate vtproto features
 		gen.generateFile(p, file)
