@@ -33,14 +33,11 @@
 /* eslint-disable */
 
 import { createEnumType } from "@aptre/protobuf-es-lite/enum";
-import type { JsonObject, JsonReadOptions, JsonValue, JsonWriteOptions } from "@aptre/protobuf-es-lite/json";
-import { jsonDebugValue } from "@aptre/protobuf-es-lite/json";
 import type { MessageType } from "@aptre/protobuf-es-lite/message";
-import { createMessageType } from "@aptre/protobuf-es-lite/message";
-import type { PartialFieldInfo } from "@aptre/protobuf-es-lite/field";
-import { ScalarType } from "@aptre/protobuf-es-lite/scalar";
+import { createMessageType, newMap } from "@aptre/protobuf-es-lite/message";
+import type { JsonObject, JsonReadOptions, JsonValue, JsonWriteOptions } from "@aptre/protobuf-es-lite/json";
+import { jsonEntries, jsonList } from "@aptre/protobuf-es-lite/json";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * `NullValue` is a singleton enumeration to represent the null value for the
@@ -53,191 +50,11 @@ export const protobufPackage = "google.protobuf";
 export enum NullValue {
   /**
    * Null value.
-   *
-   * @generated from enum value: NULL_VALUE = 0;
    */
   NULL_VALUE = 0,
 }
 
-export const NullValue_Enum = /* @__PURE__ */ createEnumType("google.protobuf.NullValue", [
-  [0, "NULL_VALUE"],
-]);
-
-/**
- * `ListValue` is a wrapper around a repeated field of values.
- *
- * The JSON representation for `ListValue` is JSON array.
- *
- * @generated from message google.protobuf.ListValue
- */
-export interface ListValue {
-  /**
-   * Repeated field of dynamically typed values.
-   *
-   * @generated from field: repeated google.protobuf.Value values = 1;
-   */
-  values?: Value[];
-
-};
-
-const ListValue_Wkt = {
-  toJson(msg: ListValue, options?: Partial<JsonWriteOptions>): JsonValue {
-    return msg.values?.map(v => Value.toJson(v, options)) ?? [];
-  },
-  fromJson(json: JsonValue | null | undefined, options?: Partial<JsonReadOptions>): ListValue {
-    if (json == null) { return {}; }
-    if (!Array.isArray(json)) {
-      throw new Error(`cannot decode google.protobuf.ListValue from JSON ${jsonDebugValue(json)}`);
-    }
-    const values: Value[] = json.map(v => Value.fromJson(v, options));
-    return {values: values} as ListValue;
-  },
-};
-
-export const ListValue: MessageType<ListValue> & typeof ListValue_Wkt = /* @__PURE__ */ createMessageType<ListValue, typeof ListValue_Wkt>({
-    typeName: "google.protobuf.ListValue",
-    fields: [
-        { no: 1, name: "values", kind: "message", T: () => Value, repeated: true },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-}, ListValue_Wkt);
-
-/**
- * `Value` represents a dynamically typed value which can be either
- * null, a number, a string, a boolean, a recursive struct value, or a
- * list of values. A producer of value is expected to set one of these
- * variants. Absence of any variant indicates an error.
- *
- * The JSON representation for `Value` is JSON value.
- *
- * @generated from message google.protobuf.Value
- */
-export interface Value {
-
-  /**
-   * The kind of value.
-   *
-   * @generated from oneof google.protobuf.Value.kind
-   */
-  kind?: {
-    value?: undefined,
-    case: undefined
-  } | {
-    /**
-     * Represents a null value.
-     *
-     * @generated from field: google.protobuf.NullValue null_value = 1;
-     */
-    value: NullValue;
-    case: "nullValue";
-  } | {
-    /**
-     * Represents a double value.
-     *
-     * @generated from field: double number_value = 2;
-     */
-    value: number;
-    case: "numberValue";
-  } | {
-    /**
-     * Represents a string value.
-     *
-     * @generated from field: string string_value = 3;
-     */
-    value: string;
-    case: "stringValue";
-  } | {
-    /**
-     * Represents a boolean value.
-     *
-     * @generated from field: bool bool_value = 4;
-     */
-    value: boolean;
-    case: "boolValue";
-  } | {
-    /**
-     * Represents a structured value.
-     *
-     * @generated from field: google.protobuf.Struct struct_value = 5;
-     */
-    value: Struct;
-    case: "structValue";
-  } | {
-    /**
-     * Represents a repeated `Value`.
-     *
-     * @generated from field: google.protobuf.ListValue list_value = 6;
-     */
-    value: ListValue;
-    case: "listValue";
-  };
-
-};
-
-const Value_Wkt = {
-  toJson(msg: Value, options?: Partial<JsonWriteOptions>): JsonValue {
-    switch (msg.kind?.case) {
-      case "nullValue":
-        return null;
-      case "numberValue":
-        if (!Number.isFinite(msg.kind.value)) {
-          throw new Error("google.protobuf.Value cannot be NaN or Infinity");
-        }
-        return msg.kind.value;
-      case "boolValue":
-        return msg.kind.value;
-      case "stringValue":
-        return msg.kind.value;
-      case "structValue":
-        return Struct.toJson(msg.kind.value, {...options, emitDefaultValues: true});
-      case "listValue":
-        return ListValue.toJson(msg.kind.value, {...options, emitDefaultValues: true});
-      case null:
-      case undefined:
-      default:
-        return null;
-    }
-  },
-  fromJson(json: JsonValue | null | undefined, _options?: Partial<JsonReadOptions>): Value {
-    const msg = {} as Value;
-    switch (typeof json) {
-      case "number":
-        msg.kind = { case: "numberValue", value: json };
-        break;
-      case "string":
-        msg.kind = { case: "stringValue", value: json };
-        break;
-      case "boolean":
-        msg.kind = { case: "boolValue", value: json };
-        break;
-      case "object":
-        if (json == null) {
-          msg.kind = { case: "nullValue", value: NullValue.NULL_VALUE };
-        } else if (Array.isArray(json)) {
-          msg.kind = { case: "listValue", value: ListValue.fromJson(json) };
-        } else {
-          msg.kind = { case: "structValue", value: Struct.fromJson(json) };
-        }
-        break;
-      default:
-        throw new Error(`cannot decode google.protobuf.Value from JSON ${jsonDebugValue(json)}`);
-    }
-    return msg;
-  },
-};
-
-export const Value: MessageType<Value> & typeof Value_Wkt = /* @__PURE__ */ createMessageType<Value, typeof Value_Wkt>({
-    typeName: "google.protobuf.Value",
-    fields: [
-        { no: 1, name: "null_value", kind: "enum", T: NullValue_Enum, oneof: "kind" },
-        { no: 2, name: "number_value", kind: "scalar", T: ScalarType.DOUBLE, oneof: "kind" },
-        { no: 3, name: "string_value", kind: "scalar", T: ScalarType.STRING, oneof: "kind" },
-        { no: 4, name: "bool_value", kind: "scalar", T: ScalarType.BOOL, oneof: "kind" },
-        { no: 5, name: "struct_value", kind: "message", T: () => Struct, oneof: "kind" },
-        { no: 6, name: "list_value", kind: "message", T: () => ListValue, oneof: "kind" },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-}, Value_Wkt);
+export const NullValue_Enum = /* @__PURE__ */ createEnumType("google.protobuf.NullValue", [[0, "NULL_VALUE"]]);
 
 /**
  * `Struct` represents a structured data value, consisting of fields
@@ -254,39 +71,109 @@ export const Value: MessageType<Value> & typeof Value_Wkt = /* @__PURE__ */ crea
 export interface Struct {
   /**
    * Unordered map of dynamically typed values.
-   *
-   * @generated from field: map<string, google.protobuf.Value> fields = 1;
    */
   fields?: { [key: string]: Value };
+}
 
-};
-
-const Struct_Wkt = {
-  toJson(msg: Struct, options?: Partial<JsonWriteOptions>): JsonValue {
-    const json: JsonObject = {}
-    if (!msg.fields) { return json; }
-    for (const [k, v] of Object.entries(msg.fields)) {
-      json[k] = v != null ? Value.toJson(v, options) : null;
-    }
-    return json;
+export const Struct: MessageType<Struct> = /* @__PURE__ */ createMessageType<Struct>("google.protobuf.Struct", () => [
+  [1, "fields", 11, 584, Value.codec],
+], {
+  writeJson: (m: Struct, o: JsonWriteOptions): JsonValue => {
+    const out: JsonObject = {};
+    const f = m.fields ?? {};
+    for (const k in f) out[k] = Value.writeJson(f[k], o);
+    return out;
   },
-  fromJson(json: JsonValue | null | undefined, _options?: Partial<JsonReadOptions>): Struct {
-    if (typeof json != "object" || json == null || Array.isArray(json)) {
-      throw new Error(`cannot decode google.protobuf.Struct from JSON ${jsonDebugValue(json)}`);
-    }
-    const fields = {} as { [key: string]: Value };
-    for (const [k, v] of Object.entries(json)) {
-      fields[k] = Value.fromJson(v);
-    }
-    return {fields: fields} as Struct;
+  readJson: (j: JsonValue, o: JsonReadOptions, m: Struct): Struct => {
+    m.fields ??= newMap();
+    for (const [k, v] of jsonEntries(j, "google.protobuf.Struct")) m.fields[k] = Value.readJson(v, o, {});
+    return m;
   },
-};
+});
 
-export const Struct: MessageType<Struct> & typeof Struct_Wkt = /* @__PURE__ */ createMessageType<Struct, typeof Struct_Wkt>({
-    typeName: "google.protobuf.Struct",
-    fields: [
-        { no: 1, name: "fields", kind: "map", K: ScalarType.STRING, V: {kind: "message", T: () => Value} },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-}, Struct_Wkt);
+/**
+ * `Value` represents a dynamically typed value which can be either
+ * null, a number, a string, a boolean, a recursive struct value, or a
+ * list of values. A producer of value is expected to set one of these
+ * variants. Absence of any variant indicates an error.
+ *
+ * The JSON representation for `Value` is JSON value.
+ *
+ * @generated from message google.protobuf.Value
+ */
+export interface Value {
+  /**
+   * The kind of value.
+   *
+   * @generated from oneof google.protobuf.Value.kind
+   */
+  kind?:
+    | { value?: undefined; case: undefined }
+    | { value: NullValue; case: "nullValue" }
+    | { value: number; case: "numberValue" }
+    | { value: string; case: "stringValue" }
+    | { value: boolean; case: "boolValue" }
+    | { value: Struct; case: "structValue" }
+    | { value: ListValue; case: "listValue" };
+}
+
+export const Value: MessageType<Value> = /* @__PURE__ */ createMessageType<Value>("google.protobuf.Value", () => [
+  [1, "null_value", 14, 0, NullValue_Enum, "kind"],
+  [2, "number_value", 1, 0, 0, "kind"],
+  [3, "string_value", 9, 0, 0, "kind"],
+  [4, "bool_value", 8, 0, 0, "kind"],
+  [5, "struct_value", 11, 0, Struct.codec, "kind"],
+  [6, "list_value", 11, 0, ListValue.codec, "kind"],
+], {
+  writeJson: (m: Value, o: JsonWriteOptions): JsonValue => {
+    switch (m.kind?.case) {
+      case "nullValue": return null;
+      case "numberValue":
+        if (!Number.isFinite(m.kind.value)) throw new Error("google.protobuf.Value cannot be NaN or Infinity");
+        return m.kind.value;
+      case "stringValue": return m.kind.value;
+      case "boolValue": return m.kind.value;
+      case "structValue": return Struct.writeJson(m.kind.value, o);
+      case "listValue": return ListValue.writeJson(m.kind.value, o);
+    }
+    throw new Error("google.protobuf.Value must have a value");
+  },
+  readJson: (j: JsonValue, o: JsonReadOptions, m: Value): Value => {
+    switch (typeof j) {
+      case "number": m.kind = { case: "numberValue", value: j }; break;
+      case "string": m.kind = { case: "stringValue", value: j }; break;
+      case "boolean": m.kind = { case: "boolValue", value: j }; break;
+      default:
+        if (j === null) m.kind = { case: "nullValue", value: NullValue.NULL_VALUE };
+        else if (Array.isArray(j)) m.kind = { case: "listValue", value: ListValue.readJson(j, o, {}) };
+        else m.kind = { case: "structValue", value: Struct.readJson(j, o, {}) };
+    }
+    return m;
+  },
+});
+
+/**
+ * `ListValue` is a wrapper around a repeated field of values.
+ *
+ * The JSON representation for `ListValue` is JSON array.
+ *
+ * @generated from message google.protobuf.ListValue
+ */
+export interface ListValue {
+  /**
+   * Repeated field of dynamically typed values.
+   */
+  values?: Value[];
+}
+
+export const ListValue: MessageType<ListValue> = /* @__PURE__ */ createMessageType<ListValue>("google.protobuf.ListValue", () => [
+  [1, "values", 11, 1, Value.codec],
+], {
+  writeJson: (m: ListValue, o: JsonWriteOptions): JsonValue => (m.values ?? []).map((v) => Value.writeJson(v, o)),
+  readJson: (j: JsonValue, o: JsonReadOptions, m: ListValue): ListValue => {
+    const a = (m.values ??= []);
+    for (const e of jsonList(j)) a.push(Value.readJson(e, o, {}));
+    return m;
+  },
+});
 

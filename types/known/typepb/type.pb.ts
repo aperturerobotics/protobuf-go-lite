@@ -33,14 +33,11 @@
 /* eslint-disable */
 
 import { createEnumType } from "@aptre/protobuf-es-lite/enum";
-import { Any } from "@aptre/protobuf-es-lite/google/protobuf/any";
+import { SourceContext } from "@aptre/protobuf-es-lite/google/protobuf/source_context";
 import type { MessageType } from "@aptre/protobuf-es-lite/message";
 import { createMessageType } from "@aptre/protobuf-es-lite/message";
-import { ScalarType } from "@aptre/protobuf-es-lite/scalar";
-import type { PartialFieldInfo } from "@aptre/protobuf-es-lite/field";
-import { SourceContext } from "@aptre/protobuf-es-lite/google/protobuf/source_context";
+import { Any } from "@aptre/protobuf-es-lite/google/protobuf/any";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * The syntax in which a protocol buffer element is defined.
@@ -50,30 +47,129 @@ export const protobufPackage = "google.protobuf";
 export enum Syntax {
   /**
    * Syntax `proto2`.
-   *
-   * @generated from enum value: SYNTAX_PROTO2 = 0;
    */
   PROTO2 = 0,
 
   /**
    * Syntax `proto3`.
-   *
-   * @generated from enum value: SYNTAX_PROTO3 = 1;
    */
   PROTO3 = 1,
 
   /**
    * Syntax `editions`.
-   *
-   * @generated from enum value: SYNTAX_EDITIONS = 2;
    */
   EDITIONS = 2,
 }
 
-export const Syntax_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Syntax", [
-  [0, "SYNTAX_PROTO2"],
-  [1, "SYNTAX_PROTO3"],
-  [2, "SYNTAX_EDITIONS"],
+export const Syntax_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Syntax", [[0, "SYNTAX_PROTO2"], [1, "SYNTAX_PROTO3"], [2, "SYNTAX_EDITIONS"]]);
+
+/**
+ * A protocol buffer message type.
+ *
+ * @generated from message google.protobuf.Type
+ */
+export interface Type {
+  /**
+   * The fully qualified message name.
+   */
+  name?: string;
+  /**
+   * The list of fields.
+   */
+  fields?: Field[];
+  /**
+   * The list of types appearing in `oneof` definitions in this type.
+   */
+  oneofs?: string[];
+  /**
+   * The protocol buffer options.
+   */
+  options?: Option[];
+  /**
+   * The source context.
+   */
+  sourceContext?: SourceContext;
+  /**
+   * The source syntax.
+   */
+  syntax?: Syntax;
+  /**
+   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+   */
+  edition?: string;
+}
+
+export const Type: MessageType<Type> = /* @__PURE__ */ createMessageType<Type>("google.protobuf.Type", () => [
+  [1, "name", 9],
+  [2, "fields", 11, 1, Field.codec],
+  [3, "oneofs", 9, 1],
+  [4, "options", 11, 1, Option.codec],
+  [5, "source_context", 11, 0, SourceContext.codec],
+  [6, "syntax", 14, 0, Syntax_Enum],
+  [7, "edition", 9],
+]);
+
+/**
+ * A single field of a message type.
+ *
+ * @generated from message google.protobuf.Field
+ */
+export interface Field {
+  /**
+   * The field type.
+   */
+  kind?: Field_Kind;
+  /**
+   * The field cardinality.
+   */
+  cardinality?: Field_Cardinality;
+  /**
+   * The field number.
+   */
+  number?: number;
+  /**
+   * The field name.
+   */
+  name?: string;
+  /**
+   * The field type URL, without the scheme, for message or enumeration
+   * types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
+   */
+  typeUrl?: string;
+  /**
+   * The index of the field type in `Type.oneofs`, for message or enumeration
+   * types. The first type has index 1; zero means the type is not in the list.
+   */
+  oneofIndex?: number;
+  /**
+   * Whether to use alternative packed wire representation.
+   */
+  packed?: boolean;
+  /**
+   * The protocol buffer options.
+   */
+  options?: Option[];
+  /**
+   * The field JSON name.
+   */
+  jsonName?: string;
+  /**
+   * The string value of the default value of this field. Proto2 syntax only.
+   */
+  defaultValue?: string;
+}
+
+export const Field: MessageType<Field> = /* @__PURE__ */ createMessageType<Field>("google.protobuf.Field", () => [
+  [1, "kind", 14, 0, Field_Kind_Enum],
+  [2, "cardinality", 14, 0, Field_Cardinality_Enum],
+  [3, "number", 5],
+  [4, "name", 9],
+  [6, "type_url", 9],
+  [7, "oneof_index", 5],
+  [8, "packed", 8],
+  [9, "options", 11, 1, Option.codec],
+  [10, "json_name", 9],
+  [11, "default_value", 9],
 ]);
 
 /**
@@ -84,159 +180,101 @@ export const Syntax_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Synta
 export enum Field_Kind {
   /**
    * Field type unknown.
-   *
-   * @generated from enum value: TYPE_UNKNOWN = 0;
    */
   TYPE_UNKNOWN = 0,
 
   /**
    * Field type double.
-   *
-   * @generated from enum value: TYPE_DOUBLE = 1;
    */
   TYPE_DOUBLE = 1,
 
   /**
    * Field type float.
-   *
-   * @generated from enum value: TYPE_FLOAT = 2;
    */
   TYPE_FLOAT = 2,
 
   /**
    * Field type int64.
-   *
-   * @generated from enum value: TYPE_INT64 = 3;
    */
   TYPE_INT64 = 3,
 
   /**
    * Field type uint64.
-   *
-   * @generated from enum value: TYPE_UINT64 = 4;
    */
   TYPE_UINT64 = 4,
 
   /**
    * Field type int32.
-   *
-   * @generated from enum value: TYPE_INT32 = 5;
    */
   TYPE_INT32 = 5,
 
   /**
    * Field type fixed64.
-   *
-   * @generated from enum value: TYPE_FIXED64 = 6;
    */
   TYPE_FIXED64 = 6,
 
   /**
    * Field type fixed32.
-   *
-   * @generated from enum value: TYPE_FIXED32 = 7;
    */
   TYPE_FIXED32 = 7,
 
   /**
    * Field type bool.
-   *
-   * @generated from enum value: TYPE_BOOL = 8;
    */
   TYPE_BOOL = 8,
 
   /**
    * Field type string.
-   *
-   * @generated from enum value: TYPE_STRING = 9;
    */
   TYPE_STRING = 9,
 
   /**
    * Field type group. Proto2 syntax only, and deprecated.
-   *
-   * @generated from enum value: TYPE_GROUP = 10;
    */
   TYPE_GROUP = 10,
 
   /**
    * Field type message.
-   *
-   * @generated from enum value: TYPE_MESSAGE = 11;
    */
   TYPE_MESSAGE = 11,
 
   /**
    * Field type bytes.
-   *
-   * @generated from enum value: TYPE_BYTES = 12;
    */
   TYPE_BYTES = 12,
 
   /**
    * Field type uint32.
-   *
-   * @generated from enum value: TYPE_UINT32 = 13;
    */
   TYPE_UINT32 = 13,
 
   /**
    * Field type enum.
-   *
-   * @generated from enum value: TYPE_ENUM = 14;
    */
   TYPE_ENUM = 14,
 
   /**
    * Field type sfixed32.
-   *
-   * @generated from enum value: TYPE_SFIXED32 = 15;
    */
   TYPE_SFIXED32 = 15,
 
   /**
    * Field type sfixed64.
-   *
-   * @generated from enum value: TYPE_SFIXED64 = 16;
    */
   TYPE_SFIXED64 = 16,
 
   /**
    * Field type sint32.
-   *
-   * @generated from enum value: TYPE_SINT32 = 17;
    */
   TYPE_SINT32 = 17,
 
   /**
    * Field type sint64.
-   *
-   * @generated from enum value: TYPE_SINT64 = 18;
    */
   TYPE_SINT64 = 18,
 }
 
-export const Field_Kind_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Field.Kind", [
-  [0, "TYPE_UNKNOWN"],
-  [1, "TYPE_DOUBLE"],
-  [2, "TYPE_FLOAT"],
-  [3, "TYPE_INT64"],
-  [4, "TYPE_UINT64"],
-  [5, "TYPE_INT32"],
-  [6, "TYPE_FIXED64"],
-  [7, "TYPE_FIXED32"],
-  [8, "TYPE_BOOL"],
-  [9, "TYPE_STRING"],
-  [10, "TYPE_GROUP"],
-  [11, "TYPE_MESSAGE"],
-  [12, "TYPE_BYTES"],
-  [13, "TYPE_UINT32"],
-  [14, "TYPE_ENUM"],
-  [15, "TYPE_SFIXED32"],
-  [16, "TYPE_SFIXED64"],
-  [17, "TYPE_SINT32"],
-  [18, "TYPE_SINT64"],
-]);
+export const Field_Kind_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Field.Kind", [[0, "TYPE_UNKNOWN"], [1, "TYPE_DOUBLE"], [2, "TYPE_FLOAT"], [3, "TYPE_INT64"], [4, "TYPE_UINT64"], [5, "TYPE_INT32"], [6, "TYPE_FIXED64"], [7, "TYPE_FIXED32"], [8, "TYPE_BOOL"], [9, "TYPE_STRING"], [10, "TYPE_GROUP"], [11, "TYPE_MESSAGE"], [12, "TYPE_BYTES"], [13, "TYPE_UINT32"], [14, "TYPE_ENUM"], [15, "TYPE_SFIXED32"], [16, "TYPE_SFIXED64"], [17, "TYPE_SINT32"], [18, "TYPE_SINT64"]]);
 
 /**
  * Whether a field is optional, required, or repeated.
@@ -246,38 +284,92 @@ export const Field_Kind_Enum = /* @__PURE__ */ createEnumType("google.protobuf.F
 export enum Field_Cardinality {
   /**
    * For fields with unknown cardinality.
-   *
-   * @generated from enum value: CARDINALITY_UNKNOWN = 0;
    */
   UNKNOWN = 0,
 
   /**
    * For optional fields.
-   *
-   * @generated from enum value: CARDINALITY_OPTIONAL = 1;
    */
   OPTIONAL = 1,
 
   /**
    * For required fields. Proto2 syntax only.
-   *
-   * @generated from enum value: CARDINALITY_REQUIRED = 2;
    */
   REQUIRED = 2,
 
   /**
    * For repeated fields.
-   *
-   * @generated from enum value: CARDINALITY_REPEATED = 3;
    */
   REPEATED = 3,
 }
 
-export const Field_Cardinality_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Field.Cardinality", [
-  [0, "CARDINALITY_UNKNOWN"],
-  [1, "CARDINALITY_OPTIONAL"],
-  [2, "CARDINALITY_REQUIRED"],
-  [3, "CARDINALITY_REPEATED"],
+export const Field_Cardinality_Enum = /* @__PURE__ */ createEnumType("google.protobuf.Field.Cardinality", [[0, "CARDINALITY_UNKNOWN"], [1, "CARDINALITY_OPTIONAL"], [2, "CARDINALITY_REQUIRED"], [3, "CARDINALITY_REPEATED"]]);
+
+/**
+ * Enum type definition.
+ *
+ * @generated from message google.protobuf.Enum
+ */
+export interface Enum {
+  /**
+   * Enum type name.
+   */
+  name?: string;
+  /**
+   * Enum value definitions.
+   */
+  enumvalue?: EnumValue[];
+  /**
+   * Protocol buffer options.
+   */
+  options?: Option[];
+  /**
+   * The source context.
+   */
+  sourceContext?: SourceContext;
+  /**
+   * The source syntax.
+   */
+  syntax?: Syntax;
+  /**
+   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+   */
+  edition?: string;
+}
+
+export const Enum: MessageType<Enum> = /* @__PURE__ */ createMessageType<Enum>("google.protobuf.Enum", () => [
+  [1, "name", 9],
+  [2, "enumvalue", 11, 1, EnumValue.codec],
+  [3, "options", 11, 1, Option.codec],
+  [4, "source_context", 11, 0, SourceContext.codec],
+  [5, "syntax", 14, 0, Syntax_Enum],
+  [6, "edition", 9],
+]);
+
+/**
+ * Enum value definition.
+ *
+ * @generated from message google.protobuf.EnumValue
+ */
+export interface EnumValue {
+  /**
+   * Enum value name.
+   */
+  name?: string;
+  /**
+   * Enum value number.
+   */
+  number?: number;
+  /**
+   * Protocol buffer options.
+   */
+  options?: Option[];
+}
+
+export const EnumValue: MessageType<EnumValue> = /* @__PURE__ */ createMessageType<EnumValue>("google.protobuf.EnumValue", () => [
+  [1, "name", 9],
+  [2, "number", 5],
+  [3, "options", 11, 1, Option.codec],
 ]);
 
 /**
@@ -292,8 +384,6 @@ export interface Option {
    * descriptor.proto), this is the short name. For example, `"map_entry"`.
    * For custom options, it should be the fully-qualified name. For example,
    * `"google.api.http"`.
-   *
-   * @generated from field: string name = 1;
    */
   name?: string;
   /**
@@ -301,267 +391,12 @@ export interface Option {
    * the corresponding wrapper type defined in google/protobuf/wrappers.proto
    * should be used. If the value is an enum, it should be stored as an int32
    * value using the google.protobuf.Int32Value type.
-   *
-   * @generated from field: google.protobuf.Any value = 2;
    */
   value?: Any;
+}
 
-};
-
-export const Option: MessageType<Option> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.Option",
-    fields: [
-        { no: 1, name: "name", kind: "scalar", T: ScalarType.STRING },
-        { no: 2, name: "value", kind: "message", T: () => Any },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
-
-/**
- * A single field of a message type.
- *
- * @generated from message google.protobuf.Field
- */
-export interface Field {
-  /**
-   * The field type.
-   *
-   * @generated from field: google.protobuf.Field.Kind kind = 1;
-   */
-  kind?: Field_Kind;
-  /**
-   * The field cardinality.
-   *
-   * @generated from field: google.protobuf.Field.Cardinality cardinality = 2;
-   */
-  cardinality?: Field_Cardinality;
-  /**
-   * The field number.
-   *
-   * @generated from field: int32 number = 3;
-   */
-  number?: number;
-  /**
-   * The field name.
-   *
-   * @generated from field: string name = 4;
-   */
-  name?: string;
-  /**
-   * The field type URL, without the scheme, for message or enumeration
-   * types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
-   *
-   * @generated from field: string type_url = 6;
-   */
-  typeUrl?: string;
-  /**
-   * The index of the field type in `Type.oneofs`, for message or enumeration
-   * types. The first type has index 1; zero means the type is not in the list.
-   *
-   * @generated from field: int32 oneof_index = 7;
-   */
-  oneofIndex?: number;
-  /**
-   * Whether to use alternative packed wire representation.
-   *
-   * @generated from field: bool packed = 8;
-   */
-  packed?: boolean;
-  /**
-   * The protocol buffer options.
-   *
-   * @generated from field: repeated google.protobuf.Option options = 9;
-   */
-  options?: Option[];
-  /**
-   * The field JSON name.
-   *
-   * @generated from field: string json_name = 10;
-   */
-  jsonName?: string;
-  /**
-   * The string value of the default value of this field. Proto2 syntax only.
-   *
-   * @generated from field: string default_value = 11;
-   */
-  defaultValue?: string;
-
-};
-
-export const Field: MessageType<Field> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.Field",
-    fields: [
-        { no: 1, name: "kind", kind: "enum", T: Field_Kind_Enum },
-        { no: 2, name: "cardinality", kind: "enum", T: Field_Cardinality_Enum },
-        { no: 3, name: "number", kind: "scalar", T: ScalarType.INT32 },
-        { no: 4, name: "name", kind: "scalar", T: ScalarType.STRING },
-        { no: 6, name: "type_url", kind: "scalar", T: ScalarType.STRING },
-        { no: 7, name: "oneof_index", kind: "scalar", T: ScalarType.INT32 },
-        { no: 8, name: "packed", kind: "scalar", T: ScalarType.BOOL },
-        { no: 9, name: "options", kind: "message", T: () => Option, repeated: true },
-        { no: 10, name: "json_name", kind: "scalar", T: ScalarType.STRING },
-        { no: 11, name: "default_value", kind: "scalar", T: ScalarType.STRING },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
-
-/**
- * A protocol buffer message type.
- *
- * @generated from message google.protobuf.Type
- */
-export interface Type {
-  /**
-   * The fully qualified message name.
-   *
-   * @generated from field: string name = 1;
-   */
-  name?: string;
-  /**
-   * The list of fields.
-   *
-   * @generated from field: repeated google.protobuf.Field fields = 2;
-   */
-  fields?: Field[];
-  /**
-   * The list of types appearing in `oneof` definitions in this type.
-   *
-   * @generated from field: repeated string oneofs = 3;
-   */
-  oneofs?: string[];
-  /**
-   * The protocol buffer options.
-   *
-   * @generated from field: repeated google.protobuf.Option options = 4;
-   */
-  options?: Option[];
-  /**
-   * The source context.
-   *
-   * @generated from field: google.protobuf.SourceContext source_context = 5;
-   */
-  sourceContext?: SourceContext;
-  /**
-   * The source syntax.
-   *
-   * @generated from field: google.protobuf.Syntax syntax = 6;
-   */
-  syntax?: Syntax;
-  /**
-   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
-   *
-   * @generated from field: string edition = 7;
-   */
-  edition?: string;
-
-};
-
-export const Type: MessageType<Type> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.Type",
-    fields: [
-        { no: 1, name: "name", kind: "scalar", T: ScalarType.STRING },
-        { no: 2, name: "fields", kind: "message", T: () => Field, repeated: true },
-        { no: 3, name: "oneofs", kind: "scalar", T: ScalarType.STRING, repeated: true },
-        { no: 4, name: "options", kind: "message", T: () => Option, repeated: true },
-        { no: 5, name: "source_context", kind: "message", T: () => SourceContext },
-        { no: 6, name: "syntax", kind: "enum", T: Syntax_Enum },
-        { no: 7, name: "edition", kind: "scalar", T: ScalarType.STRING },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
-
-/**
- * Enum value definition.
- *
- * @generated from message google.protobuf.EnumValue
- */
-export interface EnumValue {
-  /**
-   * Enum value name.
-   *
-   * @generated from field: string name = 1;
-   */
-  name?: string;
-  /**
-   * Enum value number.
-   *
-   * @generated from field: int32 number = 2;
-   */
-  number?: number;
-  /**
-   * Protocol buffer options.
-   *
-   * @generated from field: repeated google.protobuf.Option options = 3;
-   */
-  options?: Option[];
-
-};
-
-export const EnumValue: MessageType<EnumValue> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.EnumValue",
-    fields: [
-        { no: 1, name: "name", kind: "scalar", T: ScalarType.STRING },
-        { no: 2, name: "number", kind: "scalar", T: ScalarType.INT32 },
-        { no: 3, name: "options", kind: "message", T: () => Option, repeated: true },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
-
-/**
- * Enum type definition.
- *
- * @generated from message google.protobuf.Enum
- */
-export interface Enum {
-  /**
-   * Enum type name.
-   *
-   * @generated from field: string name = 1;
-   */
-  name?: string;
-  /**
-   * Enum value definitions.
-   *
-   * @generated from field: repeated google.protobuf.EnumValue enumvalue = 2;
-   */
-  enumvalue?: EnumValue[];
-  /**
-   * Protocol buffer options.
-   *
-   * @generated from field: repeated google.protobuf.Option options = 3;
-   */
-  options?: Option[];
-  /**
-   * The source context.
-   *
-   * @generated from field: google.protobuf.SourceContext source_context = 4;
-   */
-  sourceContext?: SourceContext;
-  /**
-   * The source syntax.
-   *
-   * @generated from field: google.protobuf.Syntax syntax = 5;
-   */
-  syntax?: Syntax;
-  /**
-   * The source edition string, only valid when syntax is SYNTAX_EDITIONS.
-   *
-   * @generated from field: string edition = 6;
-   */
-  edition?: string;
-
-};
-
-export const Enum: MessageType<Enum> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.Enum",
-    fields: [
-        { no: 1, name: "name", kind: "scalar", T: ScalarType.STRING },
-        { no: 2, name: "enumvalue", kind: "message", T: () => EnumValue, repeated: true },
-        { no: 3, name: "options", kind: "message", T: () => Option, repeated: true },
-        { no: 4, name: "source_context", kind: "message", T: () => SourceContext },
-        { no: 5, name: "syntax", kind: "enum", T: Syntax_Enum },
-        { no: 6, name: "edition", kind: "scalar", T: ScalarType.STRING },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
+export const Option: MessageType<Option> = /* @__PURE__ */ createMessageType<Option>("google.protobuf.Option", () => [
+  [1, "name", 9],
+  [2, "value", 11, 0, Any.codec],
+]);
 

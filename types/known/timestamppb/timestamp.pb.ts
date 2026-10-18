@@ -32,14 +32,10 @@
 // @generated from file github.com/aperturerobotics/protobuf-go-lite/types/known/timestamppb/timestamp.proto (package google.protobuf, syntax proto3)
 /* eslint-disable */
 
-import type { JsonValue } from "@aptre/protobuf-es-lite/json";
-import { protoInt64 } from "@aptre/protobuf-es-lite/proto-int64";
 import type { MessageType } from "@aptre/protobuf-es-lite/message";
 import { createMessageType } from "@aptre/protobuf-es-lite/message";
-import { ScalarType } from "@aptre/protobuf-es-lite/scalar";
-import type { PartialFieldInfo } from "@aptre/protobuf-es-lite/field";
+import { timestampMethods, timestampReadJson, timestampWriteJson } from "@aptre/protobuf-es-lite/wkt";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * A Timestamp represents a point in time independent of any time zone or local
@@ -141,8 +137,6 @@ export interface Timestamp {
    * Represents seconds of UTC time since Unix epoch
    * 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
    * 9999-12-31T23:59:59Z inclusive.
-   *
-   * @generated from field: int64 seconds = 1;
    */
   seconds?: bigint;
   /**
@@ -150,94 +144,20 @@ export interface Timestamp {
    * second values with fractions must still have non-negative nanos values
    * that count forward in time. Must be from 0 to 999,999,999
    * inclusive.
-   *
-   * @generated from field: int32 nanos = 2;
    */
   nanos?: number;
+}
 
+export const Timestamp: MessageType<Timestamp> & typeof timestampMethods = /* @__PURE__ */ {
+  ...createMessageType<Timestamp>("google.protobuf.Timestamp", () => [
+  [1, "seconds", 3],
+  [2, "nanos", 5],
+], {
+  writeJson: timestampWriteJson,
+  readJson: timestampReadJson,
+  unwrap: timestampMethods.toDate,
+  wrap: timestampMethods.fromDate,
+}),
+  ...timestampMethods,
 };
-
-const Timestamp_Wkt = {
-  fromJson(json: JsonValue): Timestamp {
-    if (typeof json !== "string") {
-      throw new Error(`cannot decode google.protobuf.Timestamp(json)}`);
-    }
-    const matches = json.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:Z|\.([0-9]{3,9})Z|([+-][0-9][0-9]:[0-9][0-9]))$/);
-    if (!matches) {
-      throw new Error(`cannot decode google.protobuf.Timestamp from JSON: invalid RFC 3339 string`);
-    }
-    const ms = Date.parse(matches[1] + "-" + matches[2] + "-" + matches[3] + "T" + matches[4] + ":" + matches[5] + ":" + matches[6] + (matches[8] ? matches[8] : "Z"));
-    if (Number.isNaN(ms)) {
-      throw new Error(`cannot decode google.protobuf.Timestamp from JSON: invalid RFC 3339 string`);
-    }
-    if (ms < Date.parse("0001-01-01T00:00:00Z") || ms > Date.parse("9999-12-31T23:59:59Z")) {
-      throw new Error(`cannot decode message google.protobuf.Timestamp from JSON: must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive`);
-    }
-    return {
-      seconds: protoInt64.parse(ms / 1000),
-      nanos: !matches[7] ? 0 : (parseInt("1" + matches[7] + "0".repeat(9 - matches[7].length)) - 1000000000),
-    }
-  },
-  toJson(msg: Timestamp): JsonValue {
-    const ms = Number(msg.seconds) * 1000;
-    if (ms < Date.parse("0001-01-01T00:00:00Z") || ms > Date.parse("9999-12-31T23:59:59Z")) {
-      throw new Error(`cannot encode google.protobuf.Timestamp to JSON: must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive`);
-    }
-    if (msg.nanos != null && msg.nanos < 0) {
-      throw new Error(`cannot encode google.protobuf.Timestamp to JSON: nanos must not be negative`);
-    }
-    let z = "Z";
-    if (msg.nanos != null && msg.nanos > 0) {
-      const nanosStr = (msg.nanos + 1000000000).toString().substring(1);
-      if (nanosStr.substring(3) === "000000") {
-        z = "." + nanosStr.substring(0, 3) + "Z";
-      } else if (nanosStr.substring(6) === "000") {
-        z = "." + nanosStr.substring(0, 6) + "Z";
-      } else {
-        z = "." + nanosStr + "Z";
-      }
-    }
-    return new Date(ms).toISOString().replace(".000Z", z);
-  },
-  toDate(msg: Timestamp | null | undefined): Date | null {
-    if (!msg?.seconds && !msg?.nanos) { return null; }
-    return new Date(Number(msg.seconds ?? 0) * 1000 + Math.ceil((msg.nanos ?? 0) / 1000000));
-  },
-  fromDate(value: Date | null | undefined): Timestamp {
-    if (value == null) { return {}; }
-    const ms = value.getTime();
-    const seconds = Math.floor(ms / 1000);
-    const nanos = (ms % 1000) * 1000000;
-    return { seconds: protoInt64.parse(seconds), nanos: nanos };
-  },
-  equals(a: Timestamp | Date | undefined | null, b: Timestamp | Date | undefined | null): boolean {
-    const aDate = a instanceof Date ? a : Timestamp_Wkt.toDate(a);
-    const bDate = b instanceof Date ? b : Timestamp_Wkt.toDate(b);
-    if (aDate === bDate) {
-      return true;
-    }
-    if (aDate == null || bDate == null) {
-      return aDate === bDate;
-    }
-    return +aDate === +bDate;
-  },
-};
-
-export const Timestamp: MessageType<Timestamp> & typeof Timestamp_Wkt = /* @__PURE__ */ createMessageType<Timestamp, typeof Timestamp_Wkt>({
-    typeName: "google.protobuf.Timestamp",
-    fields: [
-        { no: 1, name: "seconds", kind: "scalar", T: ScalarType.INT64 },
-        { no: 2, name: "nanos", kind: "scalar", T: ScalarType.INT32 },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-  fieldWrapper: {
-    wrapField(value: Timestamp | Date | null | undefined): Timestamp {
-      if (value == null || value instanceof Date) { return Timestamp_Wkt.fromDate(value); }
-      return Timestamp.createComplete(value);
-    },
-    unwrapField(msg: Timestamp): Date | null {
-      return Timestamp_Wkt.toDate(msg);
-    }
-  } as const,
-}, Timestamp_Wkt);
 

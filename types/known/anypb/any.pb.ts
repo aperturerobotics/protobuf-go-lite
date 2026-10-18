@@ -32,15 +32,10 @@
 // @generated from file github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/any.proto (package google.protobuf, syntax proto3)
 /* eslint-disable */
 
-import type { JsonReadOptions, JsonValue, JsonWriteOptions } from "@aptre/protobuf-es-lite/json";
-import type { Message, MessageType } from "@aptre/protobuf-es-lite/message";
+import type { MessageType } from "@aptre/protobuf-es-lite/message";
 import { createMessageType } from "@aptre/protobuf-es-lite/message";
-import { applyPartialMessage } from "@aptre/protobuf-es-lite/partial";
-import type { IMessageTypeRegistry } from "@aptre/protobuf-es-lite/type-registry";
-import { ScalarType } from "@aptre/protobuf-es-lite/scalar";
-import type { PartialFieldInfo } from "@aptre/protobuf-es-lite/field";
+import { anyMethods, anyReadJson, anyWriteJson } from "@aptre/protobuf-es-lite/wkt";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
@@ -162,99 +157,22 @@ export interface Any {
    *
    * Schemes other than `http`, `https` (or the empty scheme) might be
    * used with implementation specific semantics.
-   *
-   *
-   * @generated from field: string type_url = 1;
    */
   typeUrl?: string;
   /**
    * Must be a valid serialized protocol buffer of the above specified type.
-   *
-   * @generated from field: bytes value = 2;
    */
   value?: Uint8Array;
+}
 
+export const Any: MessageType<Any> & typeof anyMethods = /* @__PURE__ */ {
+  ...createMessageType<Any>("google.protobuf.Any", () => [
+  [1, "type_url", 9],
+  [2, "value", 12],
+], {
+  writeJson: anyWriteJson,
+  readJson: anyReadJson,
+}),
+  ...anyMethods,
 };
-
-const Any_Wkt = {
-  toJson(msg: Any, options?: Partial<JsonWriteOptions>): JsonValue {
-    const typeName = msg?.typeUrl;
-    if (!typeName) {
-      return {};
-    }
-    const messageType = options?.typeRegistry?.findMessage(typeName);
-    if (!messageType) {
-      throw new Error(`cannot encode message google.protobuf.Any to JSON: "${typeName}" is not in the type registry`);
-    }
-    const message = messageType.fromBinary(msg.value);
-    let json = messageType.toJson(message, options);
-    if (typeName.startsWith("google.protobuf.") || (json === null || Array.isArray(json) || typeof json !== "object")) {
-      json = {value: json};
-    }
-    json["@type"] = typeName;
-    return json;
-  },
-
-  fromJson(json: JsonValue, options?: Partial<JsonReadOptions>) {
-    if (json === null || Array.isArray(json) || typeof json != "object") {
-      throw new Error(`cannot decode message google.protobuf.Any from JSON: expected object but got ${json === null ? "null" : Array.isArray(json) ? "array" : typeof json}`);
-    }
-    if (Object.keys(json).length == 0) {
-      return {} as Any;
-    }
-    const typeUrl = json["@type"];
-    if (typeof typeUrl != "string" || typeUrl == "") {
-      throw new Error(`cannot decode message google.protobuf.Any from JSON: "@type" is empty`);
-    }
-    const typeName = typeUrl, messageType = options?.typeRegistry?.findMessage(typeName);
-    if (!messageType) {
-      throw new Error(`cannot decode message google.protobuf.Any from JSON: ${typeUrl} is not in the type registry`);
-    }
-    let message;
-    if (typeName.startsWith("google.protobuf.") &&  Object.prototype.hasOwnProperty.call(json, "value")) {
-      message = messageType.fromJson(json["value"], options);
-    } else {
-      const copy = Object.assign({}, json);
-      delete copy["@type"];
-      message = messageType.fromJson(copy, options);
-    }
-    const out = {} as Any;
-    Any.packFrom(out, message, messageType);
-    return out;
-  },
-
-  packFrom<T extends Message<T>>(out: Any, message: Message<T>, messageType: MessageType<T>): void {
-    out.value = messageType.toBinary(message);
-    out.typeUrl = messageType.typeName;
-  },
-
-  unpackTo<T extends Message<T>>(msg: Any, target: Message<T>, targetMessageType: MessageType<T>): boolean {
-    if (!Any.is(msg, targetMessageType)) {
-      return false;
-    }
-    const partial = targetMessageType.fromBinary(msg.value);
-    applyPartialMessage(partial, target, targetMessageType.fields);
-    return true;
-  },
-
-  unpack<T extends Message<T>>(msg: Any, registry: IMessageTypeRegistry): {message: Message<T>, messageType: MessageType<T>} | undefined {
-    const typeUrl = msg.typeUrl;
-    const messageType = !!typeUrl && registry.findMessage<T>(typeUrl);
-    return messageType ? {message: messageType.fromBinary(msg.value), messageType} : undefined;
-  },
-
-  is(msg: Any, msgType: MessageType | string): boolean {
-    const name = msg.typeUrl;
-    return !!name && (typeof msgType === 'string' ? name === msgType : name === msgType.typeName);
-  },
-};
-
-export const Any: MessageType<Any> & typeof Any_Wkt = /* @__PURE__ */ createMessageType<Any, typeof Any_Wkt>({
-    typeName: "google.protobuf.Any",
-    fields: [
-        { no: 1, name: "type_url", kind: "scalar", T: ScalarType.STRING },
-        { no: 2, name: "value", kind: "scalar", T: ScalarType.BYTES },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-}, Any_Wkt);
 

@@ -33,9 +33,8 @@
 /* eslint-disable */
 
 import type { MessageType } from "@aptre/protobuf-es-lite/message";
-import { createEmptyMessageType } from "@aptre/protobuf-es-lite/message";
+import { createMessageType } from "@aptre/protobuf-es-lite/message";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * A generic empty message that you can re-use to avoid defining duplicated
@@ -50,8 +49,7 @@ export const protobufPackage = "google.protobuf";
  * @generated from message google.protobuf.Empty
  */
 export interface Empty {
+}
 
-};
-
-export const Empty: MessageType<Empty> = /* @__PURE__ */ createEmptyMessageType<Empty>("google.protobuf.Empty", true);
+export const Empty: MessageType<Empty> = /* @__PURE__ */ createMessageType<Empty>("google.protobuf.Empty", () => []);
 

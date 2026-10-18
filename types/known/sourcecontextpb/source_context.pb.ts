@@ -34,10 +34,7 @@
 
 import type { MessageType } from "@aptre/protobuf-es-lite/message";
 import { createMessageType } from "@aptre/protobuf-es-lite/message";
-import { ScalarType } from "@aptre/protobuf-es-lite/scalar";
-import type { PartialFieldInfo } from "@aptre/protobuf-es-lite/field";
 
-export const protobufPackage = "google.protobuf";
 
 /**
  * `SourceContext` represents information about the source of a
@@ -49,18 +46,11 @@ export interface SourceContext {
   /**
    * The path-qualified name of the .proto file that contained the associated
    * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-   *
-   * @generated from field: string file_name = 1;
    */
   fileName?: string;
+}
 
-};
-
-export const SourceContext: MessageType<SourceContext> = /* @__PURE__ */ createMessageType({
-    typeName: "google.protobuf.SourceContext",
-    fields: [
-        { no: 1, name: "file_name", kind: "scalar", T: ScalarType.STRING },
-    ] satisfies readonly PartialFieldInfo[],
-    packedByDefault: true,
-});
+export const SourceContext: MessageType<SourceContext> = /* @__PURE__ */ createMessageType<SourceContext>("google.protobuf.SourceContext", () => [
+  [1, "file_name", 9],
+]);
 

@@ -4,12 +4,12 @@
   "workspaces": {
     "": {
       "devDependencies": {
-        "@aptre/protobuf-es-lite": "1.1.1",
+        "@aptre/protobuf-es-lite": "1.2.1",
       },
     },
   },
   "packages": {
-    "@aptre/protobuf-es-lite": ["@aptre/protobuf-es-lite@1.1.1", "", { "dependencies": { "@typescript/vfs": "^1.5.0", "lz-string": "^1.5.0", "typescript": "5.9.3" }, "bin": { "protoc-gen-es-lite": "bin/protoc-gen-es-lite" } }, "sha512-4+ws50UhTuAovafwFnJ+0I41HRWEfgLajPfID1v2UUlczxaLxDK117bG4QLaxlDxm8z4QxD5op/sPB1BzWC4Ug=="],
+    "@aptre/protobuf-es-lite": ["@aptre/protobuf-es-lite@1.2.1", "", { "dependencies": { "@typescript/vfs": "^1.5.0", "lz-string": "^1.5.0", "typescript": "5.9.3" }, "bin": { "protoc-gen-es-lite": "bin/protoc-gen-es-lite" } }, "sha512-SUF+wSjHX9eZn/akpkViUN+zmKI+K9aRYN4FnHg+vuyOGJHB3BGPTXm9RS8j1sPE9hKBDUF7lWdCpG5RKhuY2Q=="],
 
     "@typescript/vfs": ["@typescript/vfs@1.6.4", "", { "dependencies": { "debug": "^4.4.3" }, "peerDependencies": { "typescript": "*" } }, "sha512-PJFXFS4ZJKiJ9Qiuix6Dz/OwEIqHD7Dme1UwZhTK11vR+5dqW2ACbdndWQexBzCx+CPuMe5WBYQWCsFyGlQLlQ=="],
 
