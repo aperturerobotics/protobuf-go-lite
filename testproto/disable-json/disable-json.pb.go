@@ -16,7 +16,6 @@ import (
 type MessageDisableJson struct {
 	unknownFields []byte
 	// Types that are assignable to Body:
-	//
 	//	*MessageDisableJson_Hello
 	//	*MessageDisableJson_World
 	Body isMessageDisableJson_Body `protobuf_oneof:"body"`

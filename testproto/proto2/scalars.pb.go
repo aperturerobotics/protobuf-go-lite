@@ -12,6 +12,7 @@ import (
 	strconv "strconv"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 )
 
 type EnumMessage_Num int32
@@ -1548,7 +1549,1385 @@ func (this *EnumMessage) EqualMessageVT(thatMsg any) bool {
 	return this.EqualVT(that)
 }
 
-// NOTE: protobuf-go-lite json only supports proto3 and editions: proto2 is not supported.
+// MarshalProtoJSON marshals the DoubleMessage message to JSON.
+func (x *DoubleMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteFloat64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteFloat64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteFloat64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteFloat64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the DoubleMessage to JSON.
+func (x *DoubleMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the DoubleMessage message from JSON.
+func (x *DoubleMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadFloat64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadFloat64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadFloat64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadFloat64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the DoubleMessage from JSON.
+func (x *DoubleMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FloatMessage message to JSON.
+func (x *FloatMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteFloat32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteFloat32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteFloat32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteFloat32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FloatMessage to JSON.
+func (x *FloatMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FloatMessage message from JSON.
+func (x *FloatMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadFloat32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadFloat32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadFloat32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadFloat32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FloatMessage from JSON.
+func (x *FloatMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Int32Message message to JSON.
+func (x *Int32Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Int32Message to JSON.
+func (x *Int32Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Int32Message message from JSON.
+func (x *Int32Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Int32Message from JSON.
+func (x *Int32Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Int64Message message to JSON.
+func (x *Int64Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Int64Message to JSON.
+func (x *Int64Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Int64Message message from JSON.
+func (x *Int64Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Int64Message from JSON.
+func (x *Int64Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Uint32Message message to JSON.
+func (x *Uint32Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteUint32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteUint32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteUint32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteUint32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Uint32Message to JSON.
+func (x *Uint32Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Uint32Message message from JSON.
+func (x *Uint32Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadUint32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadUint32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadUint32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadUint32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Uint32Message from JSON.
+func (x *Uint32Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Uint64Message message to JSON.
+func (x *Uint64Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteUint64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteUint64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteUint64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteUint64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Uint64Message to JSON.
+func (x *Uint64Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Uint64Message message from JSON.
+func (x *Uint64Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadUint64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadUint64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Uint64Message from JSON.
+func (x *Uint64Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Sint32Message message to JSON.
+func (x *Sint32Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Sint32Message to JSON.
+func (x *Sint32Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Sint32Message message from JSON.
+func (x *Sint32Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Sint32Message from JSON.
+func (x *Sint32Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Sint64Message message to JSON.
+func (x *Sint64Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Sint64Message to JSON.
+func (x *Sint64Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Sint64Message message from JSON.
+func (x *Sint64Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Sint64Message from JSON.
+func (x *Sint64Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Fixed32Message message to JSON.
+func (x *Fixed32Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteUint32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteUint32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteUint32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteUint32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Fixed32Message to JSON.
+func (x *Fixed32Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Fixed32Message message from JSON.
+func (x *Fixed32Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadUint32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadUint32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadUint32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadUint32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Fixed32Message from JSON.
+func (x *Fixed32Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Fixed64Message message to JSON.
+func (x *Fixed64Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteUint64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteUint64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteUint64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteUint64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Fixed64Message to JSON.
+func (x *Fixed64Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Fixed64Message message from JSON.
+func (x *Fixed64Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadUint64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadUint64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Fixed64Message from JSON.
+func (x *Fixed64Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Sfixed32Message message to JSON.
+func (x *Sfixed32Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt32(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt32(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt32Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt32Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Sfixed32Message to JSON.
+func (x *Sfixed32Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Sfixed32Message message from JSON.
+func (x *Sfixed32Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt32Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt32Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Sfixed32Message from JSON.
+func (x *Sfixed32Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the Sfixed64Message message to JSON.
+func (x *Sfixed64Message) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteInt64(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteInt64(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteInt64Array(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteInt64Array(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Sfixed64Message to JSON.
+func (x *Sfixed64Message) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Sfixed64Message message from JSON.
+func (x *Sfixed64Message) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadInt64Array()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadInt64Array()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Sfixed64Message from JSON.
+func (x *Sfixed64Message) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the BoolMessage message to JSON.
+func (x *BoolMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteBool(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteBool(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteBoolArray(x.RepeatedField)
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteBoolArray(x.PackedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the BoolMessage to JSON.
+func (x *BoolMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the BoolMessage message from JSON.
+func (x *BoolMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadBool()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadBool()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadBoolArray()
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			x.PackedField = s.ReadBoolArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the BoolMessage from JSON.
+func (x *BoolMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the StringMessage message to JSON.
+func (x *StringMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteString(*x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteString(*x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteStringArray(x.RepeatedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the StringMessage to JSON.
+func (x *StringMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the StringMessage message from JSON.
+func (x *StringMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			t := s.ReadString()
+			x.RequiredField = &t
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			t := s.ReadString()
+			x.OptionalField = &t
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadStringArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the StringMessage from JSON.
+func (x *StringMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the BytesMessage message to JSON.
+func (x *BytesMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		s.WriteBytes(x.RequiredField)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		s.WriteBytes(x.OptionalField)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteBytesArray(x.RepeatedField)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the BytesMessage to JSON.
+func (x *BytesMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the BytesMessage message from JSON.
+func (x *BytesMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			x.RequiredField = s.ReadBytes()
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			x.OptionalField = s.ReadBytes()
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			x.RepeatedField = s.ReadBytesArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the BytesMessage from JSON.
+func (x *BytesMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumMessage_Num to JSON.
+func (x EnumMessage_Num) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), EnumMessage_Num_name)
+}
+
+// MarshalText marshals the EnumMessage_Num to text.
+func (x EnumMessage_Num) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), EnumMessage_Num_name)), nil
+}
+
+// MarshalJSON marshals the EnumMessage_Num to JSON.
+func (x EnumMessage_Num) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumMessage_Num from JSON.
+func (x *EnumMessage_Num) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(EnumMessage_Num_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Num enum: %v", err)
+		return
+	}
+	*x = EnumMessage_Num(v)
+}
+
+// UnmarshalText unmarshals the EnumMessage_Num from text.
+func (x *EnumMessage_Num) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), EnumMessage_Num_value)
+	if err != nil {
+		return err
+	}
+	*x = EnumMessage_Num(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the EnumMessage_Num from JSON.
+func (x *EnumMessage_Num) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumMessage message to JSON.
+func (x *EnumMessage) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.RequiredField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("requiredField")
+		(*x.RequiredField).MarshalProtoJSON(s)
+	}
+	if x.OptionalField != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optionalField")
+		(*x.OptionalField).MarshalProtoJSON(s)
+	}
+	if len(x.RepeatedField) > 0 || s.HasField("repeatedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedField")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.RepeatedField {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s)
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.PackedField) > 0 || s.HasField("packedField") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packedField")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.PackedField {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s)
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumMessage to JSON.
+func (x *EnumMessage) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumMessage message from JSON.
+func (x *EnumMessage) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "required_field", "requiredField":
+			s.AddField("required_field")
+			if s.ReadNil() {
+				x.RequiredField = nil
+				return
+			}
+			var v EnumMessage_Num
+			v.UnmarshalProtoJSON(s)
+			x.RequiredField = &v
+		case "optional_field", "optionalField":
+			s.AddField("optional_field")
+			if s.ReadNil() {
+				x.OptionalField = nil
+				return
+			}
+			var v EnumMessage_Num
+			v.UnmarshalProtoJSON(s)
+			x.OptionalField = &v
+		case "repeated_field", "repeatedField":
+			s.AddField("repeated_field")
+			if s.ReadNil() {
+				x.RepeatedField = nil
+				return
+			}
+			s.ReadArray(func() {
+				var v EnumMessage_Num
+				v.UnmarshalProtoJSON(s)
+				x.RepeatedField = append(x.RepeatedField, v)
+			})
+		case "packed_field", "packedField":
+			s.AddField("packed_field")
+			if s.ReadNil() {
+				x.PackedField = nil
+				return
+			}
+			s.ReadArray(func() {
+				var v EnumMessage_Num
+				v.UnmarshalProtoJSON(s)
+				x.PackedField = append(x.PackedField, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumMessage from JSON.
+func (x *EnumMessage) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
 
 func (m *DoubleMessage) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {

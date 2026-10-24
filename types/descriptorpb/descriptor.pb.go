@@ -12,6 +12,7 @@ import (
 	strconv "strconv"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 )
 
 // Protocol Buffers - Google's data interchange format
@@ -1736,12 +1737,10 @@ type MessageOptions struct {
 	// efficient, has fewer features, and is more complicated.
 	//
 	// The message must be defined exactly as follows:
-	//
-	//	message Foo {
-	//	  option message_set_wire_format = true;
-	//	  extensions 4 to max;
-	//	}
-	//
+	//   message Foo {
+	//     option message_set_wire_format = true;
+	//     extensions 4 to max;
+	//   }
 	// Note that the message cannot have any defined fields; MessageSets only
 	// have extensions.
 	//
@@ -1764,17 +1763,14 @@ type MessageOptions struct {
 	// maps field.
 	//
 	// For maps fields:
-	//
-	//	map<KeyType, ValueType> map_field = 1;
-	//
+	//     map<KeyType, ValueType> map_field = 1;
 	// The parsed descriptor looks like:
-	//
-	//	message MapFieldEntry {
-	//	    option map_entry = true;
-	//	    optional KeyType key = 1;
-	//	    optional ValueType value = 2;
-	//	}
-	//	repeated MapFieldEntry map_field = 1;
+	//     message MapFieldEntry {
+	//         option map_entry = true;
+	//         optional KeyType key = 1;
+	//         optional ValueType value = 2;
+	//     }
+	//     repeated MapFieldEntry map_field = 1;
 	//
 	// Implementations may choose not to generate the map_entry=true message, but
 	// use a native map in the target language to hold the keys and values.
@@ -2496,48 +2492,43 @@ type SourceCodeInfo struct {
 	// tools.
 	//
 	// For example, say we have a file like:
-	//
-	//	message Foo {
-	//	  optional string foo = 1;
-	//	}
-	//
+	//   message Foo {
+	//     optional string foo = 1;
+	//   }
 	// Let's look at just the field definition:
-	//
-	//	optional string foo = 1;
-	//	^       ^^     ^^  ^  ^^^
-	//	a       bc     de  f  ghi
-	//
+	//   optional string foo = 1;
+	//   ^       ^^     ^^  ^  ^^^
+	//   a       bc     de  f  ghi
 	// We have the following locations:
-	//
-	//	span   path               represents
-	//	[a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
-	//	[a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
-	//	[c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
-	//	[e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
-	//	[g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
+	//   span   path               represents
+	//   [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
+	//   [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
+	//   [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
+	//   [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
+	//   [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
 	//
 	// Notes:
-	//   - A location may refer to a repeated field itself (i.e. not to any
-	//     particular index within it).  This is used whenever a set of elements are
-	//     logically enclosed in a single code segment.  For example, an entire
-	//     extend block (possibly containing multiple extension definitions) will
-	//     have an outer location whose path refers to the "extensions" repeated
-	//     field without an index.
-	//   - Multiple locations may have the same path.  This happens when a single
-	//     logical declaration is spread out across multiple places.  The most
-	//     obvious example is the "extend" block again -- there may be multiple
-	//     extend blocks in the same scope, each of which will have the same path.
-	//   - A location's span is not always a subset of its parent's span.  For
-	//     example, the "extendee" of an extension declaration appears at the
-	//     beginning of the "extend" block and is shared by all extensions within
-	//     the block.
-	//   - Just because a location's span is a subset of some other location's span
-	//     does not mean that it is a descendant.  For example, a "group" defines
-	//     both a type and a field in a single declaration.  Thus, the locations
-	//     corresponding to the type and field and their components will overlap.
-	//   - Code which tries to interpret locations should probably be designed to
-	//     ignore those that it doesn't understand, as more types of locations could
-	//     be recorded in the future.
+	// - A location may refer to a repeated field itself (i.e. not to any
+	//   particular index within it).  This is used whenever a set of elements are
+	//   logically enclosed in a single code segment.  For example, an entire
+	//   extend block (possibly containing multiple extension definitions) will
+	//   have an outer location whose path refers to the "extensions" repeated
+	//   field without an index.
+	// - Multiple locations may have the same path.  This happens when a single
+	//   logical declaration is spread out across multiple places.  The most
+	//   obvious example is the "extend" block again -- there may be multiple
+	//   extend blocks in the same scope, each of which will have the same path.
+	// - A location's span is not always a subset of its parent's span.  For
+	//   example, the "extendee" of an extension declaration appears at the
+	//   beginning of the "extend" block and is shared by all extensions within
+	//   the block.
+	// - Just because a location's span is a subset of some other location's span
+	//   does not mean that it is a descendant.  For example, a "group" defines
+	//   both a type and a field in a single declaration.  Thus, the locations
+	//   corresponding to the type and field and their components will overlap.
+	// - Code which tries to interpret locations should probably be designed to
+	//   ignore those that it doesn't understand, as more types of locations could
+	//   be recorded in the future.
 	Location []*SourceCodeInfo_Location `protobuf:"bytes,1,rep,name=location" json:"location,omitempty"`
 }
 
@@ -2828,32 +2819,21 @@ type SourceCodeInfo_Location struct {
 	// Each element is a field number or an index.  They form a path from
 	// the root FileDescriptorProto to the place where the definition appears.
 	// For example, this path:
-	//
-	//	[ 4, 3, 2, 7, 1 ]
-	//
+	//   [ 4, 3, 2, 7, 1 ]
 	// refers to:
-	//
-	//	file.message_type(3)  // 4, 3
-	//	    .field(7)         // 2, 7
-	//	    .name()           // 1
-	//
+	//   file.message_type(3)  // 4, 3
+	//       .field(7)         // 2, 7
+	//       .name()           // 1
 	// This is because FileDescriptorProto.message_type has field number 4:
-	//
-	//	repeated DescriptorProto message_type = 4;
-	//
+	//   repeated DescriptorProto message_type = 4;
 	// and DescriptorProto.field has field number 2:
-	//
-	//	repeated FieldDescriptorProto field = 2;
-	//
+	//   repeated FieldDescriptorProto field = 2;
 	// and FieldDescriptorProto.name has field number 1:
-	//
-	//	optional string name = 1;
+	//   optional string name = 1;
 	//
 	// Thus, the above path gives the location of a field name.  If we removed
 	// the last element:
-	//
-	//	[ 4, 3, 2, 7 ]
-	//
+	//   [ 4, 3, 2, 7 ]
 	// this path refers to the whole field declaration (from the beginning
 	// of the label to the terminating semicolon).
 	Path []int32 `protobuf:"varint,1,rep,packed,name=path" json:"path,omitempty"`
@@ -2882,34 +2862,34 @@ type SourceCodeInfo_Location struct {
 	//
 	// Examples:
 	//
-	//	optional int32 foo = 1;  // Comment attached to foo.
-	//	// Comment attached to bar.
-	//	optional int32 bar = 2;
+	//   optional int32 foo = 1;  // Comment attached to foo.
+	//   // Comment attached to bar.
+	//   optional int32 bar = 2;
 	//
-	//	optional string baz = 3;
-	//	// Comment attached to baz.
-	//	// Another line attached to baz.
+	//   optional string baz = 3;
+	//   // Comment attached to baz.
+	//   // Another line attached to baz.
 	//
-	//	// Comment attached to moo.
-	//	//
-	//	// Another line attached to moo.
-	//	optional double moo = 4;
+	//   // Comment attached to moo.
+	//   //
+	//   // Another line attached to moo.
+	//   optional double moo = 4;
 	//
-	//	// Detached comment for corge. This is not leading or trailing comments
-	//	// to moo or corge because there are blank lines separating it from
-	//	// both.
+	//   // Detached comment for corge. This is not leading or trailing comments
+	//   // to moo or corge because there are blank lines separating it from
+	//   // both.
 	//
-	//	// Detached comment for corge paragraph 2.
+	//   // Detached comment for corge paragraph 2.
 	//
-	//	optional string corge = 5;
-	//	/* Block comment attached
-	//	 * to corge.  Leading asterisks
-	//	 * will be removed. */
-	//	/* Block comment attached to
-	//	 * grault. */
-	//	optional int32 grault = 6;
+	//   optional string corge = 5;
+	//   /* Block comment attached
+	//    * to corge.  Leading asterisks
+	//    * will be removed. */
+	//   /* Block comment attached to
+	//    * grault. */
+	//   optional int32 grault = 6;
 	//
-	//	// ignored detached comments.
+	//   // ignored detached comments.
 	LeadingComments         *string  `protobuf:"bytes,3,opt,name=leading_comments,json=leadingComments" json:"leadingComments,omitempty"`
 	TrailingComments        *string  `protobuf:"bytes,4,opt,name=trailing_comments,json=trailingComments" json:"trailingComments,omitempty"`
 	LeadingDetachedComments []string `protobuf:"bytes,6,rep,name=leading_detached_comments,json=leadingDetachedComments" json:"leadingDetachedComments,omitempty"`
@@ -4661,7 +4641,4371 @@ func (this *GeneratedCodeInfo) EqualMessageVT(thatMsg any) bool {
 	return this.EqualVT(that)
 }
 
-// NOTE: protobuf-go-lite json only supports proto3 and editions: proto2 is not supported.
+// MarshalProtoJSON marshals the Edition to JSON.
+func (x Edition) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), Edition_name)
+}
+
+// MarshalText marshals the Edition to text.
+func (x Edition) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), Edition_name)), nil
+}
+
+// MarshalJSON marshals the Edition to JSON.
+func (x Edition) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Edition from JSON.
+func (x *Edition) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(Edition_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Edition enum: %v", err)
+		return
+	}
+	*x = Edition(v)
+}
+
+// UnmarshalText unmarshals the Edition from text.
+func (x *Edition) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), Edition_value)
+	if err != nil {
+		return err
+	}
+	*x = Edition(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the Edition from JSON.
+func (x *Edition) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FileDescriptorSet message to JSON.
+func (x *FileDescriptorSet) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.File) > 0 || s.HasField("file") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("file")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.File {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("file"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FileDescriptorSet to JSON.
+func (x *FileDescriptorSet) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FileDescriptorSet message from JSON.
+func (x *FileDescriptorSet) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "file":
+			s.AddField("file")
+			if s.ReadNil() {
+				x.File = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.File = append(x.File, nil)
+					return
+				}
+				v := &FileDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("file", false))
+				if s.Err() != nil {
+					return
+				}
+				x.File = append(x.File, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FileDescriptorSet from JSON.
+func (x *FileDescriptorSet) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FileDescriptorProto message to JSON.
+func (x *FileDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.Package != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("package")
+		s.WriteString(*x.Package)
+	}
+	if len(x.Dependency) > 0 || s.HasField("dependency") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("dependency")
+		s.WriteStringArray(x.Dependency)
+	}
+	if len(x.MessageType) > 0 || s.HasField("messageType") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("messageType")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.MessageType {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("messageType"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.EnumType) > 0 || s.HasField("enumType") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("enumType")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.EnumType {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("enumType"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.Service) > 0 || s.HasField("service") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("service")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Service {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("service"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.Extension) > 0 || s.HasField("extension") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("extension")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Extension {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("extension"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	if x.SourceCodeInfo != nil || s.HasField("sourceCodeInfo") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("sourceCodeInfo")
+		x.SourceCodeInfo.MarshalProtoJSON(s.WithField("sourceCodeInfo"))
+	}
+	if len(x.PublicDependency) > 0 || s.HasField("publicDependency") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("publicDependency")
+		s.WriteInt32Array(x.PublicDependency)
+	}
+	if len(x.WeakDependency) > 0 || s.HasField("weakDependency") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("weakDependency")
+		s.WriteInt32Array(x.WeakDependency)
+	}
+	if x.Syntax != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("syntax")
+		s.WriteString(*x.Syntax)
+	}
+	if x.Edition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("edition")
+		(*x.Edition).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FileDescriptorProto to JSON.
+func (x *FileDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FileDescriptorProto message from JSON.
+func (x *FileDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "package":
+			s.AddField("package")
+			if s.ReadNil() {
+				x.Package = nil
+				return
+			}
+			t := s.ReadString()
+			x.Package = &t
+		case "dependency":
+			s.AddField("dependency")
+			if s.ReadNil() {
+				x.Dependency = nil
+				return
+			}
+			x.Dependency = s.ReadStringArray()
+		case "message_type", "messageType":
+			s.AddField("message_type")
+			if s.ReadNil() {
+				x.MessageType = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.MessageType = append(x.MessageType, nil)
+					return
+				}
+				v := &DescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("message_type", false))
+				if s.Err() != nil {
+					return
+				}
+				x.MessageType = append(x.MessageType, v)
+			})
+		case "enum_type", "enumType":
+			s.AddField("enum_type")
+			if s.ReadNil() {
+				x.EnumType = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.EnumType = append(x.EnumType, nil)
+					return
+				}
+				v := &EnumDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("enum_type", false))
+				if s.Err() != nil {
+					return
+				}
+				x.EnumType = append(x.EnumType, v)
+			})
+		case "service":
+			s.AddField("service")
+			if s.ReadNil() {
+				x.Service = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Service = append(x.Service, nil)
+					return
+				}
+				v := &ServiceDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("service", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Service = append(x.Service, v)
+			})
+		case "extension":
+			s.AddField("extension")
+			if s.ReadNil() {
+				x.Extension = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Extension = append(x.Extension, nil)
+					return
+				}
+				v := &FieldDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("extension", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Extension = append(x.Extension, v)
+			})
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &FileOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		case "source_code_info", "sourceCodeInfo":
+			if s.ReadNil() {
+				x.SourceCodeInfo = nil
+				return
+			}
+			x.SourceCodeInfo = &SourceCodeInfo{}
+			x.SourceCodeInfo.UnmarshalProtoJSON(s.WithField("source_code_info", true))
+		case "public_dependency", "publicDependency":
+			s.AddField("public_dependency")
+			if s.ReadNil() {
+				x.PublicDependency = nil
+				return
+			}
+			x.PublicDependency = s.ReadInt32Array()
+		case "weak_dependency", "weakDependency":
+			s.AddField("weak_dependency")
+			if s.ReadNil() {
+				x.WeakDependency = nil
+				return
+			}
+			x.WeakDependency = s.ReadInt32Array()
+		case "syntax":
+			s.AddField("syntax")
+			if s.ReadNil() {
+				x.Syntax = nil
+				return
+			}
+			t := s.ReadString()
+			x.Syntax = &t
+		case "edition":
+			s.AddField("edition")
+			if s.ReadNil() {
+				x.Edition = nil
+				return
+			}
+			var v Edition
+			v.UnmarshalProtoJSON(s)
+			x.Edition = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FileDescriptorProto from JSON.
+func (x *FileDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the DescriptorProto_ExtensionRange message to JSON.
+func (x *DescriptorProto_ExtensionRange) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Start != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("start")
+		s.WriteInt32(*x.Start)
+	}
+	if x.End != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("end")
+		s.WriteInt32(*x.End)
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the DescriptorProto_ExtensionRange to JSON.
+func (x *DescriptorProto_ExtensionRange) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the DescriptorProto_ExtensionRange message from JSON.
+func (x *DescriptorProto_ExtensionRange) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "start":
+			s.AddField("start")
+			if s.ReadNil() {
+				x.Start = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Start = &t
+		case "end":
+			s.AddField("end")
+			if s.ReadNil() {
+				x.End = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.End = &t
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &ExtensionRangeOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the DescriptorProto_ExtensionRange from JSON.
+func (x *DescriptorProto_ExtensionRange) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the DescriptorProto_ReservedRange message to JSON.
+func (x *DescriptorProto_ReservedRange) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Start != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("start")
+		s.WriteInt32(*x.Start)
+	}
+	if x.End != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("end")
+		s.WriteInt32(*x.End)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the DescriptorProto_ReservedRange to JSON.
+func (x *DescriptorProto_ReservedRange) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the DescriptorProto_ReservedRange message from JSON.
+func (x *DescriptorProto_ReservedRange) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "start":
+			s.AddField("start")
+			if s.ReadNil() {
+				x.Start = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Start = &t
+		case "end":
+			s.AddField("end")
+			if s.ReadNil() {
+				x.End = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.End = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the DescriptorProto_ReservedRange from JSON.
+func (x *DescriptorProto_ReservedRange) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the DescriptorProto message to JSON.
+func (x *DescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if len(x.Field) > 0 || s.HasField("field") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("field")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Field {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("field"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.NestedType) > 0 || s.HasField("nestedType") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("nestedType")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.NestedType {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("nestedType"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.EnumType) > 0 || s.HasField("enumType") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("enumType")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.EnumType {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("enumType"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.ExtensionRange) > 0 || s.HasField("extensionRange") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("extensionRange")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.ExtensionRange {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("extensionRange"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.Extension) > 0 || s.HasField("extension") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("extension")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Extension {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("extension"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	if len(x.OneofDecl) > 0 || s.HasField("oneofDecl") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("oneofDecl")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.OneofDecl {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("oneofDecl"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.ReservedRange) > 0 || s.HasField("reservedRange") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("reservedRange")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.ReservedRange {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("reservedRange"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.ReservedName) > 0 || s.HasField("reservedName") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("reservedName")
+		s.WriteStringArray(x.ReservedName)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the DescriptorProto to JSON.
+func (x *DescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the DescriptorProto message from JSON.
+func (x *DescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "field":
+			s.AddField("field")
+			if s.ReadNil() {
+				x.Field = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Field = append(x.Field, nil)
+					return
+				}
+				v := &FieldDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("field", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Field = append(x.Field, v)
+			})
+		case "nested_type", "nestedType":
+			s.AddField("nested_type")
+			if s.ReadNil() {
+				x.NestedType = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.NestedType = append(x.NestedType, nil)
+					return
+				}
+				v := &DescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("nested_type", false))
+				if s.Err() != nil {
+					return
+				}
+				x.NestedType = append(x.NestedType, v)
+			})
+		case "enum_type", "enumType":
+			s.AddField("enum_type")
+			if s.ReadNil() {
+				x.EnumType = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.EnumType = append(x.EnumType, nil)
+					return
+				}
+				v := &EnumDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("enum_type", false))
+				if s.Err() != nil {
+					return
+				}
+				x.EnumType = append(x.EnumType, v)
+			})
+		case "extension_range", "extensionRange":
+			s.AddField("extension_range")
+			if s.ReadNil() {
+				x.ExtensionRange = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.ExtensionRange = append(x.ExtensionRange, nil)
+					return
+				}
+				v := &DescriptorProto_ExtensionRange{}
+				v.UnmarshalProtoJSON(s.WithField("extension_range", false))
+				if s.Err() != nil {
+					return
+				}
+				x.ExtensionRange = append(x.ExtensionRange, v)
+			})
+		case "extension":
+			s.AddField("extension")
+			if s.ReadNil() {
+				x.Extension = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Extension = append(x.Extension, nil)
+					return
+				}
+				v := &FieldDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("extension", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Extension = append(x.Extension, v)
+			})
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &MessageOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		case "oneof_decl", "oneofDecl":
+			s.AddField("oneof_decl")
+			if s.ReadNil() {
+				x.OneofDecl = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.OneofDecl = append(x.OneofDecl, nil)
+					return
+				}
+				v := &OneofDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("oneof_decl", false))
+				if s.Err() != nil {
+					return
+				}
+				x.OneofDecl = append(x.OneofDecl, v)
+			})
+		case "reserved_range", "reservedRange":
+			s.AddField("reserved_range")
+			if s.ReadNil() {
+				x.ReservedRange = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.ReservedRange = append(x.ReservedRange, nil)
+					return
+				}
+				v := &DescriptorProto_ReservedRange{}
+				v.UnmarshalProtoJSON(s.WithField("reserved_range", false))
+				if s.Err() != nil {
+					return
+				}
+				x.ReservedRange = append(x.ReservedRange, v)
+			})
+		case "reserved_name", "reservedName":
+			s.AddField("reserved_name")
+			if s.ReadNil() {
+				x.ReservedName = nil
+				return
+			}
+			x.ReservedName = s.ReadStringArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the DescriptorProto from JSON.
+func (x *DescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the ExtensionRangeOptions_VerificationState to JSON.
+func (x ExtensionRangeOptions_VerificationState) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), ExtensionRangeOptions_VerificationState_name)
+}
+
+// MarshalText marshals the ExtensionRangeOptions_VerificationState to text.
+func (x ExtensionRangeOptions_VerificationState) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), ExtensionRangeOptions_VerificationState_name)), nil
+}
+
+// MarshalJSON marshals the ExtensionRangeOptions_VerificationState to JSON.
+func (x ExtensionRangeOptions_VerificationState) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the ExtensionRangeOptions_VerificationState from JSON.
+func (x *ExtensionRangeOptions_VerificationState) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(ExtensionRangeOptions_VerificationState_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read VerificationState enum: %v", err)
+		return
+	}
+	*x = ExtensionRangeOptions_VerificationState(v)
+}
+
+// UnmarshalText unmarshals the ExtensionRangeOptions_VerificationState from text.
+func (x *ExtensionRangeOptions_VerificationState) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), ExtensionRangeOptions_VerificationState_value)
+	if err != nil {
+		return err
+	}
+	*x = ExtensionRangeOptions_VerificationState(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the ExtensionRangeOptions_VerificationState from JSON.
+func (x *ExtensionRangeOptions_VerificationState) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the ExtensionRangeOptions_Declaration message to JSON.
+func (x *ExtensionRangeOptions_Declaration) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Number != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("number")
+		s.WriteInt32(*x.Number)
+	}
+	if x.FullName != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("fullName")
+		s.WriteString(*x.FullName)
+	}
+	if x.Type != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("type")
+		s.WriteString(*x.Type)
+	}
+	if x.Reserved != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("reserved")
+		s.WriteBool(*x.Reserved)
+	}
+	if x.Repeated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeated")
+		s.WriteBool(*x.Repeated)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the ExtensionRangeOptions_Declaration to JSON.
+func (x *ExtensionRangeOptions_Declaration) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the ExtensionRangeOptions_Declaration message from JSON.
+func (x *ExtensionRangeOptions_Declaration) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "number":
+			s.AddField("number")
+			if s.ReadNil() {
+				x.Number = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Number = &t
+		case "full_name", "fullName":
+			s.AddField("full_name")
+			if s.ReadNil() {
+				x.FullName = nil
+				return
+			}
+			t := s.ReadString()
+			x.FullName = &t
+		case "type":
+			s.AddField("type")
+			if s.ReadNil() {
+				x.Type = nil
+				return
+			}
+			t := s.ReadString()
+			x.Type = &t
+		case "reserved":
+			s.AddField("reserved")
+			if s.ReadNil() {
+				x.Reserved = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Reserved = &t
+		case "repeated":
+			s.AddField("repeated")
+			if s.ReadNil() {
+				x.Repeated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Repeated = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the ExtensionRangeOptions_Declaration from JSON.
+func (x *ExtensionRangeOptions_Declaration) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the ExtensionRangeOptions message to JSON.
+func (x *ExtensionRangeOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Declaration) > 0 || s.HasField("declaration") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("declaration")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Declaration {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("declaration"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Verification != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("verification")
+		(*x.Verification).MarshalProtoJSON(s)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the ExtensionRangeOptions to JSON.
+func (x *ExtensionRangeOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the ExtensionRangeOptions message from JSON.
+func (x *ExtensionRangeOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "declaration":
+			s.AddField("declaration")
+			if s.ReadNil() {
+				x.Declaration = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Declaration = append(x.Declaration, nil)
+					return
+				}
+				v := &ExtensionRangeOptions_Declaration{}
+				v.UnmarshalProtoJSON(s.WithField("declaration", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Declaration = append(x.Declaration, v)
+			})
+		case "verification":
+			s.AddField("verification")
+			if s.ReadNil() {
+				x.Verification = nil
+				return
+			}
+			var v ExtensionRangeOptions_VerificationState
+			v.UnmarshalProtoJSON(s)
+			x.Verification = &v
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the ExtensionRangeOptions from JSON.
+func (x *ExtensionRangeOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldDescriptorProto_Type to JSON.
+func (x FieldDescriptorProto_Type) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldDescriptorProto_Type_name)
+}
+
+// MarshalText marshals the FieldDescriptorProto_Type to text.
+func (x FieldDescriptorProto_Type) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldDescriptorProto_Type_name)), nil
+}
+
+// MarshalJSON marshals the FieldDescriptorProto_Type to JSON.
+func (x FieldDescriptorProto_Type) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldDescriptorProto_Type from JSON.
+func (x *FieldDescriptorProto_Type) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldDescriptorProto_Type_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Type enum: %v", err)
+		return
+	}
+	*x = FieldDescriptorProto_Type(v)
+}
+
+// UnmarshalText unmarshals the FieldDescriptorProto_Type from text.
+func (x *FieldDescriptorProto_Type) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldDescriptorProto_Type_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldDescriptorProto_Type(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldDescriptorProto_Type from JSON.
+func (x *FieldDescriptorProto_Type) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldDescriptorProto_Label to JSON.
+func (x FieldDescriptorProto_Label) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldDescriptorProto_Label_name)
+}
+
+// MarshalText marshals the FieldDescriptorProto_Label to text.
+func (x FieldDescriptorProto_Label) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldDescriptorProto_Label_name)), nil
+}
+
+// MarshalJSON marshals the FieldDescriptorProto_Label to JSON.
+func (x FieldDescriptorProto_Label) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldDescriptorProto_Label from JSON.
+func (x *FieldDescriptorProto_Label) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldDescriptorProto_Label_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Label enum: %v", err)
+		return
+	}
+	*x = FieldDescriptorProto_Label(v)
+}
+
+// UnmarshalText unmarshals the FieldDescriptorProto_Label from text.
+func (x *FieldDescriptorProto_Label) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldDescriptorProto_Label_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldDescriptorProto_Label(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldDescriptorProto_Label from JSON.
+func (x *FieldDescriptorProto_Label) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldDescriptorProto message to JSON.
+func (x *FieldDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.Extendee != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("extendee")
+		s.WriteString(*x.Extendee)
+	}
+	if x.Number != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("number")
+		s.WriteInt32(*x.Number)
+	}
+	if x.Label != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("label")
+		(*x.Label).MarshalProtoJSON(s)
+	}
+	if x.Type != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("type")
+		(*x.Type).MarshalProtoJSON(s)
+	}
+	if x.TypeName != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("typeName")
+		s.WriteString(*x.TypeName)
+	}
+	if x.DefaultValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("defaultValue")
+		s.WriteString(*x.DefaultValue)
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	if x.OneofIndex != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("oneofIndex")
+		s.WriteInt32(*x.OneofIndex)
+	}
+	if x.JsonName != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("jsonName")
+		s.WriteString(*x.JsonName)
+	}
+	if x.Proto3Optional != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("proto3Optional")
+		s.WriteBool(*x.Proto3Optional)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FieldDescriptorProto to JSON.
+func (x *FieldDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldDescriptorProto message from JSON.
+func (x *FieldDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "extendee":
+			s.AddField("extendee")
+			if s.ReadNil() {
+				x.Extendee = nil
+				return
+			}
+			t := s.ReadString()
+			x.Extendee = &t
+		case "number":
+			s.AddField("number")
+			if s.ReadNil() {
+				x.Number = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Number = &t
+		case "label":
+			s.AddField("label")
+			if s.ReadNil() {
+				x.Label = nil
+				return
+			}
+			var v FieldDescriptorProto_Label
+			v.UnmarshalProtoJSON(s)
+			x.Label = &v
+		case "type":
+			s.AddField("type")
+			if s.ReadNil() {
+				x.Type = nil
+				return
+			}
+			var v FieldDescriptorProto_Type
+			v.UnmarshalProtoJSON(s)
+			x.Type = &v
+		case "type_name", "typeName":
+			s.AddField("type_name")
+			if s.ReadNil() {
+				x.TypeName = nil
+				return
+			}
+			t := s.ReadString()
+			x.TypeName = &t
+		case "default_value", "defaultValue":
+			s.AddField("default_value")
+			if s.ReadNil() {
+				x.DefaultValue = nil
+				return
+			}
+			t := s.ReadString()
+			x.DefaultValue = &t
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &FieldOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		case "oneof_index", "oneofIndex":
+			s.AddField("oneof_index")
+			if s.ReadNil() {
+				x.OneofIndex = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.OneofIndex = &t
+		case "json_name", "jsonName":
+			s.AddField("json_name")
+			if s.ReadNil() {
+				x.JsonName = nil
+				return
+			}
+			t := s.ReadString()
+			x.JsonName = &t
+		case "proto3_optional", "proto3Optional":
+			s.AddField("proto3_optional")
+			if s.ReadNil() {
+				x.Proto3Optional = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Proto3Optional = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FieldDescriptorProto from JSON.
+func (x *FieldDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the OneofDescriptorProto message to JSON.
+func (x *OneofDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the OneofDescriptorProto to JSON.
+func (x *OneofDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the OneofDescriptorProto message from JSON.
+func (x *OneofDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &OneofOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the OneofDescriptorProto from JSON.
+func (x *OneofDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumDescriptorProto_EnumReservedRange message to JSON.
+func (x *EnumDescriptorProto_EnumReservedRange) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Start != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("start")
+		s.WriteInt32(*x.Start)
+	}
+	if x.End != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("end")
+		s.WriteInt32(*x.End)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumDescriptorProto_EnumReservedRange to JSON.
+func (x *EnumDescriptorProto_EnumReservedRange) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumDescriptorProto_EnumReservedRange message from JSON.
+func (x *EnumDescriptorProto_EnumReservedRange) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "start":
+			s.AddField("start")
+			if s.ReadNil() {
+				x.Start = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Start = &t
+		case "end":
+			s.AddField("end")
+			if s.ReadNil() {
+				x.End = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.End = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumDescriptorProto_EnumReservedRange from JSON.
+func (x *EnumDescriptorProto_EnumReservedRange) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumDescriptorProto message to JSON.
+func (x *EnumDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if len(x.Value) > 0 || s.HasField("value") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Value {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("value"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	if len(x.ReservedRange) > 0 || s.HasField("reservedRange") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("reservedRange")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.ReservedRange {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("reservedRange"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.ReservedName) > 0 || s.HasField("reservedName") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("reservedName")
+		s.WriteStringArray(x.ReservedName)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumDescriptorProto to JSON.
+func (x *EnumDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumDescriptorProto message from JSON.
+func (x *EnumDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "value":
+			s.AddField("value")
+			if s.ReadNil() {
+				x.Value = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Value = append(x.Value, nil)
+					return
+				}
+				v := &EnumValueDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("value", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Value = append(x.Value, v)
+			})
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &EnumOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		case "reserved_range", "reservedRange":
+			s.AddField("reserved_range")
+			if s.ReadNil() {
+				x.ReservedRange = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.ReservedRange = append(x.ReservedRange, nil)
+					return
+				}
+				v := &EnumDescriptorProto_EnumReservedRange{}
+				v.UnmarshalProtoJSON(s.WithField("reserved_range", false))
+				if s.Err() != nil {
+					return
+				}
+				x.ReservedRange = append(x.ReservedRange, v)
+			})
+		case "reserved_name", "reservedName":
+			s.AddField("reserved_name")
+			if s.ReadNil() {
+				x.ReservedName = nil
+				return
+			}
+			x.ReservedName = s.ReadStringArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumDescriptorProto from JSON.
+func (x *EnumDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumValueDescriptorProto message to JSON.
+func (x *EnumValueDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.Number != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("number")
+		s.WriteInt32(*x.Number)
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumValueDescriptorProto to JSON.
+func (x *EnumValueDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumValueDescriptorProto message from JSON.
+func (x *EnumValueDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "number":
+			s.AddField("number")
+			if s.ReadNil() {
+				x.Number = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Number = &t
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &EnumValueOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumValueDescriptorProto from JSON.
+func (x *EnumValueDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the ServiceDescriptorProto message to JSON.
+func (x *ServiceDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if len(x.Method) > 0 || s.HasField("method") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("method")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Method {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("method"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the ServiceDescriptorProto to JSON.
+func (x *ServiceDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the ServiceDescriptorProto message from JSON.
+func (x *ServiceDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "method":
+			s.AddField("method")
+			if s.ReadNil() {
+				x.Method = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Method = append(x.Method, nil)
+					return
+				}
+				v := &MethodDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("method", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Method = append(x.Method, v)
+			})
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &ServiceOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the ServiceDescriptorProto from JSON.
+func (x *ServiceDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the MethodDescriptorProto message to JSON.
+func (x *MethodDescriptorProto) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.InputType != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("inputType")
+		s.WriteString(*x.InputType)
+	}
+	if x.OutputType != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("outputType")
+		s.WriteString(*x.OutputType)
+	}
+	if x.Options != nil || s.HasField("options") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("options")
+		x.Options.MarshalProtoJSON(s.WithField("options"))
+	}
+	if x.ClientStreaming != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("clientStreaming")
+		s.WriteBool(*x.ClientStreaming)
+	}
+	if x.ServerStreaming != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("serverStreaming")
+		s.WriteBool(*x.ServerStreaming)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MethodDescriptorProto to JSON.
+func (x *MethodDescriptorProto) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MethodDescriptorProto message from JSON.
+func (x *MethodDescriptorProto) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "input_type", "inputType":
+			s.AddField("input_type")
+			if s.ReadNil() {
+				x.InputType = nil
+				return
+			}
+			t := s.ReadString()
+			x.InputType = &t
+		case "output_type", "outputType":
+			s.AddField("output_type")
+			if s.ReadNil() {
+				x.OutputType = nil
+				return
+			}
+			t := s.ReadString()
+			x.OutputType = &t
+		case "options":
+			if s.ReadNil() {
+				x.Options = nil
+				return
+			}
+			x.Options = &MethodOptions{}
+			x.Options.UnmarshalProtoJSON(s.WithField("options", true))
+		case "client_streaming", "clientStreaming":
+			s.AddField("client_streaming")
+			if s.ReadNil() {
+				x.ClientStreaming = nil
+				return
+			}
+			t := s.ReadBool()
+			x.ClientStreaming = &t
+		case "server_streaming", "serverStreaming":
+			s.AddField("server_streaming")
+			if s.ReadNil() {
+				x.ServerStreaming = nil
+				return
+			}
+			t := s.ReadBool()
+			x.ServerStreaming = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MethodDescriptorProto from JSON.
+func (x *MethodDescriptorProto) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FileOptions_OptimizeMode to JSON.
+func (x FileOptions_OptimizeMode) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FileOptions_OptimizeMode_name)
+}
+
+// MarshalText marshals the FileOptions_OptimizeMode to text.
+func (x FileOptions_OptimizeMode) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FileOptions_OptimizeMode_name)), nil
+}
+
+// MarshalJSON marshals the FileOptions_OptimizeMode to JSON.
+func (x FileOptions_OptimizeMode) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FileOptions_OptimizeMode from JSON.
+func (x *FileOptions_OptimizeMode) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FileOptions_OptimizeMode_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read OptimizeMode enum: %v", err)
+		return
+	}
+	*x = FileOptions_OptimizeMode(v)
+}
+
+// UnmarshalText unmarshals the FileOptions_OptimizeMode from text.
+func (x *FileOptions_OptimizeMode) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FileOptions_OptimizeMode_value)
+	if err != nil {
+		return err
+	}
+	*x = FileOptions_OptimizeMode(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FileOptions_OptimizeMode from JSON.
+func (x *FileOptions_OptimizeMode) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FileOptions message to JSON.
+func (x *FileOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.JavaPackage != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaPackage")
+		s.WriteString(*x.JavaPackage)
+	}
+	if x.JavaOuterClassname != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaOuterClassname")
+		s.WriteString(*x.JavaOuterClassname)
+	}
+	if x.OptimizeFor != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("optimizeFor")
+		(*x.OptimizeFor).MarshalProtoJSON(s)
+	}
+	if x.JavaMultipleFiles != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaMultipleFiles")
+		s.WriteBool(*x.JavaMultipleFiles)
+	}
+	if x.GoPackage != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("goPackage")
+		s.WriteString(*x.GoPackage)
+	}
+	if x.CcGenericServices != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("ccGenericServices")
+		s.WriteBool(*x.CcGenericServices)
+	}
+	if x.JavaGenericServices != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaGenericServices")
+		s.WriteBool(*x.JavaGenericServices)
+	}
+	if x.PyGenericServices != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("pyGenericServices")
+		s.WriteBool(*x.PyGenericServices)
+	}
+	if x.JavaGenerateEqualsAndHash != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaGenerateEqualsAndHash")
+		s.WriteBool(*x.JavaGenerateEqualsAndHash)
+	}
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.JavaStringCheckUtf8 != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("javaStringCheckUtf8")
+		s.WriteBool(*x.JavaStringCheckUtf8)
+	}
+	if x.CcEnableArenas != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("ccEnableArenas")
+		s.WriteBool(*x.CcEnableArenas)
+	}
+	if x.ObjcClassPrefix != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("objcClassPrefix")
+		s.WriteString(*x.ObjcClassPrefix)
+	}
+	if x.CsharpNamespace != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("csharpNamespace")
+		s.WriteString(*x.CsharpNamespace)
+	}
+	if x.SwiftPrefix != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("swiftPrefix")
+		s.WriteString(*x.SwiftPrefix)
+	}
+	if x.PhpClassPrefix != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("phpClassPrefix")
+		s.WriteString(*x.PhpClassPrefix)
+	}
+	if x.PhpNamespace != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("phpNamespace")
+		s.WriteString(*x.PhpNamespace)
+	}
+	if x.PhpMetadataNamespace != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("phpMetadataNamespace")
+		s.WriteString(*x.PhpMetadataNamespace)
+	}
+	if x.RubyPackage != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("rubyPackage")
+		s.WriteString(*x.RubyPackage)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FileOptions to JSON.
+func (x *FileOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FileOptions message from JSON.
+func (x *FileOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "java_package", "javaPackage":
+			s.AddField("java_package")
+			if s.ReadNil() {
+				x.JavaPackage = nil
+				return
+			}
+			t := s.ReadString()
+			x.JavaPackage = &t
+		case "java_outer_classname", "javaOuterClassname":
+			s.AddField("java_outer_classname")
+			if s.ReadNil() {
+				x.JavaOuterClassname = nil
+				return
+			}
+			t := s.ReadString()
+			x.JavaOuterClassname = &t
+		case "optimize_for", "optimizeFor":
+			s.AddField("optimize_for")
+			if s.ReadNil() {
+				x.OptimizeFor = nil
+				return
+			}
+			var v FileOptions_OptimizeMode
+			v.UnmarshalProtoJSON(s)
+			x.OptimizeFor = &v
+		case "java_multiple_files", "javaMultipleFiles":
+			s.AddField("java_multiple_files")
+			if s.ReadNil() {
+				x.JavaMultipleFiles = nil
+				return
+			}
+			t := s.ReadBool()
+			x.JavaMultipleFiles = &t
+		case "go_package", "goPackage":
+			s.AddField("go_package")
+			if s.ReadNil() {
+				x.GoPackage = nil
+				return
+			}
+			t := s.ReadString()
+			x.GoPackage = &t
+		case "cc_generic_services", "ccGenericServices":
+			s.AddField("cc_generic_services")
+			if s.ReadNil() {
+				x.CcGenericServices = nil
+				return
+			}
+			t := s.ReadBool()
+			x.CcGenericServices = &t
+		case "java_generic_services", "javaGenericServices":
+			s.AddField("java_generic_services")
+			if s.ReadNil() {
+				x.JavaGenericServices = nil
+				return
+			}
+			t := s.ReadBool()
+			x.JavaGenericServices = &t
+		case "py_generic_services", "pyGenericServices":
+			s.AddField("py_generic_services")
+			if s.ReadNil() {
+				x.PyGenericServices = nil
+				return
+			}
+			t := s.ReadBool()
+			x.PyGenericServices = &t
+		case "java_generate_equals_and_hash", "javaGenerateEqualsAndHash":
+			s.AddField("java_generate_equals_and_hash")
+			if s.ReadNil() {
+				x.JavaGenerateEqualsAndHash = nil
+				return
+			}
+			t := s.ReadBool()
+			x.JavaGenerateEqualsAndHash = &t
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "java_string_check_utf8", "javaStringCheckUtf8":
+			s.AddField("java_string_check_utf8")
+			if s.ReadNil() {
+				x.JavaStringCheckUtf8 = nil
+				return
+			}
+			t := s.ReadBool()
+			x.JavaStringCheckUtf8 = &t
+		case "cc_enable_arenas", "ccEnableArenas":
+			s.AddField("cc_enable_arenas")
+			if s.ReadNil() {
+				x.CcEnableArenas = nil
+				return
+			}
+			t := s.ReadBool()
+			x.CcEnableArenas = &t
+		case "objc_class_prefix", "objcClassPrefix":
+			s.AddField("objc_class_prefix")
+			if s.ReadNil() {
+				x.ObjcClassPrefix = nil
+				return
+			}
+			t := s.ReadString()
+			x.ObjcClassPrefix = &t
+		case "csharp_namespace", "csharpNamespace":
+			s.AddField("csharp_namespace")
+			if s.ReadNil() {
+				x.CsharpNamespace = nil
+				return
+			}
+			t := s.ReadString()
+			x.CsharpNamespace = &t
+		case "swift_prefix", "swiftPrefix":
+			s.AddField("swift_prefix")
+			if s.ReadNil() {
+				x.SwiftPrefix = nil
+				return
+			}
+			t := s.ReadString()
+			x.SwiftPrefix = &t
+		case "php_class_prefix", "phpClassPrefix":
+			s.AddField("php_class_prefix")
+			if s.ReadNil() {
+				x.PhpClassPrefix = nil
+				return
+			}
+			t := s.ReadString()
+			x.PhpClassPrefix = &t
+		case "php_namespace", "phpNamespace":
+			s.AddField("php_namespace")
+			if s.ReadNil() {
+				x.PhpNamespace = nil
+				return
+			}
+			t := s.ReadString()
+			x.PhpNamespace = &t
+		case "php_metadata_namespace", "phpMetadataNamespace":
+			s.AddField("php_metadata_namespace")
+			if s.ReadNil() {
+				x.PhpMetadataNamespace = nil
+				return
+			}
+			t := s.ReadString()
+			x.PhpMetadataNamespace = &t
+		case "ruby_package", "rubyPackage":
+			s.AddField("ruby_package")
+			if s.ReadNil() {
+				x.RubyPackage = nil
+				return
+			}
+			t := s.ReadString()
+			x.RubyPackage = &t
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FileOptions from JSON.
+func (x *FileOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the MessageOptions message to JSON.
+func (x *MessageOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.MessageSetWireFormat != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("messageSetWireFormat")
+		s.WriteBool(*x.MessageSetWireFormat)
+	}
+	if x.NoStandardDescriptorAccessor != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("noStandardDescriptorAccessor")
+		s.WriteBool(*x.NoStandardDescriptorAccessor)
+	}
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.MapEntry != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("mapEntry")
+		s.WriteBool(*x.MapEntry)
+	}
+	if x.DeprecatedLegacyJsonFieldConflicts != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecatedLegacyJsonFieldConflicts")
+		s.WriteBool(*x.DeprecatedLegacyJsonFieldConflicts)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MessageOptions to JSON.
+func (x *MessageOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MessageOptions message from JSON.
+func (x *MessageOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "message_set_wire_format", "messageSetWireFormat":
+			s.AddField("message_set_wire_format")
+			if s.ReadNil() {
+				x.MessageSetWireFormat = nil
+				return
+			}
+			t := s.ReadBool()
+			x.MessageSetWireFormat = &t
+		case "no_standard_descriptor_accessor", "noStandardDescriptorAccessor":
+			s.AddField("no_standard_descriptor_accessor")
+			if s.ReadNil() {
+				x.NoStandardDescriptorAccessor = nil
+				return
+			}
+			t := s.ReadBool()
+			x.NoStandardDescriptorAccessor = &t
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "map_entry", "mapEntry":
+			s.AddField("map_entry")
+			if s.ReadNil() {
+				x.MapEntry = nil
+				return
+			}
+			t := s.ReadBool()
+			x.MapEntry = &t
+		case "deprecated_legacy_json_field_conflicts", "deprecatedLegacyJsonFieldConflicts":
+			s.AddField("deprecated_legacy_json_field_conflicts")
+			if s.ReadNil() {
+				x.DeprecatedLegacyJsonFieldConflicts = nil
+				return
+			}
+			t := s.ReadBool()
+			x.DeprecatedLegacyJsonFieldConflicts = &t
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MessageOptions from JSON.
+func (x *MessageOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions_CType to JSON.
+func (x FieldOptions_CType) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldOptions_CType_name)
+}
+
+// MarshalText marshals the FieldOptions_CType to text.
+func (x FieldOptions_CType) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldOptions_CType_name)), nil
+}
+
+// MarshalJSON marshals the FieldOptions_CType to JSON.
+func (x FieldOptions_CType) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions_CType from JSON.
+func (x *FieldOptions_CType) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldOptions_CType_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read CType enum: %v", err)
+		return
+	}
+	*x = FieldOptions_CType(v)
+}
+
+// UnmarshalText unmarshals the FieldOptions_CType from text.
+func (x *FieldOptions_CType) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldOptions_CType_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldOptions_CType(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldOptions_CType from JSON.
+func (x *FieldOptions_CType) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions_JSType to JSON.
+func (x FieldOptions_JSType) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldOptions_JSType_name)
+}
+
+// MarshalText marshals the FieldOptions_JSType to text.
+func (x FieldOptions_JSType) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldOptions_JSType_name)), nil
+}
+
+// MarshalJSON marshals the FieldOptions_JSType to JSON.
+func (x FieldOptions_JSType) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions_JSType from JSON.
+func (x *FieldOptions_JSType) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldOptions_JSType_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read JSType enum: %v", err)
+		return
+	}
+	*x = FieldOptions_JSType(v)
+}
+
+// UnmarshalText unmarshals the FieldOptions_JSType from text.
+func (x *FieldOptions_JSType) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldOptions_JSType_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldOptions_JSType(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldOptions_JSType from JSON.
+func (x *FieldOptions_JSType) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions_OptionRetention to JSON.
+func (x FieldOptions_OptionRetention) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldOptions_OptionRetention_name)
+}
+
+// MarshalText marshals the FieldOptions_OptionRetention to text.
+func (x FieldOptions_OptionRetention) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldOptions_OptionRetention_name)), nil
+}
+
+// MarshalJSON marshals the FieldOptions_OptionRetention to JSON.
+func (x FieldOptions_OptionRetention) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions_OptionRetention from JSON.
+func (x *FieldOptions_OptionRetention) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldOptions_OptionRetention_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read OptionRetention enum: %v", err)
+		return
+	}
+	*x = FieldOptions_OptionRetention(v)
+}
+
+// UnmarshalText unmarshals the FieldOptions_OptionRetention from text.
+func (x *FieldOptions_OptionRetention) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldOptions_OptionRetention_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldOptions_OptionRetention(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldOptions_OptionRetention from JSON.
+func (x *FieldOptions_OptionRetention) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions_OptionTargetType to JSON.
+func (x FieldOptions_OptionTargetType) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FieldOptions_OptionTargetType_name)
+}
+
+// MarshalText marshals the FieldOptions_OptionTargetType to text.
+func (x FieldOptions_OptionTargetType) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FieldOptions_OptionTargetType_name)), nil
+}
+
+// MarshalJSON marshals the FieldOptions_OptionTargetType to JSON.
+func (x FieldOptions_OptionTargetType) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions_OptionTargetType from JSON.
+func (x *FieldOptions_OptionTargetType) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FieldOptions_OptionTargetType_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read OptionTargetType enum: %v", err)
+		return
+	}
+	*x = FieldOptions_OptionTargetType(v)
+}
+
+// UnmarshalText unmarshals the FieldOptions_OptionTargetType from text.
+func (x *FieldOptions_OptionTargetType) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FieldOptions_OptionTargetType_value)
+	if err != nil {
+		return err
+	}
+	*x = FieldOptions_OptionTargetType(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FieldOptions_OptionTargetType from JSON.
+func (x *FieldOptions_OptionTargetType) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions_EditionDefault message to JSON.
+func (x *FieldOptions_EditionDefault) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Value != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("value")
+		s.WriteString(*x.Value)
+	}
+	if x.Edition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("edition")
+		(*x.Edition).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FieldOptions_EditionDefault to JSON.
+func (x *FieldOptions_EditionDefault) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions_EditionDefault message from JSON.
+func (x *FieldOptions_EditionDefault) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "value":
+			s.AddField("value")
+			if s.ReadNil() {
+				x.Value = nil
+				return
+			}
+			t := s.ReadString()
+			x.Value = &t
+		case "edition":
+			s.AddField("edition")
+			if s.ReadNil() {
+				x.Edition = nil
+				return
+			}
+			var v Edition
+			v.UnmarshalProtoJSON(s)
+			x.Edition = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FieldOptions_EditionDefault from JSON.
+func (x *FieldOptions_EditionDefault) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FieldOptions message to JSON.
+func (x *FieldOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Ctype != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("ctype")
+		(*x.Ctype).MarshalProtoJSON(s)
+	}
+	if x.Packed != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("packed")
+		s.WriteBool(*x.Packed)
+	}
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.Lazy != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("lazy")
+		s.WriteBool(*x.Lazy)
+	}
+	if x.Jstype != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("jstype")
+		(*x.Jstype).MarshalProtoJSON(s)
+	}
+	if x.Weak != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("weak")
+		s.WriteBool(*x.Weak)
+	}
+	if x.UnverifiedLazy != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("unverifiedLazy")
+		s.WriteBool(*x.UnverifiedLazy)
+	}
+	if x.DebugRedact != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("debugRedact")
+		s.WriteBool(*x.DebugRedact)
+	}
+	if x.Retention != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("retention")
+		(*x.Retention).MarshalProtoJSON(s)
+	}
+	if len(x.Targets) > 0 || s.HasField("targets") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("targets")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Targets {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s)
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.EditionDefaults) > 0 || s.HasField("editionDefaults") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("editionDefaults")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.EditionDefaults {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("editionDefaults"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FieldOptions to JSON.
+func (x *FieldOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FieldOptions message from JSON.
+func (x *FieldOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "ctype":
+			s.AddField("ctype")
+			if s.ReadNil() {
+				x.Ctype = nil
+				return
+			}
+			var v FieldOptions_CType
+			v.UnmarshalProtoJSON(s)
+			x.Ctype = &v
+		case "packed":
+			s.AddField("packed")
+			if s.ReadNil() {
+				x.Packed = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Packed = &t
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "lazy":
+			s.AddField("lazy")
+			if s.ReadNil() {
+				x.Lazy = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Lazy = &t
+		case "jstype":
+			s.AddField("jstype")
+			if s.ReadNil() {
+				x.Jstype = nil
+				return
+			}
+			var v FieldOptions_JSType
+			v.UnmarshalProtoJSON(s)
+			x.Jstype = &v
+		case "weak":
+			s.AddField("weak")
+			if s.ReadNil() {
+				x.Weak = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Weak = &t
+		case "unverified_lazy", "unverifiedLazy":
+			s.AddField("unverified_lazy")
+			if s.ReadNil() {
+				x.UnverifiedLazy = nil
+				return
+			}
+			t := s.ReadBool()
+			x.UnverifiedLazy = &t
+		case "debug_redact", "debugRedact":
+			s.AddField("debug_redact")
+			if s.ReadNil() {
+				x.DebugRedact = nil
+				return
+			}
+			t := s.ReadBool()
+			x.DebugRedact = &t
+		case "retention":
+			s.AddField("retention")
+			if s.ReadNil() {
+				x.Retention = nil
+				return
+			}
+			var v FieldOptions_OptionRetention
+			v.UnmarshalProtoJSON(s)
+			x.Retention = &v
+		case "targets":
+			s.AddField("targets")
+			if s.ReadNil() {
+				x.Targets = nil
+				return
+			}
+			s.ReadArray(func() {
+				var v FieldOptions_OptionTargetType
+				v.UnmarshalProtoJSON(s)
+				x.Targets = append(x.Targets, v)
+			})
+		case "edition_defaults", "editionDefaults":
+			s.AddField("edition_defaults")
+			if s.ReadNil() {
+				x.EditionDefaults = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.EditionDefaults = append(x.EditionDefaults, nil)
+					return
+				}
+				v := &FieldOptions_EditionDefault{}
+				v.UnmarshalProtoJSON(s.WithField("edition_defaults", false))
+				if s.Err() != nil {
+					return
+				}
+				x.EditionDefaults = append(x.EditionDefaults, v)
+			})
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FieldOptions from JSON.
+func (x *FieldOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the OneofOptions message to JSON.
+func (x *OneofOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the OneofOptions to JSON.
+func (x *OneofOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the OneofOptions message from JSON.
+func (x *OneofOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the OneofOptions from JSON.
+func (x *OneofOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumOptions message to JSON.
+func (x *EnumOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.AllowAlias != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("allowAlias")
+		s.WriteBool(*x.AllowAlias)
+	}
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.DeprecatedLegacyJsonFieldConflicts != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecatedLegacyJsonFieldConflicts")
+		s.WriteBool(*x.DeprecatedLegacyJsonFieldConflicts)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumOptions to JSON.
+func (x *EnumOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumOptions message from JSON.
+func (x *EnumOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "allow_alias", "allowAlias":
+			s.AddField("allow_alias")
+			if s.ReadNil() {
+				x.AllowAlias = nil
+				return
+			}
+			t := s.ReadBool()
+			x.AllowAlias = &t
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "deprecated_legacy_json_field_conflicts", "deprecatedLegacyJsonFieldConflicts":
+			s.AddField("deprecated_legacy_json_field_conflicts")
+			if s.ReadNil() {
+				x.DeprecatedLegacyJsonFieldConflicts = nil
+				return
+			}
+			t := s.ReadBool()
+			x.DeprecatedLegacyJsonFieldConflicts = &t
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumOptions from JSON.
+func (x *EnumOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the EnumValueOptions message to JSON.
+func (x *EnumValueOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if x.DebugRedact != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("debugRedact")
+		s.WriteBool(*x.DebugRedact)
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the EnumValueOptions to JSON.
+func (x *EnumValueOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the EnumValueOptions message from JSON.
+func (x *EnumValueOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "debug_redact", "debugRedact":
+			s.AddField("debug_redact")
+			if s.ReadNil() {
+				x.DebugRedact = nil
+				return
+			}
+			t := s.ReadBool()
+			x.DebugRedact = &t
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the EnumValueOptions from JSON.
+func (x *EnumValueOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the ServiceOptions message to JSON.
+func (x *ServiceOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the ServiceOptions to JSON.
+func (x *ServiceOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the ServiceOptions message from JSON.
+func (x *ServiceOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the ServiceOptions from JSON.
+func (x *ServiceOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the MethodOptions_IdempotencyLevel to JSON.
+func (x MethodOptions_IdempotencyLevel) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), MethodOptions_IdempotencyLevel_name)
+}
+
+// MarshalText marshals the MethodOptions_IdempotencyLevel to text.
+func (x MethodOptions_IdempotencyLevel) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), MethodOptions_IdempotencyLevel_name)), nil
+}
+
+// MarshalJSON marshals the MethodOptions_IdempotencyLevel to JSON.
+func (x MethodOptions_IdempotencyLevel) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MethodOptions_IdempotencyLevel from JSON.
+func (x *MethodOptions_IdempotencyLevel) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(MethodOptions_IdempotencyLevel_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read IdempotencyLevel enum: %v", err)
+		return
+	}
+	*x = MethodOptions_IdempotencyLevel(v)
+}
+
+// UnmarshalText unmarshals the MethodOptions_IdempotencyLevel from text.
+func (x *MethodOptions_IdempotencyLevel) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), MethodOptions_IdempotencyLevel_value)
+	if err != nil {
+		return err
+	}
+	*x = MethodOptions_IdempotencyLevel(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the MethodOptions_IdempotencyLevel from JSON.
+func (x *MethodOptions_IdempotencyLevel) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the MethodOptions message to JSON.
+func (x *MethodOptions) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Deprecated != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("deprecated")
+		s.WriteBool(*x.Deprecated)
+	}
+	if x.IdempotencyLevel != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("idempotencyLevel")
+		(*x.IdempotencyLevel).MarshalProtoJSON(s)
+	}
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if len(x.UninterpretedOption) > 0 || s.HasField("uninterpretedOption") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("uninterpretedOption")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.UninterpretedOption {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("uninterpretedOption"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the MethodOptions to JSON.
+func (x *MethodOptions) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the MethodOptions message from JSON.
+func (x *MethodOptions) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "deprecated":
+			s.AddField("deprecated")
+			if s.ReadNil() {
+				x.Deprecated = nil
+				return
+			}
+			t := s.ReadBool()
+			x.Deprecated = &t
+		case "idempotency_level", "idempotencyLevel":
+			s.AddField("idempotency_level")
+			if s.ReadNil() {
+				x.IdempotencyLevel = nil
+				return
+			}
+			var v MethodOptions_IdempotencyLevel
+			v.UnmarshalProtoJSON(s)
+			x.IdempotencyLevel = &v
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "uninterpreted_option", "uninterpretedOption":
+			s.AddField("uninterpreted_option")
+			if s.ReadNil() {
+				x.UninterpretedOption = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.UninterpretedOption = append(x.UninterpretedOption, nil)
+					return
+				}
+				v := &UninterpretedOption{}
+				v.UnmarshalProtoJSON(s.WithField("uninterpreted_option", false))
+				if s.Err() != nil {
+					return
+				}
+				x.UninterpretedOption = append(x.UninterpretedOption, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the MethodOptions from JSON.
+func (x *MethodOptions) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the UninterpretedOption_NamePart message to JSON.
+func (x *UninterpretedOption_NamePart) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.NamePart != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("namePart")
+		s.WriteString(*x.NamePart)
+	}
+	if x.IsExtension != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("isExtension")
+		s.WriteBool(*x.IsExtension)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UninterpretedOption_NamePart to JSON.
+func (x *UninterpretedOption_NamePart) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UninterpretedOption_NamePart message from JSON.
+func (x *UninterpretedOption_NamePart) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name_part", "namePart":
+			s.AddField("name_part")
+			if s.ReadNil() {
+				x.NamePart = nil
+				return
+			}
+			t := s.ReadString()
+			x.NamePart = &t
+		case "is_extension", "isExtension":
+			s.AddField("is_extension")
+			if s.ReadNil() {
+				x.IsExtension = nil
+				return
+			}
+			t := s.ReadBool()
+			x.IsExtension = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UninterpretedOption_NamePart from JSON.
+func (x *UninterpretedOption_NamePart) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the UninterpretedOption message to JSON.
+func (x *UninterpretedOption) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Name) > 0 || s.HasField("name") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Name {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("name"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.IdentifierValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("identifierValue")
+		s.WriteString(*x.IdentifierValue)
+	}
+	if x.PositiveIntValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("positiveIntValue")
+		s.WriteUint64(*x.PositiveIntValue)
+	}
+	if x.NegativeIntValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("negativeIntValue")
+		s.WriteInt64(*x.NegativeIntValue)
+	}
+	if x.DoubleValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("doubleValue")
+		s.WriteFloat64(*x.DoubleValue)
+	}
+	if x.StringValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("stringValue")
+		s.WriteBytes(x.StringValue)
+	}
+	if x.AggregateValue != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("aggregateValue")
+		s.WriteString(*x.AggregateValue)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the UninterpretedOption to JSON.
+func (x *UninterpretedOption) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the UninterpretedOption message from JSON.
+func (x *UninterpretedOption) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Name = append(x.Name, nil)
+					return
+				}
+				v := &UninterpretedOption_NamePart{}
+				v.UnmarshalProtoJSON(s.WithField("name", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Name = append(x.Name, v)
+			})
+		case "identifier_value", "identifierValue":
+			s.AddField("identifier_value")
+			if s.ReadNil() {
+				x.IdentifierValue = nil
+				return
+			}
+			t := s.ReadString()
+			x.IdentifierValue = &t
+		case "positive_int_value", "positiveIntValue":
+			s.AddField("positive_int_value")
+			if s.ReadNil() {
+				x.PositiveIntValue = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.PositiveIntValue = &t
+		case "negative_int_value", "negativeIntValue":
+			s.AddField("negative_int_value")
+			if s.ReadNil() {
+				x.NegativeIntValue = nil
+				return
+			}
+			t := s.ReadInt64()
+			x.NegativeIntValue = &t
+		case "double_value", "doubleValue":
+			s.AddField("double_value")
+			if s.ReadNil() {
+				x.DoubleValue = nil
+				return
+			}
+			t := s.ReadFloat64()
+			x.DoubleValue = &t
+		case "string_value", "stringValue":
+			s.AddField("string_value")
+			if s.ReadNil() {
+				x.StringValue = nil
+				return
+			}
+			x.StringValue = s.ReadBytes()
+		case "aggregate_value", "aggregateValue":
+			s.AddField("aggregate_value")
+			if s.ReadNil() {
+				x.AggregateValue = nil
+				return
+			}
+			t := s.ReadString()
+			x.AggregateValue = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the UninterpretedOption from JSON.
+func (x *UninterpretedOption) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_FieldPresence to JSON.
+func (x FeatureSet_FieldPresence) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_FieldPresence_name)
+}
+
+// MarshalText marshals the FeatureSet_FieldPresence to text.
+func (x FeatureSet_FieldPresence) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_FieldPresence_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_FieldPresence to JSON.
+func (x FeatureSet_FieldPresence) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_FieldPresence from JSON.
+func (x *FeatureSet_FieldPresence) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_FieldPresence_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read FieldPresence enum: %v", err)
+		return
+	}
+	*x = FeatureSet_FieldPresence(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_FieldPresence from text.
+func (x *FeatureSet_FieldPresence) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_FieldPresence_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_FieldPresence(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_FieldPresence from JSON.
+func (x *FeatureSet_FieldPresence) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_EnumType to JSON.
+func (x FeatureSet_EnumType) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_EnumType_name)
+}
+
+// MarshalText marshals the FeatureSet_EnumType to text.
+func (x FeatureSet_EnumType) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_EnumType_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_EnumType to JSON.
+func (x FeatureSet_EnumType) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_EnumType from JSON.
+func (x *FeatureSet_EnumType) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_EnumType_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read EnumType enum: %v", err)
+		return
+	}
+	*x = FeatureSet_EnumType(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_EnumType from text.
+func (x *FeatureSet_EnumType) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_EnumType_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_EnumType(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_EnumType from JSON.
+func (x *FeatureSet_EnumType) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_RepeatedFieldEncoding to JSON.
+func (x FeatureSet_RepeatedFieldEncoding) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_RepeatedFieldEncoding_name)
+}
+
+// MarshalText marshals the FeatureSet_RepeatedFieldEncoding to text.
+func (x FeatureSet_RepeatedFieldEncoding) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_RepeatedFieldEncoding_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_RepeatedFieldEncoding to JSON.
+func (x FeatureSet_RepeatedFieldEncoding) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_RepeatedFieldEncoding from JSON.
+func (x *FeatureSet_RepeatedFieldEncoding) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_RepeatedFieldEncoding_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read RepeatedFieldEncoding enum: %v", err)
+		return
+	}
+	*x = FeatureSet_RepeatedFieldEncoding(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_RepeatedFieldEncoding from text.
+func (x *FeatureSet_RepeatedFieldEncoding) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_RepeatedFieldEncoding_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_RepeatedFieldEncoding(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_RepeatedFieldEncoding from JSON.
+func (x *FeatureSet_RepeatedFieldEncoding) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_Utf8Validation to JSON.
+func (x FeatureSet_Utf8Validation) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_Utf8Validation_name)
+}
+
+// MarshalText marshals the FeatureSet_Utf8Validation to text.
+func (x FeatureSet_Utf8Validation) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_Utf8Validation_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_Utf8Validation to JSON.
+func (x FeatureSet_Utf8Validation) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_Utf8Validation from JSON.
+func (x *FeatureSet_Utf8Validation) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_Utf8Validation_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Utf8Validation enum: %v", err)
+		return
+	}
+	*x = FeatureSet_Utf8Validation(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_Utf8Validation from text.
+func (x *FeatureSet_Utf8Validation) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_Utf8Validation_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_Utf8Validation(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_Utf8Validation from JSON.
+func (x *FeatureSet_Utf8Validation) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_MessageEncoding to JSON.
+func (x FeatureSet_MessageEncoding) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_MessageEncoding_name)
+}
+
+// MarshalText marshals the FeatureSet_MessageEncoding to text.
+func (x FeatureSet_MessageEncoding) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_MessageEncoding_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_MessageEncoding to JSON.
+func (x FeatureSet_MessageEncoding) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_MessageEncoding from JSON.
+func (x *FeatureSet_MessageEncoding) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_MessageEncoding_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read MessageEncoding enum: %v", err)
+		return
+	}
+	*x = FeatureSet_MessageEncoding(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_MessageEncoding from text.
+func (x *FeatureSet_MessageEncoding) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_MessageEncoding_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_MessageEncoding(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_MessageEncoding from JSON.
+func (x *FeatureSet_MessageEncoding) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet_JsonFormat to JSON.
+func (x FeatureSet_JsonFormat) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), FeatureSet_JsonFormat_name)
+}
+
+// MarshalText marshals the FeatureSet_JsonFormat to text.
+func (x FeatureSet_JsonFormat) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), FeatureSet_JsonFormat_name)), nil
+}
+
+// MarshalJSON marshals the FeatureSet_JsonFormat to JSON.
+func (x FeatureSet_JsonFormat) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet_JsonFormat from JSON.
+func (x *FeatureSet_JsonFormat) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(FeatureSet_JsonFormat_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read JsonFormat enum: %v", err)
+		return
+	}
+	*x = FeatureSet_JsonFormat(v)
+}
+
+// UnmarshalText unmarshals the FeatureSet_JsonFormat from text.
+func (x *FeatureSet_JsonFormat) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), FeatureSet_JsonFormat_value)
+	if err != nil {
+		return err
+	}
+	*x = FeatureSet_JsonFormat(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the FeatureSet_JsonFormat from JSON.
+func (x *FeatureSet_JsonFormat) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSet message to JSON.
+func (x *FeatureSet) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.FieldPresence != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("fieldPresence")
+		(*x.FieldPresence).MarshalProtoJSON(s)
+	}
+	if x.EnumType != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("enumType")
+		(*x.EnumType).MarshalProtoJSON(s)
+	}
+	if x.RepeatedFieldEncoding != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("repeatedFieldEncoding")
+		(*x.RepeatedFieldEncoding).MarshalProtoJSON(s)
+	}
+	if x.Utf8Validation != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("utf8Validation")
+		(*x.Utf8Validation).MarshalProtoJSON(s)
+	}
+	if x.MessageEncoding != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("messageEncoding")
+		(*x.MessageEncoding).MarshalProtoJSON(s)
+	}
+	if x.JsonFormat != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("jsonFormat")
+		(*x.JsonFormat).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FeatureSet to JSON.
+func (x *FeatureSet) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSet message from JSON.
+func (x *FeatureSet) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "field_presence", "fieldPresence":
+			s.AddField("field_presence")
+			if s.ReadNil() {
+				x.FieldPresence = nil
+				return
+			}
+			var v FeatureSet_FieldPresence
+			v.UnmarshalProtoJSON(s)
+			x.FieldPresence = &v
+		case "enum_type", "enumType":
+			s.AddField("enum_type")
+			if s.ReadNil() {
+				x.EnumType = nil
+				return
+			}
+			var v FeatureSet_EnumType
+			v.UnmarshalProtoJSON(s)
+			x.EnumType = &v
+		case "repeated_field_encoding", "repeatedFieldEncoding":
+			s.AddField("repeated_field_encoding")
+			if s.ReadNil() {
+				x.RepeatedFieldEncoding = nil
+				return
+			}
+			var v FeatureSet_RepeatedFieldEncoding
+			v.UnmarshalProtoJSON(s)
+			x.RepeatedFieldEncoding = &v
+		case "utf8_validation", "utf8Validation":
+			s.AddField("utf8_validation")
+			if s.ReadNil() {
+				x.Utf8Validation = nil
+				return
+			}
+			var v FeatureSet_Utf8Validation
+			v.UnmarshalProtoJSON(s)
+			x.Utf8Validation = &v
+		case "message_encoding", "messageEncoding":
+			s.AddField("message_encoding")
+			if s.ReadNil() {
+				x.MessageEncoding = nil
+				return
+			}
+			var v FeatureSet_MessageEncoding
+			v.UnmarshalProtoJSON(s)
+			x.MessageEncoding = &v
+		case "json_format", "jsonFormat":
+			s.AddField("json_format")
+			if s.ReadNil() {
+				x.JsonFormat = nil
+				return
+			}
+			var v FeatureSet_JsonFormat
+			v.UnmarshalProtoJSON(s)
+			x.JsonFormat = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FeatureSet from JSON.
+func (x *FeatureSet) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSetDefaults_FeatureSetEditionDefault message to JSON.
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Features != nil || s.HasField("features") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("features")
+		x.Features.MarshalProtoJSON(s.WithField("features"))
+	}
+	if x.Edition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("edition")
+		(*x.Edition).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FeatureSetDefaults_FeatureSetEditionDefault to JSON.
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSetDefaults_FeatureSetEditionDefault message from JSON.
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "features":
+			if s.ReadNil() {
+				x.Features = nil
+				return
+			}
+			x.Features = &FeatureSet{}
+			x.Features.UnmarshalProtoJSON(s.WithField("features", true))
+		case "edition":
+			s.AddField("edition")
+			if s.ReadNil() {
+				x.Edition = nil
+				return
+			}
+			var v Edition
+			v.UnmarshalProtoJSON(s)
+			x.Edition = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FeatureSetDefaults_FeatureSetEditionDefault from JSON.
+func (x *FeatureSetDefaults_FeatureSetEditionDefault) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the FeatureSetDefaults message to JSON.
+func (x *FeatureSetDefaults) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Defaults) > 0 || s.HasField("defaults") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("defaults")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Defaults {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("defaults"))
+		}
+		s.WriteArrayEnd()
+	}
+	if x.MinimumEdition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("minimumEdition")
+		(*x.MinimumEdition).MarshalProtoJSON(s)
+	}
+	if x.MaximumEdition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("maximumEdition")
+		(*x.MaximumEdition).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the FeatureSetDefaults to JSON.
+func (x *FeatureSetDefaults) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the FeatureSetDefaults message from JSON.
+func (x *FeatureSetDefaults) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "defaults":
+			s.AddField("defaults")
+			if s.ReadNil() {
+				x.Defaults = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Defaults = append(x.Defaults, nil)
+					return
+				}
+				v := &FeatureSetDefaults_FeatureSetEditionDefault{}
+				v.UnmarshalProtoJSON(s.WithField("defaults", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Defaults = append(x.Defaults, v)
+			})
+		case "minimum_edition", "minimumEdition":
+			s.AddField("minimum_edition")
+			if s.ReadNil() {
+				x.MinimumEdition = nil
+				return
+			}
+			var v Edition
+			v.UnmarshalProtoJSON(s)
+			x.MinimumEdition = &v
+		case "maximum_edition", "maximumEdition":
+			s.AddField("maximum_edition")
+			if s.ReadNil() {
+				x.MaximumEdition = nil
+				return
+			}
+			var v Edition
+			v.UnmarshalProtoJSON(s)
+			x.MaximumEdition = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the FeatureSetDefaults from JSON.
+func (x *FeatureSetDefaults) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the SourceCodeInfo_Location message to JSON.
+func (x *SourceCodeInfo_Location) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Path) > 0 || s.HasField("path") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("path")
+		s.WriteInt32Array(x.Path)
+	}
+	if len(x.Span) > 0 || s.HasField("span") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("span")
+		s.WriteInt32Array(x.Span)
+	}
+	if x.LeadingComments != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("leadingComments")
+		s.WriteString(*x.LeadingComments)
+	}
+	if x.TrailingComments != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("trailingComments")
+		s.WriteString(*x.TrailingComments)
+	}
+	if len(x.LeadingDetachedComments) > 0 || s.HasField("leadingDetachedComments") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("leadingDetachedComments")
+		s.WriteStringArray(x.LeadingDetachedComments)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the SourceCodeInfo_Location to JSON.
+func (x *SourceCodeInfo_Location) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the SourceCodeInfo_Location message from JSON.
+func (x *SourceCodeInfo_Location) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "path":
+			s.AddField("path")
+			if s.ReadNil() {
+				x.Path = nil
+				return
+			}
+			x.Path = s.ReadInt32Array()
+		case "span":
+			s.AddField("span")
+			if s.ReadNil() {
+				x.Span = nil
+				return
+			}
+			x.Span = s.ReadInt32Array()
+		case "leading_comments", "leadingComments":
+			s.AddField("leading_comments")
+			if s.ReadNil() {
+				x.LeadingComments = nil
+				return
+			}
+			t := s.ReadString()
+			x.LeadingComments = &t
+		case "trailing_comments", "trailingComments":
+			s.AddField("trailing_comments")
+			if s.ReadNil() {
+				x.TrailingComments = nil
+				return
+			}
+			t := s.ReadString()
+			x.TrailingComments = &t
+		case "leading_detached_comments", "leadingDetachedComments":
+			s.AddField("leading_detached_comments")
+			if s.ReadNil() {
+				x.LeadingDetachedComments = nil
+				return
+			}
+			x.LeadingDetachedComments = s.ReadStringArray()
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the SourceCodeInfo_Location from JSON.
+func (x *SourceCodeInfo_Location) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the SourceCodeInfo message to JSON.
+func (x *SourceCodeInfo) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Location) > 0 || s.HasField("location") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("location")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Location {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("location"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the SourceCodeInfo to JSON.
+func (x *SourceCodeInfo) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the SourceCodeInfo message from JSON.
+func (x *SourceCodeInfo) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "location":
+			s.AddField("location")
+			if s.ReadNil() {
+				x.Location = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Location = append(x.Location, nil)
+					return
+				}
+				v := &SourceCodeInfo_Location{}
+				v.UnmarshalProtoJSON(s.WithField("location", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Location = append(x.Location, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the SourceCodeInfo from JSON.
+func (x *SourceCodeInfo) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the GeneratedCodeInfo_Annotation_Semantic to JSON.
+func (x GeneratedCodeInfo_Annotation_Semantic) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), GeneratedCodeInfo_Annotation_Semantic_name)
+}
+
+// MarshalText marshals the GeneratedCodeInfo_Annotation_Semantic to text.
+func (x GeneratedCodeInfo_Annotation_Semantic) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), GeneratedCodeInfo_Annotation_Semantic_name)), nil
+}
+
+// MarshalJSON marshals the GeneratedCodeInfo_Annotation_Semantic to JSON.
+func (x GeneratedCodeInfo_Annotation_Semantic) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the GeneratedCodeInfo_Annotation_Semantic from JSON.
+func (x *GeneratedCodeInfo_Annotation_Semantic) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(GeneratedCodeInfo_Annotation_Semantic_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Semantic enum: %v", err)
+		return
+	}
+	*x = GeneratedCodeInfo_Annotation_Semantic(v)
+}
+
+// UnmarshalText unmarshals the GeneratedCodeInfo_Annotation_Semantic from text.
+func (x *GeneratedCodeInfo_Annotation_Semantic) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), GeneratedCodeInfo_Annotation_Semantic_value)
+	if err != nil {
+		return err
+	}
+	*x = GeneratedCodeInfo_Annotation_Semantic(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the GeneratedCodeInfo_Annotation_Semantic from JSON.
+func (x *GeneratedCodeInfo_Annotation_Semantic) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the GeneratedCodeInfo_Annotation message to JSON.
+func (x *GeneratedCodeInfo_Annotation) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Path) > 0 || s.HasField("path") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("path")
+		s.WriteInt32Array(x.Path)
+	}
+	if x.SourceFile != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("sourceFile")
+		s.WriteString(*x.SourceFile)
+	}
+	if x.Begin != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("begin")
+		s.WriteInt32(*x.Begin)
+	}
+	if x.End != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("end")
+		s.WriteInt32(*x.End)
+	}
+	if x.Semantic != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("semantic")
+		(*x.Semantic).MarshalProtoJSON(s)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the GeneratedCodeInfo_Annotation to JSON.
+func (x *GeneratedCodeInfo_Annotation) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the GeneratedCodeInfo_Annotation message from JSON.
+func (x *GeneratedCodeInfo_Annotation) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "path":
+			s.AddField("path")
+			if s.ReadNil() {
+				x.Path = nil
+				return
+			}
+			x.Path = s.ReadInt32Array()
+		case "source_file", "sourceFile":
+			s.AddField("source_file")
+			if s.ReadNil() {
+				x.SourceFile = nil
+				return
+			}
+			t := s.ReadString()
+			x.SourceFile = &t
+		case "begin":
+			s.AddField("begin")
+			if s.ReadNil() {
+				x.Begin = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Begin = &t
+		case "end":
+			s.AddField("end")
+			if s.ReadNil() {
+				x.End = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.End = &t
+		case "semantic":
+			s.AddField("semantic")
+			if s.ReadNil() {
+				x.Semantic = nil
+				return
+			}
+			var v GeneratedCodeInfo_Annotation_Semantic
+			v.UnmarshalProtoJSON(s)
+			x.Semantic = &v
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the GeneratedCodeInfo_Annotation from JSON.
+func (x *GeneratedCodeInfo_Annotation) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the GeneratedCodeInfo message to JSON.
+func (x *GeneratedCodeInfo) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.Annotation) > 0 || s.HasField("annotation") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("annotation")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.Annotation {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("annotation"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the GeneratedCodeInfo to JSON.
+func (x *GeneratedCodeInfo) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the GeneratedCodeInfo message from JSON.
+func (x *GeneratedCodeInfo) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "annotation":
+			s.AddField("annotation")
+			if s.ReadNil() {
+				x.Annotation = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.Annotation = append(x.Annotation, nil)
+					return
+				}
+				v := &GeneratedCodeInfo_Annotation{}
+				v.UnmarshalProtoJSON(s.WithField("annotation", false))
+				if s.Err() != nil {
+					return
+				}
+				x.Annotation = append(x.Annotation, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the GeneratedCodeInfo from JSON.
+func (x *GeneratedCodeInfo) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
 
 func (m *FileDescriptorSet) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {

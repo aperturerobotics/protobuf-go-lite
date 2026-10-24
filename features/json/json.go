@@ -9,7 +9,6 @@ import (
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
 	"github.com/aperturerobotics/protobuf-go-lite/generator"
-	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
 const (
@@ -41,20 +40,17 @@ func init() {
 	})
 }
 
+// GenerateFile writes the JSON marshalers and unmarshalers for every enum and
+// message in file. Proto2, proto3 and editions files share one JSON mapping:
+// a field with presence is a pointer and is written only when set.
 func (g *jsonGenerator) GenerateFile(file *protogen.File) bool {
+	// A file without enums or messages has nothing to marshal.
 	g.file = file
-
-	// If the file doesn't have marshalers or unmarshalers, we can skip it.
 	if !g.fileHasAnyMarshaler() {
 		return false
 	}
 
-	if file.Desc.Syntax() != protoreflect.Proto3 && file.Desc.Syntax() != protoreflect.Editions {
-		g.P("// NOTE: protobuf-go-lite json only supports proto3 and editions: ", file.Desc.Syntax().String(), " is not supported.")
-		g.P()
-		return true
-	}
-
+	// Write the codecs for the file's declarations.
 	g.generateFileContent()
 	return true
 }

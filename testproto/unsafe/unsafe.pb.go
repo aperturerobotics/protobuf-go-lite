@@ -17,7 +17,6 @@ import (
 type UnsafeTest struct {
 	unknownFields []byte
 	// Types that are assignable to Sub:
-	//
 	//	*UnsafeTest_Sub1_
 	//	*UnsafeTest_Sub2_
 	//	*UnsafeTest_Sub3_
@@ -181,7 +180,6 @@ func (x *UnsafeTest_Sub3) GetFoo() map[string][]byte {
 type UnsafeTest_Sub4 struct {
 	unknownFields []byte
 	// Types that are assignable to Foo:
-	//
 	//	*UnsafeTest_Sub4_S
 	//	*UnsafeTest_Sub4_B
 	Foo isUnsafeTest_Sub4_Foo `protobuf_oneof:"foo"`

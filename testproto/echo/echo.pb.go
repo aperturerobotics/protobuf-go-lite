@@ -58,7 +58,6 @@ type EchoMsg struct {
 	Body          string                 `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	Ts            *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=ts,proto3" json:"ts,omitempty"`
 	// Types that are assignable to Demo:
-	//
 	//	*EchoMsg_ExampleEnum
 	//	*EchoMsg_ExampleString
 	Demo       isEchoMsg_Demo           `protobuf_oneof:"demo"`

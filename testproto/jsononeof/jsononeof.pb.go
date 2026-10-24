@@ -41,7 +41,6 @@ type Interleaved struct {
 	// Choice selects one JSON value.
 	//
 	// Types that are assignable to Choice:
-	//
 	//	*Interleaved_Text
 	//	*Interleaved_ChildValue
 	Choice isInterleaved_Choice `protobuf_oneof:"choice"`

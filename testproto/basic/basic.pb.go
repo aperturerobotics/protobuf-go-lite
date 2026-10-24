@@ -72,7 +72,6 @@ type BasicMsg struct {
 	RepeatedInt32Field  []int32          `protobuf:"varint,16,rep,packed,name=repeated_int32_field,json=repeatedInt32Field,proto3" json:"repeatedInt32Field,omitempty"`
 	MapStringInt32Field map[string]int32 `protobuf:"bytes,17,rep,name=map_string_int32_field,json=mapStringInt32Field,proto3" json:"mapStringInt32Field,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// Types that are assignable to MyOneof:
-	//
 	//	*BasicMsg_OneofString
 	//	*BasicMsg_OneofInt32
 	MyOneof       isBasicMsg_MyOneof  `protobuf_oneof:"my_oneof"`
