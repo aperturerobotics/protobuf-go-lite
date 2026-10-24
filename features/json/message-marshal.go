@@ -52,10 +52,10 @@ func (g *jsonGenerator) genMessageMarshaler(message *protogen.Message) {
 nextField:
 	for _, field := range message.Fields {
 		var (
-			fieldGoName   any = fieldGoName(field)
-			sem               = g.FieldSemantics(field)
-			nilable           = g.fieldIsNilable(field)
-			fieldJsonName     = field.Desc.JSONName()
+			fieldGoName   = fieldGoName(field)
+			sem           = g.FieldSemantics(field)
+			nilable       = g.fieldIsNilable(field)
+			fieldJsonName = field.Desc.JSONName()
 		)
 
 		if field.Desc.IsMap() {

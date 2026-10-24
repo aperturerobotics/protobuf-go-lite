@@ -20,13 +20,13 @@ func (p *GeneratedFile) Ident(path, ident string) string {
 	return p.QualifiedGoIdent(protogen.GoImportPath(path).Ident(ident))
 }
 
-func (b *GeneratedFile) Alloc(vname string, message *protogen.Message, isQualifiedIdent bool) {
+func (p *GeneratedFile) Alloc(vname string, message *protogen.Message, isQualifiedIdent bool) {
 	ident := message.GoIdent.GoName
 	if isQualifiedIdent {
-		ident = b.QualifiedGoIdent(message.GoIdent)
+		ident = p.QualifiedGoIdent(message.GoIdent)
 	}
 
-	b.P(vname, " := new(", ident, `)`)
+	p.P(vname, " := new(", ident, `)`)
 }
 
 // SortedMapRange opens a loop over the map at accessor in key order, binding

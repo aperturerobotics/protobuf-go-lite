@@ -51,7 +51,7 @@ func (g *GeneratedFile) P(args ...any) {
 		case bool:
 			g.out.WriteString(strconv.FormatBool(v))
 		default:
-			g.out.WriteString(fmt.Sprint(v))
+			fmt.Fprint(&g.out, v)
 		}
 	}
 	g.out.WriteByte('\n')

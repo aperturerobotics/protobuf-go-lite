@@ -366,8 +366,8 @@ func runEncoderTest(t *testing.T, tc encoderTestCase, delims [2]byte) {
 }
 
 func replaceDelims(s string) string {
-	s = strings.Replace(s, "{", "<", -1)
-	return strings.Replace(s, "}", ">", -1)
+	s = strings.ReplaceAll(s, "{", "<")
+	return strings.ReplaceAll(s, "}", ">")
 }
 
 // Test for UTF-8 and ASCII outputs.

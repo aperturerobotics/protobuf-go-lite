@@ -39,9 +39,9 @@ func (g *jsonGenerator) genMessageUnmarshaler(message *protogen.Message) {
 nextField:
 	for _, field := range message.Fields {
 		var (
-			fieldGoName any = fieldGoName(field)
-			sem             = g.FieldSemantics(field)
-			nilable         = g.fieldIsNilable(field)
+			fieldGoName = fieldGoName(field)
+			sem         = g.FieldSemantics(field)
+			nilable     = g.fieldIsNilable(field)
 		)
 
 		// We need to match both the snake case field name and the camel case JSON name.

@@ -18,14 +18,14 @@ func (x *Duration) UnmarshalJSON(b []byte) error {
 }
 
 // MarshalProtoText formats the Duration to a proto text string.
-func (d *Duration) MarshalProtoText() string {
-	return d.String()
+func (x *Duration) MarshalProtoText() string {
+	return x.String()
 }
 
 // String formats the duration to a string.
-func (d *Duration) String() string {
+func (x *Duration) String() string {
 	var out strings.Builder
-	secs, nanos := d.GetSeconds(), d.GetNanos()
+	secs, nanos := x.GetSeconds(), x.GetNanos()
 	if secs != 0 {
 		_, _ = out.WriteString("seconds:")
 		_, _ = out.WriteString(strconv.FormatInt(secs, 10))
