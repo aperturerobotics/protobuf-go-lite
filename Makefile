@@ -4,6 +4,9 @@ GOIMPORTS=hack/bin/goimports
 GOFUMPT=hack/bin/gofumpt
 GOLANGCI_LINT=hack/bin/golangci-lint
 PROTOC_GEN_GO=hack/bin/protoc-gen-go-lite
+# Each tool rebuilds when the hack module pins change, even if CI restored
+# an older binary from its tools cache.
+HACK_MOD=hack/go.mod hack/go.sum
 GOLIST=go list -f "{{ .Dir }}" -m
 
 export GO111MODULE=on
@@ -15,31 +18,31 @@ all:
 vendor:
 	go mod vendor
 
-$(GOIMPORTS):
+$(GOIMPORTS): $(HACK_MOD)
 	cd ./hack; \
 	go build -v \
 		-o ./bin/goimports \
 		golang.org/x/tools/cmd/goimports
 
-$(GOFUMPT):
+$(GOFUMPT): $(HACK_MOD)
 	cd ./hack; \
 	go build -v \
 		-o ./bin/gofumpt \
 		mvdan.cc/gofumpt
 
-$(PROTOWRAP):
+$(PROTOWRAP): $(HACK_MOD)
 	cd ./hack; \
 	go build -v \
 		-o ./bin/protowrap \
 		github.com/aperturerobotics/goprotowrap/cmd/protowrap
 
-$(GOLANGCI_LINT):
+$(GOLANGCI_LINT): $(HACK_MOD)
 	cd ./hack; \
 	go build -v \
 		-o ./bin/golangci-lint \
 		github.com/golangci/golangci-lint/v2/cmd/golangci-lint
 
-$(PROTOC_GEN_GO):
+$(PROTOC_GEN_GO): $(HACK_MOD)
 	cd ./hack; \
 	go build -v \
 		-o ./bin/protoc-gen-go-lite \
