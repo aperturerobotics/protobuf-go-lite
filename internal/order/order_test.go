@@ -107,7 +107,7 @@ func TestFieldOrder(t *testing.T) {
 		t.Run(tt.label, func(t *testing.T) {
 			want := tt.fields
 			got := append([]fieldDesc(nil), want...)
-			for i, j := range rand.Perm(len(got)) {
+			for i, j := range rand.Perm(len(got)) { //nolint:gosec // shuffles test input.
 				got[i], got[j] = got[j], got[i]
 			}
 			sort.Slice(got, func(i, j int) bool {
@@ -160,7 +160,7 @@ func TestKeyOrder(t *testing.T) {
 				want = append(want, protoreflect.ValueOf(v).MapKey())
 			}
 			got = append(got, want...)
-			for i, j := range rand.Perm(len(got)) {
+			for i, j := range rand.Perm(len(got)) { //nolint:gosec // shuffles test input.
 				got[i], got[j] = got[j], got[i]
 			}
 			sort.Slice(got, func(i, j int) bool {

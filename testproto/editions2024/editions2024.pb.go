@@ -65,7 +65,6 @@ type Edition2024Fixture struct {
 	ExplicitDefaultInt32  *int32                                `protobuf:"varint,14,opt,name=explicit_default_int32,json=explicitDefaultInt32,def=42" json:"explicitDefaultInt32,omitempty"`
 	ExplicitDefaultString *string                               `protobuf:"bytes,15,opt,name=explicit_default_string,json=explicitDefaultString,def=edition" json:"explicitDefaultString,omitempty"`
 	// Types that are assignable to Choice:
-	//
 	//	*Edition2024Fixture_ChoiceString
 	//	*Edition2024Fixture_ChoiceInt32
 	Choice isEdition2024Fixture_Choice `protobuf_oneof:"choice"`

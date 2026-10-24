@@ -97,10 +97,7 @@ const (
 func (d *Decoder) parseNext(lastKind Kind) (Token, error) {
 	// Trim leading spaces.
 	d.consume(0)
-	isEOF := false
-	if len(d.in) == 0 {
-		isEOF = true
-	}
+	isEOF := len(d.in) == 0
 
 	switch lastKind {
 	case EOF:
@@ -447,12 +444,12 @@ func (d *Decoder) parseTypeName() (Token, error) {
 
 	var closed bool
 	for len(s) > 0 && !closed {
-		switch {
-		case s[0] == ']':
+		switch s[0] {
+		case ']':
 			s = s[1:]
 			closed = true
 
-		case s[0] == '/', s[0] == '.':
+		case '/', '.':
 			if len(name) > 0 && (name[len(name)-1] == '/' || name[len(name)-1] == '.') {
 				return Token{}, d.newSyntaxError("invalid type URL/extension field name: %s",
 					d.orig[startPos:len(d.orig)-len(s)+1])
@@ -669,8 +666,8 @@ func errId(seq []byte) []byte {
 
 // isDelim returns true if given byte is a delimiter character.
 func isDelim(c byte) bool {
-	return !(c == '-' || c == '+' || c == '.' || c == '_' ||
-		('a' <= c && c <= 'z') ||
-		('A' <= c && c <= 'Z') ||
-		('0' <= c && c <= '9'))
+	return c != '-' && c != '+' && c != '.' && c != '_' &&
+		(c < 'a' || c > 'z') &&
+		(c < 'A' || c > 'Z') &&
+		(c < '0' || c > '9')
 }

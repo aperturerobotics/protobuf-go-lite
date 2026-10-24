@@ -19,7 +19,7 @@ func TestEdition2024GeneratedBehavior(t *testing.T) {
 		NestedMessage:  &Edition2024Fixture_Nested{Name: &name, Value: 12},
 		DelimitedGroup: &Edition2024Fixture_DelimitedGroup{Label: &label},
 		NestedMap: map[string]*Edition2024Fixture_Nested{
-			"key": &Edition2024Fixture_Nested{Name: &name, Value: 13},
+			"key": {Name: &name, Value: 13},
 		},
 	}
 

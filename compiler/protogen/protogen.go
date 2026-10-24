@@ -277,7 +277,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 		}
 		if packageNames[filename] == "" {
 			pkgName := fdesc.GetPackage()
-			pkgName = strings.Replace(pkgName, ".", "_", -1)
+			pkgName = strings.ReplaceAll(pkgName, ".", "_")
 			packageNames[filename] = GoPackageName(pkgName)
 		}
 
@@ -289,7 +289,7 @@ func (opts Options) New(req *pluginpb.CodeGeneratorRequest) (*Plugin, error) {
 					"Please specify either:\n"+
 					"\t• a \"go_package\" option in the .proto source file, or\n"+
 					"\t• a \"M\" argument on the command line.\n\n"+
-					"See %v for more information.\n",
+					"See %v for more information",
 				fdesc.GetName(), goPackageDocURL)
 		case packageNames[filename] == "":
 			// If the package name is not explicitly specified,

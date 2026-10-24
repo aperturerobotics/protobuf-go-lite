@@ -209,7 +209,7 @@ func TestEqualHelpers(t *testing.T) {
 	if !EqualMap(map[string]int{"a": 1}, map[string]int{"a": 1}) || EqualMap(map[string]int{"a": 1}, map[string]int{"a": 2}) {
 		t.Fatalf("EqualMap mismatch")
 	}
-	if !EqualBytesSlice([][]byte{{1}, nil}, [][]byte{{1}, []byte{}}) {
+	if !EqualBytesSlice([][]byte{{1}, nil}, [][]byte{{1}, {}}) {
 		t.Fatalf("EqualBytesSlice should use implicit bytes equality")
 	}
 	if !EqualBytesMap(map[string][]byte{"a": nil}, map[string][]byte{"a": {}}) {

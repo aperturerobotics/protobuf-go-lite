@@ -15,9 +15,9 @@ func TestMapJSONKeyOrder(t *testing.T) {
 		IntKeys:    make(map[uint32]*timestamppb.Timestamp),
 		BoolKeys:   map[bool]string{true: "yes", false: "no"},
 	}
-	for i := range 16 {
-		msg.StringKeys["key-"+strconv.Itoa(i)] = &timestamppb.Timestamp{}
-		msg.IntKeys[uint32(16-i)] = &timestamppb.Timestamp{}
+	for i := range uint32(16) {
+		msg.StringKeys["key-"+strconv.FormatUint(uint64(i), 10)] = &timestamppb.Timestamp{}
+		msg.IntKeys[16-i] = &timestamppb.Timestamp{}
 	}
 
 	want, err := msg.MarshalJSON()

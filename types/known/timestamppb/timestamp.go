@@ -74,9 +74,9 @@ func (x *Timestamp) MarshalProtoJSON(s *json.MarshalState) {
 }
 
 // String formats the timestamp to a string.
-func (t *Timestamp) String() string {
+func (x *Timestamp) String() string {
 	var out strings.Builder
-	secs, nanos := t.GetSeconds(), t.GetNanos()
+	secs, nanos := x.GetSeconds(), x.GetNanos()
 	if secs != 0 {
 		_, _ = out.WriteString("seconds:")
 		_, _ = out.WriteString(strconv.FormatInt(secs, 10))
@@ -92,6 +92,6 @@ func (t *Timestamp) String() string {
 }
 
 // MarshalProtoText formats the Timestamp to a proto text string.
-func (t *Timestamp) MarshalProtoText() string {
-	return t.String()
+func (x *Timestamp) MarshalProtoText() string {
+	return x.String()
 }
