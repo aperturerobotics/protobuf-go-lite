@@ -11,6 +11,7 @@ import (
 	strconv "strconv"
 
 	protobuf_go_lite "github.com/aperturerobotics/protobuf-go-lite"
+	json "github.com/aperturerobotics/protobuf-go-lite/json"
 	descriptorpb "github.com/aperturerobotics/protobuf-go-lite/types/descriptorpb"
 )
 
@@ -284,9 +285,7 @@ type CodeGeneratorResponse_File struct {
 	// produced by another code generator.  The original generator may provide
 	// insertion points by placing special annotations in the file that look
 	// like:
-	//
-	//	@@protoc_insertion_point(NAME)
-	//
+	//   @@protoc_insertion_point(NAME)
 	// The annotation can have arbitrary text before and after it on the line,
 	// which allows it to be placed in a comment.  NAME should be replaced with
 	// an identifier naming the point -- this is what other generators will use
@@ -298,9 +297,7 @@ type CodeGeneratorResponse_File struct {
 	//
 	// For example, the C++ code generator places the following line in the
 	// .pb.h files that it generates:
-	//
-	//	// @@protoc_insertion_point(namespace_scope)
-	//
+	//   // @@protoc_insertion_point(namespace_scope)
 	// This line appears within the scope of the file's package namespace, but
 	// outside of any particular class.  Another plugin can then specify the
 	// insertion_point "namespace_scope" to generate additional classes or
@@ -559,7 +556,460 @@ func (this *CodeGeneratorResponse) EqualMessageVT(thatMsg any) bool {
 	return this.EqualVT(that)
 }
 
-// NOTE: protobuf-go-lite json only supports proto3 and editions: proto2 is not supported.
+// MarshalProtoJSON marshals the Version message to JSON.
+func (x *Version) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Major != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("major")
+		s.WriteInt32(*x.Major)
+	}
+	if x.Minor != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("minor")
+		s.WriteInt32(*x.Minor)
+	}
+	if x.Patch != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("patch")
+		s.WriteInt32(*x.Patch)
+	}
+	if x.Suffix != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("suffix")
+		s.WriteString(*x.Suffix)
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the Version to JSON.
+func (x *Version) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the Version message from JSON.
+func (x *Version) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "major":
+			s.AddField("major")
+			if s.ReadNil() {
+				x.Major = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Major = &t
+		case "minor":
+			s.AddField("minor")
+			if s.ReadNil() {
+				x.Minor = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Minor = &t
+		case "patch":
+			s.AddField("patch")
+			if s.ReadNil() {
+				x.Patch = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.Patch = &t
+		case "suffix":
+			s.AddField("suffix")
+			if s.ReadNil() {
+				x.Suffix = nil
+				return
+			}
+			t := s.ReadString()
+			x.Suffix = &t
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the Version from JSON.
+func (x *Version) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the CodeGeneratorRequest message to JSON.
+func (x *CodeGeneratorRequest) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if len(x.FileToGenerate) > 0 || s.HasField("fileToGenerate") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("fileToGenerate")
+		s.WriteStringArray(x.FileToGenerate)
+	}
+	if x.Parameter != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("parameter")
+		s.WriteString(*x.Parameter)
+	}
+	if x.CompilerVersion != nil || s.HasField("compilerVersion") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("compilerVersion")
+		x.CompilerVersion.MarshalProtoJSON(s.WithField("compilerVersion"))
+	}
+	if len(x.ProtoFile) > 0 || s.HasField("protoFile") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("protoFile")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.ProtoFile {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("protoFile"))
+		}
+		s.WriteArrayEnd()
+	}
+	if len(x.SourceFileDescriptors) > 0 || s.HasField("sourceFileDescriptors") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("sourceFileDescriptors")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.SourceFileDescriptors {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("sourceFileDescriptors"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the CodeGeneratorRequest to JSON.
+func (x *CodeGeneratorRequest) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the CodeGeneratorRequest message from JSON.
+func (x *CodeGeneratorRequest) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "file_to_generate", "fileToGenerate":
+			s.AddField("file_to_generate")
+			if s.ReadNil() {
+				x.FileToGenerate = nil
+				return
+			}
+			x.FileToGenerate = s.ReadStringArray()
+		case "parameter":
+			s.AddField("parameter")
+			if s.ReadNil() {
+				x.Parameter = nil
+				return
+			}
+			t := s.ReadString()
+			x.Parameter = &t
+		case "compiler_version", "compilerVersion":
+			if s.ReadNil() {
+				x.CompilerVersion = nil
+				return
+			}
+			x.CompilerVersion = &Version{}
+			x.CompilerVersion.UnmarshalProtoJSON(s.WithField("compiler_version", true))
+		case "proto_file", "protoFile":
+			s.AddField("proto_file")
+			if s.ReadNil() {
+				x.ProtoFile = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.ProtoFile = append(x.ProtoFile, nil)
+					return
+				}
+				v := &descriptorpb.FileDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("proto_file", false))
+				if s.Err() != nil {
+					return
+				}
+				x.ProtoFile = append(x.ProtoFile, v)
+			})
+		case "source_file_descriptors", "sourceFileDescriptors":
+			s.AddField("source_file_descriptors")
+			if s.ReadNil() {
+				x.SourceFileDescriptors = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.SourceFileDescriptors = append(x.SourceFileDescriptors, nil)
+					return
+				}
+				v := &descriptorpb.FileDescriptorProto{}
+				v.UnmarshalProtoJSON(s.WithField("source_file_descriptors", false))
+				if s.Err() != nil {
+					return
+				}
+				x.SourceFileDescriptors = append(x.SourceFileDescriptors, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the CodeGeneratorRequest from JSON.
+func (x *CodeGeneratorRequest) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the CodeGeneratorResponse_Feature to JSON.
+func (x CodeGeneratorResponse_Feature) MarshalProtoJSON(s *json.MarshalState) {
+	s.WriteEnum(int32(x), CodeGeneratorResponse_Feature_name)
+}
+
+// MarshalText marshals the CodeGeneratorResponse_Feature to text.
+func (x CodeGeneratorResponse_Feature) MarshalText() ([]byte, error) {
+	return []byte(json.GetEnumString(int32(x), CodeGeneratorResponse_Feature_name)), nil
+}
+
+// MarshalJSON marshals the CodeGeneratorResponse_Feature to JSON.
+func (x CodeGeneratorResponse_Feature) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the CodeGeneratorResponse_Feature from JSON.
+func (x *CodeGeneratorResponse_Feature) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	v := s.ReadEnum(CodeGeneratorResponse_Feature_value)
+	if err := s.Err(); err != nil {
+		s.SetErrorf("could not read Feature enum: %v", err)
+		return
+	}
+	*x = CodeGeneratorResponse_Feature(v)
+}
+
+// UnmarshalText unmarshals the CodeGeneratorResponse_Feature from text.
+func (x *CodeGeneratorResponse_Feature) UnmarshalText(b []byte) error {
+	i, err := json.ParseEnumString(string(b), CodeGeneratorResponse_Feature_value)
+	if err != nil {
+		return err
+	}
+	*x = CodeGeneratorResponse_Feature(i)
+	return nil
+}
+
+// UnmarshalJSON unmarshals the CodeGeneratorResponse_Feature from JSON.
+func (x *CodeGeneratorResponse_Feature) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the CodeGeneratorResponse_File message to JSON.
+func (x *CodeGeneratorResponse_File) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Name != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("name")
+		s.WriteString(*x.Name)
+	}
+	if x.InsertionPoint != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("insertionPoint")
+		s.WriteString(*x.InsertionPoint)
+	}
+	if x.Content != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("content")
+		s.WriteString(*x.Content)
+	}
+	if x.GeneratedCodeInfo != nil || s.HasField("generatedCodeInfo") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("generatedCodeInfo")
+		x.GeneratedCodeInfo.MarshalProtoJSON(s.WithField("generatedCodeInfo"))
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the CodeGeneratorResponse_File to JSON.
+func (x *CodeGeneratorResponse_File) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the CodeGeneratorResponse_File message from JSON.
+func (x *CodeGeneratorResponse_File) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "name":
+			s.AddField("name")
+			if s.ReadNil() {
+				x.Name = nil
+				return
+			}
+			t := s.ReadString()
+			x.Name = &t
+		case "insertion_point", "insertionPoint":
+			s.AddField("insertion_point")
+			if s.ReadNil() {
+				x.InsertionPoint = nil
+				return
+			}
+			t := s.ReadString()
+			x.InsertionPoint = &t
+		case "content":
+			s.AddField("content")
+			if s.ReadNil() {
+				x.Content = nil
+				return
+			}
+			t := s.ReadString()
+			x.Content = &t
+		case "generated_code_info", "generatedCodeInfo":
+			if s.ReadNil() {
+				x.GeneratedCodeInfo = nil
+				return
+			}
+			x.GeneratedCodeInfo = &descriptorpb.GeneratedCodeInfo{}
+			x.GeneratedCodeInfo.UnmarshalProtoJSON(s.WithField("generated_code_info", true))
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the CodeGeneratorResponse_File from JSON.
+func (x *CodeGeneratorResponse_File) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
+
+// MarshalProtoJSON marshals the CodeGeneratorResponse message to JSON.
+func (x *CodeGeneratorResponse) MarshalProtoJSON(s *json.MarshalState) {
+	if x == nil {
+		s.WriteNil()
+		return
+	}
+	s.WriteObjectStart()
+	var wroteField bool
+	if x.Error != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("error")
+		s.WriteString(*x.Error)
+	}
+	if x.SupportedFeatures != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("supportedFeatures")
+		s.WriteUint64(*x.SupportedFeatures)
+	}
+	if x.MinimumEdition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("minimumEdition")
+		s.WriteInt32(*x.MinimumEdition)
+	}
+	if x.MaximumEdition != nil {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("maximumEdition")
+		s.WriteInt32(*x.MaximumEdition)
+	}
+	if len(x.File) > 0 || s.HasField("file") {
+		s.WriteMoreIf(&wroteField)
+		s.WriteObjectField("file")
+		s.WriteArrayStart()
+		var wroteElement bool
+		for _, element := range x.File {
+			s.WriteMoreIf(&wroteElement)
+			element.MarshalProtoJSON(s.WithField("file"))
+		}
+		s.WriteArrayEnd()
+	}
+	s.WriteObjectEnd()
+}
+
+// MarshalJSON marshals the CodeGeneratorResponse to JSON.
+func (x *CodeGeneratorResponse) MarshalJSON() ([]byte, error) {
+	return json.DefaultMarshalerConfig.Marshal(x)
+}
+
+// UnmarshalProtoJSON unmarshals the CodeGeneratorResponse message from JSON.
+func (x *CodeGeneratorResponse) UnmarshalProtoJSON(s *json.UnmarshalState) {
+	if s.ReadNil() {
+		return
+	}
+	s.ReadObject(func(key string) {
+		switch key {
+		default:
+			s.Skip() // ignore unknown field
+		case "error":
+			s.AddField("error")
+			if s.ReadNil() {
+				x.Error = nil
+				return
+			}
+			t := s.ReadString()
+			x.Error = &t
+		case "supported_features", "supportedFeatures":
+			s.AddField("supported_features")
+			if s.ReadNil() {
+				x.SupportedFeatures = nil
+				return
+			}
+			t := s.ReadUint64()
+			x.SupportedFeatures = &t
+		case "minimum_edition", "minimumEdition":
+			s.AddField("minimum_edition")
+			if s.ReadNil() {
+				x.MinimumEdition = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.MinimumEdition = &t
+		case "maximum_edition", "maximumEdition":
+			s.AddField("maximum_edition")
+			if s.ReadNil() {
+				x.MaximumEdition = nil
+				return
+			}
+			t := s.ReadInt32()
+			x.MaximumEdition = &t
+		case "file":
+			s.AddField("file")
+			if s.ReadNil() {
+				x.File = nil
+				return
+			}
+			s.ReadArray(func() {
+				if s.ReadNil() {
+					x.File = append(x.File, nil)
+					return
+				}
+				v := &CodeGeneratorResponse_File{}
+				v.UnmarshalProtoJSON(s.WithField("file", false))
+				if s.Err() != nil {
+					return
+				}
+				x.File = append(x.File, v)
+			})
+		}
+	})
+}
+
+// UnmarshalJSON unmarshals the CodeGeneratorResponse from JSON.
+func (x *CodeGeneratorResponse) UnmarshalJSON(b []byte) error {
+	return json.DefaultUnmarshalerConfig.Unmarshal(b, x)
+}
 
 func (m *Version) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {

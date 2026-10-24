@@ -9,6 +9,7 @@ import (
 	errors "errors"
 	fmt "fmt"
 	io "io"
+	maps "maps"
 	math "math"
 	slices "slices"
 	strconv "strconv"
@@ -149,7 +150,6 @@ type Value struct {
 	// The kind of value.
 	//
 	// Types that are assignable to Kind:
-	//
 	//	*Value_NullValue
 	//	*Value_NumberValue
 	//	*Value_StringValue
@@ -1395,7 +1395,7 @@ func (x *Struct) MarshalProtoText() string {
 	initialLen := protobuf_go_lite.TextStartMessage(&sb, "Struct")
 	if len(x.Fields) > 0 {
 		protobuf_go_lite.TextWriteMapStart(&sb, initialLen, "fields")
-		for _, k := range protobuf_go_lite.TextSortedMapKeys(x.Fields) {
+		for _, k := range slices.Sorted(maps.Keys(x.Fields)) {
 			v := x.Fields[k]
 			protobuf_go_lite.TextWriteMapEntryPrefix(&sb)
 			protobuf_go_lite.TextWriteString(&sb, k)

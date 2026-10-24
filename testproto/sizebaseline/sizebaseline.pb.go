@@ -90,7 +90,6 @@ type SizeBaseline struct {
 	DefaultString  *string                         `protobuf:"bytes,35,opt,name=default_string,json=defaultString,def=default-size-baseline" json:"defaultString,omitempty"`
 	DefaultInt32   *int32                          `protobuf:"varint,36,opt,name=default_int32,json=defaultInt32,def=99" json:"defaultInt32,omitempty"`
 	// Types that are assignable to Selection:
-	//
 	//	*SizeBaseline_SelectedName
 	//	*SizeBaseline_SelectedId
 	//	*SizeBaseline_SelectedNested
