@@ -1,0 +1,14 @@
+syntax = "proto3";
+package arena.ref;
+
+// Digest is a message from another package, reached by an arena message.
+message Digest {
+  uint32 kind = 1;
+  bytes sum = 2;
+}
+
+// Ref names a digest.
+message Ref {
+  Digest digest = 1;
+  string name = 2;
+}

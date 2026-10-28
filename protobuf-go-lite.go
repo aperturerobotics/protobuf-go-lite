@@ -900,6 +900,36 @@ func DecodeBytesAppend(dst []byte, b []byte, idx int) ([]byte, int, error) {
 	return dst, end, nil
 }
 
+// DecodeBytesCapped decodes a length-prefixed byte slice that shares b, capped
+// at its length so an append copies instead of writing over the bytes after it.
+func DecodeBytesCapped(b []byte, idx int) ([]byte, int, error) {
+	start, end, err := DecodeLengthDelimited(b, idx)
+	if err != nil {
+		return nil, 0, err
+	}
+	return b[start:end:end], end, nil
+}
+
+// CountTag counts the fields in b whose tag is wire.
+func CountTag(b []byte, wire uint64) (int, error) {
+	var n int
+	for idx := 0; idx < len(b); {
+		tag, _, err := DecodeVarint(b, idx)
+		if err != nil {
+			return 0, err
+		}
+		if tag == wire {
+			n++
+		}
+		skippy, err := Skip(b[idx:])
+		if err != nil {
+			return 0, err
+		}
+		idx += skippy
+	}
+	return n, nil
+}
+
 // DecodeString decodes a length-prefixed string (with copy).
 // Assumes idx is within bounds (0 <= idx <= len(b)); generated code maintains this invariant.
 func DecodeString(b []byte, idx int) (string, int, error) {

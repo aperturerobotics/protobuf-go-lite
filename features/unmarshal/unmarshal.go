@@ -996,4 +996,9 @@ func (p *unmarshal) message(message *protogen.Message) {
 	p.P(`}`)
 	p.P(`return nil`)
 	p.P(`}`)
+
+	if !p.unsafe && hasArenaComment(message.Comments.Leading) {
+		p.P()
+		p.arenaMessage(message)
+	}
 }

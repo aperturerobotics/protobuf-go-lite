@@ -107,6 +107,8 @@ var helpers = map[string]protogen.GoIdent{
 	"DecodeFloat64":                 {GoName: "DecodeFloat64", GoImportPath: vtHelpersPackage},
 	"DecodeBytes":                   {GoName: "DecodeBytes", GoImportPath: vtHelpersPackage},
 	"DecodeBytesAppend":             {GoName: "DecodeBytesAppend", GoImportPath: vtHelpersPackage},
+	"DecodeBytesCapped":             {GoName: "DecodeBytesCapped", GoImportPath: vtHelpersPackage},
+	"CountTag":                      {GoName: "CountTag", GoImportPath: vtHelpersPackage},
 	"DecodeLengthDelimited":         {GoName: "DecodeLengthDelimited", GoImportPath: vtHelpersPackage},
 	"DecodeString":                  {GoName: "DecodeString", GoImportPath: vtHelpersPackage},
 	"DecodeStringUnsafe":            {GoName: "DecodeStringUnsafe", GoImportPath: vtHelpersPackage},

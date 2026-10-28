@@ -1,0 +1,46 @@
+syntax = "proto3";
+package arena;
+
+import "github.com/aperturerobotics/protobuf-go-lite/testproto/arena/ref/ref.proto";
+import "google/protobuf/timestamp.proto";
+
+enum Kind {
+  KIND_NONE = 0;
+  KIND_LEAF = 1;
+}
+
+// Page is decoded with UnmarshalVTArena.
+//
+//protobuf-go-lite:arena
+message Page {
+  uint32 level = 1;
+  bytes lower_bound = 2;
+  repeated Entry entries = 3;
+  string label = 4;
+  Kind kind = 5;
+  bool sealed = 6;
+  repeated uint64 sizes = 7;
+  repeated bytes tags = 8;
+  map<string, Entry> named = 9;
+  oneof extra {
+    Entry pinned = 10;
+    bytes blob = 11;
+    string note = 12;
+  }
+  optional int64 version = 13;
+  google.protobuf.Timestamp updated = 14;
+  arena.ref.Ref root_ref = 15;
+  repeated Page children = 16;
+  double weight = 17;
+}
+
+// Entry is an element of a page.
+message Entry {
+  bytes key = 1;
+  bytes hash = 2;
+  uint64 size = 3;
+  arena.ref.Ref child = 4;
+  arena.ref.Ref value = 5;
+  repeated arena.ref.Ref extra = 6;
+  repeated string labels = 7;
+}
