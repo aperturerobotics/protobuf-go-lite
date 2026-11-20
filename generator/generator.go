@@ -15,7 +15,6 @@
 package generator
 
 import (
-	"fmt"
 	"runtime/debug"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
@@ -24,81 +23,9 @@ import (
 	"google.golang.org/protobuf/types/pluginpb"
 
 	generator_base "github.com/aperturerobotics/protobuf-go-lite/generator/base"
-	"github.com/aperturerobotics/protobuf-go-lite/generator/pattern"
 )
 
-type ObjectSet struct {
-	mp map[string]bool
-}
-
-func NewObjectSet() ObjectSet {
-	return ObjectSet{
-		mp: map[string]bool{},
-	}
-}
-
-func (o ObjectSet) String() string {
-	return fmt.Sprintf("%#v", o)
-}
-
-func (o ObjectSet) Contains(g protogen.GoIdent) bool {
-	objectPath := fmt.Sprintf("%s.%s", string(g.GoImportPath), g.GoName)
-
-	for wildcard := range o.mp {
-		// Ignore malformed pattern error because pattern already checked in Set
-		if ok, _ := pattern.Match(wildcard, objectPath); ok {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (o ObjectSet) Set(s string) error {
-	if !pattern.ValidatePattern(s) {
-		return pattern.ErrBadPattern
-	}
-	o.mp[s] = true
-	return nil
-}
-
-type Config struct {
-	// Poolable rules determines if pool feature generate for particular message
-	Poolable ObjectSet
-	// PoolableExclude rules determines if pool feature disabled for particular message
-	PoolableExclude ObjectSet
-	CodegenMode     CodegenMode
-	WellKnownTypes  bool
-	AllowEmpty      bool
-	BuildTag        string
-	// Registry generates init-time message constructor and option registration.
-	Registry bool
-}
-
-type CodegenMode string
-
-const (
-	CodegenModeHelper   CodegenMode = "helper"
-	CodegenModeUnrolled CodegenMode = "unrolled"
-)
-
-func (c *Config) SetCodegenMode(mode string) error {
-	switch CodegenMode(mode) {
-	case "", CodegenModeHelper:
-		c.CodegenMode = CodegenModeHelper
-		return nil
-	case CodegenModeUnrolled:
-		c.CodegenMode = CodegenModeUnrolled
-		return nil
-	default:
-		return fmt.Errorf("unknown codegen mode: %q", mode)
-	}
-}
-
-func (c *Config) HelperCodegen() bool {
-	return c == nil || c.CodegenMode != CodegenModeUnrolled
-}
-
+// Generator writes the .pb.go files for one plugin run.
 type Generator struct {
 	plugin   *protogen.Plugin
 	cfg      *Config
@@ -106,14 +33,20 @@ type Generator struct {
 	local    map[protoreflect.FullName]bool
 }
 
+// SupportedFeatures are the protoc plugin features the generator declares.
 const SupportedFeatures = uint64(pluginpb.CodeGeneratorResponse_FEATURE_PROTO3_OPTIONAL) |
 	uint64(pluginpb.CodeGeneratorResponse_FEATURE_SUPPORTS_EDITIONS)
 
+// NewGenerator returns a Generator for the named features, or "all" for every
+// registered one. It fails on an unknown feature name, or when cfg.Registry
+// is set without the size, marshal and unmarshal features the registry needs.
 func NewGenerator(plugin *protogen.Plugin, featureNames []string, cfg *Config) (*Generator, error) {
+	// Declare the proto syntaxes and editions the plugin accepts.
 	plugin.SupportedFeatures = SupportedFeatures
 	plugin.SupportedEditionsMinimum = editionssupport.Minimum
 	plugin.SupportedEditionsMaximum = editionssupport.Maximum
 
+	// Resolve the features and check that the registry has what it needs.
 	features, err := findFeatures(featureNames)
 	if err != nil {
 		return nil, err
@@ -124,6 +57,7 @@ func NewGenerator(plugin *protogen.Plugin, featureNames []string, cfg *Config) (
 		}
 	}
 
+	// Note the proto packages this run generates.
 	local := make(map[protoreflect.FullName]bool)
 	for _, f := range plugin.Files {
 		if f.Generate {
@@ -139,6 +73,9 @@ func NewGenerator(plugin *protogen.Plugin, featureNames []string, cfg *Config) (
 	}, nil
 }
 
+// Generate writes one .pb.go file for each file protoc asked to generate. An
+// edition the generator does not support is reported on the plugin and skips
+// that file.
 func (gen *Generator) Generate() {
 	for _, file := range gen.plugin.Files {
 		if !file.Generate {
@@ -172,7 +109,10 @@ func (gen *Generator) Generate() {
 	}
 }
 
+// generateHeader writes the build tag, the generated-code notice, the source
+// path and the package clause with its doc.
 func (gen *Generator) generateHeader(p *GeneratedFile, file *protogen.File) {
+	// Write the build constraint and the generated-code notice.
 	if p.Config.BuildTag != "" {
 		p.P("//go:build ", p.Config.BuildTag)
 	}
