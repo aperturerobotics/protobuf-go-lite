@@ -3,6 +3,9 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// Package size registers the "size" generator feature, which emits SizeVT:
+// the exact length of the message's binary encoding. The marshal feature
+// sizes its buffer from it.
 package size
 
 import (

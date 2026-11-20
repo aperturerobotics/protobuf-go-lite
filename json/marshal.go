@@ -1,6 +1,21 @@
 // Copyright © 2021 The Things Industries B.V.
 // SPDX-License-Identifier: Apache-2.0
 
+// Package json is the streaming JSON runtime that the "json" generator feature
+// writes against. It follows the canonical protobuf JSON mapping for proto2,
+// proto3 and editions files, with these differences:
+//
+//   - DefaultMarshalerConfig sets EnumsAsInts, so enums are written as
+//     numbers unless a caller clears it.
+//   - 64-bit integers are written as JSON numbers, not strings. The reader
+//     accepts either form.
+//   - Any messages need an AnyTypeResolver in the config to marshal or
+//     unmarshal their contents.
+//
+// UnmarshalerConfig.DiscardUnknown leaves a field at its zero value when it
+// holds an unknown enum name, as protojson does.
+//
+// The package is adapted from protoc-gen-go-json by The Things Industries.
 package json
 
 import (

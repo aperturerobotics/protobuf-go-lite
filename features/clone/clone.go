@@ -3,6 +3,10 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// Package clone registers the "clone" generator feature, which emits CloneVT
+// and CloneMessageVT. A clone is a deep copy: it copies bytes, slices, maps,
+// nested messages and unknown fields, so the original and the copy share no
+// mutable memory.
 package clone
 
 import (

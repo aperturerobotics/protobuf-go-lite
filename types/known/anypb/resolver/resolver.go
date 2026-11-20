@@ -1,3 +1,6 @@
+// Package anypb_resolver resolves the type URL in an Any message to a message
+// constructor, which marshaling and unmarshaling an Any's contents need since
+// the runtime has no global registry.
 package anypb_resolver
 
 import (

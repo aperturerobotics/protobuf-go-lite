@@ -2,6 +2,13 @@
 // Copyright © 2021 The Things Industries B.V.
 // SPDX-License-Identifier: Apache-2.0
 
+// Package json registers the "json" generator feature, which emits
+// MarshalProtoJSON, UnmarshalProtoJSON, MarshalJSON and UnmarshalJSON for each
+// message and the enum name maps they use. The methods stream through the
+// runtime json package, so they use no reflection.
+//
+// A message or enum whose leading comment holds the line
+// "protobuf-go-lite:disable-json" gets no JSON methods.
 package json
 
 import (

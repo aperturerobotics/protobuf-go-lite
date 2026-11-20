@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/pluginpb/plugin.proto
 
+// Package google_protobuf_compiler contains generated types for google/protobuf/compiler/plugin.proto.
 package google_protobuf_compiler
 
 import (

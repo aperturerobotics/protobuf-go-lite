@@ -3,6 +3,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// Package marshal registers the "marshal" and "marshal_strict" generator
+// features. "marshal" emits MarshalVT, MarshalToVT and
+// MarshalToSizedBufferVT, which write the binary wire format back to front
+// into a buffer sized by SizeVT. "marshal_strict" emits the same methods with
+// a Strict suffix, which write fields in field-number order.
 package marshal
 
 import (

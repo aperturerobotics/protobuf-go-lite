@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/known/apipb/api.proto
 
+// Package apipb contains generated types for google/protobuf/api.proto.
 package apipb
 
 import (

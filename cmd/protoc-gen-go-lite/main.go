@@ -2,11 +2,22 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// The protoc-gen-go-lite binary is a protoc plugin to generate Go code for
-// both proto2 and proto3 versions of the protocol buffer language.
+// The protoc-gen-go-lite binary is a protoc plugin that generates
+// reflection-free Go code for proto2, proto3 and editions files. Its output
+// matches protoc-gen-go's types and adds the methods of each generator
+// feature it links.
 //
-// For more information about the usage of this plugin, see:
-// https://protobuf.dev/reference/go/go-generated.
+// It takes these parameters:
+//
+//   - features: the generator features to emit, separated by '+', or "all"
+//     (the default) for every registered feature: marshal, marshal_strict,
+//     unmarshal, unmarshal_unsafe, size, clone, equal, json and text.
+//   - codegen: "helper" (the default) makes generated methods call the
+//     runtime's shared helpers; "unrolled" inlines that logic.
+//   - allow-empty: write a file even when it has no content.
+//   - buildTag: the go:build constraint to put on each generated file.
+//   - registry: generate an init-time message registry with flattened custom
+//     options.
 package main
 
 import (

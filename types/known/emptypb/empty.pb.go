@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/known/emptypb/empty.proto
 
+// Package emptypb contains generated types for google/protobuf/empty.proto.
 package emptypb
 
 import (

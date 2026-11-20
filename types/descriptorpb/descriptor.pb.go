@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/descriptorpb/descriptor.proto
 
+// Package descriptorpb contains generated types for google/protobuf/descriptor.proto.
 package descriptorpb
 
 import (
