@@ -1,5 +1,10 @@
 // Copyright (c) 2022 PlanetScale Inc. All rights reserved.
 
+// Package equal registers the "equal" generator feature, which emits EqualVT
+// and EqualMessageVT. Two messages are equal when both are nil, or when both
+// are non-nil and every field and the unknown fields compare equal. Inside a
+// message a nil nested message equals an empty one, and nil bytes equal empty
+// bytes except in a field with explicit presence.
 package equal
 
 import (

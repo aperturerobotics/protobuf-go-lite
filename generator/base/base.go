@@ -2,6 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// Package generator_base holds the parts of code generation that every
+// feature shares: the file preamble, the generated struct, enum and oneof
+// types, and the hand-written support for well-known types, such as the
+// package docs and the JSON forms of Timestamp, Duration, Struct, FieldMask
+// and the wrapper messages.
 package generator_base
 
 import (

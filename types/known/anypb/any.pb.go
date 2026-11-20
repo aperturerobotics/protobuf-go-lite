@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/known/anypb/any.proto
 
+// Package anypb contains generated types for google/protobuf/any.proto.
 package anypb
 
 import (

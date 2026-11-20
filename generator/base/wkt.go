@@ -5,6 +5,7 @@
 package generator_base
 
 import (
+	"path"
 	"strings"
 
 	"github.com/aperturerobotics/protobuf-go-lite/compiler/protogen"
@@ -16,8 +17,25 @@ import (
 // in order to support specialized build systems like Bazel that always generate
 // dynamically from the source .proto files.
 
+// GenPackageKnownComment returns the package doc for a file in the
+// google.protobuf package or one of its subpackages, or no comment for any
+// other file.
+//
+// A file is matched by its package and base name, so the copies under types/,
+// whose import paths are this module's, match as well as the upstream
+// google/protobuf paths. Timestamp, Duration and Struct get a doc that
+// describes their Go conversions; every other file gets a one-line doc that
+// names its upstream source.
 func GenPackageKnownComment(f *protogen.File) protogen.Comments {
-	switch f.Desc.Path() {
+	// Only google.protobuf and its subpackages hold well-known types.
+	pkg, wkt := string(f.Desc.Package()), string(genid.GoogleProtobuf_package)
+	if pkg != wkt && !strings.HasPrefix(pkg, wkt+".") {
+		return ""
+	}
+
+	// Match on the upstream path for the file's package and base name.
+	upstream := strings.ReplaceAll(pkg, ".", "/") + "/" + path.Base(f.Desc.Path())
+	switch upstream {
 	case genid.File_google_protobuf_timestamp_proto:
 		return ` Package timestamppb contains generated types for ` + genid.File_google_protobuf_timestamp_proto + `.
 
@@ -171,7 +189,7 @@ func GenPackageKnownComment(f *protogen.File) protogen.Comments {
 	... // make use of m as a *structpb.Value
 `
 	default:
-		return ""
+		return protogen.Comments(" Package " + string(f.GoPackageName) + " contains generated types for " + upstream + ".\n")
 	}
 }
 

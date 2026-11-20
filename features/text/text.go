@@ -1,6 +1,12 @@
 // Copyright © 2024 Aperture Robotics, LLC.
 // SPDX-License-Identifier: MIT
 
+// Package text registers the "text" generator feature, which emits
+// MarshalProtoText and a String method that returns it, written with the
+// runtime's Text helpers instead of the reflection-based prototext.
+//
+// A message or enum whose leading comment holds the line
+// "protobuf-go-lite:disable-text" gets no text methods.
 package text
 
 import (

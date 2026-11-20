@@ -3,6 +3,18 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// Package unmarshal registers the "unmarshal" and "unmarshal_unsafe" generator
+// features. "unmarshal" emits UnmarshalVT, which copies strings and bytes out
+// of the input. "unmarshal_unsafe" emits UnmarshalVTUnsafe, whose strings and
+// bytes alias the input buffer, so the caller must not modify or reuse that
+// buffer while the message lives.
+//
+// A message whose leading comment holds the line "protobuf-go-lite:arena"
+// also gets UnmarshalVTArena. It counts the messages the input holds, copies
+// the input once, carves each message from one slab per type, and lets bytes
+// fields share that copy; input it cannot decode exactly as UnmarshalVT would
+// falls back to UnmarshalVT. The generator panics if such a message reaches a
+// group or a required field, which the arena decoder does not handle.
 package unmarshal
 
 import (

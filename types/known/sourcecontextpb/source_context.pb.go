@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/known/sourcecontextpb/source_context.proto
 
+// Package sourcecontextpb contains generated types for google/protobuf/source_context.proto.
 package sourcecontextpb
 
 import (

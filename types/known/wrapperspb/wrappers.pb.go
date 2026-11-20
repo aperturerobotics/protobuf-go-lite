@@ -2,6 +2,7 @@
 // protoc-gen-go-lite version: v0.8.1
 // source: github.com/aperturerobotics/protobuf-go-lite/types/known/wrapperspb/wrappers.proto
 
+// Package wrapperspb contains generated types for google/protobuf/wrappers.proto.
 package wrapperspb
 
 import (
